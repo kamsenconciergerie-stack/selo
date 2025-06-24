@@ -36,7 +36,7 @@ export default function Header() {
                 <span className="text-aywa-blue">AY</span>
                 <span className="text-primary-orange">WA</span>
               </span>
-              <span className="text-[10px] text-gray-500 -mt-1 whitespace-nowrap">Puissance et confiance sur la route</span>
+              <span className="text-xs font-medium text-gray-600 -mt-1 whitespace-nowrap tracking-wide">Puissance et confiance sur la route</span>
             </div>
           </Link>
           
