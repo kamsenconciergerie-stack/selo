@@ -14,6 +14,12 @@ export interface IStorage {
   // Booking methods
   createBooking(booking: InsertBooking): Promise<Booking>;
   getBookingsByEquipment(equipmentId: number): Promise<Booking[]>;
+  updateBookingPaymentStatus(bookingId: number, paymentStatus: string, paymentReference?: string): Promise<void>;
+  
+  // Payment methods
+  createPayment(payment: InsertPayment): Promise<Payment>;
+  getPaymentByBookingId(bookingId: number): Promise<Payment | undefined>;
+  updatePaymentStatus(paymentId: number, status: string, transactionId?: string): Promise<void>;
   
   // Inquiry methods
   createInquiry(inquiry: InsertInquiry): Promise<Inquiry>;

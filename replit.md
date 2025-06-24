@@ -101,8 +101,9 @@ Aywa est une application web full-stack pour les services de location d'équipem
 - June 24, 2025. Ajout pages Services, À Propos, Équipements Populaires
 - June 24, 2025. Création base de données MySQL complète pour le business
 - June 24, 2025. Migration vers PostgreSQL avec système d'images local
-- June 24, 2025. Ajout slogan "Puissance et confiance sur la route"
+- June 24, 2025. Ajout puis suppression du slogan sur demande utilisateur
 - June 24, 2025. Documentation application mobile React Native
+- June 24, 2025. Application web déployée et prête en production
 
 ## User Preferences
 
