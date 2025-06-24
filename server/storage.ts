@@ -1,4 +1,7 @@
 import { Equipment, Booking, Inquiry, InsertEquipment, InsertBooking, InsertInquiry } from "@shared/schema";
+import { equipment, bookings, inquiries } from "../shared/schema";
+import { eq, ilike, or } from "drizzle-orm";
+import { db } from "../shared/db";
 
 export interface IStorage {
   // Equipment methods
@@ -14,6 +17,68 @@ export interface IStorage {
   
   // Inquiry methods
   createInquiry(inquiry: InsertInquiry): Promise<Inquiry>;
+}
+
+export class DbStorage implements IStorage {
+  async getAllEquipment(): Promise<Equipment[]> {
+    return await db.select().from(equipment);
+  }
+
+  async getEquipmentById(id: number): Promise<Equipment | undefined> {
+    const result = await db.select().from(equipment).where(eq(equipment.id, id));
+    return result[0];
+  }
+
+  async getEquipmentByCategory(category: string): Promise<Equipment[]> {
+    return await db.select().from(equipment).where(eq(equipment.category, category));
+  }
+
+  async searchEquipment(query: string, location?: string): Promise<Equipment[]> {
+    let queryBuilder = db.select().from(equipment);
+    
+    if (query && location) {
+      queryBuilder = queryBuilder.where(
+        or(
+          ilike(equipment.name, `%${query}%`),
+          ilike(equipment.description, `%${query}%`)
+        )
+      ).where(eq(equipment.location, location));
+    } else if (query) {
+      queryBuilder = queryBuilder.where(
+        or(
+          ilike(equipment.name, `%${query}%`),
+          ilike(equipment.description, `%${query}%`)
+        )
+      );
+    } else if (location) {
+      queryBuilder = queryBuilder.where(eq(equipment.location, location));
+    }
+    
+    return await queryBuilder;
+  }
+
+  async createEquipment(equipmentData: InsertEquipment): Promise<Equipment> {
+    const result = await db.insert(equipment).values(equipmentData).returning();
+    return result[0];
+  }
+
+  async createBooking(bookingData: InsertBooking): Promise<Booking> {
+    const result = await db.insert(bookings).values(bookingData).returning();
+    return result[0];
+  }
+
+  async getBookingsByEquipment(equipmentId: number): Promise<Booking[]> {
+    return await db.select().from(bookings).where(eq(bookings.equipmentId, equipmentId));
+  }
+
+  async createInquiry(inquiryData: InsertInquiry): Promise<Inquiry> {
+    const inquiryWithDate = {
+      ...inquiryData,
+      createdAt: new Date().toISOString(),
+    };
+    const result = await db.insert(inquiries).values(inquiryWithDate).returning();
+    return result[0];
+  }
 }
 
 export class MemStorage implements IStorage {
@@ -309,5 +374,4 @@ export class MemStorage implements IStorage {
   }
 }
 
-// Utiliser la base de données PostgreSQL au lieu du stockage en mémoire
 export const storage = new DbStorage();
