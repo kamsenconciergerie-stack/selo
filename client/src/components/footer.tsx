@@ -39,9 +39,9 @@ export default function Footer() {
             <h3 className="font-semibold text-white mb-4">Services</h3>
             <ul className="space-y-2">
               <li><Link href="/equipements" className="hover:text-primary-orange">Location d'équipement</Link></li>
-              <li><a href="#" className="hover:text-primary-orange">Livraison</a></li>
-              <li><a href="#" className="hover:text-primary-orange">Maintenance</a></li>
-              <li><a href="#" className="hover:text-primary-orange">Formation</a></li>
+              <li><Link href="/services" className="hover:text-primary-orange">Livraison</Link></li>
+              <li><Link href="/services" className="hover:text-primary-orange">Maintenance</Link></li>
+              <li><Link href="/services" className="hover:text-primary-orange">Formation</Link></li>
             </ul>
           </div>
           
@@ -56,11 +56,11 @@ export default function Footer() {
           </div>
           
           <div>
-            <h3 className="font-semibold text-white mb-4">Support</h3>
+            <h3 className="font-semibold text-white mb-4">Société</h3>
             <ul className="space-y-2">
-              <li><a href="#" className="hover:text-primary-orange">Centre d'aide</a></li>
+              <li><Link href="/a-propos" className="hover:text-primary-orange">À propos</Link></li>
+              <li><Link href="/services" className="hover:text-primary-orange">Nos services</Link></li>
               <li><a href="#" className="hover:text-primary-orange">Conditions de location</a></li>
-              <li><a href="#" className="hover:text-primary-orange">Politique de confidentialité</a></li>
               <li><Link href="/contact" className="hover:text-primary-orange">Nous contacter</Link></li>
             </ul>
           </div>

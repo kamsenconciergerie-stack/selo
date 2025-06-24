@@ -72,7 +72,7 @@ export class MemStorage implements IStorage {
         location: "Kaolack",
         imageUrl: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400",
         specifications: ["12 bar", "500L", "Électrique"],
-        isAvailable: false,
+        isAvailable: true,
         weight: "150 kg",
         fuelType: "Électrique",
         power: "12 bar"
@@ -115,6 +115,71 @@ export class MemStorage implements IStorage {
         weight: "15 tonnes",
         fuelType: "Diesel",
         power: "120 CV"
+      },
+      {
+        name: "Bétonnière 350L",
+        description: "Bétonnière électrique pour préparation de béton",
+        category: "Outils à Main",
+        pricePerDay: 15000,
+        location: "Dakar",
+        imageUrl: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400",
+        specifications: ["350L", "Électrique", "Mobile"],
+        isAvailable: true,
+        weight: "120 kg",
+        fuelType: "Électrique",
+        power: "1500W"
+      },
+      {
+        name: "Échafaudage Complet",
+        description: "Kit d'échafaudage professionnel pour travaux en hauteur",
+        category: "Sécurité & EPI",
+        pricePerDay: 35000,
+        location: "Thiès",
+        imageUrl: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400",
+        specifications: ["Hauteur 6m", "Aluminium", "Sécurisé"],
+        isAvailable: true,
+        weight: "200 kg",
+        fuelType: "N/A",
+        power: "N/A"
+      },
+      {
+        name: "Nacelle Élévatrice",
+        description: "Nacelle électrique pour travaux en hauteur",
+        category: "Engins de Chantier",
+        pricePerDay: 95000,
+        location: "Kaolack",
+        imageUrl: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400",
+        specifications: ["12m hauteur", "Électrique", "2 personnes"],
+        isAvailable: true,
+        weight: "3 tonnes",
+        fuelType: "Électrique",
+        power: "24V"
+      },
+      {
+        name: "Scie Circulaire sur Table",
+        description: "Scie professionnelle pour découpe de matériaux",
+        category: "Outils à Main",
+        pricePerDay: 18000,
+        location: "Saint-Louis",
+        imageUrl: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400",
+        specifications: ["Lame 315mm", "3000W", "Précision"],
+        isAvailable: true,
+        weight: "45 kg",
+        fuelType: "Électrique",
+        power: "3000W"
+      },
+      {
+        name: "Groupe Électrogène 50 KVA",
+        description: "Générateur diesel pour alimentation électrique",
+        category: "Équipement Électrique",
+        pricePerDay: 55000,
+        location: "Diourbel",
+        imageUrl: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400",
+        specifications: ["50 KVA", "Diesel", "Silencieux"],
+        isAvailable: true,
+        weight: "1.8 tonnes",
+        fuelType: "Diesel",
+        power: "50 KVA"
       }
     ];
 

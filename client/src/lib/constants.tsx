@@ -6,7 +6,13 @@ export const CITIES = [
   "Ziguinchor",
   "Diourbel",
   "Tambacounda",
-  "Fatick"
+  "Fatick",
+  "Kolda",
+  "Matam",
+  "Kédougou",
+  "Sédhiou",
+  "Kaffrine",
+  "Louga"
 ];
 
 export const CATEGORIES = [
@@ -40,6 +46,30 @@ export const SERVICE_AREAS = [
     description: "Livraison sous 48h",
     deliveryTime: "Livraison sous 48h", 
     cost: 20000
+  },
+  {
+    city: "Ziguinchor",
+    description: "Livraison sous 72h",
+    deliveryTime: "Livraison sous 72h", 
+    cost: 35000
+  },
+  {
+    city: "Diourbel",
+    description: "Livraison sous 24h",
+    deliveryTime: "Livraison sous 24h", 
+    cost: 18000
+  },
+  {
+    city: "Tambacounda",
+    description: "Livraison sous 72h",
+    deliveryTime: "Livraison sous 72h", 
+    cost: 40000
+  },
+  {
+    city: "Fatick",
+    description: "Livraison sous 48h",
+    deliveryTime: "Livraison sous 48h", 
+    cost: 22000
   }
 ];
 

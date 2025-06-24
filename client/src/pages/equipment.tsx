@@ -30,15 +30,15 @@ export default function EquipmentPage() {
 
   const { data: equipment = [], isLoading } = useQuery<Equipment[]>({
     queryKey: ["/api/equipment", { 
-      category: selectedCategory || undefined,
+      category: selectedCategory && selectedCategory !== "all" ? selectedCategory : undefined,
       search: searchQuery || undefined,
-      location: selectedLocation || undefined,
+      location: selectedLocation && selectedLocation !== "all" ? selectedLocation : undefined,
     }],
     queryFn: async () => {
       const params = new URLSearchParams();
-      if (selectedCategory) params.append("category", selectedCategory);
+      if (selectedCategory && selectedCategory !== "all") params.append("category", selectedCategory);
       if (searchQuery) params.append("search", searchQuery);
-      if (selectedLocation) params.append("location", selectedLocation);
+      if (selectedLocation && selectedLocation !== "all") params.append("location", selectedLocation);
       
       const response = await fetch(`/api/equipment?${params.toString()}`);
       if (!response.ok) throw new Error("Erreur lors du chargement des équipements");
@@ -49,16 +49,16 @@ export default function EquipmentPage() {
   const handleSearch = () => {
     // Force refetch with current filters
     window.location.search = new URLSearchParams({
-      ...(selectedCategory && { category: selectedCategory }),
+      ...(selectedCategory && selectedCategory !== "all" && { category: selectedCategory }),
       ...(searchQuery && { search: searchQuery }),
-      ...(selectedLocation && { location: selectedLocation }),
+      ...(selectedLocation && selectedLocation !== "all" && { location: selectedLocation }),
     }).toString();
   };
 
   const clearFilters = () => {
     setSearchQuery("");
-    setSelectedCategory("");
-    setSelectedLocation("");
+    setSelectedCategory("all");
+    setSelectedLocation("all");
     window.location.search = "";
   };
 
@@ -96,7 +96,7 @@ export default function EquipmentPage() {
                 <SelectValue placeholder="Toutes les catégories" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">Toutes les catégories</SelectItem>
+                <SelectItem value="all">Toutes les catégories</SelectItem>
                 {CATEGORIES.map((category) => (
                   <SelectItem key={category} value={category}>
                     {category}
@@ -110,7 +110,7 @@ export default function EquipmentPage() {
                 <SelectValue placeholder="Toutes les villes" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">Toutes les villes</SelectItem>
+                <SelectItem value="all">Toutes les villes</SelectItem>
                 {CITIES.map((city) => (
                   <SelectItem key={city} value={city}>
                     {city}
@@ -140,7 +140,7 @@ export default function EquipmentPage() {
             <h2 className="text-2xl font-bold text-gray-900">
               {equipment.length} équipement{equipment.length !== 1 ? 's' : ''} trouvé{equipment.length !== 1 ? 's' : ''}
             </h2>
-            {(selectedCategory || searchQuery || selectedLocation) && (
+            {(selectedCategory && selectedCategory !== "all" || searchQuery || selectedLocation && selectedLocation !== "all") && (
               <Button variant="ghost" onClick={clearFilters}>
                 Voir tous les équipements
               </Button>

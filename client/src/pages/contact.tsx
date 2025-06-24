@@ -238,6 +238,7 @@ export default function Contact() {
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
+                            <SelectItem value="none">Pas de catégorie spécifique</SelectItem>
                             {CATEGORIES.map((category) => (
                               <SelectItem key={category} value={category}>
                                 {category}
