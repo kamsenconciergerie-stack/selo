@@ -67,7 +67,7 @@ export default function Footer() {
         </div>
         
         <div className="border-t border-gray-700 mt-8 pt-8 text-center">
-          <p>&copy; 2024 SenegalEquip. Tous droits réservés.</p>
+          <p>&copy; 2025 Aywa. Tous droits réservés.</p>
         </div>
       </div>
     </footer>

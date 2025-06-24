@@ -155,7 +155,8 @@ export class MemStorage implements IStorage {
       specifications: insertEquipment.specifications || null,
       weight: insertEquipment.weight || null,
       fuelType: insertEquipment.fuelType || null,
-      power: insertEquipment.power || null
+      power: insertEquipment.power || null,
+      isAvailable: insertEquipment.isAvailable ?? true
     };
     this.equipment.set(id, equipment);
     return equipment;

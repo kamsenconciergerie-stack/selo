@@ -68,7 +68,7 @@ export default function Contact() {
     {
       icon: Mail,
       title: "Email",
-      value: "contact@senegalequip.sn",
+      value: "contact@aywa.sn",
       description: "Réponse sous 24h",
     },
     {

@@ -1,8 +1,8 @@
-# SenegalEquip - Equipment Rental Platform
+# Aywa - Plateforme de Location d'Équipement
 
 ## Overview
 
-SenegalEquip is a full-stack web application for equipment rental services in Senegal. The platform allows users to browse, search, and book professional equipment for rent. It's built with a modern React frontend and Express.js backend, featuring a bilingual interface (French) targeting the Senegalese market.
+Aywa est une application web full-stack pour les services de location d'équipement au Sénégal. La plateforme permet aux utilisateurs de parcourir, rechercher et réserver des équipements professionnels en location. Elle est construite avec un frontend React moderne et un backend Express.js, proposant une interface en français ciblant le marché sénégalais.
 
 ## System Architecture
 
