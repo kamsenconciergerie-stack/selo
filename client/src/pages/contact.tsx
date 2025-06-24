@@ -62,13 +62,13 @@ export default function Contact() {
     {
       icon: Phone,
       title: "Téléphone",
-      value: "+221 33 XXX XXXX",
+      value: "+221 78 606 70 13",
       description: "Disponible 24h/7j",
     },
     {
       icon: Mail,
       title: "Email",
-      value: "contact@aywa.sn",
+      value: "aywa@aywa.com",
       description: "Réponse sous 24h",
     },
     {

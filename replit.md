@@ -104,3 +104,8 @@ Aywa est une application web full-stack pour les services de location d'équipem
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
+
+## Contact Information
+
+- Téléphone: +221 78 606 70 13
+- Email: aywa@aywa.com
