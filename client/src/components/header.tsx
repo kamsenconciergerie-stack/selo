@@ -31,11 +31,12 @@ export default function Header() {
             <div className="flex items-center bg-aywa-gradient rounded-lg p-2 mr-3">
               <Truck className="text-primary-orange h-6 w-6" />
             </div>
-            <div className="flex items-center">
+            <div className="flex flex-col">
               <span className="font-bold text-2xl">
                 <span className="text-aywa-blue">AY</span>
                 <span className="text-primary-orange">WA</span>
               </span>
+              <span className="text-xs text-gray-600 -mt-1">Puissance et confiance sur la route</span>
             </div>
           </Link>
           
