@@ -29,6 +29,8 @@ const bookingFormSchema = insertBookingSchema.extend({
 type BookingFormData = z.infer<typeof bookingFormSchema>;
 
 export default function BookingModal({ equipment, open, onOpenChange }: BookingModalProps) {
+  const [showPayment, setShowPayment] = useState(false);
+  const [createdBooking, setCreatedBooking] = useState<Booking | null>(null);
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -93,7 +95,8 @@ export default function BookingModal({ equipment, open, onOpenChange }: BookingM
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <>
+    <Dialog open={open && !showPayment} onOpenChange={handleCloseBooking}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold">

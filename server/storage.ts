@@ -90,9 +90,11 @@ export class DbStorage implements IStorage {
 export class MemStorage implements IStorage {
   private equipment: Map<number, Equipment>;
   private bookings: Map<number, Booking>;
+  private payments: Map<number, Payment>;
   private inquiries: Map<number, Inquiry>;
   private currentEquipmentId: number;
   private currentBookingId: number;
+  private currentPaymentId: number;
   private currentInquiryId: number;
 
   constructor() {

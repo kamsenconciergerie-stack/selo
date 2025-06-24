@@ -27,7 +27,22 @@ export const bookings = pgTable("bookings", {
   endDate: text("end_date").notNull(),
   totalPrice: integer("total_price").notNull(),
   status: text("status").notNull().default("pending"),
+  paymentMethod: text("payment_method"),
+  paymentStatus: text("payment_status").default("pending"),
+  paymentReference: text("payment_reference"),
   notes: text("notes"),
+});
+
+export const payments = pgTable("payments", {
+  id: serial("id").primaryKey(),
+  bookingId: integer("booking_id").notNull(),
+  amount: integer("amount").notNull(),
+  paymentMethod: text("payment_method").notNull(),
+  phoneNumber: text("phone_number").notNull(),
+  transactionId: text("transaction_id"),
+  status: text("status").notNull().default("pending"),
+  createdAt: text("created_at").notNull(),
+  updatedAt: text("updated_at").notNull(),
 });
 
 export const inquiries = pgTable("inquiries", {
@@ -48,6 +63,13 @@ export const insertEquipmentSchema = createInsertSchema(equipment).omit({
 export const insertBookingSchema = createInsertSchema(bookings).omit({
   id: true,
   status: true,
+  paymentStatus: true,
+});
+
+export const insertPaymentSchema = createInsertSchema(payments).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
 });
 
 export const insertInquirySchema = createInsertSchema(inquiries).omit({
@@ -59,5 +81,7 @@ export type Equipment = typeof equipment.$inferSelect;
 export type InsertEquipment = z.infer<typeof insertEquipmentSchema>;
 export type Booking = typeof bookings.$inferSelect;
 export type InsertBooking = z.infer<typeof insertBookingSchema>;
+export type Payment = typeof payments.$inferSelect;
+export type InsertPayment = z.infer<typeof insertPaymentSchema>;
 export type Inquiry = typeof inquiries.$inferSelect;
 export type InsertInquiry = z.infer<typeof insertInquirySchema>;
