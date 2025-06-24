@@ -119,10 +119,10 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-              Équipements Populaires
+              Équipements les Plus Demandés au Sénégal
             </h2>
             <p className="text-xl text-gray-600">
-              Les plus demandés par nos clients
+              Sélectionnés selon les besoins spécifiques du marché sénégalais
             </p>
           </div>
           
@@ -147,7 +147,12 @@ export default function Home() {
             </div>
           )}
           
-          <div className="text-center mt-12">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mt-12">
+            <Link href="/equipements-populaires">
+              <Button className="bg-primary-orange hover:bg-primary-orange/90 text-white px-8 py-3 text-lg">
+                Équipements les plus demandés
+              </Button>
+            </Link>
             <Link href="/equipements">
               <Button className="bg-aywa-blue hover:bg-aywa-blue/90 text-white px-8 py-3 text-lg">
                 Voir tous les équipements

@@ -48,7 +48,7 @@ export default function Footer() {
           <div>
             <h3 className="font-semibold text-white mb-4">Équipements</h3>
             <ul className="space-y-2">
-              <li><Link href="/equipements?category=Outils à Main" className="hover:text-primary-orange">Outils à main</Link></li>
+              <li><Link href="/equipements-populaires" className="hover:text-primary-orange">Plus demandés</Link></li>
               <li><Link href="/equipements?category=Engins de Chantier" className="hover:text-primary-orange">Engins de chantier</Link></li>
               <li><Link href="/equipements?category=Équipement Électrique" className="hover:text-primary-orange">Équipement électrique</Link></li>
               <li><Link href="/equipements?category=Sécurité & EPI" className="hover:text-primary-orange">Sécurité & EPI</Link></li>
