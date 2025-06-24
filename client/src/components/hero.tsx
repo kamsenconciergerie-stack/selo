@@ -1,0 +1,92 @@
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Search } from "lucide-react";
+import { useState } from "react";
+import { useLocation } from "wouter";
+import { CITIES } from "@/lib/constants";
+
+export default function Hero() {
+  const [, setLocation] = useLocation();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCity, setSelectedCity] = useState("");
+  const [startDate, setStartDate] = useState("");
+
+  const handleSearch = () => {
+    const params = new URLSearchParams();
+    if (searchQuery) params.append("search", searchQuery);
+    if (selectedCity) params.append("location", selectedCity);
+    
+    setLocation(`/equipements?${params.toString()}`);
+  };
+
+  return (
+    <section className="bg-blue-gradient text-white py-16 lg:py-24">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center">
+          <h1 className="text-4xl lg:text-6xl font-bold mb-6">
+            Location d'Équipement<br />
+            <span className="text-primary-orange">Professionnel</span> au Sénégal
+          </h1>
+          <p className="text-xl lg:text-2xl mb-8 text-blue-100">
+            Plus de 500 équipements disponibles dans tout le Sénégal
+          </p>
+          
+          <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-6">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Que cherchez-vous ?
+                </label>
+                <Input
+                  type="text"
+                  placeholder="Ex: Pelleteuse, Compresseur..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="text-gray-900"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Ville
+                </label>
+                <Select value={selectedCity} onValueChange={setSelectedCity}>
+                  <SelectTrigger className="text-gray-900">
+                    <SelectValue placeholder="Sélectionner une ville" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {CITIES.map((city) => (
+                      <SelectItem key={city} value={city}>
+                        {city}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Date de début
+                </label>
+                <Input
+                  type="date"
+                  value={startDate}
+                  onChange={(e) => setStartDate(e.target.value)}
+                  className="text-gray-900"
+                />
+              </div>
+              <div className="flex items-end">
+                <Button 
+                  onClick={handleSearch}
+                  className="w-full bg-primary-orange hover:bg-primary-orange/90 text-white font-semibold"
+                >
+                  <Search className="mr-2 h-4 w-4" />
+                  Rechercher
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
