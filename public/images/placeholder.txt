@@ -1,0 +1,26 @@
+# Dossier pour les images d'équipements Aywa
+
+Ce dossier contient les images des équipements de location.
+
+## Structure des noms de fichiers:
+- generateur-100kva.jpg - Générateur électrique 100 KVA
+- pelleteuse-20t.jpg - Pelleteuse hydraulique 20 tonnes
+- camion-citerne-10000l.jpg - Camion-citerne 10 000L
+- motopompe-haute-pression.jpg - Motopompe irrigation
+- compresseur-500l.jpg - Compresseur 500L
+- echafaudage-mobile.jpg - Échafaudage aluminium mobile
+- compresseur-air-500l.jpg - Compresseur d'air 500L
+- chargeuse-pneus.jpg - Chargeuse sur pneus
+- betonniere-350l.jpg - Bétonnière 350L
+- foreuse-eau-mobile.jpg - Foreuse à eau mobile
+- camion-grue-25t.jpg - Camion grue 25 tonnes
+- generateur-solaire-50kva.jpg - Générateur solaire 50 KVA
+- tracteur-agricole-85cv.jpg - Tracteur agricole 85 CV
+- sonorisation-5000w.jpg - Système sonorisation 5000W
+- station-lavage-mobile.jpg - Station lavage mobile
+
+## Instructions:
+1. Téléchargez les vraies photos de vos équipements
+2. Renommez-les selon les noms ci-dessus
+3. Placez-les dans ce dossier /public/images/
+4. Les images seront automatiquement servies par l'application

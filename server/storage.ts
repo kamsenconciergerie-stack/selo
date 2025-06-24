@@ -309,4 +309,5 @@ export class MemStorage implements IStorage {
   }
 }
 
-export const storage = new MemStorage();
+// Utiliser la base de données PostgreSQL au lieu du stockage en mémoire
+export const storage = new DbStorage();
