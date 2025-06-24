@@ -53,13 +53,13 @@ export default function BookingModal({ equipment, open, onOpenChange }: BookingM
       const response = await apiRequest("POST", "/api/bookings", data);
       return response.json();
     },
-    onSuccess: () => {
+    onSuccess: (booking) => {
       toast({
         title: "Réservation créée",
-        description: "Votre demande de réservation a été envoyée avec succès.",
+        description: "Procédez maintenant au paiement pour confirmer votre réservation.",
       });
-      onOpenChange(false);
-      form.reset();
+      setCreatedBooking(booking);
+      setShowPayment(true);
       queryClient.invalidateQueries({ queryKey: ["/api/equipment"] });
     },
     onError: () => {

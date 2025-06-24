@@ -1,5 +1,5 @@
-import { Equipment, Booking, Inquiry, InsertEquipment, InsertBooking, InsertInquiry } from "@shared/schema";
-import { equipment, bookings, inquiries } from "../shared/schema";
+import { Equipment, Booking, Payment, Inquiry, InsertEquipment, InsertBooking, InsertPayment, InsertInquiry } from "@shared/schema";
+import { equipment, bookings, payments, inquiries } from "../shared/schema";
 import { eq, ilike, or } from "drizzle-orm";
 import { db } from "../shared/db";
 
@@ -73,6 +73,42 @@ export class DbStorage implements IStorage {
     return result[0];
   }
 
+  async updateBookingPaymentStatus(bookingId: number, paymentStatus: string, paymentReference?: string): Promise<void> {
+    await db.update(bookings)
+      .set({ 
+        paymentStatus, 
+        paymentReference,
+        status: paymentStatus === 'completed' ? 'confirmed' : 'pending'
+      })
+      .where(eq(bookings.id, bookingId));
+  }
+
+  async createPayment(paymentData: InsertPayment): Promise<Payment> {
+    const now = new Date().toISOString();
+    const [payment] = await db.insert(payments).values({
+      ...paymentData,
+      createdAt: now,
+      updatedAt: now
+    }).returning();
+    return payment;
+  }
+
+  async getPaymentByBookingId(bookingId: number): Promise<Payment | undefined> {
+    const result = await db.select().from(payments).where(eq(payments.bookingId, bookingId));
+    return result[0];
+  }
+
+  async updatePaymentStatus(paymentId: number, status: string, transactionId?: string): Promise<void> {
+    const updateData: any = { 
+      status, 
+      updatedAt: new Date().toISOString() 
+    };
+    if (transactionId) {
+      updateData.transactionId = transactionId;
+    }
+    await db.update(payments).set(updateData).where(eq(payments.id, paymentId));
+  }
+
   async getBookingsByEquipment(equipmentId: number): Promise<Booking[]> {
     return await db.select().from(bookings).where(eq(bookings.equipmentId, equipmentId));
   }
@@ -100,9 +136,11 @@ export class MemStorage implements IStorage {
   constructor() {
     this.equipment = new Map();
     this.bookings = new Map();
+    this.payments = new Map();
     this.inquiries = new Map();
     this.currentEquipmentId = 1;
     this.currentBookingId = 1;
+    this.currentPaymentId = 1;
     this.currentInquiryId = 1;
     
     // Initialize with sample equipment data for Senegal

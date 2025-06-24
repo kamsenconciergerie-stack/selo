@@ -104,6 +104,7 @@ Aywa est une application web full-stack pour les services de location d'équipem
 - June 24, 2025. Ajout puis suppression du slogan sur demande utilisateur
 - June 24, 2025. Documentation application mobile React Native
 - June 24, 2025. Application web déployée et prête en production
+- June 24, 2025. Intégration paiements mobiles Orange Money et Wave
 
 ## User Preferences
 
