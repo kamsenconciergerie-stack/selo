@@ -1,8 +1,9 @@
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, Phone, Wrench } from "lucide-react";
+import { Menu, Phone, Truck } from "lucide-react";
 import { useState } from "react";
+import logoPath from "@assets/Screenshot_20250624_164242_Canva_1750783591400.jpg";
 
 export default function Header() {
   const [location] = useLocation();
@@ -25,8 +26,15 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <Link href="/" className="flex items-center">
-            <Wrench className="text-primary-orange h-8 w-8 mr-2" />
-            <span className="font-bold text-xl text-gray-900">SenegalEquip</span>
+            <div className="flex items-center bg-aywa-gradient rounded-lg p-2 mr-3">
+              <Truck className="text-primary-orange h-6 w-6" />
+            </div>
+            <div className="flex items-center">
+              <span className="font-bold text-2xl">
+                <span className="text-aywa-blue">AY</span>
+                <span className="text-primary-orange">WA</span>
+              </span>
+            </div>
           </Link>
           
           <nav className="hidden md:flex space-x-8">

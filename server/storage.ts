@@ -149,14 +149,26 @@ export class MemStorage implements IStorage {
 
   async createEquipment(insertEquipment: InsertEquipment): Promise<Equipment> {
     const id = this.currentEquipmentId++;
-    const equipment: Equipment = { ...insertEquipment, id };
+    const equipment: Equipment = { 
+      ...insertEquipment, 
+      id,
+      specifications: insertEquipment.specifications || null,
+      weight: insertEquipment.weight || null,
+      fuelType: insertEquipment.fuelType || null,
+      power: insertEquipment.power || null
+    };
     this.equipment.set(id, equipment);
     return equipment;
   }
 
   async createBooking(insertBooking: InsertBooking): Promise<Booking> {
     const id = this.currentBookingId++;
-    const booking: Booking = { ...insertBooking, id, status: "pending" };
+    const booking: Booking = { 
+      ...insertBooking, 
+      id, 
+      status: "pending",
+      notes: insertBooking.notes || null
+    };
     this.bookings.set(id, booking);
     return booking;
   }
@@ -170,7 +182,8 @@ export class MemStorage implements IStorage {
     const inquiry: Inquiry = { 
       ...insertInquiry, 
       id, 
-      createdAt: new Date().toISOString() 
+      createdAt: new Date().toISOString(),
+      equipmentCategory: insertInquiry.equipmentCategory || null
     };
     this.inquiries.set(id, inquiry);
     return inquiry;

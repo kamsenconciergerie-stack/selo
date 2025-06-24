@@ -67,13 +67,13 @@ export default function EquipmentPage() {
       <Header />
       
       {/* Hero Section */}
-      <section className="bg-blue-gradient text-white py-12">
+      <section className="bg-hero-gradient text-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-4xl lg:text-5xl font-bold mb-4">
               Notre Catalogue d'Équipements
             </h1>
-            <p className="text-xl text-blue-100">
+            <p className="text-xl text-orange-100">
               Découvrez notre large gamme d'équipements professionnels
             </p>
           </div>

@@ -1,15 +1,20 @@
-import { Wrench } from "lucide-react";
+import { Truck } from "lucide-react";
 import { Link } from "wouter";
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-800 text-gray-300 py-12">
+    <footer className="bg-aywa-blue text-gray-300 py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
             <div className="flex items-center mb-4">
-              <Wrench className="text-primary-orange h-8 w-8 mr-2" />
-              <span className="font-bold text-xl text-white">SenegalEquip</span>
+              <div className="flex items-center bg-primary-orange rounded-lg p-2 mr-3">
+                <Truck className="text-white h-6 w-6" />
+              </div>
+              <span className="font-bold text-2xl">
+                <span className="text-white">AY</span>
+                <span className="text-primary-orange">WA</span>
+              </span>
             </div>
             <p className="text-gray-400 mb-4">
               Votre partenaire de confiance pour la location d'équipement professionnel au Sénégal.
