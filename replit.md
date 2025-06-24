@@ -97,6 +97,9 @@ Aywa est une application web full-stack pour les services de location d'équipem
 ## Changelog
 
 - June 24, 2025. Initial setup
+- June 24, 2025. Transformation en plateforme Aywa avec branding et équipements adaptés au Sénégal
+- June 24, 2025. Ajout pages Services, À Propos, Équipements Populaires
+- June 24, 2025. Création base de données MySQL complète pour le business
 
 ## User Preferences
 
