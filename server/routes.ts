@@ -93,6 +93,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Register payment routes
+  registerPaymentRoutes(app);
+
   const httpServer = createServer(app);
   return httpServer;
 }

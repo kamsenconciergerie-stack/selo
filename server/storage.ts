@@ -397,6 +397,9 @@ export class MemStorage implements IStorage {
       ...insertBooking, 
       id, 
       status: "pending",
+      paymentMethod: null,
+      paymentStatus: "pending",
+      paymentReference: null,
       notes: insertBooking.notes || null
     };
     this.bookings.set(id, booking);
@@ -405,6 +408,45 @@ export class MemStorage implements IStorage {
 
   async getBookingsByEquipment(equipmentId: number): Promise<Booking[]> {
     return Array.from(this.bookings.values()).filter(b => b.equipmentId === equipmentId);
+  }
+
+  async updateBookingPaymentStatus(bookingId: number, paymentStatus: string, paymentReference?: string): Promise<void> {
+    const booking = this.bookings.get(bookingId);
+    if (booking) {
+      booking.paymentStatus = paymentStatus;
+      booking.paymentReference = paymentReference || null;
+      booking.status = paymentStatus === 'completed' ? 'confirmed' : 'pending';
+      this.bookings.set(bookingId, booking);
+    }
+  }
+
+  async createPayment(paymentData: InsertPayment): Promise<Payment> {
+    this.currentPaymentId++;
+    const now = new Date().toISOString();
+    const payment: Payment = {
+      id: this.currentPaymentId,
+      ...paymentData,
+      createdAt: now,
+      updatedAt: now
+    };
+    this.payments.set(this.currentPaymentId, payment);
+    return payment;
+  }
+
+  async getPaymentByBookingId(bookingId: number): Promise<Payment | undefined> {
+    return Array.from(this.payments.values()).find(payment => payment.bookingId === bookingId);
+  }
+
+  async updatePaymentStatus(paymentId: number, status: string, transactionId?: string): Promise<void> {
+    const payment = this.payments.get(paymentId);
+    if (payment) {
+      payment.status = status;
+      payment.updatedAt = new Date().toISOString();
+      if (transactionId) {
+        payment.transactionId = transactionId;
+      }
+      this.payments.set(paymentId, payment);
+    }
   }
 
   async createInquiry(insertInquiry: InsertInquiry): Promise<Inquiry> {
