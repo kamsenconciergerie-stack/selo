@@ -4,28 +4,28 @@
 
 :root {
   --background: hsl(0, 0%, 100%);
-  --foreground: hsl(20, 14.3%, 4.1%);
+  --foreground: hsl(216, 50%, 16%);
   --muted: hsl(60, 4.8%, 95.9%);
   --muted-foreground: hsl(25, 5.3%, 44.7%);
   --popover: hsl(0, 0%, 100%);
-  --popover-foreground: hsl(20, 14.3%, 4.1%);
+  --popover-foreground: hsl(216, 50%, 16%);
   --card: hsl(0, 0%, 100%);
-  --card-foreground: hsl(20, 14.3%, 4.1%);
+  --card-foreground: hsl(216, 50%, 16%);
   --border: hsl(20, 5.9%, 90%);
   --input: hsl(20, 5.9%, 90%);
-  --primary: hsl(20, 91%, 58%);
+  --primary: hsl(26, 100%, 60%);
   --primary-foreground: hsl(0, 0%, 100%);
-  --secondary: hsl(60, 4.8%, 95.9%);
-  --secondary-foreground: hsl(24, 9.8%, 10%);
+  --secondary: hsl(216, 50%, 16%);
+  --secondary-foreground: hsl(0, 0%, 100%);
   --accent: hsl(60, 4.8%, 95.9%);
   --accent-foreground: hsl(24, 9.8%, 10%);
   --destructive: hsl(0, 84.2%, 60.2%);
   --destructive-foreground: hsl(60, 9.1%, 97.8%);
-  --ring: hsl(20, 14.3%, 4.1%);
+  --ring: hsl(216, 50%, 16%);
   --radius: 0.5rem;
-  --blue-600: hsl(213, 94%, 68%);
-  --blue-700: hsl(213, 94%, 58%);
-  --blue-800: hsl(213, 94%, 48%);
+  --aywa-blue: hsl(216, 50%, 16%);
+  --aywa-orange: hsl(26, 100%, 60%);
+  --aywa-blue-light: hsl(216, 50%, 25%);
 }
 
 .dark {
@@ -64,26 +64,30 @@
 
 @layer utilities {
   .text-primary-orange {
-    color: hsl(20, 91%, 58%);
+    color: hsl(26, 100%, 60%);
   }
   
   .bg-primary-orange {
-    background-color: hsl(20, 91%, 58%);
+    background-color: hsl(26, 100%, 60%);
   }
   
   .hover\:bg-primary-orange:hover {
-    background-color: hsl(20, 91%, 48%);
+    background-color: hsl(26, 100%, 55%);
   }
   
-  .text-blue-custom {
-    color: hsl(213, 94%, 58%);
+  .text-aywa-blue {
+    color: hsl(216, 50%, 16%);
   }
   
-  .bg-blue-custom {
-    background-color: hsl(213, 94%, 58%);
+  .bg-aywa-blue {
+    background-color: hsl(216, 50%, 16%);
   }
   
-  .bg-blue-gradient {
-    background: linear-gradient(to right, hsl(213, 94%, 58%), hsl(213, 94%, 48%));
+  .bg-aywa-gradient {
+    background: linear-gradient(135deg, hsl(216, 50%, 16%) 0%, hsl(216, 50%, 25%) 100%);
+  }
+  
+  .bg-hero-gradient {
+    background: linear-gradient(135deg, hsl(216, 50%, 16%) 0%, hsl(216, 50%, 25%) 50%, hsl(26, 100%, 60%) 100%);
   }
 }
