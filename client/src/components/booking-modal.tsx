@@ -94,6 +94,18 @@ export default function BookingModal({ equipment, open, onOpenChange }: BookingM
     return equipment.pricePerDay;
   };
 
+  const handleCloseBooking = () => {
+    onOpenChange(false);
+    form.reset();
+    setCreatedBooking(null);
+    setShowPayment(false);
+  };
+
+  const handlePaymentClose = () => {
+    setShowPayment(false);
+    handleCloseBooking();
+  };
+
   return (
     <>
     <Dialog open={open && !showPayment} onOpenChange={handleCloseBooking}>
@@ -246,5 +258,15 @@ export default function BookingModal({ equipment, open, onOpenChange }: BookingM
         </div>
       </DialogContent>
     </Dialog>
+    
+    {/* Payment Modal */}
+    {createdBooking && (
+      <PaymentModal
+        booking={createdBooking}
+        open={showPayment}
+        onOpenChange={handlePaymentClose}
+      />
+    )}
+    </>
   );
 }
