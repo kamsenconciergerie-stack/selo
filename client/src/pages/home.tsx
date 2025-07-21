@@ -152,7 +152,7 @@ export default function Home() {
               Les Plus Populaires
             </h2>
             <p className="text-xl text-gray-600">
-              Groupes électrogènes, marteaux-piqueurs, compresseurs et équipements essentiels
+              Tracteurs, charrues, camions benne, motopompes et équipements agricoles les plus demandés
             </p>
           </div>
           
@@ -177,12 +177,7 @@ export default function Home() {
             </div>
           )}
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mt-12">
-            <Link href="/equipements-populaires">
-              <Button className="bg-primary-orange hover:bg-primary-orange/90 text-white px-8 py-3 text-lg">
-                Les plus populaires
-              </Button>
-            </Link>
+          <div className="flex justify-center mt-12">
             <Link href="/equipements">
               <Button className="bg-aywa-blue hover:bg-aywa-blue/90 text-white px-8 py-3 text-lg">
                 Voir tous les équipements
