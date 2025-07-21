@@ -16,28 +16,47 @@ export default function Home() {
     queryKey: ["/api/equipment"],
   });
 
-  // Most demanded equipment in Senegal - prioritize these categories
-  const popularEquipmentNames = [
-    "Tracteur 75 CV",
-    "Tracteur 90 CV", 
-    "Charrue 2 socs",
-    "Charrue 3 socs",
-    "Motopompe thermique",
-    "Camion benne 20 T",
-    "Camion benne 30 T",
-    "Pulvérisateur motorisé",
-    "Semoir mécanique",
-    "Billonneuse",
-    "Camion plateau 10 T",
-    "Camion plateau 20 T",
-    "Pick-up 4x4 double cabine",
-    "Décortiqueuse à riz",
-    "Décortiqueuse à arachide"
-  ];
+  // Most demanded equipment in Senegal - exact popular equipment list
+  const getPopularEquipment = () => {
+    const popularCategories = [
+      // Tracteur 75–90 CV
+      { names: ["Tracteur 75 CV", "Tracteur 90 CV"], displayName: "Tracteur 75–90 CV" },
+      // Charrue 2–3 socs  
+      { names: ["Charrue 2 socs", "Charrue 3 socs"], displayName: "Charrue 2–3 socs" },
+      // Motopompe thermique
+      { names: ["Motopompe thermique"], displayName: "Motopompe thermique" },
+      // Camion benne 20–30 T
+      { names: ["Camion benne 20 T", "Camion benne 30 T"], displayName: "Camion benne 20–30 T" },
+      // Pulvérisateur motorisé
+      { names: ["Pulvérisateur motorisé"], displayName: "Pulvérisateur motorisé" },
+      // Semoir mécanique
+      { names: ["Semoir mécanique"], displayName: "Semoir mécanique" },
+      // Billonneuse / butteuse
+      { names: ["Billonneuse", "Butteuse"], displayName: "Billonneuse / butteuse" },
+      // Camion plateau 10–20 T
+      { names: ["Camion plateau 10 T", "Camion plateau 20 T"], displayName: "Camion plateau 10–20 T" },
+      // Pick-up 4x4 double cabine
+      { names: ["Pick-up 4x4 double cabine"], displayName: "Pick-up 4x4 double cabine" },
+      // Décortiqueuse (riz, arachide)
+      { names: ["Décortiqueuse à riz", "Décortiqueuse à arachide"], displayName: "Décortiqueuse (riz, arachide)" }
+    ];
+
+    const popularEquipment = [];
+    
+    for (const category of popularCategories) {
+      // Find first available equipment from each category
+      const foundEquipment = equipment.find(eq => 
+        category.names.some(name => eq.name === name)
+      );
+      if (foundEquipment) {
+        popularEquipment.push(foundEquipment);
+      }
+    }
+    
+    return popularEquipment;
+  };
   
-  const featuredEquipment = equipment.filter(eq => 
-    popularEquipmentNames.some(name => eq.name === name)
-  ).slice(0, 6);
+  const featuredEquipment = getPopularEquipment();
 
   const categories = [
     {
@@ -157,8 +176,8 @@ export default function Home() {
           </div>
           
           {isLoading ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {[1, 2, 3].map((i) => (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => (
                 <Card key={i} className="animate-pulse">
                   <div className="h-48 bg-gray-300"></div>
                   <CardContent className="p-6">
@@ -170,7 +189,7 @@ export default function Home() {
               ))}
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
               {featuredEquipment.map((item) => (
                 <EquipmentCard key={item.id} equipment={item} />
               ))}
