@@ -9,7 +9,7 @@ import EquipmentDetail from "@/pages/equipment-detail";
 import Contact from "@/pages/contact";
 import Services from "@/pages/services";
 import About from "@/pages/about";
-import PopularEquipment from "@/pages/popular-equipment";
+import EquipementsPopulaires from "@/pages/equipements-populaires";
 import QuoteRequest from "@/pages/quote-request";
 import SimpleAdmin from "@/pages/simple-admin";
 import NotFound from "@/pages/not-found";
@@ -20,7 +20,7 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/equipements" component={Equipment} />
       <Route path="/equipements/:id" component={EquipmentDetail} />
-      <Route path="/equipements-populaires" component={PopularEquipment} />
+      <Route path="/equipements-populaires" component={EquipementsPopulaires} />
       <Route path="/services" component={Services} />
       <Route path="/a-propos" component={About} />
       <Route path="/contact" component={Contact} />
