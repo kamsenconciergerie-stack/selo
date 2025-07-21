@@ -124,6 +124,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
+      <Hero />
       
       {/* Bannière Promo Magal de Touba 2025 - Version Créative */}
       <div className="relative overflow-hidden bg-gradient-to-br from-amber-100 via-orange-50 to-yellow-50 py-6 px-4 shadow-2xl border-b-4 border-amber-400">
@@ -217,8 +218,6 @@ export default function Home() {
         <div className="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-amber-400 via-orange-400 to-yellow-400 shadow-lg"></div>
       </div>
 
-      <Hero />
-      
       {/* Equipment Categories */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
