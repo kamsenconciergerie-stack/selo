@@ -9,7 +9,7 @@ export default function Services() {
   const services = [
     {
       icon: Package,
-      title: "📦 Envoi de Colis",
+      title: "📦 Envois de Colis",
       description: "Service d'envoi et de livraison de colis dans tout le Sénégal avec nos véhicules professionnels",
       features: [
         "Livraison rapide 24-48h",
@@ -22,7 +22,7 @@ export default function Services() {
     },
     {
       icon: Truck,
-      title: "🚛 Location de Camions",
+      title: "🚛 Location de Camion",
       description: "Location de camions porteurs, semi-remorques et camions bennes pour tous vos besoins de transport",
       features: [
         "Camions de 3.5T à 40T",
@@ -35,7 +35,7 @@ export default function Services() {
     },
     {
       icon: Car,
-      title: "🛻 Fourgonnettes et Utilitaires",
+      title: "🛻 Fourgonnettes et Location d'Utilitaires",
       description: "Location de fourgons Renault Master, Mercedes Sprinter et véhicules utilitaires pour professionnels",
       features: [
         "Véhicules récents et entretenus",
@@ -45,32 +45,6 @@ export default function Services() {
       ],
       bgColor: "bg-orange-100",
       iconColor: "text-primary-orange"
-    },
-    {
-      icon: Wrench,
-      title: "🔧 Location d'Équipements",
-      description: "Large gamme d'équipements professionnels disponibles à la location pour tous vos projets",
-      features: [
-        "Équipements certifiés et entretenus",
-        "Livraison et récupération incluses",
-        "Support technique 24/7",
-        "Tarifs compétitifs"
-      ],
-      bgColor: "bg-purple-100",
-      iconColor: "text-purple-600"
-    },
-    {
-      icon: Headphones,
-      title: "📞 Support 24/7",
-      description: "Assistance technique et commerciale disponible à tout moment",
-      features: [
-        "Ligne d'urgence 24h/24",
-        "Chat en ligne",
-        "Support technique spécialisé",
-        "Suivi de commande en temps réel"
-      ],
-      bgColor: "bg-indigo-100",
-      iconColor: "text-indigo-600"
     }
   ];
 
@@ -111,7 +85,7 @@ export default function Services() {
       {/* Services Grid */}
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {services.map((service) => {
               const Icon = service.icon;
               return (

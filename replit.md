@@ -119,6 +119,8 @@ Aywa est une application web full-stack pour les services de location d'équipem
 - January 21, 2025. Service SMS pour notifications via Orange/Tigo
 - January 21, 2025. Dashboard utilisateur avec gestion réservations et avis
 - January 21, 2025. Mise en avant des camions avec 4 catégories principales
+- January 21, 2025. Simplification page services avec 3 services principaux
+- January 21, 2025. Mise à jour page À Propos avec nouveau contenu et contact
 
 ## User Preferences
 
