@@ -38,9 +38,19 @@ app.use((req, res, next) => {
 });
 
 (async () => {
-  // Serve static files for uploads and images
+  // Serve static files for uploads and images with cache-busting
   app.use('/uploads', express.static('uploads'));
-  app.use('/images', express.static('public/images'));
+  app.use('/images', express.static('public/images', {
+    etag: false,
+    lastModified: false,
+    setHeaders: (res, path) => {
+      if (path.endsWith('.svg')) {
+        res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+        res.setHeader('Pragma', 'no-cache');
+        res.setHeader('Expires', '0');
+      }
+    }
+  }));
   
   const server = await registerRoutes(app);
 
