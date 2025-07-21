@@ -769,6 +769,63 @@ ${validatedData.message}`
     }
   });
 
+  // Admin partners routes
+  app.get("/api/admin/partners", async (req, res) => {
+    try {
+      const partners = await storage.getAllPartners();
+      res.json(partners);
+    } catch (error) {
+      console.error("Error fetching partners:", error);
+      res.status(500).json({ message: "Failed to fetch partners" });
+    }
+  });
+
+  app.get("/api/admin/partners/stats", async (req, res) => {
+    try {
+      const partners = await storage.getAllPartners();
+      const stats = {
+        totalPartners: partners.length,
+        verifiedPartners: partners.filter((p: any) => p.verificationStatus === 'verified').length,
+        pendingVerification: partners.filter((p: any) => p.verificationStatus === 'pending').length,
+        totalRevenue: partners.reduce((sum: number, p: any) => sum + (p.totalRevenue || 0), 0),
+        averageRating: partners.length > 0 ? 
+          partners.reduce((sum: number, p: any) => sum + (p.rating || 0), 0) / partners.length : 0
+      };
+      res.json(stats);
+    } catch (error) {
+      console.error("Error fetching partner stats:", error);
+      res.status(500).json({ message: "Failed to fetch partner stats" });
+    }
+  });
+
+  app.put("/api/admin/partners/:id/verify", async (req, res) => {
+    try {
+      const partnerId = parseInt(req.params.id);
+      const { verificationStatus } = req.body;
+      
+      const updatedPartner = await storage.updatePartner(partnerId, {
+        verificationStatus,
+        updatedAt: new Date().toISOString()
+      });
+      
+      res.json(updatedPartner);
+    } catch (error) {
+      console.error("Error updating partner:", error);
+      res.status(500).json({ message: "Failed to update partner" });
+    }
+  });
+
+  app.delete("/api/admin/partners/:id", async (req, res) => {
+    try {
+      const partnerId = parseInt(req.params.id);
+      await storage.deletePartner(partnerId);
+      res.json({ message: "Partner deleted successfully" });
+    } catch (error) {
+      console.error("Error deleting partner:", error);
+      res.status(500).json({ message: "Failed to delete partner" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

@@ -740,6 +740,50 @@ export class DbStorage implements IStorage {
     const result = await db.select().from(commercialManagers).where(eq(commercialManagers.id, id));
     return result[0];
   }
+
+  // Partner operations
+  async getAllPartners(): Promise<any[]> {
+    try {
+      return await db.select().from(partners);
+    } catch (error) {
+      console.error('Error fetching partners:', error);
+      return [];
+    }
+  }
+
+  async getPartnerById(id: number): Promise<any | undefined> {
+    try {
+      const [partner] = await db.select().from(partners).where(eq(partners.id, id));
+      return partner;
+    } catch (error) {
+      console.error('Error fetching partner:', error);
+      return undefined;
+    }
+  }
+
+  async updatePartner(id: number, updates: any): Promise<any> {
+    try {
+      const [updated] = await db
+        .update(partners)
+        .set({ ...updates, updatedAt: new Date() })
+        .where(eq(partners.id, id))
+        .returning();
+      return updated;
+    } catch (error) {
+      console.error('Error updating partner:', error);
+      throw error;
+    }
+  }
+
+  async deletePartner(id: number): Promise<boolean> {
+    try {
+      await db.delete(partners).where(eq(partners.id, id));
+      return true;
+    } catch (error) {
+      console.error('Error deleting partner:', error);
+      return false;
+    }
+  }
 }
 
 export class MemStorage implements IStorage {

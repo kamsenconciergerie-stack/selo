@@ -423,6 +423,31 @@ function AdminDashboardContent() {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
+                  <Users className="h-5 w-5" />
+                  Réseau de Partenaires
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <PartnersSummary />
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Partenaires récents</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <RecentPartners />
+              </CardContent>
+            </Card>
+          </div>
+        </TabsContent>
+
+        <TabsContent value="settings" className="space-y-6">
+          <div className="grid grid-cols-1 gap-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
                   <BarChart3 className="h-5 w-5" />
                   Répartition par Statut
                 </CardTitle>
