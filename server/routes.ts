@@ -826,6 +826,115 @@ ${validatedData.message}`
     }
   });
 
+  // Partners routes
+  app.get("/api/partners", async (req, res) => {
+    try {
+      const partners = await storage.getAllPartners();
+      res.json(partners);
+    } catch (error) {
+      console.error("Error fetching partners:", error);
+      res.status(500).json({ message: "Failed to fetch partners" });
+    }
+  });
+
+  // Partner authentication
+  app.post("/api/partners/login", async (req, res) => {
+    try {
+      const { email, password } = req.body;
+      
+      // Mock authentication for demo - replace with real authentication
+      const demoPartners = [
+        { id: 1, email: "contact@transportexpress.sn", password: "partner123", companyName: "Transport Express Dakar" },
+        { id: 2, email: "info@logisticspro.sn", password: "partner123", companyName: "Logistics Pro Sénégal" },
+        { id: 3, email: "contact@camionsdusud.sn", password: "partner123", companyName: "Camions du Sud" }
+      ];
+
+      const partner = demoPartners.find(p => p.email === email && p.password === password);
+      
+      if (partner) {
+        res.json({ 
+          success: true, 
+          partnerId: partner.id,
+          companyName: partner.companyName,
+          token: `token_${partner.id}`
+        });
+      } else {
+        res.status(401).json({ success: false, message: "Invalid credentials" });
+      }
+    } catch (error) {
+      console.error("Partner login error:", error);
+      res.status(500).json({ success: false, message: "Login failed" });
+    }
+  });
+
+  // Partner bookings
+  app.get("/api/partners/:partnerId/bookings", async (req, res) => {
+    try {
+      const { partnerId } = req.params;
+      
+      // Mock partner bookings data - replace with actual database query
+      const mockBookings = [
+        {
+          id: 1,
+          customerName: "Amadou Ba",
+          customerEmail: "amadou.ba@email.com",
+          customerPhone: "+221 77 234 56 78",
+          equipmentId: 1,
+          equipmentName: "Camion benne 15T",
+          startDate: "2025-01-22T08:00:00Z",
+          endDate: "2025-01-25T18:00:00Z",
+          totalPrice: 180000,
+          status: "confirmed",
+          createdAt: "2025-01-20T10:30:00Z",
+          paymentStatus: "paid"
+        },
+        {
+          id: 2,
+          customerName: "Fatou Diop",
+          customerEmail: "fatou.diop@entreprise.sn",
+          customerPhone: "+221 76 345 67 89",
+          equipmentId: 2,
+          equipmentName: "Camion porteur 8T",
+          startDate: "2025-01-23T09:00:00Z",
+          endDate: "2025-01-24T17:00:00Z",
+          totalPrice: 95000,
+          status: "in_progress",
+          createdAt: "2025-01-19T14:15:00Z",
+          paymentStatus: "paid"
+        }
+      ];
+      
+      res.json(mockBookings);
+    } catch (error) {
+      console.error("Error fetching partner bookings:", error);
+      res.status(500).json({ message: "Failed to fetch bookings" });
+    }
+  });
+
+  // Partner statistics
+  app.get("/api/partners/:partnerId/stats", async (req, res) => {
+    try {
+      const { partnerId } = req.params;
+      
+      // Mock partner stats - replace with actual calculations
+      const mockStats = {
+        totalBookings: 156,
+        activeBookings: 8,
+        completedBookings: 142,
+        totalRevenue: 12500000,
+        monthlyRevenue: 2100000,
+        averageRating: 4.8,
+        totalReviews: 89,
+        equipmentCount: 25
+      };
+      
+      res.json(mockStats);
+    } catch (error) {
+      console.error("Error fetching partner stats:", error);
+      res.status(500).json({ message: "Failed to fetch stats" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

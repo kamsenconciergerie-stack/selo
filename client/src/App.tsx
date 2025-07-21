@@ -20,6 +20,8 @@ import AdminEquipment from "@/pages/admin-equipment";
 import AdminNotifications from "@/pages/admin-notifications";
 import AdminPartners from "@/pages/admin-partners";
 import AdminPartnersAnalytics from "@/pages/admin-partners-analytics";
+import PartnerLogin from "@/pages/partner-login";
+import PartnerDashboard from "@/pages/partner-dashboard";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -41,6 +43,8 @@ function Router() {
       <Route path="/admin/notifications" component={AdminNotifications} />
       <Route path="/admin/partners" component={AdminPartners} />
       <Route path="/admin/partners/analytics" component={AdminPartnersAnalytics} />
+      <Route path="/adminpartners" component={PartnerLogin} />
+      <Route path="/adminpartners/dashboard" component={PartnerDashboard} />
       <Route path="/adminone" component={AdminDashboardComplete} />
       <Route component={NotFound} />
     </Switch>
