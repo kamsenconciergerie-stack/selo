@@ -96,6 +96,10 @@ export interface IStorage {
   getUserPaymentHistory(userId: number): Promise<Payment[]>;
   getPersonalizedRecommendations(userId: number): Promise<Equipment[]>;
   
+  // Admin methods
+  getAllBookings(): Promise<Booking[]>;
+  deleteBooking(bookingId: number): Promise<boolean>;
+  
   // Review methods
   createReview(review: InsertReview): Promise<Review>;
   getReviewsByEquipment(equipmentId: number): Promise<Review[]>;
@@ -634,6 +638,7 @@ export class MemStorage implements IStorage {
     // Initialize with sample equipment data for Senegal
     this.initializeData();
     this.initializeCommercialManagers();
+    this.initializeSampleBookings();
   }
 
   private initializeCommercialManagers() {
@@ -1395,6 +1400,98 @@ export class MemStorage implements IStorage {
     }
     
     return Array.from(this.equipment.values()).slice(0, 6);
+  }
+
+  // Admin methods
+  async getAllBookings(): Promise<Booking[]> {
+    return Array.from(this.bookings.values());
+  }
+
+  async deleteBooking(bookingId: number): Promise<boolean> {
+    return this.bookings.delete(bookingId);
+  }
+
+  private initializeSampleBookings() {
+    const sampleBookings = [
+      {
+        equipmentId: 1, // Camion benne 15 T
+        customerName: "Amadou Ba",
+        customerEmail: "amadou.ba@gmail.com", 
+        customerPhone: "+221 77 123 45 67",
+        startDate: "2025-01-25",
+        endDate: "2025-01-27",
+        totalPrice: 370000, // 2 jours * 185000
+        status: "confirmed" as const,
+        paymentStatus: "completed",
+        notes: "Transport de sable pour construction",
+        createdAt: new Date().toISOString()
+      },
+      {
+        equipmentId: 5, // Tracteur 75 CV
+        customerName: "Fatou Diop",
+        customerEmail: "fatou.diop@yahoo.fr",
+        customerPhone: "+221 76 234 56 78", 
+        startDate: "2025-01-28",
+        endDate: "2025-01-30",
+        totalPrice: 180000, // 2 jours * 90000
+        status: "pending" as const,
+        paymentStatus: "pending",
+        notes: "Labour des champs d'arachide",
+        createdAt: new Date().toISOString()
+      },
+      {
+        equipmentId: 10, // Motopompe thermique
+        customerName: "Ousmane Sow",
+        customerEmail: "ousmane.sow@hotmail.com",
+        customerPhone: "+221 78 345 67 89",
+        startDate: "2025-01-22",
+        endDate: "2025-01-24", 
+        totalPrice: 45000, // 3 jours * 15000
+        status: "completed" as const,
+        paymentStatus: "completed",
+        notes: "Irrigation des rizières",
+        createdAt: new Date("2025-01-20").toISOString()
+      },
+      {
+        equipmentId: 2, // Camion benne 20 T
+        customerName: "Maimouna Kane",
+        customerEmail: "maimouna.kane@gmail.com",
+        customerPhone: "+221 70 456 78 90",
+        startDate: "2025-02-01",
+        endDate: "2025-02-03",
+        totalPrice: 462000, // 2 jours * 231000
+        status: "pending" as const,
+        paymentStatus: "pending",
+        notes: "Transport de matériaux de construction",
+        createdAt: new Date().toISOString()
+      },
+      {
+        equipmentId: 7, // Semoir
+        customerName: "Ibrahima Fall",
+        customerEmail: "ibrahima.fall@gmail.com",
+        customerPhone: "+221 77 567 89 01",
+        startDate: "2025-01-20",
+        endDate: "2025-01-21",
+        totalPrice: 40000, // 1 jour * 40000
+        status: "cancelled" as const,
+        paymentStatus: "cancelled",
+        notes: "Annulé - météo défavorable",
+        createdAt: new Date("2025-01-18").toISOString()
+      }
+    ];
+
+    sampleBookings.forEach(booking => {
+      const id = this.currentBookingId++;
+      this.bookings.set(id, {
+        id,
+        userId: null, // Pas d'utilisateur connecté pour ces réservations
+        ...booking,
+        canModify: new Date(booking.startDate) > new Date(),
+        canCancel: new Date(booking.startDate) > new Date(Date.now() + 24 * 60 * 60 * 1000)
+      });
+    });
+
+    console.log(`[STORAGE] Loaded ${sampleBookings.length} sample bookings`);
   }
 
   async deleteUserSession(token: string): Promise<void> {

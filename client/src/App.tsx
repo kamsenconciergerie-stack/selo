@@ -14,6 +14,7 @@ import QuoteRequest from "@/pages/quote-request";
 import LoginPage from "@/pages/login";
 import DashboardPage from "@/pages/dashboard";
 import SimpleAdmin from "@/pages/simple-admin";
+import AdminReservations from "@/pages/admin-reservations-simple";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -30,6 +31,7 @@ function Router() {
       <Route path="/login" component={LoginPage} />
       <Route path="/dashboard" component={DashboardPage} />
       <Route path="/admin" component={SimpleAdmin} />
+      <Route path="/admin/reservations" component={AdminReservations} />
       <Route component={NotFound} />
     </Switch>
   );

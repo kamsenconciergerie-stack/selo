@@ -560,6 +560,67 @@ ${validatedData.message}`
     }
   });
 
+  // Admin routes for bookings management
+  app.get("/api/admin/bookings", async (req, res) => {
+    try {
+      // Get all bookings with equipment information
+      const allBookings = await storage.getAllBookings();
+      const equipmentList = await storage.getAllEquipment();
+      
+      // Enrich bookings with equipment details
+      const enrichedBookings = allBookings.map(booking => {
+        const equipment = equipmentList.find(eq => eq.id === booking.equipmentId);
+        return {
+          ...booking,
+          equipmentName: equipment?.name,
+          equipmentCategory: equipment?.category
+        };
+      });
+      
+      res.json(enrichedBookings);
+    } catch (error) {
+      console.error("Error fetching admin bookings:", error);
+      res.status(500).json({ message: "Erreur lors de la récupération des réservations" });
+    }
+  });
+
+  app.put("/api/admin/bookings/:id", async (req, res) => {
+    try {
+      const bookingId = parseInt(req.params.id);
+      const { status } = req.body;
+      
+      if (!status || !['pending', 'confirmed', 'completed', 'cancelled'].includes(status)) {
+        return res.status(400).json({ message: "Statut invalide" });
+      }
+      
+      const updatedBooking = await storage.updateBooking(bookingId, { status });
+      if (!updatedBooking) {
+        return res.status(404).json({ message: "Réservation non trouvée" });
+      }
+      
+      res.json(updatedBooking);
+    } catch (error) {
+      console.error("Error updating booking status:", error);
+      res.status(500).json({ message: "Erreur lors de la mise à jour du statut" });
+    }
+  });
+
+  app.delete("/api/admin/bookings/:id", async (req, res) => {
+    try {
+      const bookingId = parseInt(req.params.id);
+      const deleted = await storage.deleteBooking(bookingId);
+      
+      if (!deleted) {
+        return res.status(404).json({ message: "Réservation non trouvée" });
+      }
+      
+      res.json({ message: "Réservation supprimée avec succès" });
+    } catch (error) {
+      console.error("Error deleting booking:", error);
+      res.status(500).json({ message: "Erreur lors de la suppression de la réservation" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
