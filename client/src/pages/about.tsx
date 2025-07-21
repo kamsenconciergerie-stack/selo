@@ -111,31 +111,7 @@ export default function About() {
             </p>
           </div>
           
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
-            <Card className="bg-white/10 backdrop-blur-sm border-white/20">
-              <CardContent className="p-6 text-center">
-                <Users className="h-12 w-12 text-orange-200 mx-auto mb-4" />
-                <h3 className="text-xl font-bold mb-2">+500 clients actifs</h3>
-                <p className="text-orange-100">Accédez à notre large base de clients professionnels</p>
-              </CardContent>
-            </Card>
-            
-            <Card className="bg-white/10 backdrop-blur-sm border-white/20">
-              <CardContent className="p-6 text-center">
-                <MapPin className="h-12 w-12 text-orange-200 mx-auto mb-4" />
-                <h3 className="text-xl font-bold mb-2">Couverture nationale</h3>
-                <p className="text-orange-100">Développez votre activité dans tout le Sénégal</p>
-              </CardContent>
-            </Card>
-            
-            <Card className="bg-white/10 backdrop-blur-sm border-white/20">
-              <CardContent className="p-6 text-center">
-                <Clock className="h-12 w-12 text-orange-200 mx-auto mb-4" />
-                <h3 className="text-xl font-bold mb-2">Support 24/7</h3>
-                <p className="text-orange-100">Notre équipe vous accompagne en permanence</p>
-              </CardContent>
-            </Card>
-          </div>
+
 
           <div className="text-center">
             <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
