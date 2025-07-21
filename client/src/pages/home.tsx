@@ -190,17 +190,18 @@ export default function Home() {
                   <span className="text-3xl">🕌</span>
                 </div>
                 <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg magal-banner-shimmer">
-                  ÉVÉNEMENT SPÉCIAL
+                  GRAND MAGAL DE TOUBA 2025
                 </div>
               </div>
               
               <h2 className="text-2xl lg:text-4xl font-bold text-blue-800 mb-2 leading-tight drop-shadow-sm">
-                Profitez de Réductions Spéciales sur nos Équipements !
+                Grand Magal de Touba 2025 - Réductions Spéciales !
               </h2>
               
               <p className="text-blue-800 text-base lg:text-lg max-w-2xl mx-auto lg:mx-0 mb-4 drop-shadow-sm">
-                En cette période sacrée, nous vous offrons des <span className="font-bold text-blue-900">réductions exceptionnelles</span> 
-                sur toute notre gamme d'équipements ! Simplifiez vos déplacements et le transport de vos bagages, colis, etc.
+                À l'occasion du <span className="font-bold text-blue-900">Grand Magal de Touba 2025</span>, nous vous offrons des 
+                <span className="font-bold text-blue-900"> réductions exceptionnelles</span> sur toute notre gamme d'équipements ! 
+                Simplifiez vos déplacements, le transport de vos bagages et marchandises pendant cet événement sacré.
               </p>
               
               <div className="flex flex-wrap gap-2 justify-center lg:justify-start">
