@@ -149,6 +149,8 @@ export interface IStorage {
   createEquipmentUnavailability(data: any): Promise<any>;
   updateEquipmentUnavailability(id: number, data: any): Promise<any>;
   deleteEquipmentUnavailability(id: number): Promise<boolean>;
+  getUnavailabilityByEquipment(equipmentId: number): Promise<any[]>;
+  getEquipmentPartnerInfo(equipmentId: number): Promise<any>;
 }
 
 export class DbStorage implements IStorage {
@@ -2051,6 +2053,76 @@ export class MemStorage implements IStorage {
     } catch (error) {
       console.error("Error deleting unavailability period:", error);
       return false;
+    }
+  }
+
+  async getUnavailabilityByEquipment(equipmentId: number): Promise<any[]> {
+    try {
+      // Mock data for equipment unavailability periods
+      const allPeriods = [
+        {
+          id: 1,
+          partnerId: 1,
+          equipmentId: 1,
+          equipmentName: "Camion benne 15 T",
+          startDate: "2025-01-25T00:00:00.000Z",
+          endDate: "2025-01-27T00:00:00.000Z",
+          reason: "maintenance",
+          description: "Révision générale programmée",
+          partnerName: "Transport Express Dakar",
+          createdAt: "2025-01-21T00:00:00.000Z"
+        },
+        {
+          id: 2,
+          partnerId: 2,
+          equipmentId: 2,
+          equipmentName: "Camion benne 20 T",
+          startDate: "2025-02-01T00:00:00.000Z",
+          endDate: "2025-02-03T00:00:00.000Z",
+          reason: "rented_externally",
+          description: "Location directe client habituel",
+          partnerName: "Logistics Pro Sénégal",
+          createdAt: "2025-01-21T00:00:00.000Z"
+        },
+        {
+          id: 3,
+          partnerId: 1,
+          equipmentId: 5,
+          equipmentName: "Tracteur 75 CV",
+          startDate: "2025-02-10T00:00:00.000Z",
+          endDate: "2025-02-15T00:00:00.000Z",
+          reason: "repair",
+          description: "Réparation du système hydraulique",
+          partnerName: "Transport Express Dakar",
+          createdAt: "2025-01-22T00:00:00.000Z"
+        }
+      ];
+      
+      return allPeriods.filter(p => p.equipmentId === equipmentId);
+    } catch (error) {
+      console.error("Error fetching unavailability by equipment:", error);
+      return [];
+    }
+  }
+
+  async getEquipmentPartnerInfo(equipmentId: number): Promise<any> {
+    try {
+      // Mock partner information mapping
+      const partnerMapping = {
+        1: { partnerId: 1, partnerName: "Transport Express Dakar", lastUpdate: "2025-01-21T14:30:00.000Z" },
+        2: { partnerId: 2, partnerName: "Logistics Pro Sénégal", lastUpdate: "2025-01-20T09:15:00.000Z" },
+        3: { partnerId: 1, partnerName: "Transport Express Dakar", lastUpdate: "2025-01-19T16:45:00.000Z" },
+        4: { partnerId: 3, partnerName: "Camions du Sud", lastUpdate: "2025-01-18T11:20:00.000Z" },
+        5: { partnerId: 1, partnerName: "Transport Express Dakar", lastUpdate: "2025-01-22T08:10:00.000Z" },
+        6: { partnerId: 2, partnerName: "Logistics Pro Sénégal", lastUpdate: "2025-01-17T13:25:00.000Z" },
+        7: { partnerId: 3, partnerName: "Camions du Sud", lastUpdate: "2025-01-16T10:30:00.000Z" },
+        8: { partnerId: 1, partnerName: "Transport Express Dakar", lastUpdate: "2025-01-15T15:45:00.000Z" }
+      };
+      
+      return partnerMapping[equipmentId as keyof typeof partnerMapping] || null;
+    } catch (error) {
+      console.error("Error fetching partner info:", error);
+      return null;
     }
   }
 }

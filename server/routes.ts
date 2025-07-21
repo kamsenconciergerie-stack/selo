@@ -1171,6 +1171,29 @@ ${validatedData.message}`
     }
   });
 
+  // Admin route to get equipment with unavailability info
+  app.get("/api/admin/equipment-with-unavailability", async (req, res) => {
+    try {
+      const equipment = await storage.getAllEquipment();
+      const equipmentWithUnavailability = await Promise.all(
+        equipment.map(async (eq) => {
+          const unavailabilityPeriods = await storage.getUnavailabilityByEquipment(eq.id);
+          const partnerInfo = await storage.getEquipmentPartnerInfo(eq.id);
+          return {
+            ...eq,
+            unavailabilityPeriods,
+            partnerInfo
+          };
+        })
+      );
+      
+      res.json(equipmentWithUnavailability);
+    } catch (error) {
+      console.error("Error fetching equipment with unavailability:", error);
+      res.status(500).json({ message: "Failed to fetch equipment data" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

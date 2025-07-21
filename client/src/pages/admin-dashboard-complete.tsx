@@ -4,6 +4,9 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ProtectedAdminRoute from "@/components/ProtectedAdminRoute";
+import { useQuery } from "@tanstack/react-query";
+import { format } from "date-fns";
+import { fr } from "date-fns/locale";
 import { 
   Calendar, 
   Users, 
@@ -215,6 +218,103 @@ function formatDate(dateString: string): string {
     month: '2-digit', 
     year: 'numeric'
   });
+}
+
+function EquipmentWithUnavailabilityList() {
+  const { data: equipmentData = [], isLoading } = useQuery({
+    queryKey: ["/api/admin/equipment-with-unavailability"],
+  });
+
+  if (isLoading) {
+    return <div className="text-center py-8">Chargement...</div>;
+  }
+
+  return (
+    <div className="space-y-6">
+      {equipmentData.map((equipment: any) => (
+        <Card key={equipment.id} className="border-l-4 border-l-blue-500">
+          <CardContent className="p-6">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {/* Information équipement */}
+              <div className="lg:col-span-1">
+                <div className="flex items-start justify-between mb-3">
+                  <h4 className="font-semibold text-lg">{equipment.name}</h4>
+                  <Badge 
+                    className={equipment.isAvailable ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}
+                  >
+                    {equipment.isAvailable ? 'Disponible' : 'Indisponible'}
+                  </Badge>
+                </div>
+                <p className="text-sm text-gray-600 mb-2">{equipment.category}</p>
+                <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
+                  <MapPin className="h-4 w-4" />
+                  {equipment.location}
+                </div>
+                <p className="font-bold text-orange-600">{formatPrice(equipment.pricePerDay)}/jour</p>
+              </div>
+
+              {/* Informations partenaire */}
+              <div className="lg:col-span-1">
+                <h5 className="font-medium text-gray-900 mb-3 flex items-center gap-2">
+                  <Users className="h-4 w-4" />
+                  Informations Partenaire
+                </h5>
+                {equipment.partnerInfo ? (
+                  <div className="space-y-2">
+                    <p className="text-sm">
+                      <span className="font-medium">Partenaire:</span> {equipment.partnerInfo.partnerName}
+                    </p>
+                    <p className="text-sm flex items-center gap-2">
+                      <Clock className="h-3 w-3" />
+                      <span className="font-medium">Dernière MAJ:</span> 
+                      <span className="text-gray-600">{formatDate(equipment.partnerInfo.lastUpdate)}</span>
+                    </p>
+                  </div>
+                ) : (
+                  <p className="text-sm text-gray-500">Aucune information partenaire</p>
+                )}
+              </div>
+
+              {/* Périodes d'indisponibilité */}
+              <div className="lg:col-span-1">
+                <h5 className="font-medium text-gray-900 mb-3 flex items-center gap-2">
+                  <AlertTriangle className="h-4 w-4" />
+                  Indisponibilités
+                </h5>
+                {equipment.unavailabilityPeriods && equipment.unavailabilityPeriods.length > 0 ? (
+                  <div className="space-y-3">
+                    {equipment.unavailabilityPeriods.map((period: any) => (
+                      <div key={period.id} className="bg-red-50 border border-red-200 rounded-lg p-3">
+                        <div className="flex items-center gap-2 mb-1">
+                          <Badge 
+                            variant="outline" 
+                            className={
+                              period.reason === 'maintenance' ? 'bg-blue-50 text-blue-700 border-blue-200' :
+                              period.reason === 'repair' ? 'bg-red-50 text-red-700 border-red-200' :
+                              'bg-yellow-50 text-yellow-700 border-yellow-200'
+                            }
+                          >
+                            {period.reason === 'maintenance' ? 'Maintenance' :
+                             period.reason === 'repair' ? 'Réparation' : 'Location externe'}
+                          </Badge>
+                        </div>
+                        <p className="text-xs text-gray-600 mb-1">
+                          Du {format(new Date(period.startDate), 'dd MMM', { locale: fr })} au {format(new Date(period.endDate), 'dd MMM yyyy', { locale: fr })}
+                        </p>
+                        <p className="text-xs text-gray-700">{period.description}</p>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-sm text-gray-500">Aucune indisponibilité prévue</p>
+                )}
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      ))}
+    </div>
+  );
 }
 
 function AdminDashboardContent() {
@@ -556,32 +656,10 @@ function AdminDashboardContent() {
         <TabsContent value="equipment" className="space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle>Gestion des Équipements</CardTitle>
+              <CardTitle>Gestion des Équipements avec Indisponibilités</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {equipment.slice(0, 12).map((item) => (
-                  <div key={item.id} className="border rounded-lg p-4">
-                    <div className="flex items-start justify-between mb-2">
-                      <h3 className="font-medium">{item.name}</h3>
-                      <Badge variant={item.isAvailable ? "default" : "secondary"}>
-                        {item.isAvailable ? "Disponible" : "Indisponible"}
-                      </Badge>
-                    </div>
-                    <p className="text-sm text-gray-600 mb-2">{item.category}</p>
-                    <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
-                      <MapPin className="h-3 w-3" />
-                      {item.location}
-                    </div>
-                    <p className="font-bold">{formatPrice(item.pricePerDay)}/jour</p>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-4 text-center">
-                <Button onClick={() => window.location.href = '/admin/equipment'}>
-                  Gérer tous les équipements
-                </Button>
-              </div>
+              <EquipmentWithUnavailabilityList />
             </CardContent>
           </Card>
         </TabsContent>
