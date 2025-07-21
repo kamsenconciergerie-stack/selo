@@ -79,32 +79,7 @@ export default function About() {
     }
   };
 
-  const stats = [
-    {
-      icon: Users,
-      number: "500+",
-      label: "Clients satisfaits",
-      description: "Entreprises et particuliers nous font confiance"
-    },
-    {
-      icon: MapPin,
-      number: "8",
-      label: "Villes couvertes",
-      description: "Présence dans tout le Sénégal"
-    },
-    {
-      icon: Clock,
-      number: "5+",
-      label: "Années d'expérience",
-      description: "Expertise dans la location d'équipement"
-    },
-    {
-      icon: Award,
-      number: "98%",
-      label: "Taux de satisfaction",
-      description: "Clients recommandent nos services"
-    }
-  ];
+
 
   const values = [
     {
@@ -163,34 +138,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {stats.map((stat) => {
-              const Icon = stat.icon;
-              return (
-                <Card key={stat.label} className="text-center">
-                  <CardContent className="p-6">
-                    <div className="bg-primary-orange/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Icon className="h-8 w-8 text-primary-orange" />
-                    </div>
-                    <div className="text-3xl font-bold text-aywa-blue mb-2">
-                      {stat.number}
-                    </div>
-                    <div className="text-lg font-semibold text-gray-900 mb-1">
-                      {stat.label}
-                    </div>
-                    <p className="text-sm text-gray-600">
-                      {stat.description}
-                    </p>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
-        </div>
-      </section>
+
 
       {/* Mission Section */}
       <section className="py-16 bg-gray-50">
