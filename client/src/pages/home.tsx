@@ -128,15 +128,7 @@ export default function Home() {
       
       {/* Bannière Promo Magal de Touba 2025 - Version Créative */}
       <div className="relative overflow-hidden bg-gradient-to-br from-orange-400 via-orange-500 to-orange-600 py-6 px-4 shadow-2xl border-b-4 border-orange-700">
-        {/* Image de la Grande Mosquée de Touba en arrière-plan */}
-        <div className="absolute inset-0 opacity-15">
-          <img 
-            src="/attached_assets/image_1753115553272.png" 
-            alt="Grande Mosquée de Touba"
-            className="w-full h-full object-cover object-center"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-orange-300/20 to-orange-400/20"></div>
-        </div>
+
         
         {/* Motifs décoratifs orange/bleu */}
         <div className="absolute inset-0 opacity-15">
