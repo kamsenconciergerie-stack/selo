@@ -29,7 +29,7 @@ export default function ProtectedAdminRoute({ children }: ProtectedAdminRoutePro
     setError("");
 
     // Seul le compte admin principal a accès
-    const isValid = credentials.username === "admin" && credentials.password === "aywa2025";
+    const isValid = credentials.username === "admin" && credentials.password === "aywadmin2025";
 
     if (isValid) {
       localStorage.setItem("aywa_admin_auth", "authenticated");

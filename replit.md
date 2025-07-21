@@ -131,6 +131,7 @@ Aywa est une application web full-stack pour les services de location d'équipem
 - January 21, 2025. Mise à jour texte bannière promo et suppression image mosquée pour design simplifié
 - January 21, 2025. Dashboard d'administration complet créé accessible via /adminone avec vue d'ensemble, gestion réservations, équipements et analyses
 - January 21, 2025. Système d'authentification sécurisé pour administration - accès restreint au compte admin principal uniquement
+- January 21, 2025. Mise à jour mot de passe administrateur vers aywadmin2025
 
 ## User Preferences
 
