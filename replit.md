@@ -129,6 +129,7 @@ Aywa est une application web full-stack pour les services de location d'équipem
 - January 21, 2025. Ajout bannière promo "Tarifs spéciaux Magal de Touba 2025" avec CTA service commercial
 - January 21, 2025. Bannière créative avec image mosquée Touba, couleurs dorées harmonisées, positionnée au-dessus section produits
 - January 21, 2025. Mise à jour texte bannière promo et suppression image mosquée pour design simplifié
+- January 21, 2025. Dashboard d'administration complet créé accessible via /adminone avec vue d'ensemble, gestion réservations, équipements et analyses
 
 ## User Preferences
 
