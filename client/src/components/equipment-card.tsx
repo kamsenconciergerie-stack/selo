@@ -19,9 +19,13 @@ export default function EquipmentCard({ equipment }: EquipmentCardProps) {
     <>
       <Card className="overflow-hidden hover:shadow-xl transition-shadow">
         <img 
-          src={equipment.imageUrl} 
+          src={`${equipment.imageUrl}?v=${Date.now()}`}
           alt={equipment.name}
           className="w-full h-48 object-cover"
+          onError={(e) => {
+            console.log('Image load error:', equipment.imageUrl);
+            e.currentTarget.src = '/attached_assets/image_1753108301083.png';
+          }}
         />
         
         <CardContent className="p-6">

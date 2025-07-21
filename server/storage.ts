@@ -681,8 +681,10 @@ export class MemStorage implements IStorage {
     this.equipment.clear();
     this.currentEquipmentId = 1;
     
-    // Add all new equipment
+    // Add all new equipment with cache-busting timestamp
+    console.log('[STORAGE] Loading fresh equipment data with new SVG images...');
     sampleEquipment.forEach(eq => this.createEquipment(eq));
+    console.log(`[STORAGE] Loaded ${sampleEquipment.length} equipment items`);
   }
 
   async getAllEquipment(): Promise<Equipment[]> {

@@ -38,8 +38,9 @@ app.use((req, res, next) => {
 });
 
 (async () => {
-  // Serve static files for uploads
+  // Serve static files for uploads and images
   app.use('/uploads', express.static('uploads'));
+  app.use('/images', express.static('public/images'));
   
   const server = await registerRoutes(app);
 
