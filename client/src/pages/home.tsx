@@ -20,28 +20,40 @@ export default function Home() {
 
   const categories = [
     {
-      name: "Outils à Main",
-      description: "Marteaux, perceuses, scies et plus",
-      icon: Hammer,
-      count: equipment.filter(eq => eq.category === "Outils à Main").length,
+      name: "🚛 Camion porteur",
+      description: "Camions de déménagement et livraison",
+      icon: Truck,
+      count: equipment.filter(eq => eq.category === "Camion porteur").length,
+    },
+    {
+      name: "🚚 Camion semi-remorque", 
+      description: "Tracteurs avec remorques détachables",
+      icon: Truck,
+      count: equipment.filter(eq => eq.category === "Camion semi-remorque").length,
+    },
+    {
+      name: "🛻 Camionnette / Fourgon",
+      description: "Renault Master, Mercedes Sprinter", 
+      icon: Truck,
+      count: equipment.filter(eq => eq.category === "Camionnette / Fourgon").length,
+    },
+    {
+      name: "🏗️ Camion benne",
+      description: "Bennes arrière et basculantes trilatérales",
+      icon: Truck,
+      count: equipment.filter(eq => eq.category === "Camion benne").length,
     },
     {
       name: "Engins de Chantier", 
       description: "Pelleteuses, bulldozers, chargeuses",
-      icon: Truck,
+      icon: Hammer,
       count: equipment.filter(eq => eq.category === "Engins de Chantier").length,
     },
     {
-      name: "Équipement Électrique",
-      description: "Générateurs, compresseurs, pompes", 
-      icon: Zap,
-      count: equipment.filter(eq => eq.category === "Équipement Électrique").length,
-    },
-    {
-      name: "Sécurité & EPI",
-      description: "Casques, harnais, équipements de protection",
+      name: "Outils à Main",
+      description: "Marteaux, perceuses, scies et plus",
       icon: HardHat,
-      count: equipment.filter(eq => eq.category === "Sécurité & EPI").length,
+      count: equipment.filter(eq => eq.category === "Outils à Main").length,
     },
   ];
 
@@ -79,10 +91,10 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-              Nos Catégories d'Équipements
+              🚛 Camions & Véhicules Professionnels
             </h2>
             <p className="text-xl text-gray-600">
-              Trouvez l'équipement parfait pour vos projets
+              Location de camions, fourgons et véhicules utilitaires au Sénégal
             </p>
           </div>
           

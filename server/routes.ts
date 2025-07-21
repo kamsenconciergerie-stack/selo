@@ -84,8 +84,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/categories", async (req, res) => {
     try {
       const categories = [
+        "Camion porteur",
+        "Camion semi-remorque", 
+        "Camionnette / Fourgon",
+        "Camion benne",
+        "Engins de Chantier",
         "Outils à Main",
-        "Engins de Chantier", 
         "Équipement Électrique",
         "Sécurité & EPI"
       ];

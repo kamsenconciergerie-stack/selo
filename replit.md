@@ -33,6 +33,13 @@ Aywa est une application web full-stack pour les services de location d'équipem
 1. **Equipment**: Main rental items with categories, pricing, specifications, and availability
 2. **Bookings**: Rental reservations with customer details, dates, and pricing
 3. **Inquiries**: Contact form submissions for customer support
+4. **Users**: Customer accounts with authentication and role management
+5. **Partners**: Vehicle rental partners with comprehensive registration system
+6. **Reviews**: Equipment ratings and feedback from users
+7. **Equipment Tracking**: GPS and status tracking for rented items
+8. **Maintenance**: Scheduled maintenance and service records
+9. **Locations**: Multi-location support for equipment distribution
+10. **Notifications**: SMS and system notifications for users and partners
 
 ### API Endpoints
 - `GET /api/equipment` - List equipment with filtering (category, search, location)
@@ -106,6 +113,12 @@ Aywa est une application web full-stack pour les services de location d'équipem
 - June 24, 2025. Application web déployée et prête en production
 - June 24, 2025. Intégration paiements mobiles Orange Money et Wave
 - June 24, 2025. Mise à jour images équipements avec logo Aywa personnalisé
+- January 21, 2025. Ajout système de partenariat complet avec 8 nouvelles tables
+- January 21, 2025. Système d'authentification JWT avec rôles (customer, partner, admin)
+- January 21, 2025. Processus d'inscription partenaire en 3 étapes
+- January 21, 2025. Service SMS pour notifications via Orange/Tigo
+- January 21, 2025. Dashboard utilisateur avec gestion réservations et avis
+- January 21, 2025. Mise en avant des camions avec 4 catégories principales
 
 ## User Preferences
 
