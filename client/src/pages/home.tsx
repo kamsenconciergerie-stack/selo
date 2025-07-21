@@ -164,13 +164,13 @@ export default function Home() {
               
               <div className="flex flex-wrap gap-2 justify-center lg:justify-start">
                 <span className="bg-blue-200/70 backdrop-blur-sm text-blue-900 px-3 py-1 rounded-full text-sm border border-blue-300/70 shadow-sm font-semibold">
-                  🚛 **Camions & Véhicules**
+                  🚛 Camions & Véhicules
                 </span>
                 <span className="bg-blue-200/70 backdrop-blur-sm text-blue-900 px-3 py-1 rounded-full text-sm border border-blue-300/70 shadow-sm font-semibold">
-                  🚜 **Matériel Agricole**
+                  🚜 Matériel Agricole
                 </span>
                 <span className="bg-blue-200/70 backdrop-blur-sm text-blue-900 px-3 py-1 rounded-full text-sm border border-blue-300/70 shadow-sm font-semibold">
-                  ⚡ **Équipements Électriques**
+                  ⚡ Équipements Électriques
                 </span>
               </div>
             </div>
@@ -178,8 +178,8 @@ export default function Home() {
             {/* Section droite - Actions */}
             <div className="flex flex-col items-center gap-4 bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-blue-400/60 shadow-xl">
               <div className="text-center">
-                <div className="text-blue-700 text-sm font-bold mb-1">**Offre Limitée**</div>
-                <div className="text-blue-900 text-2xl font-bold">**Jusqu'à -25%**</div>
+                <div className="text-blue-700 text-sm font-bold mb-1">Offre Limitée</div>
+                <div className="text-blue-900 text-2xl font-bold">Jusqu'à -25%</div>
                 <div className="text-blue-800 text-sm font-semibold">sur vos locations</div>
               </div>
               
@@ -189,14 +189,14 @@ export default function Home() {
               >
                 <Link href="/contact">
                   <Phone className="h-5 w-5 mr-2" />
-                  **Service Commercial**
+                  Service Commercial
                 </Link>
               </Button>
               
               <div className="text-center">
-                <div className="text-blue-700 text-sm mb-1 font-semibold">**Réservation directe**</div>
+                <div className="text-blue-700 text-sm mb-1 font-semibold">Réservation directe</div>
                 <div className="bg-blue-200/60 backdrop-blur-sm rounded-lg px-4 py-2 border border-blue-300/60">
-                  <div className="text-blue-900 font-bold text-xl">**+221 78 606 70 13**</div>
+                  <div className="text-blue-900 font-bold text-xl">+221 78 606 70 13</div>
                 </div>
               </div>
             </div>
