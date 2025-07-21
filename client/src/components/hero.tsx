@@ -9,12 +9,24 @@ import { CITIES } from "@/lib/constants";
 export default function Hero() {
   const [, setLocation] = useLocation();
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
   const [startDate, setStartDate] = useState("");
 
+  const equipmentCategories = [
+    "Camion porteur",
+    "Camion semi-remorque", 
+    "Camionnette / Fourgon",
+    "Camion benne",
+    "Engins de Chantier",
+    "Outils à Main",
+    "Équipement Électrique",
+    "Sécurité & EPI"
+  ];
+
   const handleSearch = () => {
     const params = new URLSearchParams();
-    if (searchQuery) params.append("search", searchQuery);
+    if (selectedCategory) params.append("category", selectedCategory);
     if (selectedCity) params.append("location", selectedCity);
     
     setLocation(`/equipements?${params.toString()}`);
@@ -38,13 +50,18 @@ export default function Hero() {
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Que cherchez-vous ?
                 </label>
-                <Input
-                  type="text"
-                  placeholder="Ex: Pelleteuse, Compresseur..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="text-gray-900"
-                />
+                <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                  <SelectTrigger className="text-gray-900">
+                    <SelectValue placeholder="Choisir une catégorie" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {equipmentCategories.map((category) => (
+                      <SelectItem key={category} value={category}>
+                        {category}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
