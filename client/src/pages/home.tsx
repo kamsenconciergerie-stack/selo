@@ -154,15 +154,12 @@ export default function Home() {
               </div>
               
               <h2 className="text-2xl lg:text-4xl font-bold text-blue-800 mb-2 leading-tight drop-shadow-sm">
-                **Magal de Touba 2025**
-                <span className="block text-blue-700 text-xl lg:text-2xl font-bold">
-                  **Tarifs Exceptionnels**
-                </span>
+                Profitez de Réductions Spéciales sur nos Équipements !
               </h2>
               
               <p className="text-blue-800 text-base lg:text-lg max-w-2xl mx-auto lg:mx-0 mb-4 drop-shadow-sm">
-                En cette période sacrée, bénéficiez de <span className="font-bold text-blue-900">**réductions spéciales**</span> 
-                sur tous nos équipements pour faciliter vos déplacements et projets.
+                En cette période sacrée, nous vous offrons des <span className="font-bold text-blue-900">réductions exceptionnelles</span> 
+                sur toute notre gamme d'équipements ! Simplifiez vos déplacements et le transport de vos bagages, colis, etc.
               </p>
               
               <div className="flex flex-wrap gap-2 justify-center lg:justify-start">
