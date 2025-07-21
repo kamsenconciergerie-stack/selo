@@ -419,7 +419,7 @@ function AdminDashboardContent() {
         </TabsContent>
 
         <TabsContent value="analytics" className="space-y-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
@@ -438,6 +438,44 @@ function AdminDashboardContent() {
               </CardHeader>
               <CardContent>
                 <RecentPartners />
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <MapPin className="h-5 w-5" />
+                  Répartition géographique
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <PartnersByLocation />
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Award className="h-5 w-5" />
+                  Top Partenaires
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <TopPartners />
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <AlertTriangle className="h-5 w-5" />
+                  Actions requises
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <PendingActions />
               </CardContent>
             </Card>
           </div>

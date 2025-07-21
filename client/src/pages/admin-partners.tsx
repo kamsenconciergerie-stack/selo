@@ -189,6 +189,42 @@ function AdminPartnersContent() {
   // Get unique cities for filter
   const uniqueCities = [...new Set(partners.map(p => p.city))].sort();
 
+  // Export partners data to CSV
+  const exportPartnersData = () => {
+    const csvData = filteredPartners.map(partner => ({
+      'Nom entreprise': partner.companyName,
+      'Email': partner.email,
+      'Téléphone': partner.phone,
+      'Ville': partner.city,
+      'Type activité': partner.businessType,
+      'Statut': verificationStatusConfig[partner.verificationStatus].label,
+      'Note': partner.rating,
+      'Flotte': partner.fleetSize,
+      'Expérience (ans)': partner.experienceYears,
+      'Inscrit le': new Date(partner.joinedAt).toLocaleDateString('fr-FR')
+    }));
+
+    const headers = Object.keys(csvData[0] || {});
+    const csvContent = [
+      headers.join(','),
+      ...csvData.map(row => headers.map(key => `"${(row as any)[key] || ''}"`).join(','))
+    ].join('\n');
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', `partenaires-aywa-${new Date().toLocaleDateString('fr-FR')}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    toast({
+      title: "Export réussi",
+      description: `${filteredPartners.length} partenaires exportés en CSV`,
+    });
+  };
+
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -321,10 +357,16 @@ function AdminPartnersContent() {
                 </SelectContent>
               </Select>
 
-              <Button variant="outline" className="flex items-center gap-2">
-                <Calendar className="h-4 w-4" />
-                Exporter données
-              </Button>
+              <div className="flex gap-2">
+                <Button variant="outline" className="flex items-center gap-2" onClick={() => exportPartnersData()}>
+                  <Download className="h-4 w-4" />
+                  Exporter CSV
+                </Button>
+                <Button variant="outline" className="flex items-center gap-2" onClick={() => window.open('/admin/partners/analytics', '_blank')}>
+                  <TrendingUp className="h-4 w-4" />
+                  Analyses
+                </Button>
+              </div>
             </div>
           </CardContent>
         </Card>
@@ -403,12 +445,12 @@ function AdminPartnersContent() {
                         <div>
                           <p className="text-sm font-medium text-gray-700 mb-1">Zones de service:</p>
                           <div className="flex flex-wrap gap-1">
-                            {partner.serviceAreas.slice(0, 3).map((area, index) => (
+                            {partner.serviceAreas?.slice(0, 3).map((area, index) => (
                               <Badge key={index} variant="secondary" className="text-xs">
                                 {area}
                               </Badge>
-                            ))}
-                            {partner.serviceAreas.length > 3 && (
+                            )) || <span className="text-xs text-gray-500">Non spécifié</span>}
+                            {partner.serviceAreas && partner.serviceAreas.length > 3 && (
                               <Badge variant="secondary" className="text-xs">
                                 +{partner.serviceAreas.length - 3}
                               </Badge>
@@ -418,12 +460,12 @@ function AdminPartnersContent() {
                         <div>
                           <p className="text-sm font-medium text-gray-700 mb-1">Équipements:</p>
                           <div className="flex flex-wrap gap-1">
-                            {partner.equipmentTypes.slice(0, 2).map((type, index) => (
+                            {partner.equipmentTypes?.slice(0, 2).map((type, index) => (
                               <Badge key={index} variant="outline" className="text-xs">
                                 {type}
                               </Badge>
-                            ))}
-                            {partner.equipmentTypes.length > 2 && (
+                            )) || <span className="text-xs text-gray-500">Non spécifié</span>}
+                            {partner.equipmentTypes && partner.equipmentTypes.length > 2 && (
                               <Badge variant="outline" className="text-xs">
                                 +{partner.equipmentTypes.length - 2}
                               </Badge>

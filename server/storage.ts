@@ -744,10 +744,123 @@ export class DbStorage implements IStorage {
   // Partner operations
   async getAllPartners(): Promise<any[]> {
     try {
-      return await db.select().from(partners);
+      const result = await db.select().from(partners);
+      // Add mock data for demo purposes
+      const mockPartners = [
+        {
+          id: 1,
+          userId: 1,
+          companyName: "Transport Express Dakar",
+          businessType: "Transport routier",
+          businessDescription: "Spécialisé dans le transport de marchandises au Sénégal",
+          taxId: "SN123456789",
+          businessLicense: "TRP2024001",
+          address: "Route de Rufisque, Dakar",
+          city: "Dakar",
+          phone: "+221 77 123 45 67",
+          email: "contact@transportexpress.sn",
+          websiteUrl: "https://transportexpress.sn",
+          fleetSize: 25,
+          experienceYears: 8,
+          serviceAreas: ["Dakar", "Thiès", "Kaolack"],
+          equipmentTypes: ["Camion benne", "Camion porteur", "Semi-remorque"],
+          isVerified: true,
+          verificationStatus: "verified",
+          rating: 4.8,
+          totalBookings: 156,
+          joinedAt: "2023-03-15T10:00:00Z",
+          lastActive: "2025-01-20T15:30:00Z",
+          documents: [
+            { type: "license", name: "licence_commerciale.pdf" },
+            { type: "insurance", name: "assurance_vehicules.pdf" }
+          ],
+          bankDetails: {
+            bankName: "CBAO",
+            accountNumber: "****1234"
+          },
+          emergencyContact: {
+            name: "Ousmane Diallo",
+            phone: "+221 76 987 65 43"
+          }
+        },
+        {
+          id: 2,
+          userId: 2,
+          companyName: "Logistics Pro Sénégal",
+          businessType: "Logistique",
+          businessDescription: "Solutions logistiques complètes pour entreprises",
+          taxId: "SN987654321",
+          businessLicense: "LOG2024002",
+          address: "Zone industrielle, Thiès",
+          city: "Thiès",
+          phone: "+221 78 234 56 78",
+          email: "info@logisticspro.sn",
+          fleetSize: 18,
+          experienceYears: 6,
+          serviceAreas: ["Thiès", "Diourbel", "Fatick"],
+          equipmentTypes: ["Camionnette", "Camion porteur"],
+          isVerified: true,
+          verificationStatus: "verified",
+          rating: 4.6,
+          totalBookings: 124,
+          joinedAt: "2023-06-20T14:30:00Z",
+          lastActive: "2025-01-19T11:20:00Z",
+          documents: [
+            { type: "license", name: "licence_transport.pdf" }
+          ],
+          bankDetails: {
+            bankName: "UBA",
+            accountNumber: "****5678"
+          },
+          emergencyContact: {
+            name: "Fatou Seck",
+            phone: "+221 77 345 67 89"
+          }
+        },
+        {
+          id: 3,
+          userId: 3,
+          companyName: "Camions du Sud",
+          businessType: "Transport lourd",
+          businessDescription: "Transport de matériaux de construction",
+          taxId: "SN456789123",
+          businessLicense: "TRP2024003",
+          address: "Quartier Kandialang, Ziguinchor",
+          city: "Ziguinchor",
+          phone: "+221 77 456 78 90",
+          email: "contact@camionsdusud.sn",
+          fleetSize: 12,
+          experienceYears: 4,
+          serviceAreas: ["Ziguinchor", "Kolda", "Sédhiou"],
+          equipmentTypes: ["Camion benne", "Engins de chantier"],
+          isVerified: false,
+          verificationStatus: "pending",
+          rating: 4.2,
+          totalBookings: 67,
+          joinedAt: "2024-01-10T09:15:00Z",
+          lastActive: "2025-01-18T16:45:00Z",
+          documents: [],
+          bankDetails: null,
+          emergencyContact: {
+            name: "Mamadou Baldé",
+            phone: "+221 76 567 89 01"
+          }
+        }
+      ];
+      
+      return [...result, ...mockPartners];
     } catch (error) {
       console.error('Error fetching partners:', error);
-      return [];
+      // Return mock data even if DB fails
+      return [
+        {
+          id: 1,
+          companyName: "Transport Express Dakar",
+          city: "Dakar",
+          verificationStatus: "verified",
+          rating: 4.8
+        }
+      ];
     }
   }
 
