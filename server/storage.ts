@@ -420,15 +420,33 @@ export class DbStorage implements IStorage {
     return this.getAllEquipment();
   }
 
-  // Stub implementations for missing interface methods
+  // Equipment management implementations
+  async createEquipment(equipmentData: InsertEquipment): Promise<Equipment> {
+    const [newEquipment] = await db.insert(equipment).values(equipmentData).returning();
+    return newEquipment;
+  }
+
   async updateEquipment(id: number, equipmentData: Partial<InsertEquipment>): Promise<Equipment | undefined> {
-    const result = await db.update(equipment).set(equipmentData).where(eq(equipment.id, id)).returning();
-    return result[0];
+    const [updatedEquipment] = await db
+      .update(equipment)
+      .set(equipmentData)
+      .where(eq(equipment.id, id))
+      .returning();
+    return updatedEquipment;
   }
 
   async deleteEquipment(id: number): Promise<boolean> {
     const result = await db.delete(equipment).where(eq(equipment.id, id));
-    return result.rowCount > 0;
+    return (result.rowCount || 0) > 0;
+  }
+
+  async updateEquipmentImages(id: number, imagePaths: string[]): Promise<Equipment | undefined> {
+    const [updatedEquipment] = await db
+      .update(equipment)
+      .set({ imageUrl: imagePaths[0] || "" })
+      .where(eq(equipment.id, id))
+      .returning();
+    return updatedEquipment;
   }
 
   async createReview(reviewData: InsertReview): Promise<Review> {

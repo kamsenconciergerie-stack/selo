@@ -16,6 +16,7 @@ import DashboardPage from "@/pages/dashboard";
 import SimpleAdmin from "@/pages/simple-admin";
 import AdminReservations from "@/pages/admin-reservations-simple";
 import AdminDashboardComplete from "@/pages/admin-dashboard-complete";
+import AdminEquipment from "@/pages/admin-equipment";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -33,6 +34,7 @@ function Router() {
       <Route path="/dashboard" component={DashboardPage} />
       <Route path="/admin" component={SimpleAdmin} />
       <Route path="/admin/reservations" component={AdminReservations} />
+      <Route path="/admin/equipment" component={AdminEquipment} />
       <Route path="/adminone" component={AdminDashboardComplete} />
       <Route component={NotFound} />
     </Switch>

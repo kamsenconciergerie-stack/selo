@@ -409,6 +409,11 @@ function AdminDashboardContent() {
                   </div>
                 ))}
               </div>
+              <div className="mt-4 text-center">
+                <Button onClick={() => window.location.href = '/admin/equipment'}>
+                  Gérer tous les équipements
+                </Button>
+              </div>
             </CardContent>
           </Card>
         </TabsContent>

@@ -575,6 +575,81 @@ ${validatedData.message}`
     }
   });
 
+  // Admin routes for equipment management (protected)
+  app.post("/api/admin/equipment", upload.single('image'), async (req, res) => {
+    try {
+      const equipmentData = {
+        name: req.body.name,
+        description: req.body.description,
+        category: req.body.category,
+        pricePerDay: parseInt(req.body.pricePerDay),
+        location: req.body.location,
+        specifications: JSON.parse(req.body.specifications || '[]'),
+        weight: req.body.weight,
+        fuelType: req.body.fuelType,
+        power: req.body.power,
+        isAvailable: req.body.isAvailable === 'true',
+        imageUrl: req.file ? `/uploads/${req.file.filename}` : '/public/equipment-placeholder.svg'
+      };
+
+      const newEquipment = await storage.createEquipment(equipmentData);
+      res.json(newEquipment);
+    } catch (error) {
+      console.error("Error creating equipment:", error);
+      res.status(500).json({ message: "Erreur lors de la création de l'équipement" });
+    }
+  });
+
+  app.put("/api/admin/equipment/:id", upload.single('image'), async (req, res) => {
+    try {
+      const equipmentId = parseInt(req.params.id);
+      const updateData: any = {
+        name: req.body.name,
+        description: req.body.description,
+        category: req.body.category,
+        pricePerDay: parseInt(req.body.pricePerDay),
+        location: req.body.location,
+        specifications: JSON.parse(req.body.specifications || '[]'),
+        weight: req.body.weight,
+        fuelType: req.body.fuelType,
+        power: req.body.power,
+        isAvailable: req.body.isAvailable === 'true'
+      };
+
+      // Only update image if new file uploaded
+      if (req.file) {
+        updateData.imageUrl = `/uploads/${req.file.filename}`;
+      }
+
+      const updatedEquipment = await storage.updateEquipment(equipmentId, updateData);
+      
+      if (!updatedEquipment) {
+        return res.status(404).json({ message: "Équipement non trouvé" });
+      }
+      
+      res.json(updatedEquipment);
+    } catch (error) {
+      console.error("Error updating equipment:", error);
+      res.status(500).json({ message: "Erreur lors de la mise à jour de l'équipement" });
+    }
+  });
+
+  app.delete("/api/admin/equipment/:id", async (req, res) => {
+    try {
+      const equipmentId = parseInt(req.params.id);
+      const deleted = await storage.deleteEquipment(equipmentId);
+      
+      if (!deleted) {
+        return res.status(404).json({ message: "Équipement non trouvé" });
+      }
+      
+      res.json({ message: "Équipement supprimé avec succès" });
+    } catch (error) {
+      console.error("Error deleting equipment:", error);
+      res.status(500).json({ message: "Erreur lors de la suppression de l'équipement" });
+    }
+  });
+
   // Admin routes for bookings management (protected)
   app.get("/api/admin/bookings", isAuthenticated, isAdmin, async (req, res) => {
     try {
