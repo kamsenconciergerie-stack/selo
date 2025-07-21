@@ -37,8 +37,8 @@ export default function Hero() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <h1 className="text-4xl lg:text-6xl font-bold mb-6">
-            Location d'Équipement<br />
-            <span className="text-primary-orange">Professionnel</span> au Sénégal
+            Location de camions et d'équipements<br />
+            <span className="text-primary-orange">Professionnel</span> partout au Sénégal
           </h1>
           <p className="text-xl lg:text-2xl mb-8 text-blue-100">
             Plus de 500 équipements disponibles dans tout le Sénégal
