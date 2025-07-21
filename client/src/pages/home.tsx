@@ -127,7 +127,7 @@ export default function Home() {
       <Hero />
       
       {/* Bannière Promo Magal de Touba 2025 - Version Créative */}
-      <div className="relative overflow-hidden bg-gradient-to-br from-amber-100 via-orange-50 to-yellow-50 py-6 px-4 shadow-2xl border-b-4 border-amber-400">
+      <div className="relative overflow-hidden bg-gradient-to-br from-orange-400 via-orange-500 to-orange-600 py-6 px-4 shadow-2xl border-b-4 border-orange-700">
         {/* Image de la Grande Mosquée de Touba en arrière-plan */}
         <div className="absolute inset-0 opacity-15">
           <img 
@@ -135,15 +135,15 @@ export default function Home() {
             alt="Grande Mosquée de Touba"
             className="w-full h-full object-cover object-center"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-amber-200/30 to-orange-200/30"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-orange-300/20 to-orange-400/20"></div>
         </div>
         
-        {/* Motifs décoratifs dorés */}
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-amber-300 to-yellow-400 rounded-full transform -translate-x-16 -translate-y-16"></div>
-          <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-orange-300 to-amber-400 rounded-full transform translate-x-12 -translate-y-12"></div>
-          <div className="absolute bottom-0 left-1/4 w-20 h-20 bg-gradient-to-br from-yellow-300 to-orange-300 rounded-full transform translate-y-10"></div>
-          <div className="absolute bottom-0 right-1/3 w-16 h-16 bg-gradient-to-br from-amber-400 to-yellow-300 rounded-full transform translate-y-8"></div>
+        {/* Motifs décoratifs orange/bleu */}
+        <div className="absolute inset-0 opacity-15">
+          <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-blue-300 to-blue-400 rounded-full transform -translate-x-16 -translate-y-16"></div>
+          <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-orange-300 to-orange-400 rounded-full transform translate-x-12 -translate-y-12"></div>
+          <div className="absolute bottom-0 left-1/4 w-20 h-20 bg-gradient-to-br from-blue-400 to-blue-500 rounded-full transform translate-y-10"></div>
+          <div className="absolute bottom-0 right-1/3 w-16 h-16 bg-gradient-to-br from-orange-400 to-orange-500 rounded-full transform translate-y-8"></div>
         </div>
         
         {/* Contenu principal */}
@@ -153,61 +153,61 @@ export default function Home() {
             {/* Section gauche - Message principal */}
             <div className="flex-1 text-center lg:text-left">
               <div className="flex items-center justify-center lg:justify-start gap-3 mb-3">
-                <div className="bg-amber-500/20 backdrop-blur-sm p-3 rounded-full border border-amber-400/50 magal-banner-float shadow-lg">
+                <div className="bg-blue-500/30 backdrop-blur-sm p-3 rounded-full border border-blue-400/60 magal-banner-float shadow-lg">
                   <span className="text-3xl">🕌</span>
                 </div>
-                <div className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg magal-banner-shimmer">
+                <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg magal-banner-shimmer">
                   ÉVÉNEMENT SPÉCIAL
                 </div>
               </div>
               
-              <h2 className="text-2xl lg:text-4xl font-bold text-amber-900 mb-2 leading-tight drop-shadow-sm">
-                Magal de Touba 2025
-                <span className="block text-orange-700 text-xl lg:text-2xl font-semibold">
-                  Tarifs Exceptionnels
+              <h2 className="text-2xl lg:text-4xl font-bold text-blue-800 mb-2 leading-tight drop-shadow-sm">
+                **Magal de Touba 2025**
+                <span className="block text-blue-700 text-xl lg:text-2xl font-bold">
+                  **Tarifs Exceptionnels**
                 </span>
               </h2>
               
-              <p className="text-amber-800 text-base lg:text-lg max-w-2xl mx-auto lg:mx-0 mb-4 drop-shadow-sm">
-                En cette période sacrée, bénéficiez de <span className="font-bold text-orange-600">réductions spéciales</span> 
+              <p className="text-blue-800 text-base lg:text-lg max-w-2xl mx-auto lg:mx-0 mb-4 drop-shadow-sm">
+                En cette période sacrée, bénéficiez de <span className="font-bold text-blue-900">**réductions spéciales**</span> 
                 sur tous nos équipements pour faciliter vos déplacements et projets.
               </p>
               
               <div className="flex flex-wrap gap-2 justify-center lg:justify-start">
-                <span className="bg-amber-200/60 backdrop-blur-sm text-amber-900 px-3 py-1 rounded-full text-sm border border-amber-300/60 shadow-sm">
-                  🚛 Camions & Véhicules
+                <span className="bg-blue-200/70 backdrop-blur-sm text-blue-900 px-3 py-1 rounded-full text-sm border border-blue-300/70 shadow-sm font-semibold">
+                  🚛 **Camions & Véhicules**
                 </span>
-                <span className="bg-amber-200/60 backdrop-blur-sm text-amber-900 px-3 py-1 rounded-full text-sm border border-amber-300/60 shadow-sm">
-                  🚜 Matériel Agricole
+                <span className="bg-blue-200/70 backdrop-blur-sm text-blue-900 px-3 py-1 rounded-full text-sm border border-blue-300/70 shadow-sm font-semibold">
+                  🚜 **Matériel Agricole**
                 </span>
-                <span className="bg-amber-200/60 backdrop-blur-sm text-amber-900 px-3 py-1 rounded-full text-sm border border-amber-300/60 shadow-sm">
-                  ⚡ Équipements Électriques
+                <span className="bg-blue-200/70 backdrop-blur-sm text-blue-900 px-3 py-1 rounded-full text-sm border border-blue-300/70 shadow-sm font-semibold">
+                  ⚡ **Équipements Électriques**
                 </span>
               </div>
             </div>
 
             {/* Section droite - Actions */}
-            <div className="flex flex-col items-center gap-4 bg-white/70 backdrop-blur-sm rounded-2xl p-6 border border-amber-300/50 shadow-xl">
+            <div className="flex flex-col items-center gap-4 bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-blue-400/60 shadow-xl">
               <div className="text-center">
-                <div className="text-orange-600 text-sm font-medium mb-1">Offre Limitée</div>
-                <div className="text-amber-900 text-2xl font-bold">Jusqu'à -25%</div>
-                <div className="text-amber-700 text-sm">sur vos locations</div>
+                <div className="text-blue-700 text-sm font-bold mb-1">**Offre Limitée**</div>
+                <div className="text-blue-900 text-2xl font-bold">**Jusqu'à -25%**</div>
+                <div className="text-blue-800 text-sm font-semibold">sur vos locations</div>
               </div>
               
               <Button 
                 asChild
-                className="bg-gradient-to-r from-amber-600 to-orange-600 text-white hover:from-amber-500 hover:to-orange-500 font-bold px-8 py-4 text-lg shadow-xl transform hover:scale-105 transition-all duration-200 border-0"
+                className="bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-500 hover:to-blue-600 font-bold px-8 py-4 text-lg shadow-xl transform hover:scale-105 transition-all duration-200 border-0"
               >
                 <Link href="/contact">
                   <Phone className="h-5 w-5 mr-2" />
-                  Service Commercial
+                  **Service Commercial**
                 </Link>
               </Button>
               
               <div className="text-center">
-                <div className="text-amber-600 text-sm mb-1">Réservation directe</div>
-                <div className="bg-amber-200/50 backdrop-blur-sm rounded-lg px-4 py-2 border border-amber-300/50">
-                  <div className="text-amber-900 font-bold text-xl">+221 78 606 70 13</div>
+                <div className="text-blue-700 text-sm mb-1 font-semibold">**Réservation directe**</div>
+                <div className="bg-blue-200/60 backdrop-blur-sm rounded-lg px-4 py-2 border border-blue-300/60">
+                  <div className="text-blue-900 font-bold text-xl">**+221 78 606 70 13**</div>
                 </div>
               </div>
             </div>
@@ -215,7 +215,7 @@ export default function Home() {
         </div>
         
         {/* Élément décoratif en bas */}
-        <div className="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-amber-400 via-orange-400 to-yellow-400 shadow-lg"></div>
+        <div className="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 shadow-lg"></div>
       </div>
 
       {/* Equipment Categories */}
