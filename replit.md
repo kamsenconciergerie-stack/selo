@@ -123,7 +123,7 @@ Aywa est une application web full-stack pour les services de location d'équipem
 - January 21, 2025. Mise à jour page À Propos avec nouveau contenu et contact
 - January 21, 2025. Création images SVG personnalisées avec couleurs Aywa pour tous équipements
 - January 21, 2025. Configuration serveur statique pour images SVG et déploiement prêt
-- January 21, 2025. Demande configuration domaine personnalisé pour production
+- January 21, 2025. Configuration domaine personnalisé aywalogistic.com pour production
 
 ## User Preferences
 
@@ -132,4 +132,5 @@ Preferred communication style: Simple, everyday language.
 ## Contact Information
 
 - Téléphone: +221 78 606 70 13
-- Email: aywa@aywa.com
+- Email: contact@aywalogistic.com
+- Domaine: aywalogistic.com
