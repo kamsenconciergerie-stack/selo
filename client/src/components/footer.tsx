@@ -40,8 +40,6 @@ export default function Footer() {
             <ul className="space-y-2">
               <li><Link href="/equipements" className="hover:text-primary-orange">Location d'équipement</Link></li>
               <li><Link href="/services" className="hover:text-primary-orange">Livraison</Link></li>
-              <li><Link href="/services" className="hover:text-primary-orange">Maintenance</Link></li>
-              <li><Link href="/services" className="hover:text-primary-orange">Formation</Link></li>
             </ul>
           </div>
           
