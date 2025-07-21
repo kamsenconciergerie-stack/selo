@@ -145,7 +145,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-              ⚡ Équipements les Plus Demandés au Sénégal
+              Les Plus Populaires
             </h2>
             <p className="text-xl text-gray-600">
               Groupes électrogènes, marteaux-piqueurs, compresseurs et équipements essentiels
@@ -176,7 +176,7 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center mt-12">
             <Link href="/equipements-populaires">
               <Button className="bg-primary-orange hover:bg-primary-orange/90 text-white px-8 py-3 text-lg">
-                Équipements les plus demandés
+                Les plus populaires
               </Button>
             </Link>
             <Link href="/equipements">
