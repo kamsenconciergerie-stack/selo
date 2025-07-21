@@ -165,7 +165,7 @@ export default function Services() {
             Contactez-nous dès aujourd'hui pour un devis personnalisé et gratuit
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/contact">
+            <Link href="/devis">
               <Button className="bg-primary-orange hover:bg-primary-orange/90 text-white px-8 py-3 text-lg">
                 Demander un devis
               </Button>

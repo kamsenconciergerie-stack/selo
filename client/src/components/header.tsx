@@ -60,9 +60,11 @@ export default function Header() {
               <Phone className="h-4 w-4 mr-2" />
               <span>+221 78 606 70 13</span>
             </div>
-            <Button className="bg-primary-orange hover:bg-primary-orange/90 text-white">
-              Demande de devis
-            </Button>
+            <Link href="/devis">
+              <Button className="bg-primary-orange hover:bg-primary-orange/90 text-white">
+                Demande de devis
+              </Button>
+            </Link>
             
             {/* Mobile menu */}
             <Sheet open={isOpen} onOpenChange={setIsOpen}>

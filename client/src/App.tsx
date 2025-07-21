@@ -10,6 +10,7 @@ import Contact from "@/pages/contact";
 import Services from "@/pages/services";
 import About from "@/pages/about";
 import PopularEquipment from "@/pages/popular-equipment";
+import QuoteRequest from "@/pages/quote-request";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -22,6 +23,7 @@ function Router() {
       <Route path="/services" component={Services} />
       <Route path="/a-propos" component={About} />
       <Route path="/contact" component={Contact} />
+      <Route path="/devis" component={QuoteRequest} />
       <Route component={NotFound} />
     </Switch>
   );

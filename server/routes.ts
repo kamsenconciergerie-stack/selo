@@ -116,6 +116,54 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Quote request submission
+  app.post("/api/quote-request", async (req, res) => {
+    try {
+      const quoteRequestSchema = z.object({
+        name: z.string().min(2),
+        email: z.string().email(),
+        phone: z.string().min(9),
+        company: z.string().optional(),
+        category: z.string().min(1),
+        equipment: z.string().min(2),
+        startDate: z.string().min(1),
+        duration: z.string().min(1),
+        location: z.string().min(2),
+        message: z.string().min(10)
+      });
+      
+      const validatedData = quoteRequestSchema.parse(req.body);
+      
+      // Store as a special inquiry type for quote requests
+      const inquiry = await storage.createInquiry({
+        name: validatedData.name,
+        email: validatedData.email,
+        phone: validatedData.phone,
+        category: "Demande de devis",
+        message: `Demande de devis pour ${validatedData.equipment} (${validatedData.category})
+        
+Entreprise: ${validatedData.company || 'Non spécifiée'}
+Date de début: ${validatedData.startDate}
+Durée: ${validatedData.duration}
+Lieu: ${validatedData.location}
+
+Détails du projet:
+${validatedData.message}`
+      });
+      
+      res.status(201).json({ message: "Demande de devis reçue avec succès", inquiry });
+    } catch (error) {
+      console.error("Error creating quote request:", error);
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ 
+          message: "Données invalides", 
+          errors: error.errors 
+        });
+      }
+      res.status(500).json({ message: "Erreur lors de l'envoi de la demande" });
+    }
+  });
+
   // Categories route
   app.get("/api/categories", async (req, res) => {
     try {
