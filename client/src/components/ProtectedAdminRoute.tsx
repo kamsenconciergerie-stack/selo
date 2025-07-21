@@ -28,17 +28,8 @@ export default function ProtectedAdminRoute({ children }: ProtectedAdminRoutePro
     e.preventDefault();
     setError("");
 
-    // Simple admin credentials check
-    const validCredentials = [
-      { username: "admin", password: "aywa2025" },
-      { username: "administrateur", password: "aywaadmin" },
-      { username: "mamadou.diallo@aywalogistic.com", password: "aywa123" },
-      { username: "fatou.seck@aywalogistic.com", password: "aywa123" }
-    ];
-
-    const isValid = validCredentials.some(
-      cred => cred.username === credentials.username && cred.password === credentials.password
-    );
+    // Seul le compte admin principal a accès
+    const isValid = credentials.username === "admin" && credentials.password === "aywa2025";
 
     if (isValid) {
       localStorage.setItem("aywa_admin_auth", "authenticated");
@@ -88,7 +79,7 @@ export default function ProtectedAdminRoute({ children }: ProtectedAdminRoutePro
                   <Input
                     id="username"
                     type="text"
-                    placeholder="admin ou email"
+                    placeholder="admin"
                     value={credentials.username}
                     onChange={(e) => setCredentials(prev => ({ ...prev, username: e.target.value }))}
                     className="pl-10"
@@ -126,10 +117,8 @@ export default function ProtectedAdminRoute({ children }: ProtectedAdminRoutePro
 
             <div className="mt-6 text-center">
               <div className="text-sm text-gray-600 bg-gray-50 p-3 rounded">
-                <strong>Comptes de test :</strong><br />
-                - admin / aywa2025<br />
-                - administrateur / aywaadmin<br />
-                - mamadou.diallo@aywalogistic.com / aywa123
+                <strong>Accès restreint</strong><br />
+                Seul l'administrateur principal peut accéder à cette section
               </div>
             </div>
           </CardContent>
@@ -147,7 +136,7 @@ export default function ProtectedAdminRoute({ children }: ProtectedAdminRoutePro
             <Shield className="h-5 w-5 text-primary-orange" />
             <span className="font-medium text-gray-900">Mode Administration</span>
             <span className="text-sm text-gray-500">
-              ({localStorage.getItem("aywa_admin_user")})
+              (Administrateur principal)
             </span>
           </div>
           <Button variant="outline" size="sm" onClick={handleLogout}>
