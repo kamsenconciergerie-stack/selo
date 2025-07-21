@@ -125,40 +125,86 @@ export default function Home() {
     <div className="min-h-screen bg-gray-50">
       <Header />
       
-      {/* Bannière Promo Magal de Touba 2025 */}
-      <div className="bg-gradient-to-r from-orange-500 via-orange-400 to-yellow-400 py-4 px-4 shadow-lg">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <div className="bg-white p-2 rounded-full">
-                <Star className="h-6 w-6 text-orange-500" />
+      {/* Bannière Promo Magal de Touba 2025 - Version Créative */}
+      <div className="relative overflow-hidden bg-gradient-to-br from-emerald-600 via-teal-500 to-cyan-400 py-6 px-4 shadow-2xl">
+        {/* Motifs décoratifs islamiques en arrière-plan */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 left-0 w-32 h-32 bg-white rounded-full transform -translate-x-16 -translate-y-16"></div>
+          <div className="absolute top-0 right-0 w-24 h-24 bg-white rounded-full transform translate-x-12 -translate-y-12"></div>
+          <div className="absolute bottom-0 left-1/4 w-20 h-20 bg-white rounded-full transform translate-y-10"></div>
+          <div className="absolute bottom-0 right-1/3 w-16 h-16 bg-white rounded-full transform translate-y-8"></div>
+        </div>
+        
+        {/* Contenu principal */}
+        <div className="relative max-w-7xl mx-auto">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
+            
+            {/* Section gauche - Message principal */}
+            <div className="flex-1 text-center lg:text-left">
+              <div className="flex items-center justify-center lg:justify-start gap-3 mb-3">
+                <div className="bg-white/20 backdrop-blur-sm p-3 rounded-full border border-white/30 magal-banner-float">
+                  <span className="text-3xl">🕌</span>
+                </div>
+                <div className="bg-gradient-to-r from-yellow-300 to-amber-300 text-emerald-800 px-4 py-1 rounded-full text-sm font-bold shadow-lg magal-banner-shimmer">
+                  ÉVÉNEMENT SPÉCIAL
+                </div>
               </div>
-              <div className="text-white">
-                <h2 className="text-xl md:text-2xl font-bold">
-                  🕌 Tarifs Spéciaux pour Magal de Touba 2025
-                </h2>
-                <p className="text-orange-100 text-sm md:text-base">
-                  Réductions exceptionnelles sur tous nos équipements pour ce grand événement religieux
-                </p>
+              
+              <h2 className="text-2xl lg:text-4xl font-bold text-white mb-2 leading-tight">
+                Magal de Touba 2025
+                <span className="block text-yellow-200 text-xl lg:text-2xl font-semibold">
+                  Tarifs Exceptionnels
+                </span>
+              </h2>
+              
+              <p className="text-white/90 text-base lg:text-lg max-w-2xl mx-auto lg:mx-0 mb-4">
+                En cette période sacrée, bénéficiez de <span className="font-bold text-yellow-200">réductions spéciales</span> 
+                sur tous nos équipements pour faciliter vos déplacements et projets.
+              </p>
+              
+              <div className="flex flex-wrap gap-2 justify-center lg:justify-start">
+                <span className="bg-white/20 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm border border-white/30">
+                  🚛 Camions & Véhicules
+                </span>
+                <span className="bg-white/20 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm border border-white/30">
+                  🚜 Matériel Agricole
+                </span>
+                <span className="bg-white/20 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm border border-white/30">
+                  ⚡ Équipements Électriques
+                </span>
               </div>
             </div>
-            <div className="flex flex-col sm:flex-row gap-3">
+
+            {/* Section droite - Actions */}
+            <div className="flex flex-col items-center gap-4 bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 shadow-xl">
+              <div className="text-center">
+                <div className="text-yellow-200 text-sm font-medium mb-1">Offre Limitée</div>
+                <div className="text-white text-2xl font-bold">Jusqu'à -25%</div>
+                <div className="text-white/80 text-sm">sur vos locations</div>
+              </div>
+              
               <Button 
                 asChild
-                className="bg-white text-orange-600 hover:bg-orange-50 font-semibold px-6 py-3 shadow-lg"
+                className="bg-gradient-to-r from-yellow-400 to-amber-400 text-emerald-800 hover:from-yellow-300 hover:to-amber-300 font-bold px-8 py-4 text-lg shadow-xl transform hover:scale-105 transition-all duration-200 border-0"
               >
                 <Link href="/contact">
-                  <Phone className="h-4 w-4 mr-2" />
-                  Contacter notre service commercial
+                  <Phone className="h-5 w-5 mr-2" />
+                  Service Commercial
                 </Link>
               </Button>
-              <div className="text-white text-center sm:text-left">
-                <div className="text-sm opacity-90">Appelez directement :</div>
-                <div className="font-bold text-lg">+221 78 606 70 13</div>
+              
+              <div className="text-center">
+                <div className="text-white/70 text-sm mb-1">Réservation directe</div>
+                <div className="bg-white/20 backdrop-blur-sm rounded-lg px-4 py-2 border border-white/30">
+                  <div className="text-white font-bold text-xl">+221 78 606 70 13</div>
+                </div>
               </div>
             </div>
           </div>
         </div>
+        
+        {/* Élément décoratif en bas */}
+        <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-yellow-300 via-amber-300 to-orange-300"></div>
       </div>
 
       <Hero />

@@ -51,6 +51,27 @@
   --radius: 0.5rem;
 }
 
+/* Animation pour la bannière Magal de Touba */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.magal-banner-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.magal-banner-shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
 @layer base {
   * {
     @apply border-border;
