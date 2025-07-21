@@ -121,6 +121,9 @@ Aywa est une application web full-stack pour les services de location d'équipem
 - January 21, 2025. Mise en avant des camions avec 4 catégories principales
 - January 21, 2025. Simplification page services avec 3 services principaux
 - January 21, 2025. Mise à jour page À Propos avec nouveau contenu et contact
+- January 21, 2025. Création images SVG personnalisées avec couleurs Aywa pour tous équipements
+- January 21, 2025. Configuration serveur statique pour images SVG et déploiement prêt
+- January 21, 2025. Demande configuration domaine personnalisé pour production
 
 ## User Preferences
 
