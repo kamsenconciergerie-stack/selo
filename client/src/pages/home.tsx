@@ -188,6 +188,86 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Package Examples Section */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+              Exemple de combinaisons populaires (forfait location)
+            </h2>
+            <p className="text-xl text-gray-600">
+              Nos équipes vous proposent des forfaits complets pour vos projets
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <Card className="hover:shadow-lg transition-shadow">
+              <CardContent className="p-6">
+                <div className="bg-primary-orange/10 w-12 h-12 rounded-full flex items-center justify-center mb-4">
+                  <Truck className="h-6 w-6 text-primary-orange" />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                  Tracteur 75 CV + charrue + opérateur → pour 5 ha de maïs
+                </h3>
+                <p className="text-gray-600">
+                  Solution complète pour la préparation et le labour de terrain agricole avec opérateur expérimenté inclus.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="hover:shadow-lg transition-shadow">
+              <CardContent className="p-6">
+                <div className="bg-green-100 w-12 h-12 rounded-full flex items-center justify-center mb-4">
+                  <Zap className="h-6 w-6 text-green-600" />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                  Tracteur + billonneuse + semoir + motopompe → pour périmètre maraîcher de 2 ha
+                </h3>
+                <p className="text-gray-600">
+                  Kit complet pour l'aménagement et l'irrigation d'un périmètre maraîcher moderne.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="hover:shadow-lg transition-shadow">
+              <CardContent className="p-6">
+                <div className="bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center mb-4">
+                  <Truck className="h-6 w-6 text-blue-600" />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                  Camion benne 30 T + chargeur frontal → pour approvisionnement en gravier ou céréales
+                </h3>
+                <p className="text-gray-600">
+                  Ensemble logistique pour le transport et la manutention de matériaux en vrac ou de produits agricoles.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="hover:shadow-lg transition-shadow">
+              <CardContent className="p-6">
+                <div className="bg-purple-100 w-12 h-12 rounded-full flex items-center justify-center mb-4">
+                  <CheckCircle className="h-6 w-6 text-purple-600" />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                  Pick-up 4x4 + pulvérisateur + motopompe → pour suivi agricole multisite
+                </h3>
+                <p className="text-gray-600">
+                  Solution mobile pour la surveillance et le traitement de plusieurs exploitations agricoles.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="text-center mt-12">
+            <Link href="/contact">
+              <Button className="bg-primary-orange hover:bg-primary-orange/90 text-white px-8 py-3 text-lg">
+                Demander un devis personnalisé
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* How It Works */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
