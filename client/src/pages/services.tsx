@@ -2,53 +2,66 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Truck, Clock, Shield, Wrench, Headphones, Award } from "lucide-react";
+import { Truck, Clock, Shield, Wrench, Headphones, Award, Package, Car } from "lucide-react";
 import { Link } from "wouter";
 
 export default function Services() {
   const services = [
     {
-      icon: Truck,
-      title: "Livraison et Reprise",
-      description: "Service de livraison gratuit dans Dakar et tarifs préférentiels dans tout le Sénégal",
+      icon: Package,
+      title: "📦 Envoi de Colis",
+      description: "Service d'envoi et de livraison de colis dans tout le Sénégal avec nos véhicules professionnels",
       features: [
-        "Livraison le jour même à Dakar",
-        "Reprise incluse dans le tarif",
-        "Équipe de livraison professionnelle",
-        "Déchargement sur site"
+        "Livraison rapide 24-48h",
+        "Suivi en temps réel",
+        "Assurance colis incluse",
+        "Pickup à domicile disponible"
       ],
       bgColor: "bg-blue-100",
       iconColor: "text-blue-600"
     },
     {
-      icon: Wrench,
-      title: "Maintenance & Réparation",
-      description: "Service de maintenance préventive et réparation sur site",
+      icon: Truck,
+      title: "🚛 Location de Camions",
+      description: "Location de camions porteurs, semi-remorques et camions bennes pour tous vos besoins de transport",
       features: [
-        "Maintenance préventive incluse",
-        "Intervention rapide en cas de panne",
-        "Techniciens qualifiés",
-        "Pièces de rechange disponibles"
+        "Camions de 3.5T à 40T",
+        "Avec ou sans chauffeur",
+        "Assurance tous risques",
+        "Maintenance incluse"
       ],
       bgColor: "bg-green-100", 
       iconColor: "text-green-600"
     },
     {
-      icon: Shield,
-      title: "Formation & Sécurité",
-      description: "Formation complète à l'utilisation sécuritaire des équipements",
+      icon: Car,
+      title: "🛻 Fourgonnettes et Utilitaires",
+      description: "Location de fourgons Renault Master, Mercedes Sprinter et véhicules utilitaires pour professionnels",
       features: [
-        "Formation obligatoire pour gros équipements",
-        "Certification sécurité",
-        "Manuels d'utilisation en français",
-        "Support technique continu"
+        "Véhicules récents et entretenus",
+        "Capacité 1.5T à 3.5T",
+        "Idéal e-commerce et artisans",
+        "Tarifs dégressifs longue durée"
       ],
       bgColor: "bg-orange-100",
       iconColor: "text-primary-orange"
     },
     {
+      icon: Wrench,
+      title: "🔧 Location d'Équipements",
+      description: "Large gamme d'équipements professionnels disponibles à la location pour tous vos projets",
+      features: [
+        "Équipements certifiés et entretenus",
+        "Livraison et récupération incluses",
+        "Support technique 24/7",
+        "Tarifs compétitifs"
+      ],
+      bgColor: "bg-purple-100",
+      iconColor: "text-purple-600"
+    },
+    {
       icon: Headphones,
-      title: "Support 24/7",
+      title: "📞 Support 24/7",
       description: "Assistance technique et commerciale disponible à tout moment",
       features: [
         "Ligne d'urgence 24h/24",
@@ -56,8 +69,8 @@ export default function Services() {
         "Support technique spécialisé",
         "Suivi de commande en temps réel"
       ],
-      bgColor: "bg-purple-100",
-      iconColor: "text-purple-600"
+      bgColor: "bg-indigo-100",
+      iconColor: "text-indigo-600"
     }
   ];
 
@@ -87,10 +100,10 @@ export default function Services() {
       <section className="bg-hero-gradient text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl lg:text-5xl font-bold mb-4">
-            Nos Services
+            🚛 Nos Services de Transport et Location
           </h1>
           <p className="text-xl text-orange-100 max-w-3xl mx-auto">
-            Des services complets pour accompagner vos projets du début à la fin
+            Envoi de colis, location de camions et véhicules utilitaires au Sénégal
           </p>
         </div>
       </section>
