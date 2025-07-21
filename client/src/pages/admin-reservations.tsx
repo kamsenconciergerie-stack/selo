@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { format } from "date-fns";
+import { fr } from "date-fns/locale";
 import { 
   Calendar, 
   User, 
@@ -9,13 +11,21 @@ import {
   AlertCircle,
   Trash2,
   Filter,
-  Search
+  Search,
+  History,
+  Eye,
+  ChevronDown,
+  ChevronUp,
+  Clock,
+  Download
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useMutation } from "@tanstack/react-query";
+import { useToast } from "@/hooks/use-toast";
 
 interface Booking {
   id: number;
@@ -31,6 +41,17 @@ interface Booking {
   status: 'pending' | 'confirmed' | 'completed' | 'cancelled';
   paymentStatus?: string;
   notes?: string;
+  createdAt: string;
+}
+
+interface BookingHistoryEntry {
+  id: number;
+  bookingId: number;
+  field: string;
+  oldValue: string;
+  newValue: string;
+  modifiedBy: string;
+  reason?: string;
   createdAt: string;
 }
 
@@ -51,6 +72,9 @@ export default function AdminReservations() {
   const [dateFilter, setDateFilter] = useState<string>("all");
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [expandedBookings, setExpandedBookings] = useState<Set<number>>(new Set());
+  const [bookingHistories, setBookingHistories] = useState<Record<number, BookingHistoryEntry[]>>({});
+  const { toast } = useToast();
 
   // Load bookings on mount
   useEffect(() => {
@@ -71,6 +95,84 @@ export default function AdminReservations() {
       setIsLoading(false);
     }
   };
+
+  const loadBookingHistory = async (bookingId: number) => {
+    try {
+      const response = await fetch(`/api/admin/booking-history/${bookingId}`);
+      if (response.ok) {
+        const history = await response.json();
+        setBookingHistories(prev => ({
+          ...prev,
+          [bookingId]: history
+        }));
+      }
+    } catch (error) {
+      console.error("Erreur lors du chargement de l'historique:", error);
+    }
+  };
+
+  const toggleBookingExpansion = async (bookingId: number) => {
+    const newExpanded = new Set(expandedBookings);
+    if (newExpanded.has(bookingId)) {
+      newExpanded.delete(bookingId);
+    } else {
+      newExpanded.add(bookingId);
+      // Load history if not already loaded
+      if (!bookingHistories[bookingId]) {
+        await loadBookingHistory(bookingId);
+      }
+    }
+    setExpandedBookings(newExpanded);
+  };
+
+  const updateBookingMutation = useMutation({
+    mutationFn: async ({ bookingId, status }: { bookingId: number; status: string }) => {
+      const response = await fetch(`/api/admin/bookings/${bookingId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status })
+      });
+      if (!response.ok) throw new Error("Erreur lors de la mise à jour");
+      return response.json();
+    },
+    onSuccess: () => {
+      loadBookings();
+      toast({
+        title: "Réservation mise à jour",
+        description: "Le statut a été modifié avec succès.",
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Erreur",
+        description: "Impossible de mettre à jour le statut.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const deleteBookingMutation = useMutation({
+    mutationFn: async (bookingId: number) => {
+      const response = await fetch(`/api/admin/bookings/${bookingId}`, {
+        method: "DELETE"
+      });
+      if (!response.ok) throw new Error("Erreur lors de la suppression");
+    },
+    onSuccess: () => {
+      loadBookings();
+      toast({
+        title: "Réservation supprimée",
+        description: "La réservation a été supprimée avec succès.",
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Erreur", 
+        description: "Impossible de supprimer la réservation.",
+        variant: "destructive",
+      });
+    },
+  });
 
   const updateBookingStatus = async (bookingId: number, status: string) => {
     try {
@@ -418,6 +520,20 @@ export default function AdminReservations() {
                       <Button
                         variant="outline"
                         size="sm"
+                        onClick={() => toggleBookingExpansion(booking.id)}
+                        className="flex items-center gap-2"
+                      >
+                        <History className="h-4 w-4" />
+                        {expandedBookings.has(booking.id) ? 
+                          <ChevronUp className="h-4 w-4" /> : 
+                          <ChevronDown className="h-4 w-4" />
+                        }
+                        Historique
+                      </Button>
+
+                      <Button
+                        variant="outline"
+                        size="sm"
                         onClick={() => deleteBookingMutation.mutate(booking.id)}
                         className="flex items-center gap-2 text-red-600 hover:text-red-700"
                       >
@@ -432,6 +548,64 @@ export default function AdminReservations() {
                       <p className="text-sm text-gray-700">
                         <strong>Notes:</strong> {booking.notes}
                       </p>
+                    </div>
+                  )}
+
+                  {/* Historique des modifications */}
+                  {expandedBookings.has(booking.id) && (
+                    <div className="mt-4 border-t pt-4">
+                      <div className="flex items-center gap-2 mb-3">
+                        <History className="h-4 w-4 text-gray-500" />
+                        <h4 className="font-medium text-gray-900">Historique des modifications</h4>
+                      </div>
+                      
+                      {bookingHistories[booking.id]?.length > 0 ? (
+                        <div className="space-y-2">
+                          {bookingHistories[booking.id].map((entry: BookingHistoryEntry) => (
+                            <div key={entry.id} className="bg-gray-50 rounded-lg p-3 text-sm">
+                              <div className="flex items-center justify-between mb-1">
+                                <span className="font-medium text-gray-900">
+                                  {entry.field === 'startDate' ? 'Date de début' :
+                                   entry.field === 'endDate' ? 'Date de fin' :
+                                   entry.field === 'totalPrice' ? 'Prix total' :
+                                   entry.field === 'status' ? 'Statut' :
+                                   entry.field}
+                                </span>
+                                <Badge variant="outline" className="text-xs">
+                                  {entry.modifiedBy === 'client' ? 'Client' : 'Admin'}
+                                </Badge>
+                              </div>
+                              
+                              <div className="text-gray-600 mb-1">
+                                <span className="line-through text-red-600">{entry.oldValue}</span>
+                                {' → '}
+                                <span className="text-green-600">{entry.newValue}</span>
+                              </div>
+                              
+                              {entry.reason && (
+                                <p className="text-gray-500 italic text-xs mb-1">
+                                  Raison: {entry.reason}
+                                </p>
+                              )}
+                              
+                              <p className="text-xs text-gray-400">
+                                {new Date(entry.createdAt).toLocaleDateString('fr-FR', {
+                                  day: '2-digit',
+                                  month: 'long',
+                                  year: 'numeric',
+                                  hour: '2-digit',
+                                  minute: '2-digit'
+                                })}
+                              </p>
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="bg-gray-50 rounded-lg p-4 text-center text-gray-500 text-sm">
+                          <History className="h-8 w-8 mx-auto mb-2 opacity-50" />
+                          <p>Aucune modification enregistrée pour cette réservation</p>
+                        </div>
+                      )}
                     </div>
                   )}
 

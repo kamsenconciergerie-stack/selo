@@ -7,6 +7,7 @@ import { authRoutes } from "./auth-routes";
 import { partnerRoutes } from "./partner-routes";
 import { authenticate, generateSessionToken, type AuthenticatedRequest } from "./auth-middleware";
 import { setupAuth, isAuthenticated, isAdmin } from "./replitAuth";
+import { EmailService } from "./email-service";
 import { z } from "zod";
 import multer from "multer";
 import path from "path";
@@ -708,6 +709,63 @@ ${validatedData.message}`
     } catch (error) {
       console.error("Error deleting booking:", error);
       res.status(500).json({ message: "Erreur lors de la suppression de la réservation" });
+    }
+  });
+
+  // Routes pour les notifications administrateur
+  app.get("/api/admin/notifications", async (req, res) => {
+    try {
+      const notifications = await storage.getAdminNotifications();
+      res.json(notifications);
+    } catch (error) {
+      console.error("Error fetching notifications:", error);
+      res.status(500).json({ message: "Erreur lors de la récupération des notifications" });
+    }
+  });
+
+  app.put("/api/admin/notifications/:id/read", async (req, res) => {
+    try {
+      const notificationId = parseInt(req.params.id);
+      await storage.markNotificationAsRead(notificationId);
+      res.json({ message: "Notification marquée comme lue" });
+    } catch (error) {
+      console.error("Error marking notification as read:", error);
+      res.status(500).json({ message: "Erreur lors de la mise à jour" });
+    }
+  });
+
+  app.put("/api/admin/notifications/mark-all-read", async (req, res) => {
+    try {
+      await storage.markAllNotificationsAsRead();
+      res.json({ message: "Toutes les notifications marquées comme lues" });
+    } catch (error) {
+      console.error("Error marking all notifications as read:", error);
+      res.status(500).json({ message: "Erreur lors de la mise à jour" });
+    }
+  });
+
+  app.delete("/api/admin/notifications/:id", async (req, res) => {
+    try {
+      const notificationId = parseInt(req.params.id);
+      const deleted = await storage.deleteNotification(notificationId);
+      if (!deleted) {
+        return res.status(404).json({ message: "Notification non trouvée" });
+      }
+      res.json({ message: "Notification supprimée" });
+    } catch (error) {
+      console.error("Error deleting notification:", error);
+      res.status(500).json({ message: "Erreur lors de la suppression" });
+    }
+  });
+
+  app.get("/api/admin/booking-history/:bookingId", async (req, res) => {
+    try {
+      const bookingId = parseInt(req.params.bookingId);
+      const history = await storage.getBookingHistory(bookingId);
+      res.json(history);
+    } catch (error) {
+      console.error("Error fetching booking history:", error);
+      res.status(500).json({ message: "Erreur lors de la récupération de l'historique" });
     }
   });
 

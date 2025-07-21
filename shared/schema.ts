@@ -39,6 +39,30 @@ export const bookings = pgTable("bookings", {
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
 
+// Historique des modifications de réservations
+export const bookingHistory = pgTable("booking_history", {
+  id: serial("id").primaryKey(),
+  bookingId: integer("booking_id").notNull(),
+  field: text("field").notNull(), // Champ modifié (startDate, endDate, etc.)
+  oldValue: text("old_value"), // Ancienne valeur
+  newValue: text("new_value"), // Nouvelle valeur
+  modifiedBy: text("modified_by").notNull(), // client, admin
+  reason: text("reason"), // Raison de la modification
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
+
+// Notifications pour l'administration
+export const adminNotifications = pgTable("admin_notifications", {
+  id: serial("id").primaryKey(),
+  type: text("type").notNull(), // reservation_modified, new_booking, cancellation
+  title: text("title").notNull(),
+  message: text("message").notNull(),
+  bookingId: integer("booking_id"),
+  isRead: boolean("is_read").notNull().default(false),
+  priority: text("priority").notNull().default("normal"), // low, normal, high, urgent
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
+
 export const payments = pgTable("payments", {
   id: serial("id").primaryKey(),
   bookingId: integer("booking_id").notNull(),

@@ -17,6 +17,7 @@ import SimpleAdmin from "@/pages/simple-admin";
 import AdminReservations from "@/pages/admin-reservations-simple";
 import AdminDashboardComplete from "@/pages/admin-dashboard-complete";
 import AdminEquipment from "@/pages/admin-equipment";
+import AdminNotifications from "@/pages/admin-notifications";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -35,6 +36,7 @@ function Router() {
       <Route path="/admin" component={SimpleAdmin} />
       <Route path="/admin/reservations" component={AdminReservations} />
       <Route path="/admin/equipment" component={AdminEquipment} />
+      <Route path="/admin/notifications" component={AdminNotifications} />
       <Route path="/adminone" component={AdminDashboardComplete} />
       <Route component={NotFound} />
     </Switch>

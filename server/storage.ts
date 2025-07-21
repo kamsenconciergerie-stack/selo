@@ -132,6 +132,17 @@ export interface IStorage {
   // Analytics methods
   recordAnalytics(metric: string, value: number, metadata?: any): Promise<void>;
   getAnalytics(metric: string, startDate: Date, endDate: Date): Promise<any[]>;
+  
+  // Notification methods
+  getAdminNotifications(): Promise<any[]>;
+  markNotificationAsRead(id: number): Promise<void>;
+  markAllNotificationsAsRead(): Promise<void>;
+  deleteNotification(id: number): Promise<boolean>;
+  createAdminNotification(notification: any): Promise<void>;
+  
+  // Booking history methods
+  getBookingHistory(bookingId: number): Promise<any[]>;
+  recordBookingChange(bookingId: number, field: string, oldValue: string, newValue: string, modifiedBy: string, reason?: string): Promise<void>;
 }
 
 export class DbStorage implements IStorage {
@@ -355,8 +366,78 @@ export class DbStorage implements IStorage {
   }
 
   async updateBooking(bookingId: number, updates: Partial<Booking>): Promise<Booking | undefined> {
-    const result = await db.update(bookings).set(updates).where(eq(bookings.id, bookingId)).returning();
-    return result[0];
+    // Get current booking for comparison
+    const currentBooking = await db.select().from(bookings).where(eq(bookings.id, bookingId));
+    const current = currentBooking[0];
+    
+    if (!current) {
+      return undefined;
+    }
+
+    const [updatedBooking] = await db
+      .update(bookings)
+      .set({ ...updates, updatedAt: new Date() })
+      .where(eq(bookings.id, bookingId))
+      .returning();
+
+    // Record changes and create notifications/emails
+    const changes = [];
+    for (const [field, newValue] of Object.entries(updates)) {
+      if (field !== 'updatedAt' && current[field as keyof typeof current] !== newValue) {
+        const oldValue = current[field as keyof typeof current];
+        changes.push({ field, oldValue: String(oldValue), newValue: String(newValue) });
+        
+        await this.recordBookingChange(
+          bookingId,
+          field,
+          String(oldValue),
+          String(newValue),
+          'client' // Assume client modification unless specified
+        );
+
+        // Create admin notification for important changes
+        if (['startDate', 'endDate', 'status'].includes(field)) {
+          await this.createAdminNotification({
+            type: 'reservation_modified',
+            title: `Réservation #${bookingId} modifiée`,
+            message: `${field === 'startDate' ? 'Date de début' : 
+                      field === 'endDate' ? 'Date de fin' : 
+                      field === 'status' ? 'Statut' : field} 
+                      modifié de "${oldValue}" à "${newValue}"`,
+            bookingId: bookingId,
+            priority: field === 'status' ? 'high' : 'normal'
+          });
+        }
+      }
+    }
+
+    // Trigger email notification if there are significant changes
+    if (changes.length > 0) {
+      // Get equipment name for email
+      const equipmentResult = await db.select({ name: equipment.name })
+        .from(equipment)
+        .where(eq(equipment.id, current.equipmentId));
+      
+      const equipmentName = equipmentResult[0]?.name || `Équipement #${current.equipmentId}`;
+      
+      // Import and use EmailService dynamically to avoid circular dependency
+      try {
+        const { EmailService } = await import('./email-service');
+        await EmailService.sendBookingModificationAlert({
+          bookingId,
+          customerName: current.customerName,
+          customerEmail: current.customerEmail,
+          customerPhone: current.customerPhone,
+          equipmentName,
+          changes,
+          modificationDate: new Date().toISOString()
+        });
+      } catch (error) {
+        console.error('Error sending email notification:', error);
+      }
+    }
+
+    return updatedBooking;
   }
 
   async cancelBooking(bookingId: number): Promise<void> {
@@ -536,6 +617,44 @@ export class DbStorage implements IStorage {
   async getAnalytics(metric: string, startDate: Date, endDate: Date): Promise<any[]> {
     return await db.select().from(analytics)
       .where(eq(analytics.metric, metric));
+  }
+
+  // Notification methods implementation
+  async getAdminNotifications(): Promise<any[]> {
+    // Mock implementation - return empty array for now
+    return [];
+  }
+
+  async markNotificationAsRead(id: number): Promise<void> {
+    // Mock implementation
+    console.log(`Marking notification ${id} as read`);
+  }
+
+  async markAllNotificationsAsRead(): Promise<void> {
+    // Mock implementation
+    console.log("Marking all notifications as read");
+  }
+
+  async deleteNotification(id: number): Promise<boolean> {
+    // Mock implementation
+    console.log(`Deleting notification ${id}`);
+    return true;
+  }
+
+  async createAdminNotification(notification: any): Promise<void> {
+    // Mock implementation - log notification for now
+    console.log("Creating admin notification:", notification);
+  }
+
+  // Booking history methods implementation
+  async getBookingHistory(bookingId: number): Promise<any[]> {
+    // Mock implementation - return empty array for now
+    return [];
+  }
+
+  async recordBookingChange(bookingId: number, field: string, oldValue: string, newValue: string, modifiedBy: string, reason?: string): Promise<void> {
+    // Mock implementation - log change for now
+    console.log(`Booking ${bookingId} change: ${field} from ${oldValue} to ${newValue} by ${modifiedBy}`, reason);
   }
 
   // User authentication methods
