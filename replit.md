@@ -124,6 +124,7 @@ Aywa est une application web full-stack pour les services de location d'équipem
 - January 21, 2025. Création images SVG personnalisées avec couleurs Aywa pour tous équipements
 - January 21, 2025. Configuration serveur statique pour images SVG et déploiement prêt
 - January 21, 2025. Configuration domaine personnalisé aywalogistic.com pour production
+- January 21, 2025. Correction couleurs étiquettes AYWA et emails contact visibles - PRÊT DÉPLOIEMENT
 
 ## User Preferences
 
