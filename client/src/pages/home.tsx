@@ -195,7 +195,7 @@ export default function Home() {
               </div>
               
               <h2 className="text-2xl lg:text-4xl font-bold text-blue-800 mb-2 leading-tight drop-shadow-sm">
-                Grand Magal de Touba 2025 - Réductions Spéciales !
+                Réductions Spéciales !
               </h2>
               
               <p className="text-blue-800 text-base lg:text-lg max-w-2xl mx-auto lg:mx-0 mb-4 drop-shadow-sm">
