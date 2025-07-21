@@ -3,6 +3,8 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertBookingSchema, insertInquirySchema } from "@shared/schema";
 import { registerPaymentRoutes } from "./payment-routes";
+import { authRoutes } from "./auth-routes";
+import { partnerRoutes } from "./partner-routes";
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
