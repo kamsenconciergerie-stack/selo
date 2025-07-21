@@ -46,6 +46,9 @@ export interface IStorage {
   getEquipmentByCategory(category: string): Promise<Equipment[]>;
   searchEquipment(query: string, location?: string): Promise<Equipment[]>;
   createEquipment(equipment: InsertEquipment): Promise<Equipment>;
+  updateEquipment(id: number, equipment: Partial<InsertEquipment>): Promise<Equipment | undefined>;
+  deleteEquipment(id: number): Promise<boolean>;
+  updateEquipmentImages(id: number, imagePaths: string[]): Promise<Equipment | undefined>;
   
   // Booking methods
   createBooking(booking: InsertBooking): Promise<Booking>;
@@ -164,6 +167,29 @@ export class DbStorage implements IStorage {
 
   async createEquipment(equipmentData: InsertEquipment): Promise<Equipment> {
     const result = await db.insert(equipment).values(equipmentData).returning();
+    return result[0];
+  }
+
+  async updateEquipment(id: number, equipmentData: Partial<InsertEquipment>): Promise<Equipment | undefined> {
+    const result = await db
+      .update(equipment)
+      .set(equipmentData)
+      .where(eq(equipment.id, id))
+      .returning();
+    return result[0];
+  }
+
+  async deleteEquipment(id: number): Promise<boolean> {
+    const result = await db.delete(equipment).where(eq(equipment.id, id));
+    return (result.rowCount || 0) > 0;
+  }
+
+  async updateEquipmentImages(id: number, imagePaths: string[]): Promise<Equipment | undefined> {
+    const result = await db
+      .update(equipment)
+      .set({ imageUrl: imagePaths[0] }) // For now, use the first image as main image
+      .where(eq(equipment.id, id))
+      .returning();
     return result[0];
   }
 

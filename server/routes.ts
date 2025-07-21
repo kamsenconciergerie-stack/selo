@@ -6,6 +6,33 @@ import { registerPaymentRoutes } from "./payment-routes";
 import { authRoutes } from "./auth-routes";
 import { partnerRoutes } from "./partner-routes";
 import { z } from "zod";
+import multer from "multer";
+import path from "path";
+
+// Configure multer for image uploads
+const uploadStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/');
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
+  }
+});
+
+const upload = multer({ 
+  storage: uploadStorage,
+  limits: {
+    fileSize: 5 * 1024 * 1024, // 5MB limit
+  },
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype.startsWith('image/')) {
+      cb(null, true);
+    } else {
+      cb(new Error('Only image files are allowed'));
+    }
+  }
+});
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Equipment routes
@@ -191,6 +218,121 @@ ${validatedData.message}`
   
   // Register partner routes
   app.use('/api/partners', partnerRoutes);
+
+  // Admin routes for equipment management
+  app.post("/api/admin/equipment", async (req, res) => {
+    try {
+      const equipmentSchema = z.object({
+        name: z.string().min(2),
+        category: z.string().min(1),
+        pricePerDay: z.number().min(0),
+        description: z.string().min(10),
+        specifications: z.array(z.string()).optional(),
+        location: z.string().min(1),
+        imageUrl: z.string().default("/placeholder-equipment.jpg"),
+        isAvailable: z.boolean().default(true),
+        weight: z.string().optional(),
+        fuelType: z.string().optional(),
+        power: z.string().optional()
+      });
+      
+      const validatedData = equipmentSchema.parse(req.body);
+      const equipment = await storage.createEquipment(validatedData);
+      
+      res.status(201).json(equipment);
+    } catch (error) {
+      console.error("Error creating equipment:", error);
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ 
+          message: "Données invalides", 
+          errors: error.errors 
+        });
+      }
+      res.status(500).json({ message: "Erreur lors de la création de l'équipement" });
+    }
+  });
+
+  app.put("/api/admin/equipment/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const equipmentSchema = z.object({
+        name: z.string().min(2),
+        category: z.string().min(1),
+        pricePerDay: z.number().min(0),
+        description: z.string().min(10),
+        specifications: z.array(z.string()).optional(),
+        location: z.string().min(1),
+        imageUrl: z.string().optional(),
+        isAvailable: z.boolean(),
+        weight: z.string().optional(),
+        fuelType: z.string().optional(),
+        power: z.string().optional()
+      });
+      
+      const validatedData = equipmentSchema.parse(req.body);
+      const equipment = await storage.updateEquipment(id, validatedData);
+      
+      if (!equipment) {
+        return res.status(404).json({ message: "Équipement non trouvé" });
+      }
+      
+      res.json(equipment);
+    } catch (error) {
+      console.error("Error updating equipment:", error);
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ 
+          message: "Données invalides", 
+          errors: error.errors 
+        });
+      }
+      res.status(500).json({ message: "Erreur lors de la modification de l'équipement" });
+    }
+  });
+
+  app.delete("/api/admin/equipment/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const success = await storage.deleteEquipment(id);
+      
+      if (!success) {
+        return res.status(404).json({ message: "Équipement non trouvé" });
+      }
+      
+      res.json({ message: "Équipement supprimé avec succès" });
+    } catch (error) {
+      console.error("Error deleting equipment:", error);
+      res.status(500).json({ message: "Erreur lors de la suppression de l'équipement" });
+    }
+  });
+
+  // Image upload route
+  app.post("/api/admin/equipment/:id/images", upload.array('images', 5), async (req, res) => {
+    try {
+      const equipmentId = parseInt(req.params.id);
+      const files = req.files as Express.Multer.File[];
+      
+      if (!files || files.length === 0) {
+        return res.status(400).json({ message: "Aucune image fournie" });
+      }
+
+      // Save image paths to equipment
+      const imagePaths = files.map(file => `/uploads/${file.filename}`);
+      const equipment = await storage.updateEquipmentImages(equipmentId, imagePaths);
+      
+      if (!equipment) {
+        return res.status(404).json({ message: "Équipement non trouvé" });
+      }
+      
+      res.json({ 
+        message: "Images uploadées avec succès", 
+        imagePaths,
+        equipment 
+      });
+    } catch (error) {
+      console.error("Error uploading images:", error);
+      res.status(500).json({ message: "Erreur lors de l'upload des images" });
+    }
+  });
 
   const httpServer = createServer(app);
   return httpServer;
