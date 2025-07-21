@@ -86,6 +86,21 @@ export const inquiries = pgTable("inquiries", {
   createdAt: text("created_at").notNull(),
 });
 
+export const partnerRequests = pgTable("partner_requests", {
+  id: serial("id").primaryKey(),
+  firstName: text("first_name").notNull(),
+  lastName: text("last_name").notNull(),
+  email: text("email").notNull(),
+  phone: text("phone").notNull(),
+  website: text("website"),
+  equipmentCategories: text("equipment_categories").array().notNull(),
+  status: text("status").notNull().default("pending"), // pending, approved, rejected
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  processedAt: timestamp("processed_at"),
+  processedBy: text("processed_by"),
+  notes: text("notes"),
+});
+
 export const insertEquipmentSchema = createInsertSchema(equipment).omit({
   id: true,
 });
@@ -105,6 +120,14 @@ export const insertPaymentSchema = createInsertSchema(payments).omit({
 export const insertInquirySchema = createInsertSchema(inquiries).omit({
   id: true,
   createdAt: true,
+});
+
+export const insertPartnerRequestSchema = createInsertSchema(partnerRequests).omit({
+  id: true,
+  status: true,
+  createdAt: true,
+  processedAt: true,
+  processedBy: true,
 });
 
 // User accounts system

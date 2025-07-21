@@ -19,7 +19,9 @@ import {
   Phone,
   Mail,
   MapPin,
-  DollarSign
+  DollarSign,
+  ExternalLink,
+  Clock
 } from "lucide-react";
 
 interface Booking {
@@ -55,6 +57,151 @@ interface DashboardStats {
   confirmedBookings: number;
   totalEquipment: number;
   availableEquipment: number;
+  partnerRequests?: {
+    total: number;
+    pending: number;
+    approved: number;
+    rejected: number;
+  };
+}
+
+interface PartnerRequest {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  website: string;
+  equipmentCategories: string[];
+  status: 'pending' | 'approved' | 'rejected';
+  createdAt: string;
+}
+
+function PartnerRequestsList() {
+  const [requests, setRequests] = useState<PartnerRequest[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchRequests = async () => {
+      try {
+        const response = await fetch('/api/admin/partner-requests');
+        if (response.ok) {
+          const data = await response.json();
+          setRequests(data);
+        }
+      } catch (error) {
+        console.error('Error fetching partner requests:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRequests();
+  }, []);
+
+  if (loading) {
+    return <div className="text-center py-4">Chargement...</div>;
+  }
+
+  if (requests.length === 0) {
+    return (
+      <div className="text-center py-8 text-gray-500">
+        Aucune demande de partenariat enregistrée
+      </div>
+    );
+  }
+
+  const getStatusBadge = (status: string) => {
+    switch (status) {
+      case 'pending':
+        return <Badge variant="outline" className="bg-orange-50 text-orange-700 border-orange-200">En Attente</Badge>;
+      case 'approved':
+        return <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">Approuvée</Badge>;
+      case 'rejected':
+        return <Badge variant="outline" className="bg-red-50 text-red-700 border-red-200">Rejetée</Badge>;
+      default:
+        return <Badge variant="outline">{status}</Badge>;
+    }
+  };
+
+  return (
+    <div className="space-y-4">
+      {requests.map((request) => (
+        <Card key={request.id} className="border-l-4 border-l-blue-500">
+          <CardContent className="p-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {/* Info partenaire */}
+              <div className="md:col-span-2">
+                <div className="flex items-start justify-between mb-2">
+                  <h5 className="font-semibold text-gray-900">
+                    {request.firstName} {request.lastName}
+                  </h5>
+                  {getStatusBadge(request.status)}
+                </div>
+                
+                <div className="space-y-1 text-sm text-gray-600">
+                  <div className="flex items-center gap-2">
+                    <Mail className="h-4 w-4" />
+                    <span>{request.email}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Phone className="h-4 w-4" />
+                    <span>{request.phone}</span>
+                  </div>
+                  {request.website && (
+                    <div className="flex items-center gap-2">
+                      <ExternalLink className="h-4 w-4" />
+                      <a 
+                        href={request.website} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-blue-600 hover:underline"
+                      >
+                        {request.website}
+                      </a>
+                    </div>
+                  )}
+                  <div className="flex items-center gap-2">
+                    <Clock className="h-4 w-4" />
+                    <span>{formatDate(request.createdAt)}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Catégories d'équipements */}
+              <div>
+                <h6 className="font-medium text-gray-900 mb-2">Catégories d'intérêt</h6>
+                <div className="flex flex-wrap gap-1">
+                  {request.equipmentCategories.map((category) => (
+                    <Badge 
+                      key={category} 
+                      variant="secondary" 
+                      className="text-xs bg-blue-50 text-blue-700"
+                    >
+                      {category}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {request.status === 'pending' && (
+              <div className="flex gap-2 mt-4 pt-4 border-t">
+                <Button size="sm" className="bg-green-600 hover:bg-green-700">
+                  <CheckCircle className="h-4 w-4 mr-1" />
+                  Approuver
+                </Button>
+                <Button size="sm" variant="outline" className="text-red-600 border-red-200 hover:bg-red-50">
+                  <XCircle className="h-4 w-4 mr-1" />
+                  Rejeter
+                </Button>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      ))}
+    </div>
+  );
 }
 
 function formatPrice(price: number): string {
@@ -101,6 +248,12 @@ function AdminDashboardContent() {
       const equipmentData = equipmentResponse.ok ? await equipmentResponse.json() : [];
       setEquipment(equipmentData);
 
+      // Load partner requests stats
+      const partnerRequestsResponse = await fetch("/api/admin/partner-requests/stats");
+      const partnerRequestsStats = partnerRequestsResponse.ok ? await partnerRequestsResponse.json() : {
+        total: 0, pending: 0, approved: 0, rejected: 0
+      };
+
       // Calculate stats
       const totalRevenue = bookingsData
         .filter((b: Booking) => b.status === 'confirmed' || b.status === 'completed')
@@ -112,7 +265,8 @@ function AdminDashboardContent() {
         pendingBookings: bookingsData.filter((b: Booking) => b.status === 'pending').length,
         confirmedBookings: bookingsData.filter((b: Booking) => b.status === 'confirmed').length,
         totalEquipment: equipmentData.length,
-        availableEquipment: equipmentData.filter((e: Equipment) => e.isAvailable).length
+        availableEquipment: equipmentData.filter((e: Equipment) => e.isAvailable).length,
+        partnerRequests: partnerRequestsStats
       });
 
     } catch (error) {
@@ -190,7 +344,7 @@ function AdminDashboardContent() {
       </div>
 
       {/* Statistiques principales */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-8">
         <Card>
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
@@ -231,6 +385,19 @@ function AdminDashboardContent() {
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
+                <p className="text-sm font-medium text-gray-600">Demandes Partenaires</p>
+                <p className="text-3xl font-bold text-purple-600">{stats.partnerRequests?.total || 0}</p>
+                <p className="text-xs text-purple-500 mt-1">{stats.partnerRequests?.pending || 0} en attente</p>
+              </div>
+              <Users className="h-8 w-8 text-purple-500" />
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div>
                 <p className="text-sm font-medium text-gray-600">Équipements Actifs</p>
                 <p className="text-3xl font-bold text-blue-600">{stats.availableEquipment}/{stats.totalEquipment}</p>
               </div>
@@ -242,10 +409,11 @@ function AdminDashboardContent() {
 
       {/* Contenu par onglets */}
       <Tabs defaultValue="overview" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-4">
+        <TabsList className="grid w-full grid-cols-5">
           <TabsTrigger value="overview">Vue d'ensemble</TabsTrigger>
           <TabsTrigger value="bookings">Réservations</TabsTrigger>
           <TabsTrigger value="equipment">Équipements</TabsTrigger>
+          <TabsTrigger value="partners">Partenaires</TabsTrigger>
           <TabsTrigger value="analytics">Analyses</TabsTrigger>
         </TabsList>
 
@@ -564,6 +732,56 @@ function AdminDashboardContent() {
                       </div>
                     </div>
                   ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </TabsContent>
+
+        <TabsContent value="partners" className="space-y-6">
+          <div className="grid grid-cols-1 gap-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Users className="h-5 w-5" />
+                  Demandes de Partenariat ({stats.partnerRequests?.total || 0})
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {/* Stats cards */}
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    <Card>
+                      <CardContent className="p-4">
+                        <div className="text-center">
+                          <p className="text-2xl font-bold text-orange-600">{stats.partnerRequests?.pending || 0}</p>
+                          <p className="text-sm text-gray-600">En Attente</p>
+                        </div>
+                      </CardContent>
+                    </Card>
+                    <Card>
+                      <CardContent className="p-4">
+                        <div className="text-center">
+                          <p className="text-2xl font-bold text-green-600">{stats.partnerRequests?.approved || 0}</p>
+                          <p className="text-sm text-gray-600">Approuvées</p>
+                        </div>
+                      </CardContent>
+                    </Card>
+                    <Card>
+                      <CardContent className="p-4">
+                        <div className="text-center">
+                          <p className="text-2xl font-bold text-red-600">{stats.partnerRequests?.rejected || 0}</p>
+                          <p className="text-sm text-gray-600">Rejetées</p>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+
+                  {/* Liste des demandes */}
+                  <div className="space-y-4">
+                    <h4 className="font-semibold text-gray-900">Demandes Récentes</h4>
+                    <PartnerRequestsList />
+                  </div>
                 </div>
               </CardContent>
             </Card>

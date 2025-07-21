@@ -935,6 +935,85 @@ ${validatedData.message}`
     }
   });
 
+  // Partner requests routes
+  app.post("/api/partner-inquiry", async (req, res) => {
+    try {
+      const partnerRequest = req.body;
+      // Mock storage for now - replace with actual database insertion
+      const result = {
+        id: Math.floor(Math.random() * 1000),
+        ...partnerRequest,
+        status: 'pending',
+        createdAt: new Date().toISOString(),
+      };
+      res.status(201).json(result);
+    } catch (error) {
+      console.error("Error creating partner request:", error);
+      res.status(500).json({ message: "Failed to create partner request" });
+    }
+  });
+
+  app.get("/api/admin/partner-requests", async (req, res) => {
+    try {
+      // Mock partner requests data - replace with actual database query
+      const partnerRequests = [
+        {
+          id: 1,
+          firstName: "Mamadou",
+          lastName: "Diallo",
+          email: "mamadou.diallo@transport.sn",
+          phone: "+221 77 123 45 67",
+          website: "https://transportdiallo.sn",
+          equipmentCategories: ["Camion porteur", "Camion benne"],
+          status: "pending",
+          createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+        },
+        {
+          id: 2,
+          firstName: "Fatou",
+          lastName: "Ba",
+          email: "fatou.ba@logistics.sn",
+          phone: "+221 76 234 56 78",
+          website: "",
+          equipmentCategories: ["Camionnette / Fourgon", "Engins de Chantier"],
+          status: "pending",
+          createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+        },
+        {
+          id: 3,
+          firstName: "Ousmane",
+          lastName: "Ndiaye",
+          email: "ousmane.ndiaye@equipement.sn",
+          phone: "+221 78 345 67 89",
+          website: "https://equipementndiaye.com",
+          equipmentCategories: ["Camion semi-remorque", "Outils à Main"],
+          status: "approved",
+          createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+        }
+      ];
+      res.json(partnerRequests);
+    } catch (error) {
+      console.error("Error fetching partner requests:", error);
+      res.status(500).json({ message: "Failed to fetch partner requests" });
+    }
+  });
+
+  app.get("/api/admin/partner-requests/stats", async (req, res) => {
+    try {
+      // Mock stats - replace with actual database query
+      const stats = {
+        total: 3,
+        pending: 2,
+        approved: 1,
+        rejected: 0,
+      };
+      res.json(stats);
+    } catch (error) {
+      console.error("Error fetching partner requests stats:", error);
+      res.status(500).json({ message: "Failed to fetch partner requests stats" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
