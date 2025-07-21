@@ -25,7 +25,7 @@ export const CATEGORIES = [
 export const SERVICE_AREAS = [
   {
     city: "Dakar",
-    description: "Zone principale - Livraison le jour même - à partir de 5 000 XOF",
+    description: "Livraison le jour même - à partir de 5 000 XOF",
     deliveryTime: "Livraison le jour même",
     cost: 5000
   },

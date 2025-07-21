@@ -243,7 +243,7 @@ export default function Home() {
                         {area.city}
                       </h3>
                       <p className="text-gray-600">
-                        {area.description} {area.cost > 0 && `- ${area.cost.toLocaleString()} XOF`}
+                        {area.description}
                       </p>
                     </div>
                     <CheckCircle className="h-8 w-8 text-green-600" />

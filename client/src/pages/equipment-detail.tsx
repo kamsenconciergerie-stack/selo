@@ -122,11 +122,7 @@ export default function EquipmentDetail() {
                     {formatPrice(equipment.pricePerDay)}
                   </div>
                   <div className="text-gray-600">par jour</div>
-                  {serviceArea && serviceArea.cost > 0 && (
-                    <div className="text-sm text-gray-500 mt-2">
-                      + {formatPrice(serviceArea.cost)} frais de livraison
-                    </div>
-                  )}
+
                 </div>
               </CardContent>
             </Card>
@@ -155,11 +151,7 @@ export default function EquipmentDetail() {
                       <div className="font-semibold text-gray-900">Livraison à {equipment.location}</div>
                       <div className="text-sm text-gray-600">{serviceArea.deliveryTime}</div>
                     </div>
-                    <div className="text-right">
-                      <div className="font-semibold text-gray-900">
-                        {serviceArea.cost === 0 ? "Gratuit" : formatPrice(serviceArea.cost)}
-                      </div>
-                    </div>
+
                   </div>
                 </CardContent>
               </Card>
