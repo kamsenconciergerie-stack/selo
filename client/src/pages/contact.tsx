@@ -67,9 +67,21 @@ export default function Contact() {
     },
     {
       icon: Mail,
-      title: "Email",
-      value: "aywa@aywa.com",
+      title: "Contact Général",
+      value: "contact@aywalogistic.com",
       description: "Réponse sous 24h",
+    },
+    {
+      icon: Mail,
+      title: "Réservations",
+      value: "reservation@aywalogistic.com",
+      description: "Pour vos demandes de location",
+    },
+    {
+      icon: Mail,
+      title: "Partenaires",
+      value: "partenaires@aywalogistic.com",
+      description: "Rejoignez notre réseau",
     },
     {
       icon: MapPin,
@@ -113,6 +125,33 @@ export default function Contact() {
                 Que vous ayez besoin d'un équipement spécifique ou de conseils pour votre projet, 
                 notre équipe d'experts est là pour vous accompagner.
               </p>
+            </div>
+
+            {/* Section emails spécialisés */}
+            <div className="bg-aywa-blue/5 p-6 rounded-lg border border-aywa-blue/20 mb-8">
+              <h3 className="text-xl font-semibold text-aywa-blue mb-4">
+                📧 Contactez le bon service directement
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="text-center p-4 bg-white rounded-lg shadow-sm">
+                  <div className="text-2xl mb-2">📞</div>
+                  <h4 className="font-semibold text-gray-900">Support Client</h4>
+                  <p className="text-aywa-blue font-medium">contact@aywalogistic.com</p>
+                  <p className="text-sm text-gray-600">Questions générales</p>
+                </div>
+                <div className="text-center p-4 bg-white rounded-lg shadow-sm">
+                  <div className="text-2xl mb-2">📋</div>
+                  <h4 className="font-semibold text-gray-900">Réservations</h4>
+                  <p className="text-aywa-blue font-medium">reservation@aywalogistic.com</p>
+                  <p className="text-sm text-gray-600">Location d'équipements</p>
+                </div>
+                <div className="text-center p-4 bg-white rounded-lg shadow-sm">
+                  <div className="text-2xl mb-2">🤝</div>
+                  <h4 className="font-semibold text-gray-900">Partenaires</h4>
+                  <p className="text-aywa-blue font-medium">partenaires@aywalogistic.com</p>
+                  <p className="text-sm text-gray-600">Rejoignez notre réseau</p>
+                </div>
+              </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
