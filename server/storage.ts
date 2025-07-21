@@ -274,15 +274,15 @@ export class MemStorage implements IStorage {
 
   private initializeData() {
     const sampleEquipment: InsertEquipment[] = [
-      // Camions benne
+      // Camions benne - Prix ajustés marché africain
       {
         name: "Camion benne 15 T",
         description: "Camion benne 15 tonnes pour transport de matériaux",
         category: "Camion benne",
-        pricePerDay: 75000,
+        pricePerDay: 185000, // ~300€/jour marché Sénégal
         location: "Dakar",
         imageUrl: "/images/camion-benne.svg",
-        specifications: ["15 tonnes", "Benne basculante", "Diesel"],
+        specifications: ["15 tonnes", "Benne basculante", "Diesel", "Avec chauffeur"],
         isAvailable: true,
         weight: "15 tonnes",
         fuelType: "Diesel",
@@ -292,10 +292,10 @@ export class MemStorage implements IStorage {
         name: "Camion benne 20 T",
         description: "Camion benne 20 tonnes pour transport de matériaux",
         category: "Camion benne",
-        pricePerDay: 90000,
+        pricePerDay: 245000, // ~400€/jour marché Sénégal
         location: "Thiès",
         imageUrl: "/images/camion-benne.svg",
-        specifications: ["20 tonnes", "Benne basculante", "Diesel"],
+        specifications: ["20 tonnes", "Benne basculante", "Diesel", "Avec chauffeur"],
         isAvailable: true,
         weight: "20 tonnes",
         fuelType: "Diesel",
@@ -305,10 +305,10 @@ export class MemStorage implements IStorage {
         name: "Camion benne 30 T",
         description: "Camion benne 30 tonnes pour grands chantiers",
         category: "Camion benne",
-        pricePerDay: 120000,
+        pricePerDay: 310000, // ~500€/jour marché Sénégal
         location: "Dakar",
         imageUrl: "/images/camion-benne.svg",
-        specifications: ["30 tonnes", "Benne basculante", "Diesel"],
+        specifications: ["30 tonnes", "Benne basculante", "Diesel", "Avec chauffeur"],
         isAvailable: true,
         weight: "30 tonnes",
         fuelType: "Diesel",
@@ -318,24 +318,24 @@ export class MemStorage implements IStorage {
         name: "Camion benne 40 T",
         description: "Camion benne 40 tonnes pour très grands projets",
         category: "Camion benne",
-        pricePerDay: 150000,
+        pricePerDay: 370000, // ~600€/jour marché Sénégal
         location: "Saint-Louis",
-        imageUrl: "/attached_assets/image_1753109013032.png",
-        specifications: ["40 tonnes", "Benne basculante", "Diesel"],
+        imageUrl: "/images/camion-benne.svg",
+        specifications: ["40 tonnes", "Benne basculante", "Diesel", "Avec chauffeur"],
         isAvailable: true,
         weight: "40 tonnes",
         fuelType: "Diesel",
         power: "400 CV"
       },
-      // Tracteurs
+      // Tracteurs - Prix ajustés marché africain
       {
         name: "Tracteur 50 CV",
         description: "Tracteur agricole 50 CV pour petites exploitations",
         category: "Tracteur",
-        pricePerDay: 45000,
+        pricePerDay: 75000, // ~125€/jour marché Sénégal
         location: "Kaolack",
         imageUrl: "/images/tracteur.svg",
-        specifications: ["50 CV", "4x4", "Relevage hydraulique"],
+        specifications: ["50 CV", "4x4", "Relevage hydraulique", "Carburant inclus"],
         isAvailable: true,
         weight: "3.5 tonnes",
         fuelType: "Diesel",
@@ -345,10 +345,10 @@ export class MemStorage implements IStorage {
         name: "Tracteur 75 CV",
         description: "Tracteur agricole 75 CV polyvalent",
         category: "Tracteur",
-        pricePerDay: 65000,
+        pricePerDay: 95000, // ~155€/jour marché Sénégal
         location: "Diourbel",
         imageUrl: "/images/tracteur.svg",
-        specifications: ["75 CV", "4x4", "Relevage hydraulique"],
+        specifications: ["75 CV", "4x4", "Relevage hydraulique", "Carburant inclus"],
         isAvailable: true,
         weight: "4.2 tonnes",
         fuelType: "Diesel",
@@ -358,10 +358,10 @@ export class MemStorage implements IStorage {
         name: "Tracteur 90 CV",
         description: "Tracteur agricole 90 CV pour moyennes exploitations",
         category: "Tracteur",
-        pricePerDay: 80000,
+        pricePerDay: 110000, // ~180€/jour marché Sénégal
         location: "Kolda",
         imageUrl: "/images/tracteur.svg",
-        specifications: ["90 CV", "4x4", "Relevage hydraulique", "Climatisé"],
+        specifications: ["90 CV", "4x4", "Relevage hydraulique", "Climatisé", "Carburant inclus"],
         isAvailable: true,
         weight: "5 tonnes",
         fuelType: "Diesel",
@@ -371,24 +371,24 @@ export class MemStorage implements IStorage {
         name: "Tracteur 120 CV",
         description: "Tracteur agricole 120 CV pour grandes exploitations",
         category: "Tracteur",
-        pricePerDay: 100000,
+        pricePerDay: 140000, // ~230€/jour marché Sénégal
         location: "Tambacounda",
         imageUrl: "/images/tracteur.svg",
-        specifications: ["120 CV", "4x4", "Relevage hydraulique", "Climatisé"],
+        specifications: ["120 CV", "4x4", "Relevage hydraulique", "Climatisé", "Carburant inclus"],
         isAvailable: true,
         weight: "6.5 tonnes",
         fuelType: "Diesel",
         power: "120 CV"
       },
-      // Équipements de semis et plantation
+      // Équipements de semis et plantation - Prix ajustés
       {
         name: "Semoir mécanique",
         description: "Semoir mécanique pour céréales",
         category: "Équipement Agricole",
-        pricePerDay: 25000,
+        pricePerDay: 35000, // Prix réaliste pour équipement spécialisé
         location: "Kaolack",
         imageUrl: "/images/semoir.svg",
-        specifications: ["Mécanique", "Largeur 3m", "Céréales"],
+        specifications: ["Mécanique", "Largeur 3m", "Céréales", "Formation incluse"],
         isAvailable: true,
         weight: "800 kg",
         fuelType: "N/A",
@@ -398,10 +398,10 @@ export class MemStorage implements IStorage {
         name: "Semoir pneumatique",
         description: "Semoir pneumatique haute précision",
         category: "Équipement Agricole",
-        pricePerDay: 35000,
+        pricePerDay: 55000, // Technologie avancée
         location: "Diourbel",
-        imageUrl: "/attached_assets/image_1753108301083.png",
-        specifications: ["Pneumatique", "Largeur 4m", "Haute précision"],
+        imageUrl: "/images/semoir.svg",
+        specifications: ["Pneumatique", "Largeur 4m", "Haute précision", "GPS optionnel"],
         isAvailable: true,
         weight: "1.2 tonnes",
         fuelType: "N/A",
@@ -411,10 +411,10 @@ export class MemStorage implements IStorage {
         name: "Billonneuse",
         description: "Billonneuse pour formation de billons",
         category: "Équipement Agricole",
-        pricePerDay: 20000,
+        pricePerDay: 25000,
         location: "Kaolack",
-        imageUrl: "/attached_assets/image_1753108301083.png",
-        specifications: ["Formation billons", "Largeur 2m", "Hydraulique"],
+        imageUrl: "/images/semoir.svg",
+        specifications: ["Formation billons", "Largeur 2m", "Hydraulique", "Réglages multiples"],
         isAvailable: true,
         weight: "600 kg",
         fuelType: "N/A",
@@ -424,38 +424,38 @@ export class MemStorage implements IStorage {
         name: "Butteuse",
         description: "Butteuse pour buttage des cultures",
         category: "Équipement Agricole",
-        pricePerDay: 18000,
+        pricePerDay: 22000,
         location: "Kolda",
-        imageUrl: "/attached_assets/image_1753108301083.png",
-        specifications: ["Buttage", "Largeur 1.5m", "Réglable"],
+        imageUrl: "/images/charrue.svg",
+        specifications: ["Buttage", "Largeur 1.5m", "Réglable", "Multi-cultures"],
         isAvailable: true,
         weight: "400 kg",
         fuelType: "N/A",
         power: "N/A"
       },
-      // Équipements de récolte
+      // Équipements de récolte - Équipement rare et spécialisé
       {
         name: "Moissonneuse-batteuse",
         description: "Moissonneuse-batteuse pour céréales",
         category: "Équipement Agricole",
-        pricePerDay: 200000,
+        pricePerDay: 450000, // Équipement très rare au Sénégal, prix premium
         location: "Tambacounda",
-        imageUrl: "/attached_assets/image_1753108301083.png",
-        specifications: ["Céréales", "Largeur 4.5m", "Trémie 8000L"],
+        imageUrl: "/images/decortiqueuse.svg",
+        specifications: ["Céréales", "Largeur 4.5m", "Trémie 8000L", "Opérateur inclus"],
         isAvailable: true,
         weight: "15 tonnes",
         fuelType: "Diesel",
         power: "300 CV"
       },
-      // Pulvérisateurs
+      // Pulvérisateurs - Prix ajustés
       {
         name: "Pulvérisateur motorisé",
         description: "Pulvérisateur motorisé pour traitements",
         category: "Équipement Agricole",
-        pricePerDay: 30000,
+        pricePerDay: 45000, // Prix réaliste pour équipement motorisé
         location: "Dakar",
         imageUrl: "/images/pulverisateur.svg",
-        specifications: ["1000L", "Motorisé", "Rampe 12m"],
+        specifications: ["1000L", "Motorisé", "Rampe 12m", "Calibrage inclus"],
         isAvailable: true,
         weight: "1.5 tonnes",
         fuelType: "Diesel",
@@ -465,24 +465,24 @@ export class MemStorage implements IStorage {
         name: "Pulvérisateur à dos",
         description: "Pulvérisateur à dos pour petites surfaces",
         category: "Équipement Agricole",
-        pricePerDay: 8000,
+        pricePerDay: 5000, // Prix très accessible pour petits producteurs
         location: "Kaolack",
-        imageUrl: "/attached_assets/image_1753108301083.png",
-        specifications: ["20L", "Manuel", "Portable"],
+        imageUrl: "/images/pulverisateur.svg",
+        specifications: ["20L", "Manuel", "Portable", "Kit de buses"],
         isAvailable: true,
         weight: "25 kg",
         fuelType: "N/A",
         power: "N/A"
       },
-      // Motopompes
+      // Motopompes - Prix ajustés marché africain
       {
         name: "Motopompe thermique",
         description: "Motopompe thermique pour irrigation",
         category: "Irrigation",
-        pricePerDay: 35000,
+        pricePerDay: 15000, // 10 000 FCFA/jour marché local + marge
         location: "Saint-Louis",
         imageUrl: "/images/motopompe.svg",
-        specifications: ["500 m³/h", "Diesel", "Auto-amorçante"],
+        specifications: ["500 m³/h", "Diesel", "Auto-amorçante", "Formation incluse"],
         isAvailable: true,
         weight: "800 kg",
         fuelType: "Diesel",
@@ -492,77 +492,77 @@ export class MemStorage implements IStorage {
         name: "Motopompe solaire",
         description: "Motopompe solaire écologique",
         category: "Irrigation",
-        pricePerDay: 45000,
+        pricePerDay: 25000, // Prix premium pour technologie solaire
         location: "Matam",
-        imageUrl: "/attached_assets/image_1753108301083.png",
-        specifications: ["200 m³/h", "Solaire", "Écologique"],
+        imageUrl: "/images/motopompe.svg",
+        specifications: ["200 m³/h", "Solaire", "Écologique", "Maintenance incluse"],
         isAvailable: true,
         weight: "500 kg",
         fuelType: "Solaire",
         power: "15 kW"
       },
-      // Équipements de transformation
+      // Équipements de transformation - Prix adaptés marché local
       {
         name: "Broyeur de fourrage",
         description: "Broyeur de fourrage pour alimentation animale",
         category: "Transformation",
-        pricePerDay: 40000,
+        pricePerDay: 30000, // Prix adapté aux éleveurs locaux
         location: "Kolda",
-        imageUrl: "/attached_assets/image_1753108301083.png",
-        specifications: ["2000 kg/h", "Électrique", "Mobile"],
+        imageUrl: "/images/decortiqueuse.svg",
+        specifications: ["2000 kg/h", "Diesel", "Mobile", "Formation incluse"],
         isAvailable: true,
         weight: "1.2 tonnes",
-        fuelType: "Électrique",
-        power: "15 kW"
+        fuelType: "Diesel",
+        power: "15 CV"
       },
       {
         name: "Décortiqueuse à riz",
         description: "Décortiqueuse à riz haute capacité",
         category: "Transformation",
-        pricePerDay: 35000,
+        pricePerDay: 25000, // Prix accessible pour riziculteurs
         location: "Saint-Louis",
         imageUrl: "/images/decortiqueuse.svg",
-        specifications: ["1000 kg/h", "Électrique", "Automatique"],
+        specifications: ["1000 kg/h", "Diesel", "Automatique", "Maintenance incluse"],
         isAvailable: true,
         weight: "800 kg",
-        fuelType: "Électrique",
-        power: "10 kW"
+        fuelType: "Diesel",
+        power: "10 CV"
       },
       {
         name: "Décortiqueuse à arachide",
         description: "Décortiqueuse à arachide professionnelle",
         category: "Transformation",
-        pricePerDay: 30000,
+        pricePerDay: 20000, // Prix spécial pour l'arachide (culture principale)
         location: "Kaolack",
         imageUrl: "/images/decortiqueuse.svg",
-        specifications: ["800 kg/h", "Électrique", "Professionnelle"],
+        specifications: ["800 kg/h", "Diesel", "Professionnelle", "Support technique"],
         isAvailable: true,
         weight: "600 kg",
-        fuelType: "Électrique",
-        power: "8 kW"
+        fuelType: "Diesel",
+        power: "8 CV"
       },
       {
         name: "Égreneuse de maïs",
         description: "Égreneuse de maïs mécanisée",
         category: "Transformation",
-        pricePerDay: 25000,
+        pricePerDay: 18000, // Prix abordable pour petits producteurs
         location: "Tambacounda",
-        imageUrl: "/attached_assets/image_1753108301083.png",
-        specifications: ["500 kg/h", "Électrique", "Mécanisée"],
+        imageUrl: "/images/decortiqueuse.svg",
+        specifications: ["500 kg/h", "Manuel/Diesel", "Mécanisée", "Facilité d'usage"],
         isAvailable: true,
         weight: "400 kg",
-        fuelType: "Électrique",
-        power: "5 kW"
+        fuelType: "Diesel",
+        power: "5 CV"
       },
-      // Équipements de labour
+      // Équipements de labour - Prix réalistes
       {
         name: "Charrue 2 socs",
         description: "Charrue 2 socs pour labour léger",
         category: "Équipement Agricole",
-        pricePerDay: 15000,
+        pricePerDay: 12000, // Prix accessible pour petites exploitations
         location: "Kaolack",
         imageUrl: "/images/charrue.svg",
-        specifications: ["2 socs", "Réversible", "Hydraulique"],
+        specifications: ["2 socs", "Réversible", "Hydraulique", "Tous sols"],
         isAvailable: true,
         weight: "600 kg",
         fuelType: "N/A",
@@ -572,10 +572,10 @@ export class MemStorage implements IStorage {
         name: "Charrue 3 socs",
         description: "Charrue 3 socs pour labour moyen",
         category: "Équipement Agricole",
-        pricePerDay: 20000,
+        pricePerDay: 18000, // Prix adapté moyennes exploitations
         location: "Diourbel",
         imageUrl: "/images/charrue.svg",
-        specifications: ["3 socs", "Réversible", "Hydraulique"],
+        specifications: ["3 socs", "Réversible", "Hydraulique", "Labour profond"],
         isAvailable: true,
         weight: "850 kg",
         fuelType: "N/A",
@@ -585,24 +585,24 @@ export class MemStorage implements IStorage {
         name: "Charrue 4 socs",
         description: "Charrue 4 socs pour labour intensif",
         category: "Équipement Agricole",
-        pricePerDay: 25000,
+        pricePerDay: 28000, // Prix pour grandes exploitations
         location: "Tambacounda",
-        imageUrl: "/attached_assets/image_1753108301083.png",
-        specifications: ["4 socs", "Réversible", "Hydraulique"],
+        imageUrl: "/images/charrue.svg",
+        specifications: ["4 socs", "Réversible", "Hydraulique", "Haute productivité"],
         isAvailable: true,
         weight: "1.1 tonnes",
         fuelType: "N/A",
         power: "N/A"
       },
-      // Camions plateau
+      // Camions plateau - Prix ajustés marché transport
       {
         name: "Camion plateau 10 T",
         description: "Camion plateau 10 tonnes pour transport général",
         category: "Camion plateau",
-        pricePerDay: 60000,
+        pricePerDay: 155000, // ~250€/jour marché Sénégal
         location: "Dakar",
-        imageUrl: "/attached_assets/image_1753109013032.png",
-        specifications: ["10 tonnes", "Plateau fixe", "Ridelles"],
+        imageUrl: "/images/pickup.svg",
+        specifications: ["10 tonnes", "Plateau fixe", "Ridelles", "Avec chauffeur"],
         isAvailable: true,
         weight: "10 tonnes",
         fuelType: "Diesel",
@@ -612,16 +612,43 @@ export class MemStorage implements IStorage {
         name: "Camion plateau 20 T",
         description: "Camion plateau 20 tonnes pour gros transport",
         category: "Camion plateau",
-        pricePerDay: 85000,
+        pricePerDay: 200000, // ~325€/jour marché Sénégal
         location: "Thiès",
-        imageUrl: "/attached_assets/image_1753109013032.png",
-        specifications: ["20 tonnes", "Plateau fixe", "Grue auxiliaire"],
+        imageUrl: "/images/pickup.svg",
+        specifications: ["20 tonnes", "Plateau fixe", "Grue auxiliaire", "Avec chauffeur"],
         isAvailable: true,
         weight: "20 tonnes",
         fuelType: "Diesel",
         power: "250 CV"
       },
-      // Pick-up
+      // Pick-up - Prix ajustés marché africain
+      {
+        name: "Pick-up 4x4",
+        description: "Pick-up 4x4 pour transport léger et supervision",
+        category: "Véhicule léger",
+        pricePerDay: 45000, // Prix compétitif marché local
+        location: "Dakar",
+        imageUrl: "/images/pickup.svg",
+        specifications: ["4x4", "Climatisé", "GPS", "Assurance incluse"],
+        isAvailable: true,
+        weight: "2.5 tonnes",
+        fuelType: "Diesel",
+        power: "150 CV"
+      },
+      {
+        name: "Pick-up simple cabine",
+        description: "Pick-up utilitaire pour transport matériel",
+        category: "Véhicule léger",
+        pricePerDay: 35000,
+        location: "Thiès",
+        imageUrl: "/images/pickup.svg",
+        specifications: ["2x4", "Benne 1T", "Économique", "Assurance incluse"],
+        isAvailable: true,
+        weight: "2 tonnes",
+        fuelType: "Diesel",
+        power: "120 CV"
+      },
+      // Fin des équipements
       {
         name: "Pick-up 4x4 double cabine",
         description: "Pick-up 4x4 double cabine tout terrain",
