@@ -126,6 +126,7 @@ Aywa est une application web full-stack pour les services de location d'équipem
 - January 21, 2025. Configuration domaine personnalisé aywalogistic.com pour production
 - January 21, 2025. Correction couleurs étiquettes AYWA et emails contact visibles - PRÊT DÉPLOIEMENT
 - January 21, 2025. Mise à jour prix équipements selon marché africain/sénégalais - REDÉPLOIEMENT
+- January 21, 2025. Ajout bannière promo "Tarifs spéciaux Magal de Touba 2025" avec CTA service commercial
 
 ## User Preferences
 

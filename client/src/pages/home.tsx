@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { useQuery } from "@tanstack/react-query";
 import { Equipment } from "@shared/schema";
 import { Link } from "wouter";
-import { Hammer, Truck, Zap, HardHat, Search, Calendar, CheckCircle } from "lucide-react";
+import { Hammer, Truck, Zap, HardHat, Search, Calendar, CheckCircle, Phone, Star } from "lucide-react";
 import EquipmentCard from "@/components/equipment-card";
 import { SERVICE_AREAS } from "@/lib/constants";
 
@@ -124,6 +124,43 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
+      
+      {/* Bannière Promo Magal de Touba 2025 */}
+      <div className="bg-gradient-to-r from-orange-500 via-orange-400 to-yellow-400 py-4 px-4 shadow-lg">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <div className="bg-white p-2 rounded-full">
+                <Star className="h-6 w-6 text-orange-500" />
+              </div>
+              <div className="text-white">
+                <h2 className="text-xl md:text-2xl font-bold">
+                  🕌 Tarifs Spéciaux pour Magal de Touba 2025
+                </h2>
+                <p className="text-orange-100 text-sm md:text-base">
+                  Réductions exceptionnelles sur tous nos équipements pour ce grand événement religieux
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Button 
+                asChild
+                className="bg-white text-orange-600 hover:bg-orange-50 font-semibold px-6 py-3 shadow-lg"
+              >
+                <Link href="/contact">
+                  <Phone className="h-4 w-4 mr-2" />
+                  Contacter notre service commercial
+                </Link>
+              </Button>
+              <div className="text-white text-center sm:text-left">
+                <div className="text-sm opacity-90">Appelez directement :</div>
+                <div className="font-bold text-lg">+221 78 606 70 13</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <Hero />
       
       {/* Equipment Categories */}
