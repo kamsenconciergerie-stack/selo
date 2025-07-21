@@ -60,40 +60,81 @@ export default function Home() {
 
   const categories = [
     {
-      name: "🚛 Camion porteur",
-      description: "Camions de déménagement et livraison",
+      name: "Camions et Transport",
+      description: "Camions bennes, plateaux et véhicules de transport",
       icon: Truck,
-      count: equipment.filter(eq => eq.category === "Camion porteur").length,
+      emoji: "🚛",
+      count: equipment.filter(eq => eq.category === "Camions et Transport").length,
     },
     {
-      name: "🚚 Camion semi-remorque", 
-      description: "Tracteurs avec remorques détachables",
+      name: "Équipement Agricole", 
+      description: "Tracteurs, charrues, semoirs et outils agricoles",
       icon: Truck,
-      count: equipment.filter(eq => eq.category === "Camion semi-remorque").length,
+      emoji: "🚜",
+      count: equipment.filter(eq => eq.category === "Équipement Agricole").length,
     },
     {
-      name: "🛻 Camionnette / Fourgon",
-      description: "Renault Master, Mercedes Sprinter", 
-      icon: Truck,
-      count: equipment.filter(eq => eq.category === "Camionnette / Fourgon").length,
+      name: "BTP et Construction",
+      description: "Équipements de construction et de travaux publics", 
+      icon: HardHat,
+      emoji: "🏗️",
+      count: equipment.filter(eq => eq.category === "BTP et Construction").length,
     },
     {
-      name: "🏗️ Camion benne",
-      description: "Bennes arrière et basculantes trilatérales",
-      icon: Truck,
-      count: equipment.filter(eq => eq.category === "Camion benne").length,
-    },
-    {
-      name: "⚡ Équipement Électrique",
-      description: "Groupes électrogènes, compresseurs, pompes", 
-      icon: Zap,
-      count: equipment.filter(eq => eq.category === "Équipement Électrique").length,
-    },
-    {
-      name: "🔨 Outils à Main",
-      description: "Marteaux-piqueurs, perceuses, échafaudages",
+      name: "Manutention",
+      description: "Équipements de levage et de manutention",
       icon: Hammer,
-      count: equipment.filter(eq => eq.category === "Outils à Main").length,
+      emoji: "🏋️",
+      count: equipment.filter(eq => eq.category === "Manutention").length,
+    },
+    {
+      name: "Équipement Spécialisé",
+      description: "Équipements techniques et spécialisés",
+      icon: Zap,
+      emoji: "⚙️",
+      count: equipment.filter(eq => eq.category === "Équipement Spécialisé").length,
+    },
+    {
+      name: "Excavation",
+      description: "Pelleteuses, mini-pelles et équipements de terrassement",
+      icon: Hammer,
+      emoji: "⛏️",
+      count: equipment.filter(eq => eq.category === "Excavation").length,
+    },
+    {
+      name: "Levage et Grutage",
+      description: "Grues, chariots élévateurs et équipements de levage",
+      icon: Truck,
+      emoji: "🏗️",
+      count: equipment.filter(eq => eq.category === "Levage et Grutage").length,
+    },
+    {
+      name: "Compactage",
+      description: "Rouleaux compresseurs et équipements de compactage",
+      icon: HardHat,
+      emoji: "🛣️",
+      count: equipment.filter(eq => eq.category === "Compactage").length,
+    },
+    {
+      name: "Électricité et Énergie",
+      description: "Groupes électrogènes et équipements électriques",
+      icon: Zap,
+      emoji: "⚡",
+      count: equipment.filter(eq => eq.category === "Électricité et Énergie").length,
+    },
+    {
+      name: "Pompage et Irrigation",
+      description: "Pompes, motopompes et systèmes d'irrigation",
+      icon: Zap,
+      emoji: "💧",
+      count: equipment.filter(eq => eq.category === "Pompage et Irrigation").length,
+    },
+    {
+      name: "Nettoyage et Entretien",
+      description: "Équipements de nettoyage et d'entretien",
+      icon: Hammer,
+      emoji: "🧹",
+      count: equipment.filter(eq => eq.category === "Nettoyage et Entretien").length,
     },
   ];
 
@@ -212,28 +253,35 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-              Nos Produits
+              Nos Catégories d'Équipements
             </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Découvrez notre gamme complète d'équipements professionnels disponibles à la location
+            </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {categories.map((category) => {
               const Icon = category.icon;
               return (
                 <Link key={category.name} href={`/equipements?category=${encodeURIComponent(category.name)}`}>
-                  <Card className="hover:shadow-lg transition-shadow cursor-pointer group">
+                  <Card className="hover:shadow-lg transition-all duration-300 cursor-pointer group hover:scale-105 border-l-4 border-l-orange-500">
                     <CardContent className="p-6">
-                      <div className="text-primary-orange text-4xl mb-4 group-hover:scale-110 transition-transform">
-                        <Icon className="h-10 w-10" />
+                      <div className="flex items-center justify-center mb-4">
+                        <div className="bg-orange-100 p-4 rounded-full">
+                          <span className="text-3xl">{category.emoji}</span>
+                        </div>
                       </div>
-                      <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                      <h3 className="text-lg font-semibold text-center mb-2 group-hover:text-orange-600">
                         {category.name}
                       </h3>
-                      <p className="text-gray-600 mb-4">
+                      <p className="text-gray-600 text-sm text-center mb-3">
                         {category.description}
                       </p>
-                      <div className="text-sm text-primary-orange font-medium">
-                        {category.count}+ équipements
+                      <div className="text-center">
+                        <Badge variant="outline" className="bg-orange-50 text-orange-700 border-orange-200">
+                          {category.count} équipement{category.count > 1 ? 's' : ''} disponible{category.count > 1 ? 's' : ''}
+                        </Badge>
                       </div>
                     </CardContent>
                   </Card>
