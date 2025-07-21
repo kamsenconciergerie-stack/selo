@@ -281,11 +281,7 @@ export default function About() {
                   <span className="text-gray-700">+221 78 606 70 13</span>
                 </div>
               </div>
-              <Link href="/contact">
-                <Button className="bg-primary-orange hover:bg-primary-orange/90 text-white px-8 py-3 text-lg mt-6">
-                  Formulaire de contact
-                </Button>
-              </Link>
+
             </div>
             <div>
               <img 
