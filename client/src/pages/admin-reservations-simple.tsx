@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import ProtectedAdminRoute from "@/components/ProtectedAdminRoute";
 import { Calendar, User, Phone, Mail, CheckCircle, XCircle, AlertCircle, Search, Trash2 } from "lucide-react";
 
 interface Booking {
@@ -43,7 +44,7 @@ function formatDate(dateString: string): string {
   });
 }
 
-export default function AdminReservationsSimple() {
+function AdminReservationsContent() {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
@@ -363,5 +364,13 @@ export default function AdminReservationsSimple() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function AdminReservationsSimple() {
+  return (
+    <ProtectedAdminRoute>
+      <AdminReservationsContent />
+    </ProtectedAdminRoute>
   );
 }

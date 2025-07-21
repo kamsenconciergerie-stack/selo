@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import ProtectedAdminRoute from "@/components/ProtectedAdminRoute";
 import { 
   Calendar, 
   Users, 
@@ -69,7 +70,7 @@ function formatDate(dateString: string): string {
   });
 }
 
-export default function AdminDashboardComplete() {
+function AdminDashboardContent() {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [equipment, setEquipment] = useState<Equipment[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -539,5 +540,13 @@ export default function AdminDashboardComplete() {
         </CardContent>
       </Card>
     </div>
+  );
+}
+
+export default function AdminDashboardComplete() {
+  return (
+    <ProtectedAdminRoute>
+      <AdminDashboardContent />
+    </ProtectedAdminRoute>
   );
 }

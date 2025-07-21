@@ -6,6 +6,7 @@ import { registerPaymentRoutes } from "./payment-routes";
 import { authRoutes } from "./auth-routes";
 import { partnerRoutes } from "./partner-routes";
 import { authenticate, generateSessionToken, type AuthenticatedRequest } from "./auth-middleware";
+import { setupAuth, isAuthenticated, isAdmin } from "./replitAuth";
 import { z } from "zod";
 import multer from "multer";
 import path from "path";
@@ -36,6 +37,8 @@ const upload = multer({
 });
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Auth middleware
+  await setupAuth(app);
   // Equipment routes
   app.get("/api/equipment", async (req, res) => {
     try {
@@ -560,8 +563,20 @@ ${validatedData.message}`
     }
   });
 
-  // Admin routes for bookings management
-  app.get("/api/admin/bookings", async (req, res) => {
+  // Auth routes
+  app.get('/api/auth/user', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      res.json(user);
+    } catch (error) {
+      console.error("Error fetching user:", error);
+      res.status(500).json({ message: "Failed to fetch user" });
+    }
+  });
+
+  // Admin routes for bookings management (protected)
+  app.get("/api/admin/bookings", isAuthenticated, isAdmin, async (req, res) => {
     try {
       // Get all bookings with equipment information
       const allBookings = await storage.getAllBookings();
@@ -584,7 +599,7 @@ ${validatedData.message}`
     }
   });
 
-  app.put("/api/admin/bookings/:id", async (req, res) => {
+  app.put("/api/admin/bookings/:id", isAuthenticated, isAdmin, async (req, res) => {
     try {
       const bookingId = parseInt(req.params.id);
       const { status } = req.body;
@@ -605,7 +620,7 @@ ${validatedData.message}`
     }
   });
 
-  app.delete("/api/admin/bookings/:id", async (req, res) => {
+  app.delete("/api/admin/bookings/:id", isAuthenticated, isAdmin, async (req, res) => {
     try {
       const bookingId = parseInt(req.params.id);
       const deleted = await storage.deleteBooking(bookingId);
