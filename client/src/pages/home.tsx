@@ -36,7 +36,7 @@ export default function Home() {
   ];
   
   const featuredEquipment = equipment.filter(eq => 
-    popularEquipmentNames.some(name => eq.name.includes(name.split(' ')[0]) && eq.name.includes(name.split(' ')[1]))
+    popularEquipmentNames.some(name => eq.name === name)
   ).slice(0, 6);
 
   const categories = [
