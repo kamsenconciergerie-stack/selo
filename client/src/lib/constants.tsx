@@ -31,44 +31,44 @@ export const SERVICE_AREAS = [
   },
   {
     city: "Thiès", 
-    description: "Livraison sous 24h",
-    deliveryTime: "Livraison sous 24h",
+    description: "Livraison sous 24h - à partir de 15 000 XOF",
+    deliveryTime: "Livraison sous 24h - à partir de 15 000 XOF",
     cost: 15000
   },
   {
     city: "Saint-Louis",
-    description: "Livraison sous 48h", 
-    deliveryTime: "Livraison sous 48h",
+    description: "Livraison sous 48h - à partir de 25 000 XOF", 
+    deliveryTime: "Livraison sous 48h - à partir de 25 000 XOF",
     cost: 25000
   },
   {
     city: "Kaolack",
-    description: "Livraison sous 48h",
-    deliveryTime: "Livraison sous 48h", 
+    description: "Livraison sous 48h - à partir de 20 000 XOF",
+    deliveryTime: "Livraison sous 48h - à partir de 20 000 XOF", 
     cost: 20000
   },
   {
     city: "Ziguinchor",
-    description: "Livraison sous 72h",
-    deliveryTime: "Livraison sous 72h", 
+    description: "Livraison sous 72h - à partir de 35 000 XOF",
+    deliveryTime: "Livraison sous 72h - à partir de 35 000 XOF", 
     cost: 35000
   },
   {
     city: "Diourbel",
-    description: "Livraison sous 24h",
-    deliveryTime: "Livraison sous 24h", 
+    description: "Livraison sous 24h - à partir de 18 000 XOF",
+    deliveryTime: "Livraison sous 24h - à partir de 18 000 XOF", 
     cost: 18000
   },
   {
     city: "Tambacounda",
-    description: "Livraison sous 72h",
-    deliveryTime: "Livraison sous 72h", 
+    description: "Livraison sous 72h - à partir de 40 000 XOF",
+    deliveryTime: "Livraison sous 72h - à partir de 40 000 XOF", 
     cost: 40000
   },
   {
     city: "Fatick",
-    description: "Livraison sous 48h",
-    deliveryTime: "Livraison sous 48h", 
+    description: "Livraison sous 48h - à partir de 22 000 XOF",
+    deliveryTime: "Livraison sous 48h - à partir de 22 000 XOF", 
     cost: 22000
   }
 ];
