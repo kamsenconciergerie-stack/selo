@@ -340,19 +340,7 @@ export class MemStorage implements IStorage {
         fuelType: "Électrique",
         power: "12 bar"
       },
-      {
-        name: "Échafaudage Mobile Aluminium",
-        description: "Échafaudage pour construction - très demandé avec le boom immobilier",
-        category: "Sécurité & EPI",
-        pricePerDay: 25000,
-        location: "Dakar",
-        imageUrl: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400",
-        specifications: ["8m hauteur", "Aluminium", "Roulettes", "Sécurisé"],
-        isAvailable: true,
-        weight: "150 kg",
-        fuelType: "N/A",
-        power: "N/A"
-      },
+
       {
         name: "Compresseur d'Air 500L",
         description: "Compresseur mobile - indispensable pour les ateliers mécaniques",
