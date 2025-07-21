@@ -80,6 +80,42 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Partner inquiry submission
+  app.post("/api/partner-inquiry", async (req, res) => {
+    try {
+      const partnerInquirySchema = z.object({
+        firstName: z.string().min(2),
+        lastName: z.string().min(2),
+        phone: z.string().min(9),
+        email: z.string().email(),
+        website: z.string().optional(),
+        equipmentCategories: z.array(z.string()).min(1)
+      });
+      
+      const validatedData = partnerInquirySchema.parse(req.body);
+      
+      // Store as a special inquiry type for partners
+      const inquiry = await storage.createInquiry({
+        name: `${validatedData.firstName} ${validatedData.lastName}`,
+        email: validatedData.email,
+        phone: validatedData.phone,
+        category: "Partenariat",
+        message: `Demande de partenariat pour les catégories: ${validatedData.equipmentCategories.join(", ")}${validatedData.website ? `. Site web: ${validatedData.website}` : ''}`
+      });
+      
+      res.status(201).json({ message: "Demande de partenariat reçue avec succès", inquiry });
+    } catch (error) {
+      console.error("Error creating partner inquiry:", error);
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ 
+          message: "Données invalides", 
+          errors: error.errors 
+        });
+      }
+      res.status(500).json({ message: "Erreur lors de l'envoi de la demande" });
+    }
+  });
+
   // Categories route
   app.get("/api/categories", async (req, res) => {
     try {

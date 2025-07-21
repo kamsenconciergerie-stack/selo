@@ -2,10 +2,83 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Users, MapPin, Clock, Award, Target, Heart } from "lucide-react";
 import { Link } from "wouter";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
+import { apiRequest } from "@/lib/queryClient";
+// Import removed - we'll define categories locally
+
+const partnerFormSchema = z.object({
+  firstName: z.string().min(2, "Prénom requis"),
+  lastName: z.string().min(2, "Nom requis"), 
+  phone: z.string().min(9, "Téléphone requis"),
+  email: z.string().email("Email invalide"),
+  website: z.string().optional(),
+  equipmentCategories: z.array(z.string()).min(1, "Sélectionnez au moins une catégorie d'équipement")
+});
+
+type PartnerFormData = z.infer<typeof partnerFormSchema>;
 
 export default function About() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const { toast } = useToast();
+  
+  const equipmentCategories = [
+    "Camion porteur",
+    "Camion semi-remorque", 
+    "Camionnette / Fourgon",
+    "Camion benne",
+    "Engins de Chantier",
+    "Outils à Main",
+    "Équipement Électrique",
+    "Sécurité & EPI"
+  ];
+  
+  const form = useForm<PartnerFormData>({
+    resolver: zodResolver(partnerFormSchema),
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      phone: "",
+      email: "",
+      website: "",
+      equipmentCategories: []
+    }
+  });
+
+  const onSubmit = async (data: PartnerFormData) => {
+    setIsSubmitting(true);
+    try {
+      await apiRequest('/api/partner-inquiry', 'POST', data);
+      
+      toast({
+        title: "Demande envoyée",
+        description: "Nous vous contacterons sous 24h pour discuter de votre partenariat.",
+      });
+      
+      form.reset();
+      setDialogOpen(false);
+    } catch (error) {
+      toast({
+        title: "Erreur",
+        description: "Une erreur est survenue. Veuillez réessayer.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   const stats = [
     {
       icon: Users,
@@ -48,27 +121,6 @@ export default function About() {
       icon: Users,
       title: "Proximité",
       description: "Nous privilégions une approche personnalisée et un contact direct avec nos clients."
-    }
-  ];
-
-  const team = [
-    {
-      name: "Amadou Diallo",
-      role: "Directeur Général",
-      description: "15 ans d'expérience dans le secteur de la construction au Sénégal",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300"
-    },
-    {
-      name: "Fatou Sow",
-      role: "Directrice Commerciale",
-      description: "Spécialisée dans la relation client et le développement commercial",
-      image: "https://images.unsplash.com/photo-1494790108755-2616b612b2bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300"
-    },
-    {
-      name: "Moussa Kane",
-      role: "Responsable Technique",
-      description: "Expert en maintenance et réparation d'équipements lourds",
-      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300"
     }
   ];
 
@@ -186,61 +238,177 @@ export default function About() {
         </div>
       </section>
 
-      {/* Team Section */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-              Notre Équipe
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Une équipe passionnée et expérimentée à votre service
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {team.map((member) => (
-              <Card key={member.name} className="text-center">
-                <CardContent className="p-6">
-                  <img 
-                    src={member.image}
-                    alt={member.name}
-                    className="w-24 h-24 rounded-full mx-auto mb-4 object-cover"
-                  />
-                  <h3 className="text-xl font-semibold text-gray-900 mb-1">
-                    {member.name}
-                  </h3>
-                  <p className="text-primary-orange font-medium mb-3">
-                    {member.role}
-                  </p>
-                  <p className="text-gray-600">
-                    {member.description}
-                  </p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* CTA Section */}
+
+      {/* Partner CTA Section */}
       <section className="py-16 bg-aywa-blue">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
-            Rejoignez nos clients satisfaits
+            Rejoignez notre réseau de partenaires
           </h2>
           <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-            Découvrez pourquoi plus de 500 clients nous font confiance pour leurs projets
+            Vous possédez des équipements à louer ? Rejoignez notre plateforme et développez votre activité
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/equipements">
-              <Button className="bg-primary-orange hover:bg-primary-orange/90 text-white px-8 py-3 text-lg">
-                Voir nos équipements
-              </Button>
-            </Link>
+            <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+              <DialogTrigger asChild>
+                <Button className="bg-primary-orange hover:bg-primary-orange/90 text-white px-8 py-3 text-lg">
+                  Devenir partenaire d'Aywa
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+                <DialogHeader>
+                  <DialogTitle>Rejoignez notre réseau de partenaires</DialogTitle>
+                </DialogHeader>
+                
+                <Form {...form}>
+                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                    <div className="grid grid-cols-2 gap-4">
+                      <FormField
+                        control={form.control}
+                        name="firstName"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Prénom *</FormLabel>
+                            <FormControl>
+                              <Input placeholder="Votre prénom" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="lastName"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Nom *</FormLabel>
+                            <FormControl>
+                              <Input placeholder="Votre nom" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+
+                    <FormField
+                      control={form.control}
+                      name="phone"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Téléphone *</FormLabel>
+                          <FormControl>
+                            <Input placeholder="ex: +221 77 123 45 67" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="email"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Email *</FormLabel>
+                          <FormControl>
+                            <Input type="email" placeholder="votre@email.com" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="website"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Site Internet (facultatif)</FormLabel>
+                          <FormControl>
+                            <Input placeholder="https://votre-site.com" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="equipmentCategories"
+                      render={() => (
+                        <FormItem>
+                          <div className="mb-4">
+                            <FormLabel className="text-base font-semibold">
+                              Équipements que vous souhaitez louer *
+                            </FormLabel>
+                          </div>
+                          <div className="grid grid-cols-2 gap-3">
+                            {equipmentCategories.map((category: string) => (
+                              <FormField
+                                key={category}
+                                control={form.control}
+                                name="equipmentCategories"
+                                render={({ field }) => {
+                                  return (
+                                    <FormItem
+                                      key={category}
+                                      className="flex flex-row items-start space-x-3 space-y-0"
+                                    >
+                                      <FormControl>
+                                        <Checkbox
+                                          checked={field.value?.includes(category)}
+                                          onCheckedChange={(checked) => {
+                                            return checked
+                                              ? field.onChange([...field.value, category])
+                                              : field.onChange(
+                                                  field.value?.filter(
+                                                    (value) => value !== category
+                                                  )
+                                                )
+                                          }}
+                                        />
+                                      </FormControl>
+                                      <FormLabel className="text-sm font-normal">
+                                        {category}
+                                      </FormLabel>
+                                    </FormItem>
+                                  )
+                                }}
+                              />
+                            ))}
+                          </div>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <div className="flex gap-4">
+                      <Button 
+                        type="submit" 
+                        disabled={isSubmitting}
+                        className="flex-1 bg-primary-orange hover:bg-primary-orange/90"
+                      >
+                        {isSubmitting ? "Envoi en cours..." : "Envoyer ma demande"}
+                      </Button>
+                      <Button 
+                        type="button" 
+                        variant="outline" 
+                        onClick={() => setDialogOpen(false)}
+                        className="flex-1"
+                      >
+                        Annuler
+                      </Button>
+                    </div>
+                  </form>
+                </Form>
+              </DialogContent>
+            </Dialog>
+            
             <Link href="/contact">
               <Button variant="outline" className="border-white text-white hover:bg-white hover:text-aywa-blue px-8 py-3 text-lg">
-                Demander un devis
+                Nous contacter
               </Button>
             </Link>
           </div>
