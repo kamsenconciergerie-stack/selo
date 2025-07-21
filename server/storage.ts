@@ -469,6 +469,45 @@ export class MemStorage implements IStorage {
         weight: "500 kg",
         fuelType: "Électrique",
         power: "15 kW"
+      },
+      {
+        name: "Camion Fourgon 20m³",
+        description: "Camion fourgon pour déménagement et livraison - idéal pour transport de marchandises",
+        category: "Camionnette / Fourgon",
+        pricePerDay: 45000,
+        location: "Dakar",
+        imageUrl: "/attached_assets/image_1753108719267.png",
+        specifications: ["20m³", "Hayon hydraulique", "GPS", "Assurance incluse"],
+        isAvailable: true,
+        weight: "3.5 tonnes",
+        fuelType: "Diesel",
+        power: "130 CV"
+      },
+      {
+        name: "Fourgon Utilitaire 15m³",
+        description: "Fourgon compact pour livraisons urbaines - parfait pour e-commerce et artisans",
+        category: "Camionnette / Fourgon",
+        pricePerDay: 35000,
+        location: "Thiès",
+        imageUrl: "/attached_assets/image_1753108719267.png",
+        specifications: ["15m³", "Charge utile 1.5T", "Climatisation", "Bluetooth"],
+        isAvailable: true,
+        weight: "2.8 tonnes",
+        fuelType: "Diesel",
+        power: "110 CV"
+      },
+      {
+        name: "Camionnette Isotherme",
+        description: "Véhicule frigorifique pour transport de denrées - essentiel pour la chaîne du froid",
+        category: "Camionnette / Fourgon",
+        pricePerDay: 55000,
+        location: "Dakar",
+        imageUrl: "/attached_assets/image_1753108719267.png",
+        specifications: ["Isotherme", "Groupe froid", "12m³", "Certification HACCP"],
+        isAvailable: true,
+        weight: "3.5 tonnes",
+        fuelType: "Diesel",
+        power: "140 CV"
       }
     ];
 

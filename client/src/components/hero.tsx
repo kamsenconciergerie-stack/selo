@@ -38,7 +38,7 @@ export default function Hero() {
         <div className="text-center">
           <h1 className="text-4xl lg:text-6xl font-bold mb-6">
             Location de camions et d'équipements<br />
-            <span className="text-primary-orange">Professionnel</span> au Sénégal
+            <span className="text-primary-orange">Professionnels</span> au Sénégal
           </h1>
           <p className="text-xl lg:text-2xl mb-8 text-blue-100">
             Des centaines d'équipements disponibles partout au Sénégal
