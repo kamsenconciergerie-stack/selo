@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Users, MapPin, Clock, Award, Target, Heart } from "lucide-react";
 import { Link } from "wouter";
@@ -15,7 +14,6 @@ import { z } from "zod";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
-// Import removed - we'll define categories locally
 
 const partnerFormSchema = z.object({
   firstName: z.string().min(2, "Prénom requis"),
@@ -79,8 +77,6 @@ export default function About() {
     }
   };
 
-
-
   const values = [
     {
       icon: Target,
@@ -103,29 +99,217 @@ export default function About() {
     <div className="min-h-screen bg-gray-50">
       <Header />
       
-      {/* Hero Section */}
+      {/* Rejoignez-nous Section - En haut */}
       <section className="bg-hero-gradient text-white py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h1 className="text-4xl lg:text-5xl font-bold mb-6">
+              Rejoignez le réseau Aywa
+            </h1>
+            <p className="text-xl text-orange-100 max-w-3xl mx-auto">
+              Développez votre activité de location d'équipements en rejoignant la première plateforme du Sénégal
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+            <Card className="bg-white/10 backdrop-blur-sm border-white/20">
+              <CardContent className="p-6 text-center">
+                <Users className="h-12 w-12 text-orange-200 mx-auto mb-4" />
+                <h3 className="text-xl font-bold mb-2">+500 clients actifs</h3>
+                <p className="text-orange-100">Accédez à notre large base de clients professionnels</p>
+              </CardContent>
+            </Card>
+            
+            <Card className="bg-white/10 backdrop-blur-sm border-white/20">
+              <CardContent className="p-6 text-center">
+                <MapPin className="h-12 w-12 text-orange-200 mx-auto mb-4" />
+                <h3 className="text-xl font-bold mb-2">Couverture nationale</h3>
+                <p className="text-orange-100">Développez votre activité dans tout le Sénégal</p>
+              </CardContent>
+            </Card>
+            
+            <Card className="bg-white/10 backdrop-blur-sm border-white/20">
+              <CardContent className="p-6 text-center">
+                <Clock className="h-12 w-12 text-orange-200 mx-auto mb-4" />
+                <h3 className="text-xl font-bold mb-2">Support 24/7</h3>
+                <p className="text-orange-100">Notre équipe vous accompagne en permanence</p>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="text-center">
+            <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+              <DialogTrigger asChild>
+                <Button className="bg-white text-primary-orange hover:bg-gray-100 px-8 py-3 text-lg font-semibold">
+                  Devenir Partenaire Aywa
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+                <DialogHeader>
+                  <DialogTitle>Rejoindre le réseau de partenaires Aywa</DialogTitle>
+                </DialogHeader>
+                
+                <Form {...form}>
+                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <FormField
+                        control={form.control}
+                        name="firstName"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Prénom</FormLabel>
+                            <FormControl>
+                              <Input placeholder="Votre prénom" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={form.control}
+                        name="lastName"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Nom</FormLabel>
+                            <FormControl>
+                              <Input placeholder="Votre nom" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <FormField
+                        control={form.control}
+                        name="phone"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Téléphone</FormLabel>
+                            <FormControl>
+                              <Input placeholder="+221 XX XXX XX XX" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={form.control}
+                        name="email"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Email</FormLabel>
+                            <FormControl>
+                              <Input placeholder="votre.email@exemple.com" type="email" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+
+                    <FormField
+                      control={form.control}
+                      name="website"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Site web (optionnel)</FormLabel>
+                          <FormControl>
+                            <Input placeholder="https://votre-site.com" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="equipmentCategories"
+                      render={() => (
+                        <FormItem>
+                          <FormLabel>Catégories d'équipements disponibles</FormLabel>
+                          <div className="grid grid-cols-2 gap-3">
+                            {equipmentCategories.map((category) => (
+                              <FormField
+                                key={category}
+                                control={form.control}
+                                name="equipmentCategories"
+                                render={({ field }) => {
+                                  return (
+                                    <FormItem
+                                      key={category}
+                                      className="flex flex-row items-start space-x-3 space-y-0"
+                                    >
+                                      <FormControl>
+                                        <Checkbox
+                                          checked={field.value?.includes(category)}
+                                          onCheckedChange={(checked) => {
+                                            return checked
+                                              ? field.onChange([...field.value, category])
+                                              : field.onChange(
+                                                  field.value?.filter(
+                                                    (value) => value !== category
+                                                  )
+                                                )
+                                          }}
+                                        />
+                                      </FormControl>
+                                      <FormLabel className="text-sm font-normal">
+                                        {category}
+                                      </FormLabel>
+                                    </FormItem>
+                                  )
+                                }}
+                              />
+                            ))}
+                          </div>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <Button 
+                      type="submit" 
+                      className="w-full bg-primary-orange hover:bg-primary-orange/90"
+                      disabled={isSubmitting}
+                    >
+                      {isSubmitting ? "Envoi en cours..." : "Envoyer ma demande"}
+                    </Button>
+                  </form>
+                </Form>
+              </DialogContent>
+            </Dialog>
+          </div>
+        </div>
+      </section>
+
+      {/* À Propos Section */}
+      <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h1 className="text-4xl lg:text-5xl font-bold mb-6">
+              <h2 className="text-3xl lg:text-4xl font-bold mb-6 text-gray-900">
                 À Propos d'Aywa
-              </h1>
-              <p className="text-xl text-orange-100 mb-8">
+              </h2>
+              <p className="text-lg text-gray-600 mb-8">
                 Aywa vise à accompagner les professionnels et les particuliers dans leurs projets en fournissant des moyens de transport de colis et équipements de qualité et un service personnalisé partout au Sénégal.
               </p>
               <div className="space-y-4">
-                <h3 className="text-2xl font-bold text-white mb-4">Nous contacter</h3>
-                <div className="space-y-2 text-orange-100">
-                  <p>📞 Téléphone: +221 78 606 70 13</p>
-                  <p>📧 Email: aywa@aywa.com</p>
+                <div className="flex items-center gap-3">
+                  <div className="flex-shrink-0 w-8 h-8 bg-primary-orange rounded-full flex items-center justify-center">
+                    <span className="text-white font-bold">📞</span>
+                  </div>
+                  <span className="text-gray-700">+221 78 606 70 13</span>
                 </div>
-                <Link href="/contact">
-                  <Button className="bg-primary-orange hover:bg-primary-orange/90 text-white px-8 py-3 text-lg mt-4">
-                    Formulaire de contact
-                  </Button>
-                </Link>
               </div>
+              <Link href="/contact">
+                <Button className="bg-primary-orange hover:bg-primary-orange/90 text-white px-8 py-3 text-lg mt-6">
+                  Formulaire de contact
+                </Button>
+              </Link>
             </div>
             <div>
               <img 
@@ -137,8 +321,6 @@ export default function About() {
           </div>
         </div>
       </section>
-
-
 
       {/* Mission Section */}
       <section className="py-16 bg-gray-50">
@@ -182,183 +364,6 @@ export default function About() {
                 })}
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-
-
-      {/* Partner CTA Section */}
-      <section className="py-16 bg-aywa-blue">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
-            Rejoignez notre réseau de partenaires
-          </h2>
-          <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-            Vous possédez des équipements à louer ? Rejoignez notre plateforme et développez votre activité
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-              <DialogTrigger asChild>
-                <Button className="bg-primary-orange hover:bg-primary-orange/90 text-white px-8 py-3 text-lg">
-                  Devenir partenaire d'Aywa
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
-                <DialogHeader>
-                  <DialogTitle>Rejoignez notre réseau de partenaires</DialogTitle>
-                </DialogHeader>
-                
-                <Form {...form}>
-                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                    <div className="grid grid-cols-2 gap-4">
-                      <FormField
-                        control={form.control}
-                        name="firstName"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Prénom *</FormLabel>
-                            <FormControl>
-                              <Input placeholder="Votre prénom" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name="lastName"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Nom *</FormLabel>
-                            <FormControl>
-                              <Input placeholder="Votre nom" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-
-                    <FormField
-                      control={form.control}
-                      name="phone"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Téléphone *</FormLabel>
-                          <FormControl>
-                            <Input placeholder="ex: +221 77 123 45 67" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="email"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Email *</FormLabel>
-                          <FormControl>
-                            <Input type="email" placeholder="votre@email.com" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="website"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Site Internet (facultatif)</FormLabel>
-                          <FormControl>
-                            <Input placeholder="https://votre-site.com" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="equipmentCategories"
-                      render={() => (
-                        <FormItem>
-                          <div className="mb-4">
-                            <FormLabel className="text-base font-semibold">
-                              Équipements que vous souhaitez louer *
-                            </FormLabel>
-                          </div>
-                          <div className="grid grid-cols-2 gap-3">
-                            {equipmentCategories.map((category: string) => (
-                              <FormField
-                                key={category}
-                                control={form.control}
-                                name="equipmentCategories"
-                                render={({ field }) => {
-                                  return (
-                                    <FormItem
-                                      key={category}
-                                      className="flex flex-row items-start space-x-3 space-y-0"
-                                    >
-                                      <FormControl>
-                                        <Checkbox
-                                          checked={field.value?.includes(category)}
-                                          onCheckedChange={(checked) => {
-                                            return checked
-                                              ? field.onChange([...field.value, category])
-                                              : field.onChange(
-                                                  field.value?.filter(
-                                                    (value) => value !== category
-                                                  )
-                                                )
-                                          }}
-                                        />
-                                      </FormControl>
-                                      <FormLabel className="text-sm font-normal">
-                                        {category}
-                                      </FormLabel>
-                                    </FormItem>
-                                  )
-                                }}
-                              />
-                            ))}
-                          </div>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <div className="flex gap-4">
-                      <Button 
-                        type="submit" 
-                        disabled={isSubmitting}
-                        className="flex-1 bg-primary-orange hover:bg-primary-orange/90"
-                      >
-                        {isSubmitting ? "Envoi en cours..." : "Envoyer ma demande"}
-                      </Button>
-                      <Button 
-                        type="button" 
-                        variant="outline" 
-                        onClick={() => setDialogOpen(false)}
-                        className="flex-1"
-                      >
-                        Annuler
-                      </Button>
-                    </div>
-                  </form>
-                </Form>
-              </DialogContent>
-            </Dialog>
-            
-            <Link href="/contact">
-              <Button variant="outline" className="border-white text-white hover:bg-white hover:text-aywa-blue px-8 py-3 text-lg">
-                Nous contacter
-              </Button>
-            </Link>
           </div>
         </div>
       </section>
