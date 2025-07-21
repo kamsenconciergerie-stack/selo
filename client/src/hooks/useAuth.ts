@@ -1,60 +1,80 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiRequest } from "@/lib/queryClient";
+import { useState, useEffect, createContext, useContext } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { apiRequest } from '@/lib/queryClient';
 
 interface User {
   id: number;
+  email: string;
   firstName: string;
   lastName: string;
-  email: string;
-  role: string;
   phone?: string;
-  address?: string;
-  city?: string;
-  isVerified: boolean;
+  role: string;
 }
 
-export function useAuth() {
+interface AuthContextType {
+  user: User | null;
+  isAuthenticated: boolean;
+  isLoading: boolean;
+  login: (email: string, password: string) => Promise<void>;
+  logout: () => void;
+  token: string | null;
+}
+
+export const useAuth = (): AuthContextType => {
+  const [token, setToken] = useState<string | null>(null);
   const queryClient = useQueryClient();
 
-  const { data: user, isLoading, error } = useQuery<User>({
-    queryKey: ['/api/auth/user'],
+  useEffect(() => {
+    const storedToken = localStorage.getItem('authToken');
+    if (storedToken) {
+      setToken(storedToken);
+    }
+  }, []);
+
+  // Get current user
+  const { data: user, isLoading } = useQuery({
+    queryKey: ['/api/auth/me'],
     queryFn: async () => {
-      const token = localStorage.getItem('aywa_token');
-      if (!token) {
-        throw new Error('No token found');
-      }
-      
-      return await apiRequest('/api/auth/user', {
+      if (!token) return null;
+      return await apiRequest('/api/auth/me', {
         headers: {
-          'Authorization': `Bearer ${token}`,
-        },
+          Authorization: `Bearer ${token}`
+        }
       });
     },
-    retry: false,
-    staleTime: 5 * 60 * 1000, // 5 minutes
+    enabled: !!token,
+    retry: false
   });
 
-  const logoutMutation = useMutation({
-    mutationFn: async () => {
-      localStorage.removeItem('aywa_token');
-      queryClient.clear();
-    },
-    onSuccess: () => {
-      window.location.href = '/';
-    },
-  });
+  // Login function
+  const login = async (email: string, password: string) => {
+    const response = await apiRequest('/api/auth/login', {
+      method: 'POST',
+      body: JSON.stringify({ email, password })
+    });
+    
+    localStorage.setItem('authToken', response.token);
+    localStorage.setItem('user', JSON.stringify(response.user));
+    setToken(response.token);
+    
+    // Invalidate queries to refetch user data
+    queryClient.invalidateQueries({ queryKey: ['/api/auth/me'] });
+  };
 
+  // Logout function
   const logout = () => {
-    logoutMutation.mutate();
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('user');
+    setToken(null);
+    queryClient.removeQueries();
   };
 
   return {
-    user,
+    user: user?.user || null,
+    isAuthenticated: !!token && !!user,
     isLoading,
-    isAuthenticated: !!user && !error,
-    isPartner: user?.role === 'partner',
-    isAdmin: user?.role === 'admin' || user?.role === 'manager',
+    login,
     logout,
-    error,
+    token
   };
-}
+};

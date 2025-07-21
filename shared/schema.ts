@@ -21,17 +21,22 @@ export const equipment = pgTable("equipment", {
 export const bookings = pgTable("bookings", {
   id: serial("id").primaryKey(),
   equipmentId: integer("equipment_id").notNull(),
+  userId: integer("user_id"), // New: Link to authenticated user
   customerName: text("customer_name").notNull(),
   customerEmail: text("customer_email").notNull(),
   customerPhone: text("customer_phone").notNull(),
   startDate: text("start_date").notNull(),
   endDate: text("end_date").notNull(),
   totalPrice: integer("total_price").notNull(),
-  status: text("status").notNull().default("pending"),
+  status: text("status").notNull().default("pending"), // pending, confirmed, completed, cancelled
   paymentMethod: text("payment_method"),
   paymentStatus: text("payment_status").default("pending"),
   paymentReference: text("payment_reference"),
   notes: text("notes"),
+  canModify: boolean("can_modify").notNull().default(true),
+  canCancel: boolean("can_cancel").notNull().default(true),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
 
 export const payments = pgTable("payments", {
@@ -82,16 +87,42 @@ export const insertInquirySchema = createInsertSchema(inquiries).omit({
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
   email: text("email").notNull().unique(),
-  password: text("password").notNull(),
+  password: text("password"), // Can be null for OAuth users
   firstName: text("first_name").notNull(),
   lastName: text("last_name").notNull(),
-  phone: text("phone").notNull(),
+  phone: text("phone"),
   address: text("address"),
   city: text("city"),
   role: text("role").notNull().default("customer"), // customer, admin, manager, partner
   isVerified: boolean("is_verified").notNull().default(false),
+  authProvider: text("auth_provider").notNull().default("local"), // local, google
+  googleId: text("google_id").unique(),
+  profilePicture: text("profile_picture"),
+  commercialManagerId: integer("commercial_manager_id"), // Reference to assigned manager
+  preferences: jsonb("preferences"), // User preferences for recommendations
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
+});
+
+// Commercial managers
+export const commercialManagers = pgTable("commercial_managers", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").notNull(), // Reference to users table
+  name: text("name").notNull(),
+  phone: text("phone").notNull(),
+  email: text("email").notNull(),
+  specialization: text("specialization"), // trucks, agricultural, industrial
+  isActive: boolean("is_active").notNull().default(true),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
+
+// User sessions for authentication
+export const userSessions = pgTable("user_sessions", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").notNull(),
+  sessionToken: text("session_token").notNull().unique(),
+  expiresAt: timestamp("expires_at").notNull(),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 
 // Partner registration and management
@@ -285,8 +316,8 @@ export const bookingRelations = relations(bookings, ({ one, many }) => ({
     references: [equipment.id],
   }),
   user: one(users, {
-    fields: [bookings.customerEmail],
-    references: [users.email],
+    fields: [bookings.userId],
+    references: [users.id],
   }),
   payments: many(payments),
   reviews: many(reviews),
@@ -295,9 +326,29 @@ export const bookingRelations = relations(bookings, ({ one, many }) => ({
 export const userRelations = relations(users, ({ many, one }) => ({
   bookings: many(bookings),
   reviews: many(reviews),
+  sessions: many(userSessions),
   partner: one(partners, {
     fields: [users.id],
     references: [partners.userId],
+  }),
+  commercialManager: one(commercialManagers, {
+    fields: [users.commercialManagerId],
+    references: [commercialManagers.id],
+  }),
+}));
+
+export const commercialManagerRelations = relations(commercialManagers, ({ one, many }) => ({
+  user: one(users, {
+    fields: [commercialManagers.userId],
+    references: [users.id],
+  }),
+  customers: many(users),
+}));
+
+export const userSessionRelations = relations(userSessions, ({ one }) => ({
+  user: one(users, {
+    fields: [userSessions.userId],
+    references: [users.id],
   }),
 }));
 
@@ -328,6 +379,16 @@ export const insertUserSchema = createInsertSchema(users).omit({
   id: true,
   createdAt: true,
   updatedAt: true,
+});
+
+export const insertCommercialManagerSchema = createInsertSchema(commercialManagers).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertUserSessionSchema = createInsertSchema(userSessions).omit({
+  id: true,
+  createdAt: true,
 });
 
 export const insertReviewSchema = createInsertSchema(reviews).omit({
@@ -396,6 +457,10 @@ export type Inquiry = typeof inquiries.$inferSelect;
 export type InsertInquiry = z.infer<typeof insertInquirySchema>;
 export type User = typeof users.$inferSelect;
 export type InsertUser = z.infer<typeof insertUserSchema>;
+export type CommercialManager = typeof commercialManagers.$inferSelect;
+export type InsertCommercialManager = z.infer<typeof insertCommercialManagerSchema>;
+export type UserSession = typeof userSessions.$inferSelect;
+export type InsertUserSession = z.infer<typeof insertUserSessionSchema>;
 export type Review = typeof reviews.$inferSelect;
 export type InsertReview = z.infer<typeof insertReviewSchema>;
 export type EquipmentTracking = typeof equipmentTracking.$inferSelect;

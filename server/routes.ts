@@ -1,10 +1,11 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertBookingSchema, insertInquirySchema } from "@shared/schema";
+import { insertBookingSchema, insertInquirySchema, insertUserSchema } from "@shared/schema";
 import { registerPaymentRoutes } from "./payment-routes";
 import { authRoutes } from "./auth-routes";
 import { partnerRoutes } from "./partner-routes";
+import { authenticate, generateSessionToken, type AuthenticatedRequest } from "./auth-middleware";
 import { z } from "zod";
 import multer from "multer";
 import path from "path";
@@ -207,6 +208,231 @@ ${validatedData.message}`
       res.json(categories);
     } catch (error) {
       res.status(500).json({ message: "Erreur lors de la récupération des catégories" });
+    }
+  });
+
+  // Authentication routes
+  app.post("/api/auth/register", async (req, res) => {
+    try {
+      const validatedData = insertUserSchema.extend({
+        password: z.string().min(6, "Le mot de passe doit contenir au moins 6 caractères")
+      }).parse(req.body);
+
+      // Check if user already exists
+      const existingUser = await storage.getUserByEmail(validatedData.email);
+      if (existingUser) {
+        return res.status(400).json({ message: "Un utilisateur avec cet email existe déjà" });
+      }
+
+      // Assign a commercial manager randomly
+      const managers = Array.from((storage as any).commercialManagers.values());
+      const randomManager = managers[Math.floor(Math.random() * managers.length)];
+
+      const user = await storage.createUser({
+        ...validatedData,
+        commercialManagerId: randomManager?.id || null
+      });
+
+      // Create session token
+      const sessionToken = generateSessionToken();
+      const expiresAt = new Date();
+      expiresAt.setDate(expiresAt.getDate() + 30); // 30 days
+
+      await storage.createUserSession({
+        userId: user.id,
+        sessionToken,
+        expiresAt
+      });
+
+      res.status(201).json({
+        user: {
+          id: user.id,
+          email: user.email,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          phone: user.phone,
+          role: user.role
+        },
+        token: sessionToken
+      });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ 
+          message: "Données d'inscription invalides", 
+          errors: error.errors 
+        });
+      }
+      res.status(500).json({ message: "Erreur lors de l'inscription" });
+    }
+  });
+
+  app.post("/api/auth/login", async (req, res) => {
+    try {
+      const { email, password } = req.body;
+
+      if (!email || !password) {
+        return res.status(400).json({ message: "Email et mot de passe requis" });
+      }
+
+      const user = await storage.verifyUserPassword(email, password);
+      if (!user) {
+        return res.status(401).json({ message: "Email ou mot de passe incorrect" });
+      }
+
+      // Create session token
+      const sessionToken = generateSessionToken();
+      const expiresAt = new Date();
+      expiresAt.setDate(expiresAt.getDate() + 30); // 30 days
+
+      await storage.createUserSession({
+        userId: user.id,
+        sessionToken,
+        expiresAt
+      });
+
+      res.json({
+        user: {
+          id: user.id,
+          email: user.email,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          phone: user.phone,
+          role: user.role
+        },
+        token: sessionToken
+      });
+    } catch (error) {
+      res.status(500).json({ message: "Erreur lors de la connexion" });
+    }
+  });
+
+  app.post("/api/auth/logout", authenticate, async (req: AuthenticatedRequest, res) => {
+    try {
+      const token = req.headers.authorization?.replace('Bearer ', '');
+      if (token) {
+        await storage.deleteUserSession(token);
+      }
+      res.json({ message: "Déconnexion réussie" });
+    } catch (error) {
+      res.status(500).json({ message: "Erreur lors de la déconnexion" });
+    }
+  });
+
+  // User profile routes
+  app.get("/api/auth/me", authenticate, async (req: AuthenticatedRequest, res) => {
+    try {
+      const user = req.user;
+      let commercialManager = null;
+
+      if (user.commercialManagerId) {
+        commercialManager = await storage.getCommercialManagerById(user.commercialManagerId);
+      }
+
+      res.json({
+        user: {
+          id: user.id,
+          email: user.email,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          phone: user.phone,
+          address: user.address,
+          city: user.city,
+          role: user.role,
+          profilePicture: user.profilePicture
+        },
+        commercialManager
+      });
+    } catch (error) {
+      res.status(500).json({ message: "Erreur lors de la récupération du profil" });
+    }
+  });
+
+  // User dashboard routes
+  app.get("/api/dashboard/bookings", authenticate, async (req: AuthenticatedRequest, res) => {
+    try {
+      const userId = req.user.id;
+      const bookings = await storage.getUserBookings(userId);
+
+      // Get equipment details for each booking
+      const bookingsWithEquipment = await Promise.all(
+        bookings.map(async (booking) => {
+          const equipment = await storage.getEquipmentById(booking.equipmentId);
+          return { ...booking, equipment };
+        })
+      );
+
+      res.json(bookingsWithEquipment);
+    } catch (error) {
+      res.status(500).json({ message: "Erreur lors de la récupération des réservations" });
+    }
+  });
+
+  app.put("/api/dashboard/bookings/:id", authenticate, async (req: AuthenticatedRequest, res) => {
+    try {
+      const bookingId = parseInt(req.params.id);
+      const userId = req.user.id;
+      const updates = req.body;
+
+      // Verify the booking belongs to the user
+      const existingBooking = await storage.getUserBookings(userId);
+      const userBooking = existingBooking.find(b => b.id === bookingId);
+
+      if (!userBooking) {
+        return res.status(404).json({ message: "Réservation non trouvée" });
+      }
+
+      if (!userBooking.canModify) {
+        return res.status(400).json({ message: "Cette réservation ne peut plus être modifiée" });
+      }
+
+      const updatedBooking = await storage.updateBooking(bookingId, updates);
+      res.json(updatedBooking);
+    } catch (error) {
+      res.status(500).json({ message: "Erreur lors de la modification de la réservation" });
+    }
+  });
+
+  app.delete("/api/dashboard/bookings/:id", authenticate, async (req: AuthenticatedRequest, res) => {
+    try {
+      const bookingId = parseInt(req.params.id);
+      const userId = req.user.id;
+
+      // Verify the booking belongs to the user
+      const existingBookings = await storage.getUserBookings(userId);
+      const userBooking = existingBookings.find(b => b.id === bookingId);
+
+      if (!userBooking) {
+        return res.status(404).json({ message: "Réservation non trouvée" });
+      }
+
+      if (!userBooking.canCancel) {
+        return res.status(400).json({ message: "Cette réservation ne peut plus être annulée" });
+      }
+
+      await storage.cancelBooking(bookingId);
+      res.json({ message: "Réservation annulée avec succès" });
+    } catch (error) {
+      res.status(500).json({ message: "Erreur lors de l'annulation de la réservation" });
+    }
+  });
+
+  app.get("/api/dashboard/payments", authenticate, async (req: AuthenticatedRequest, res) => {
+    try {
+      const userId = req.user.id;
+      const payments = await storage.getUserPaymentHistory(userId);
+      res.json(payments);
+    } catch (error) {
+      res.status(500).json({ message: "Erreur lors de la récupération de l'historique des paiements" });
+    }
+  });
+
+  app.get("/api/dashboard/recommendations", authenticate, async (req: AuthenticatedRequest, res) => {
+    try {
+      const userId = req.user.id;
+      const recommendations = await storage.getPersonalizedRecommendations(userId);
+      res.json(recommendations);
+    } catch (error) {
+      res.status(500).json({ message: "Erreur lors de la récupération des recommandations" });
     }
   });
 

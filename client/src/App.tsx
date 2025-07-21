@@ -11,6 +11,8 @@ import Services from "@/pages/services";
 import About from "@/pages/about";
 import EquipementsPopulaires from "@/pages/equipements-populaires";
 import QuoteRequest from "@/pages/quote-request";
+import LoginPage from "@/pages/login";
+import DashboardPage from "@/pages/dashboard";
 import SimpleAdmin from "@/pages/simple-admin";
 import NotFound from "@/pages/not-found";
 
@@ -25,6 +27,8 @@ function Router() {
       <Route path="/a-propos" component={About} />
       <Route path="/contact" component={Contact} />
       <Route path="/devis" component={QuoteRequest} />
+      <Route path="/login" component={LoginPage} />
+      <Route path="/dashboard" component={DashboardPage} />
       <Route path="/admin" component={SimpleAdmin} />
       <Route component={NotFound} />
     </Switch>

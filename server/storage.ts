@@ -10,6 +10,8 @@ import {
   Location,
   EquipmentInventory,
   Notification,
+  CommercialManager,
+  UserSession,
   InsertEquipment, 
   InsertBooking, 
   InsertPayment, 
@@ -20,7 +22,9 @@ import {
   InsertMaintenance,
   InsertLocation,
   InsertInventory,
-  InsertNotification
+  InsertNotification,
+  InsertCommercialManager,
+  InsertUserSession
 } from "@shared/schema";
 import { 
   equipment, 
@@ -34,7 +38,9 @@ import {
   locations,
   equipmentInventory,
   notifications,
-  analytics
+  analytics,
+  commercialManagers,
+  userSessions
 } from "../shared/schema";
 import { eq, ilike, or } from "drizzle-orm";
 import { db } from "../shared/db";
@@ -68,30 +74,27 @@ export interface IStorage {
   createUser(user: InsertUser): Promise<User>;
   getUserById(id: number): Promise<User | undefined>;
   getUserByEmail(email: string): Promise<User | undefined>;
+  getUserByGoogleId(googleId: string): Promise<User | undefined>;
   updateUser(id: number, user: Partial<User>): Promise<void>;
-
-  // Partner methods
-  createPartner(partner: InsertPartner): Promise<Partner>;
-  getPartnerByUserId(userId: number): Promise<Partner | undefined>;
-  getPartnerById(id: number): Promise<Partner | undefined>;
-  updatePartnerStatus(userId: number, status: string, approvedBy: number): Promise<void>;
-  getEquipmentByPartnerId(partnerId: number): Promise<Equipment[]>;
-  getPartnerBookings(partnerId: number, limit?: number): Promise<Booking[]>;
-  getPartnerEarnings(partnerId: number): Promise<PartnerEarnings[]>;
-
-  // Partner application methods
-  createPartnerApplication(application: InsertPartnerApplication): Promise<PartnerApplication>;
-  getAllPartnerApplications(): Promise<PartnerApplication[]>;
-  getPartnerApplicationById(id: number): Promise<PartnerApplication | undefined>;
-  updatePartnerApplicationStatus(id: number, status: string, notes: string, reviewedBy: number): Promise<void>;
-
-  // Partner document methods
-  createPartnerDocument(document: InsertPartnerDocument): Promise<PartnerDocument>;
-  getPartnerDocuments(partnerId: number): Promise<PartnerDocument[]>;
-
-  // Partner fleet methods
-  createPartnerFleet(fleet: InsertPartnerFleet): Promise<PartnerFleet>;
-  getPartnerFleet(partnerId: number): Promise<PartnerFleet[]>;
+  verifyUserPassword(email: string, password: string): Promise<User | null>;
+  
+  // Commercial manager methods
+  createCommercialManager(manager: InsertCommercialManager): Promise<CommercialManager>;
+  getCommercialManagerById(id: number): Promise<CommercialManager | undefined>;
+  getCommercialManagerByUserId(userId: number): Promise<CommercialManager | undefined>;
+  
+  // User session methods
+  createUserSession(session: InsertUserSession): Promise<UserSession>;
+  getUserBySessionToken(token: string): Promise<User | undefined>;
+  getUserSession(token: string): Promise<UserSession | undefined>;
+  deleteUserSession(token: string): Promise<void>;
+  
+  // User dashboard methods
+  getUserBookings(userId: number): Promise<Booking[]>;
+  updateBooking(bookingId: number, updates: Partial<Booking>): Promise<Booking | undefined>;
+  cancelBooking(bookingId: number): Promise<void>;
+  getUserPaymentHistory(userId: number): Promise<Payment[]>;
+  getPersonalizedRecommendations(userId: number): Promise<Equipment[]>;
   
   // Review methods
   createReview(review: InsertReview): Promise<Review>;
@@ -150,7 +153,7 @@ export class DbStorage implements IStorage {
           ilike(equipment.name, `%${query}%`),
           ilike(equipment.description, `%${query}%`)
         )
-      ).where(eq(equipment.location, location));
+      );
     } else if (query) {
       queryBuilder = queryBuilder.where(
         or(
@@ -246,6 +249,356 @@ export class DbStorage implements IStorage {
     const result = await db.insert(inquiries).values(inquiryWithDate).returning();
     return result[0];
   }
+
+  async getBookingsByUser(userId: number): Promise<Booking[]> {
+    return await db.select().from(bookings).where(eq(bookings.userId, userId));
+  }
+
+  // User methods
+  async createUser(userData: InsertUser): Promise<User> {
+    const result = await db.insert(users).values(userData).returning();
+    return result[0];
+  }
+
+  async getUserById(id: number): Promise<User | undefined> {
+    const result = await db.select().from(users).where(eq(users.id, id));
+    return result[0];
+  }
+
+  async getUserByEmail(email: string): Promise<User | undefined> {
+    const result = await db.select().from(users).where(eq(users.email, email));
+    return result[0];
+  }
+
+  async getUserByGoogleId(googleId: string): Promise<User | undefined> {
+    const result = await db.select().from(users).where(eq(users.googleId, googleId));
+    return result[0];
+  }
+
+  async updateUser(id: number, userData: Partial<User>): Promise<void> {
+    await db.update(users).set(userData).where(eq(users.id, id));
+  }
+
+  async verifyUserPassword(email: string, password: string): Promise<User | null> {
+    const user = await this.getUserByEmail(email);
+    if (!user || !user.password) return null;
+    
+    // In production, use bcrypt to verify password
+    // For now, simple comparison (you should implement proper password hashing)
+    if (user.password === password) {
+      return user;
+    }
+    return null;
+  }
+
+  // Commercial manager methods
+  async createCommercialManager(managerData: InsertCommercialManager): Promise<CommercialManager> {
+    const result = await db.insert(commercialManagers).values(managerData).returning();
+    return result[0];
+  }
+
+  async getCommercialManagerById(id: number): Promise<CommercialManager | undefined> {
+    const result = await db.select().from(commercialManagers).where(eq(commercialManagers.id, id));
+    return result[0];
+  }
+
+  async getCommercialManagerByUserId(userId: number): Promise<CommercialManager | undefined> {
+    const result = await db.select().from(commercialManagers).where(eq(commercialManagers.userId, userId));
+    return result[0];
+  }
+
+  // User session methods
+  async createUserSession(sessionData: InsertUserSession): Promise<UserSession> {
+    const result = await db.insert(userSessions).values(sessionData).returning();
+    return result[0];
+  }
+
+  async getUserBySessionToken(token: string): Promise<User | undefined> {
+    const result = await db.select({
+      id: users.id,
+      email: users.email,
+      firstName: users.firstName,
+      lastName: users.lastName,
+      phone: users.phone,
+      address: users.address,
+      city: users.city,
+      role: users.role,
+      isVerified: users.isVerified,
+      authProvider: users.authProvider,
+      googleId: users.googleId,
+      profilePicture: users.profilePicture,
+      commercialManagerId: users.commercialManagerId,
+      preferences: users.preferences,
+      createdAt: users.createdAt,
+      updatedAt: users.updatedAt,
+      password: users.password
+    })
+      .from(users)
+      .innerJoin(userSessions, eq(users.id, userSessions.userId))
+      .where(eq(userSessions.sessionToken, token))
+      .where(eq(userSessions.expiresAt, userSessions.expiresAt)); // Check if session is still valid
+    
+    return result[0];
+  }
+
+  async deleteUserSession(token: string): Promise<void> {
+    await db.delete(userSessions).where(eq(userSessions.sessionToken, token));
+  }
+
+  // User dashboard methods
+  async getUserBookings(userId: number): Promise<Booking[]> {
+    return await db.select().from(bookings).where(eq(bookings.userId, userId));
+  }
+
+  async updateBooking(bookingId: number, updates: Partial<Booking>): Promise<Booking | undefined> {
+    const result = await db.update(bookings).set(updates).where(eq(bookings.id, bookingId)).returning();
+    return result[0];
+  }
+
+  async cancelBooking(bookingId: number): Promise<void> {
+    await db.update(bookings)
+      .set({ 
+        status: 'cancelled',
+        canModify: false,
+        canCancel: false 
+      })
+      .where(eq(bookings.id, bookingId));
+  }
+
+  async getUserPaymentHistory(userId: number): Promise<Payment[]> {
+    const result = await db.select({
+      id: payments.id,
+      bookingId: payments.bookingId,
+      amount: payments.amount,
+      paymentMethod: payments.paymentMethod,
+      phoneNumber: payments.phoneNumber,
+      transactionId: payments.transactionId,
+      status: payments.status,
+      createdAt: payments.createdAt,
+      updatedAt: payments.updatedAt
+    })
+      .from(payments)
+      .innerJoin(bookings, eq(payments.bookingId, bookings.id))
+      .where(eq(bookings.userId, userId));
+    
+    return result;
+  }
+
+  async getPersonalizedRecommendations(userId: number): Promise<Equipment[]> {
+    // Get user's booking history to understand preferences
+    const userBookings = await this.getUserBookings(userId);
+    
+    if (userBookings.length === 0) {
+      // If no history, return popular equipment
+      return this.getAllEquipment();
+    }
+
+    // Get equipment categories from user's previous bookings
+    const bookedEquipmentIds = userBookings.map(b => b.equipmentId);
+    const bookedEquipment = await db.select()
+      .from(equipment)
+      .where(
+        or(...bookedEquipmentIds.map(id => eq(equipment.id, id)))
+      );
+
+    const preferredCategories = [...new Set(bookedEquipment.map(e => e.category))];
+
+    // Recommend similar equipment from preferred categories
+    if (preferredCategories.length > 0) {
+      return await db.select()
+        .from(equipment)
+        .where(
+          or(...preferredCategories.map(cat => eq(equipment.category, cat)))
+        )
+        .limit(12);
+    }
+
+    return this.getAllEquipment();
+  }
+
+  // Stub implementations for missing interface methods
+  async updateEquipment(id: number, equipmentData: Partial<InsertEquipment>): Promise<Equipment | undefined> {
+    const result = await db.update(equipment).set(equipmentData).where(eq(equipment.id, id)).returning();
+    return result[0];
+  }
+
+  async deleteEquipment(id: number): Promise<boolean> {
+    const result = await db.delete(equipment).where(eq(equipment.id, id));
+    return result.rowCount > 0;
+  }
+
+  async createReview(reviewData: InsertReview): Promise<Review> {
+    const result = await db.insert(reviews).values(reviewData).returning();
+    return result[0];
+  }
+
+  async getReviewsByEquipment(equipmentId: number): Promise<Review[]> {
+    return await db.select().from(reviews).where(eq(reviews.equipmentId, equipmentId));
+  }
+
+  async getReviewsByUser(userId: number): Promise<Review[]> {
+    return await db.select().from(reviews).where(eq(reviews.userId, userId));
+  }
+
+  async updateEquipmentTracking(trackingData: InsertTracking): Promise<EquipmentTracking> {
+    const result = await db.insert(equipmentTracking).values(trackingData).returning();
+    return result[0];
+  }
+
+  async getEquipmentTracking(equipmentId: number): Promise<EquipmentTracking | undefined> {
+    const result = await db.select().from(equipmentTracking).where(eq(equipmentTracking.equipmentId, equipmentId));
+    return result[0];
+  }
+
+  async createMaintenanceSchedule(maintenanceData: InsertMaintenance): Promise<MaintenanceSchedule> {
+    const result = await db.insert(maintenanceSchedule).values(maintenanceData).returning();
+    return result[0];
+  }
+
+  async getMaintenanceByEquipment(equipmentId: number): Promise<MaintenanceSchedule[]> {
+    return await db.select().from(maintenanceSchedule).where(eq(maintenanceSchedule.equipmentId, equipmentId));
+  }
+
+  async updateMaintenanceStatus(id: number, status: string): Promise<void> {
+    await db.update(maintenanceSchedule).set({ status }).where(eq(maintenanceSchedule.id, id));
+  }
+
+  async createLocation(locationData: InsertLocation): Promise<Location> {
+    const result = await db.insert(locations).values(locationData).returning();
+    return result[0];
+  }
+
+  async getAllLocations(): Promise<Location[]> {
+    return await db.select().from(locations);
+  }
+
+  async getActiveLocations(): Promise<Location[]> {
+    return await db.select().from(locations).where(eq(locations.isActive, true));
+  }
+
+  async createInventory(inventoryData: InsertInventory): Promise<EquipmentInventory> {
+    const result = await db.insert(equipmentInventory).values(inventoryData).returning();
+    return result[0];
+  }
+
+  async getInventoryByLocation(locationId: number): Promise<EquipmentInventory[]> {
+    return await db.select().from(equipmentInventory).where(eq(equipmentInventory.locationId, locationId));
+  }
+
+  async updateInventoryQuantity(id: number, quantity: number): Promise<void> {
+    await db.update(equipmentInventory).set({ quantity }).where(eq(equipmentInventory.id, id));
+  }
+
+  async createNotification(notificationData: InsertNotification): Promise<Notification> {
+    const result = await db.insert(notifications).values(notificationData).returning();
+    return result[0];
+  }
+
+  async getPendingNotifications(): Promise<Notification[]> {
+    return await db.select().from(notifications).where(eq(notifications.status, 'pending'));
+  }
+
+  async updateNotificationStatus(id: number, status: string): Promise<void> {
+    await db.update(notifications).set({ status }).where(eq(notifications.id, id));
+  }
+
+  async recordAnalytics(metric: string, value: number, metadata?: any): Promise<void> {
+    await db.insert(analytics).values({
+      date: new Date(),
+      metric,
+      value,
+      metadata
+    });
+  }
+
+  async getAnalytics(metric: string, startDate: Date, endDate: Date): Promise<any[]> {
+    return await db.select().from(analytics)
+      .where(eq(analytics.metric, metric));
+  }
+
+  // User authentication methods
+  async createUser(userData: InsertUser): Promise<User> {
+    // Hash password
+    const hashedPassword = await bcrypt.hash(userData.password, 10);
+    const result = await db.insert(users).values({
+      ...userData,
+      password: hashedPassword
+    }).returning();
+    return result[0];
+  }
+
+  async getUserByEmail(email: string): Promise<User | undefined> {
+    const result = await db.select().from(users).where(eq(users.email, email));
+    return result[0];
+  }
+
+  async verifyUserPassword(email: string, password: string): Promise<User | null> {
+    const user = await this.getUserByEmail(email);
+    if (!user) return null;
+    
+    const isValid = await bcrypt.compare(password, user.password);
+    return isValid ? user : null;
+  }
+
+  async createUserSession(sessionData: InsertUserSession): Promise<UserSession> {
+    const result = await db.insert(userSessions).values(sessionData).returning();
+    return result[0];
+  }
+
+  async getUserSession(token: string): Promise<UserSession | undefined> {
+    const result = await db.select().from(userSessions).where(eq(userSessions.sessionToken, token));
+    return result[0];
+  }
+
+  async deleteUserSession(token: string): Promise<void> {
+    await db.delete(userSessions).where(eq(userSessions.sessionToken, token));
+  }
+
+  async getUserBookings(userId: number): Promise<any[]> {
+    const userBookings = await db.select().from(bookings).where(eq(bookings.userId, userId));
+    return userBookings.map(booking => ({
+      ...booking,
+      canModify: new Date(booking.startDate) > new Date(),
+      canCancel: new Date(booking.startDate) > new Date(Date.now() + 24 * 60 * 60 * 1000) // 24h before
+    }));
+  }
+
+  async updateBooking(id: number, updates: Partial<InsertBooking>): Promise<Booking> {
+    const result = await db.update(bookings).set(updates).where(eq(bookings.id, id)).returning();
+    return result[0];
+  }
+
+  async cancelBooking(id: number): Promise<void> {
+    await db.update(bookings).set({ status: 'cancelled' }).where(eq(bookings.id, id));
+  }
+
+  async getUserPaymentHistory(userId: number): Promise<Payment[]> {
+    return await db.select().from(payments).where(eq(payments.userId, userId));
+  }
+
+  async getPersonalizedRecommendations(userId: number): Promise<Equipment[]> {
+    // Simple recommendation based on user's booking history
+    const userBookings = await db.select().from(bookings).where(eq(bookings.userId, userId));
+    if (userBookings.length === 0) {
+      // Return popular equipment for new users
+      return await db.select().from(equipment).limit(6);
+    }
+    
+    // Get similar equipment based on categories used before
+    const categories = [...new Set(userBookings.map(b => b.category || ''))];
+    if (categories.length > 0) {
+      return await db.select().from(equipment)
+        .where(or(...categories.map(cat => eq(equipment.category, cat))))
+        .limit(6);
+    }
+    
+    return await db.select().from(equipment).limit(6);
+  }
+
+  async getCommercialManagerById(id: number): Promise<CommercialManager | undefined> {
+    const result = await db.select().from(commercialManagers).where(eq(commercialManagers.id, id));
+    return result[0];
+  }
 }
 
 export class MemStorage implements IStorage {
@@ -253,23 +606,72 @@ export class MemStorage implements IStorage {
   private bookings: Map<number, Booking>;
   private payments: Map<number, Payment>;
   private inquiries: Map<number, Inquiry>;
+  private users: Map<number, User>;
+  private commercialManagers: Map<number, CommercialManager>;
+  private userSessions: Map<string, UserSession>;
   private currentEquipmentId: number;
   private currentBookingId: number;
   private currentPaymentId: number;
   private currentInquiryId: number;
+  private currentUserId: number;
+  private currentManagerId: number;
 
   constructor() {
     this.equipment = new Map();
     this.bookings = new Map();
     this.payments = new Map();
     this.inquiries = new Map();
+    this.users = new Map();
+    this.commercialManagers = new Map();
+    this.userSessions = new Map();
     this.currentEquipmentId = 1;
     this.currentBookingId = 1;
     this.currentPaymentId = 1;
     this.currentInquiryId = 1;
+    this.currentUserId = 1;
+    this.currentManagerId = 1;
     
     // Initialize with sample equipment data for Senegal
     this.initializeData();
+    this.initializeCommercialManagers();
+  }
+
+  private initializeCommercialManagers() {
+    const managers: InsertCommercialManager[] = [
+      {
+        userId: 1, // Will be created later
+        name: "Mamadou Diallo",
+        phone: "+221 77 123 45 67",
+        email: "mamadou.diallo@aywalogistic.com",
+        specialization: "trucks",
+        isActive: true
+      },
+      {
+        userId: 2,
+        name: "Fatou Seck",
+        phone: "+221 76 234 56 78",
+        email: "fatou.seck@aywalogistic.com",
+        specialization: "agricultural",
+        isActive: true
+      },
+      {
+        userId: 3,
+        name: "Ousmane Fall",
+        phone: "+221 78 345 67 89",
+        email: "ousmane.fall@aywalogistic.com",
+        specialization: "industrial",
+        isActive: true
+      }
+    ];
+
+    managers.forEach(manager => {
+      const id = this.currentManagerId++;
+      this.commercialManagers.set(id, {
+        id,
+        ...manager,
+        createdAt: new Date()
+      });
+    });
   }
 
   private initializeData() {
@@ -823,6 +1225,336 @@ export class MemStorage implements IStorage {
     };
     this.inquiries.set(id, inquiry);
     return inquiry;
+  }
+
+  // User authentication and management methods
+  async createUser(userData: InsertUser): Promise<User> {
+    const id = this.currentUserId++;
+    const user: User = {
+      id,
+      ...userData,
+      password: userData.password || null,
+      phone: userData.phone || null,
+      address: userData.address || null,
+      city: userData.city || null,
+      isVerified: userData.isVerified || false,
+      authProvider: userData.authProvider || "local",
+      googleId: userData.googleId || null,
+      profilePicture: userData.profilePicture || null,
+      commercialManagerId: userData.commercialManagerId || null,
+      preferences: userData.preferences || null,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+    this.users.set(id, user);
+    return user;
+  }
+
+  async getUserById(id: number): Promise<User | undefined> {
+    return this.users.get(id);
+  }
+
+  async getUserByEmail(email: string): Promise<User | undefined> {
+    return Array.from(this.users.values()).find(user => user.email === email);
+  }
+
+  async getUserByGoogleId(googleId: string): Promise<User | undefined> {
+    return Array.from(this.users.values()).find(user => user.googleId === googleId);
+  }
+
+  async updateUser(id: number, userData: Partial<User>): Promise<void> {
+    const user = this.users.get(id);
+    if (user) {
+      const updatedUser = { ...user, ...userData, updatedAt: new Date() };
+      this.users.set(id, updatedUser);
+    }
+  }
+
+  async verifyUserPassword(email: string, password: string): Promise<User | null> {
+    const user = await this.getUserByEmail(email);
+    if (!user || !user.password) return null;
+    
+    // Simple password verification (use bcrypt in production)
+    if (user.password === password) {
+      return user;
+    }
+    return null;
+  }
+
+  async getBookingsByUser(userId: number): Promise<Booking[]> {
+    return Array.from(this.bookings.values()).filter(b => b.userId === userId);
+  }
+
+  // Commercial manager methods
+  async createCommercialManager(managerData: InsertCommercialManager): Promise<CommercialManager> {
+    const id = this.currentManagerId++;
+    const manager: CommercialManager = {
+      id,
+      ...managerData,
+      createdAt: new Date()
+    };
+    this.commercialManagers.set(id, manager);
+    return manager;
+  }
+
+  async getCommercialManagerById(id: number): Promise<CommercialManager | undefined> {
+    return this.commercialManagers.get(id);
+  }
+
+  async getCommercialManagerByUserId(userId: number): Promise<CommercialManager | undefined> {
+    return Array.from(this.commercialManagers.values()).find(m => m.userId === userId);
+  }
+
+  // User session methods
+  async createUserSession(sessionData: InsertUserSession): Promise<UserSession> {
+    const session: UserSession = {
+      id: Math.floor(Math.random() * 1000000),
+      ...sessionData,
+      createdAt: new Date()
+    };
+    this.userSessions.set(sessionData.sessionToken, session);
+    return session;
+  }
+
+  async getUserBySessionToken(token: string): Promise<User | undefined> {
+    const session = this.userSessions.get(token);
+    if (!session || session.expiresAt < new Date()) {
+      return undefined;
+    }
+    return this.getUserById(session.userId);
+  }
+
+  async getUserSession(token: string): Promise<UserSession | undefined> {
+    const session = this.userSessions.get(token);
+    if (!session || session.expiresAt < new Date()) {
+      return undefined;
+    }
+    return session;
+  }
+
+  async deleteUserSession(token: string): Promise<void> {
+    this.userSessions.delete(token);
+  }
+
+  // Dashboard methods
+  async getUserBookings(userId: number): Promise<any[]> {
+    const userBookings = Array.from(this.bookings.values()).filter(b => b.userId === userId);
+    return userBookings.map(booking => ({
+      ...booking,
+      canModify: new Date(booking.startDate) > new Date(),
+      canCancel: new Date(booking.startDate) > new Date(Date.now() + 24 * 60 * 60 * 1000) // 24h before
+    }));
+  }
+
+  async updateBooking(bookingId: number, updates: Partial<Booking>): Promise<Booking | undefined> {
+    const booking = this.bookings.get(bookingId);
+    if (booking) {
+      const updatedBooking = { ...booking, ...updates, updatedAt: new Date().toISOString() };
+      this.bookings.set(bookingId, updatedBooking);
+      return updatedBooking;
+    }
+    return undefined;
+  }
+
+  async cancelBooking(bookingId: number): Promise<void> {
+    const booking = this.bookings.get(bookingId);
+    if (booking) {
+      booking.status = 'cancelled';
+      this.bookings.set(bookingId, booking);
+    }
+  }
+
+  async getUserPaymentHistory(userId: number): Promise<Payment[]> {
+    return Array.from(this.payments.values()).filter(p => p.userId === userId);
+  }
+
+  async getPersonalizedRecommendations(userId: number): Promise<Equipment[]> {
+    // Simple recommendation based on user's booking history
+    const userBookings = await this.getUserBookings(userId);
+    if (userBookings.length === 0) {
+      // Return popular equipment for new users (first 6)
+      return Array.from(this.equipment.values()).slice(0, 6);
+    }
+    
+    // Get similar equipment based on categories used before
+    const categories = [...new Set(userBookings.map(b => b.category || ''))].filter(Boolean);
+    if (categories.length > 0) {
+      const recommendations = Array.from(this.equipment.values())
+        .filter(eq => categories.includes(eq.category))
+        .slice(0, 6);
+      
+      // If not enough recommendations, fill with popular equipment
+      if (recommendations.length < 6) {
+        const additionalEquipment = Array.from(this.equipment.values())
+          .filter(eq => !recommendations.find(r => r.id === eq.id))
+          .slice(0, 6 - recommendations.length);
+        recommendations.push(...additionalEquipment);
+      }
+      
+      return recommendations;
+    }
+    
+    return Array.from(this.equipment.values()).slice(0, 6);
+  }
+
+  async deleteUserSession(token: string): Promise<void> {
+    this.userSessions.delete(token);
+  }
+
+  // User dashboard methods
+  async getUserBookings(userId: number): Promise<Booking[]> {
+    return Array.from(this.bookings.values()).filter(b => b.userId === userId);
+  }
+
+  async updateBooking(bookingId: number, updates: Partial<Booking>): Promise<Booking | undefined> {
+    const booking = this.bookings.get(bookingId);
+    if (booking) {
+      const updatedBooking = { ...booking, ...updates, updatedAt: new Date() };
+      this.bookings.set(bookingId, updatedBooking);
+      return updatedBooking;
+    }
+    return undefined;
+  }
+
+  async cancelBooking(bookingId: number): Promise<void> {
+    const booking = this.bookings.get(bookingId);
+    if (booking) {
+      booking.status = 'cancelled';
+      booking.canModify = false;
+      booking.canCancel = false;
+      this.bookings.set(bookingId, booking);
+    }
+  }
+
+  async getUserPaymentHistory(userId: number): Promise<Payment[]> {
+    const userBookings = await this.getUserBookings(userId);
+    const bookingIds = userBookings.map(b => b.id);
+    return Array.from(this.payments.values()).filter(p => bookingIds.includes(p.bookingId));
+  }
+
+  async getPersonalizedRecommendations(userId: number): Promise<Equipment[]> {
+    const userBookings = await this.getUserBookings(userId);
+    
+    if (userBookings.length === 0) {
+      return this.getAllEquipment();
+    }
+
+    // Get categories from user's booking history
+    const bookedEquipmentIds = userBookings.map(b => b.equipmentId);
+    const bookedEquipment = Array.from(this.equipment.values()).filter(e => 
+      bookedEquipmentIds.includes(e.id)
+    );
+    
+    const preferredCategories = [...new Set(bookedEquipment.map(e => e.category))];
+
+    // Return equipment from preferred categories
+    const recommendations = Array.from(this.equipment.values()).filter(e => 
+      preferredCategories.includes(e.category)
+    );
+
+    return recommendations.slice(0, 12);
+  }
+
+  // Missing interface methods - stub implementations
+  async updateEquipment(id: number, equipmentData: Partial<InsertEquipment>): Promise<Equipment | undefined> {
+    const equipment = this.equipment.get(id);
+    if (equipment) {
+      const updated = { ...equipment, ...equipmentData };
+      this.equipment.set(id, updated);
+      return updated;
+    }
+    return undefined;
+  }
+
+  async deleteEquipment(id: number): Promise<boolean> {
+    return this.equipment.delete(id);
+  }
+
+  async updateEquipmentImages(id: number, imagePaths: string[]): Promise<Equipment | undefined> {
+    const equipment = this.equipment.get(id);
+    if (equipment && imagePaths.length > 0) {
+      equipment.imageUrl = imagePaths[0];
+      this.equipment.set(id, equipment);
+      return equipment;
+    }
+    return undefined;
+  }
+
+  // Stub implementations for other missing methods
+  async createReview(reviewData: InsertReview): Promise<Review> {
+    return { id: 1, ...reviewData, createdAt: new Date() };
+  }
+
+  async getReviewsByEquipment(equipmentId: number): Promise<Review[]> {
+    return [];
+  }
+
+  async getReviewsByUser(userId: number): Promise<Review[]> {
+    return [];
+  }
+
+  async updateEquipmentTracking(trackingData: InsertTracking): Promise<EquipmentTracking> {
+    return { id: 1, ...trackingData, lastUpdated: new Date() };
+  }
+
+  async getEquipmentTracking(equipmentId: number): Promise<EquipmentTracking | undefined> {
+    return undefined;
+  }
+
+  async createMaintenanceSchedule(maintenanceData: InsertMaintenance): Promise<MaintenanceSchedule> {
+    return { id: 1, ...maintenanceData, createdAt: new Date() };
+  }
+
+  async getMaintenanceByEquipment(equipmentId: number): Promise<MaintenanceSchedule[]> {
+    return [];
+  }
+
+  async updateMaintenanceStatus(id: number, status: string): Promise<void> {
+    // Stub implementation
+  }
+
+  async createLocation(locationData: InsertLocation): Promise<Location> {
+    return { id: 1, ...locationData };
+  }
+
+  async getAllLocations(): Promise<Location[]> {
+    return [];
+  }
+
+  async getActiveLocations(): Promise<Location[]> {
+    return [];
+  }
+
+  async createInventory(inventoryData: InsertInventory): Promise<EquipmentInventory> {
+    return { id: 1, ...inventoryData };
+  }
+
+  async getInventoryByLocation(locationId: number): Promise<EquipmentInventory[]> {
+    return [];
+  }
+
+  async updateInventoryQuantity(id: number, quantity: number): Promise<void> {
+    // Stub implementation
+  }
+
+  async createNotification(notificationData: InsertNotification): Promise<Notification> {
+    return { id: 1, ...notificationData, createdAt: new Date() };
+  }
+
+  async getPendingNotifications(): Promise<Notification[]> {
+    return [];
+  }
+
+  async updateNotificationStatus(id: number, status: string): Promise<void> {
+    // Stub implementation
+  }
+
+  async recordAnalytics(metric: string, value: number, metadata?: any): Promise<void> {
+    // Stub implementation
+  }
+
+  async getAnalytics(metric: string, startDate: Date, endDate: Date): Promise<any[]> {
+    return [];
   }
 }
 
