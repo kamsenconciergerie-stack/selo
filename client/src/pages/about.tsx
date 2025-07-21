@@ -85,15 +85,20 @@ export default function About() {
                 À Propos d'Aywa
               </h1>
               <p className="text-xl text-orange-100 mb-8">
-                Depuis 2020, Aywa accompagne les professionnels et les particuliers 
-                dans leurs projets en fournissant des équipements de qualité et 
-                un service personnalisé partout au Sénégal.
+                Aywa vise à accompagner les professionnels et les particuliers dans leurs projets en fournissant des moyens de transport de colis et équipements de qualité et un service personnalisé partout au Sénégal.
               </p>
-              <Link href="/contact">
-                <Button className="bg-primary-orange hover:bg-primary-orange/90 text-white px-8 py-3 text-lg">
-                  Nous contacter
-                </Button>
-              </Link>
+              <div className="space-y-4">
+                <h3 className="text-2xl font-bold text-white mb-4">Nous contacter</h3>
+                <div className="space-y-2 text-orange-100">
+                  <p>📞 Téléphone: +221 78 606 70 13</p>
+                  <p>📧 Email: aywa@aywa.com</p>
+                </div>
+                <Link href="/contact">
+                  <Button className="bg-primary-orange hover:bg-primary-orange/90 text-white px-8 py-3 text-lg mt-4">
+                    Formulaire de contact
+                  </Button>
+                </Link>
+              </div>
             </div>
             <div>
               <img 
@@ -151,13 +156,11 @@ export default function About() {
                 Notre Mission
               </h2>
               <p className="text-lg text-gray-700 mb-6">
-                Chez Aywa, notre mission est de démocratiser l'accès aux équipements 
-                professionnels au Sénégal. Nous croyons que chaque projet, qu'il soit 
-                grand ou petit, mérite d'avoir accès aux meilleurs outils.
+                Aywa vise à accompagner les professionnels et les particuliers dans leurs projets en fournissant des moyens de transport de colis et équipements de qualité et un service personnalisé partout au Sénégal.
               </p>
               <p className="text-lg text-gray-700 mb-8">
-                Nous nous engageons à offrir un service de qualité, des prix 
-                compétitifs et un accompagnement personnalisé pour garantir 
+                Nous nous engageons à offrir des solutions de transport fiables, 
+                des prix compétitifs et un accompagnement personnalisé pour garantir 
                 la réussite de vos projets.
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
