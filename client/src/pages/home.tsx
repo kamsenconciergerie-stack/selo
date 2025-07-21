@@ -16,7 +16,24 @@ export default function Home() {
     queryKey: ["/api/equipment"],
   });
 
-  const featuredEquipment = equipment.slice(0, 3);
+  // Most demanded equipment in Senegal - prioritize these categories
+  const popularEquipmentNames = [
+    "Groupe Électrogène Silencieux 20KVA",
+    "Marteau-Piqueur Électrique", 
+    "Compresseur d'Air Mobile 500L",
+    "Motopompe Eau Claire 6 Pouces",
+    "Échafaudage Mobile Aluminium",
+    "Perceuse à Colonne Professionnelle"
+  ];
+  
+  const featuredEquipment = equipment.filter(eq => 
+    eq.name.includes("Groupe Électrogène") || 
+    eq.name.includes("Marteau-Piqueur") || 
+    eq.name.includes("Compresseur") || 
+    eq.name.includes("Motopompe") ||
+    eq.name.includes("Échafaudage") ||
+    eq.name.includes("Perceuse")
+  ).slice(0, 6);
 
   const categories = [
     {
@@ -44,15 +61,15 @@ export default function Home() {
       count: equipment.filter(eq => eq.category === "Camion benne").length,
     },
     {
-      name: "Engins de Chantier", 
-      description: "Pelleteuses, bulldozers, chargeuses",
-      icon: Hammer,
-      count: equipment.filter(eq => eq.category === "Engins de Chantier").length,
+      name: "⚡ Équipement Électrique",
+      description: "Groupes électrogènes, compresseurs, pompes", 
+      icon: Zap,
+      count: equipment.filter(eq => eq.category === "Équipement Électrique").length,
     },
     {
-      name: "Outils à Main",
-      description: "Marteaux, perceuses, scies et plus",
-      icon: HardHat,
+      name: "🔨 Outils à Main",
+      description: "Marteaux-piqueurs, perceuses, échafaudages",
+      icon: Hammer,
       count: equipment.filter(eq => eq.category === "Outils à Main").length,
     },
   ];
@@ -91,14 +108,14 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-              🚛 Camions & Véhicules Professionnels
+              🚛 Camions & Équipements les Plus Demandés
             </h2>
             <p className="text-xl text-gray-600">
-              Location de camions, fourgons et véhicules utilitaires au Sénégal
+              Véhicules, groupes électrogènes, outils et équipements essentiels au Sénégal
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-8">
             {categories.map((category) => {
               const Icon = category.icon;
               return (
@@ -131,10 +148,10 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-              Équipements les Plus Demandés au Sénégal
+              ⚡ Équipements les Plus Demandés au Sénégal
             </h2>
             <p className="text-xl text-gray-600">
-              Sélectionnés selon les besoins spécifiques du marché sénégalais
+              Groupes électrogènes, marteaux-piqueurs, compresseurs et équipements essentiels
             </p>
           </div>
           
