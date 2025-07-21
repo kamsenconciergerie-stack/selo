@@ -677,6 +677,11 @@ export class MemStorage implements IStorage {
       }
     ];
 
+    // Clear existing equipment first to ensure fresh data
+    this.equipment.clear();
+    this.currentEquipmentId = 1;
+    
+    // Add all new equipment
     sampleEquipment.forEach(eq => this.createEquipment(eq));
   }
 
@@ -792,4 +797,4 @@ export class MemStorage implements IStorage {
   }
 }
 
-export const storage = new DbStorage();
+export const storage = new MemStorage();
