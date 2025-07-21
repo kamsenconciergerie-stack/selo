@@ -179,7 +179,7 @@ export default function Home() {
             <div className="flex flex-col items-center gap-4 bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-blue-400/60 shadow-xl">
               <div className="text-center">
                 <div className="text-blue-700 text-sm font-bold mb-1">Offre Limitée</div>
-                <div className="text-blue-900 text-2xl font-bold">Jusqu'à -25%</div>
+                <div className="text-blue-900 text-2xl font-bold">*Jusqu'à -25%*</div>
                 <div className="text-blue-800 text-sm font-semibold">sur vos locations</div>
               </div>
               
