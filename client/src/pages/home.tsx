@@ -18,21 +18,25 @@ export default function Home() {
 
   // Most demanded equipment in Senegal - prioritize these categories
   const popularEquipmentNames = [
-    "Groupe Électrogène Silencieux 20KVA",
-    "Marteau-Piqueur Électrique", 
-    "Compresseur d'Air Mobile 500L",
-    "Motopompe Eau Claire 6 Pouces",
-    "Échafaudage Mobile Aluminium",
-    "Perceuse à Colonne Professionnelle"
+    "Tracteur 75 CV",
+    "Tracteur 90 CV", 
+    "Charrue 2 socs",
+    "Charrue 3 socs",
+    "Motopompe thermique",
+    "Camion benne 20 T",
+    "Camion benne 30 T",
+    "Pulvérisateur motorisé",
+    "Semoir mécanique",
+    "Billonneuse",
+    "Camion plateau 10 T",
+    "Camion plateau 20 T",
+    "Pick-up 4x4 double cabine",
+    "Décortiqueuse à riz",
+    "Décortiqueuse à arachide"
   ];
   
   const featuredEquipment = equipment.filter(eq => 
-    eq.name.includes("Groupe Électrogène") || 
-    eq.name.includes("Marteau-Piqueur") || 
-    eq.name.includes("Compresseur") || 
-    eq.name.includes("Motopompe") ||
-    eq.name.includes("Échafaudage") ||
-    eq.name.includes("Perceuse")
+    popularEquipmentNames.some(name => eq.name.includes(name.split(' ')[0]) && eq.name.includes(name.split(' ')[1]))
   ).slice(0, 6);
 
   const categories = [
