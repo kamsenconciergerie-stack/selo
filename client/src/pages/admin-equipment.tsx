@@ -33,7 +33,13 @@ const categories = [
   "Équipement Agricole", 
   "BTP et Construction",
   "Manutention",
-  "Équipement Spécialisé"
+  "Équipement Spécialisé",
+  "Excavation",
+  "Levage et Grutage",
+  "Compactage",
+  "Électricité et Énergie",
+  "Pompage et Irrigation",
+  "Nettoyage et Entretien"
 ];
 
 const locations = [
@@ -203,6 +209,16 @@ function AdminEquipmentContent() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
+    // Validation
+    if (!formData.category) {
+      toast({
+        title: "Erreur",
+        description: "Veuillez sélectionner une catégorie d'équipement.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
     const submitData = new FormData();
     submitData.append("name", formData.name);
     submitData.append("description", formData.description);
@@ -276,9 +292,9 @@ function AdminEquipmentContent() {
                   </div>
                   
                   <div>
-                    <Label htmlFor="category">Catégorie</Label>
+                    <Label htmlFor="category">Catégorie *</Label>
                     <Select value={formData.category} onValueChange={(value) => setFormData(prev => ({ ...prev, category: value }))}>
-                      <SelectTrigger>
+                      <SelectTrigger className={!formData.category ? "border-red-300" : ""}>
                         <SelectValue placeholder="Sélectionner une catégorie" />
                       </SelectTrigger>
                       <SelectContent>
@@ -287,6 +303,9 @@ function AdminEquipmentContent() {
                         ))}
                       </SelectContent>
                     </Select>
+                    {!formData.category && (
+                      <p className="text-red-500 text-xs mt-1">Catégorie obligatoire</p>
+                    )}
                   </div>
                 </div>
 
