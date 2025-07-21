@@ -242,6 +242,14 @@ export default function EquipmentDetail() {
                 </ul>
               </div>
             </div>
+            <div className="mt-6 p-4 bg-primary-orange/10 rounded-lg border-l-4 border-primary-orange">
+              <p className="text-gray-700 font-medium">
+                📞 Contactez l'équipe commerciale d'Aywa pour en savoir plus au{" "}
+                <a href="tel:+221786067013" className="text-primary-orange font-bold hover:underline">
+                  78 606 70 13
+                </a>
+              </p>
+            </div>
           </CardContent>
         </Card>
       </div>
