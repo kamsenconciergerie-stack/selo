@@ -1,5 +1,41 @@
-import { Equipment, Booking, Payment, Inquiry, InsertEquipment, InsertBooking, InsertPayment, InsertInquiry } from "@shared/schema";
-import { equipment, bookings, payments, inquiries } from "../shared/schema";
+import { 
+  Equipment, 
+  Booking, 
+  Payment, 
+  Inquiry, 
+  User,
+  Review,
+  EquipmentTracking,
+  MaintenanceSchedule,
+  Location,
+  EquipmentInventory,
+  Notification,
+  InsertEquipment, 
+  InsertBooking, 
+  InsertPayment, 
+  InsertInquiry,
+  InsertUser,
+  InsertReview,
+  InsertTracking,
+  InsertMaintenance,
+  InsertLocation,
+  InsertInventory,
+  InsertNotification
+} from "@shared/schema";
+import { 
+  equipment, 
+  bookings, 
+  payments, 
+  inquiries,
+  users,
+  reviews,
+  equipmentTracking,
+  maintenanceSchedule,
+  locations,
+  equipmentInventory,
+  notifications,
+  analytics
+} from "../shared/schema";
 import { eq, ilike, or } from "drizzle-orm";
 import { db } from "../shared/db";
 
@@ -14,6 +50,7 @@ export interface IStorage {
   // Booking methods
   createBooking(booking: InsertBooking): Promise<Booking>;
   getBookingsByEquipment(equipmentId: number): Promise<Booking[]>;
+  getBookingsByUser(userId: number): Promise<Booking[]>;
   updateBookingPaymentStatus(bookingId: number, paymentStatus: string, paymentReference?: string): Promise<void>;
   
   // Payment methods
@@ -23,6 +60,68 @@ export interface IStorage {
   
   // Inquiry methods
   createInquiry(inquiry: InsertInquiry): Promise<Inquiry>;
+  
+  // User methods
+  createUser(user: InsertUser): Promise<User>;
+  getUserById(id: number): Promise<User | undefined>;
+  getUserByEmail(email: string): Promise<User | undefined>;
+  updateUser(id: number, user: Partial<User>): Promise<void>;
+
+  // Partner methods
+  createPartner(partner: InsertPartner): Promise<Partner>;
+  getPartnerByUserId(userId: number): Promise<Partner | undefined>;
+  getPartnerById(id: number): Promise<Partner | undefined>;
+  updatePartnerStatus(userId: number, status: string, approvedBy: number): Promise<void>;
+  getEquipmentByPartnerId(partnerId: number): Promise<Equipment[]>;
+  getPartnerBookings(partnerId: number, limit?: number): Promise<Booking[]>;
+  getPartnerEarnings(partnerId: number): Promise<PartnerEarnings[]>;
+
+  // Partner application methods
+  createPartnerApplication(application: InsertPartnerApplication): Promise<PartnerApplication>;
+  getAllPartnerApplications(): Promise<PartnerApplication[]>;
+  getPartnerApplicationById(id: number): Promise<PartnerApplication | undefined>;
+  updatePartnerApplicationStatus(id: number, status: string, notes: string, reviewedBy: number): Promise<void>;
+
+  // Partner document methods
+  createPartnerDocument(document: InsertPartnerDocument): Promise<PartnerDocument>;
+  getPartnerDocuments(partnerId: number): Promise<PartnerDocument[]>;
+
+  // Partner fleet methods
+  createPartnerFleet(fleet: InsertPartnerFleet): Promise<PartnerFleet>;
+  getPartnerFleet(partnerId: number): Promise<PartnerFleet[]>;
+  
+  // Review methods
+  createReview(review: InsertReview): Promise<Review>;
+  getReviewsByEquipment(equipmentId: number): Promise<Review[]>;
+  getReviewsByUser(userId: number): Promise<Review[]>;
+  
+  // Equipment tracking methods
+  updateEquipmentTracking(tracking: InsertTracking): Promise<EquipmentTracking>;
+  getEquipmentTracking(equipmentId: number): Promise<EquipmentTracking | undefined>;
+  
+  // Maintenance methods
+  createMaintenanceSchedule(maintenance: InsertMaintenance): Promise<MaintenanceSchedule>;
+  getMaintenanceByEquipment(equipmentId: number): Promise<MaintenanceSchedule[]>;
+  updateMaintenanceStatus(id: number, status: string): Promise<void>;
+  
+  // Location methods
+  createLocation(location: InsertLocation): Promise<Location>;
+  getAllLocations(): Promise<Location[]>;
+  getActiveLocations(): Promise<Location[]>;
+  
+  // Inventory methods
+  createInventory(inventory: InsertInventory): Promise<EquipmentInventory>;
+  getInventoryByLocation(locationId: number): Promise<EquipmentInventory[]>;
+  updateInventoryQuantity(id: number, quantity: number): Promise<void>;
+  
+  // Notification methods
+  createNotification(notification: InsertNotification): Promise<Notification>;
+  getPendingNotifications(): Promise<Notification[]>;
+  updateNotificationStatus(id: number, status: string): Promise<void>;
+  
+  // Analytics methods
+  recordAnalytics(metric: string, value: number, metadata?: any): Promise<void>;
+  getAnalytics(metric: string, startDate: Date, endDate: Date): Promise<any[]>;
 }
 
 export class DbStorage implements IStorage {

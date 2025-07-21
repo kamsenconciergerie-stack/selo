@@ -96,6 +96,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Register payment routes
   registerPaymentRoutes(app);
 
+  // Register auth routes
+  app.use('/api/auth', authRoutes);
+  
+  // Register partner routes
+  app.use('/api/partners', partnerRoutes);
+
   const httpServer = createServer(app);
   return httpServer;
 }
