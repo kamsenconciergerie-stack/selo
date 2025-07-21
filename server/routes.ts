@@ -953,6 +953,96 @@ ${validatedData.message}`
     }
   });
 
+  // Equipment unavailability routes for partners
+  app.get("/api/partners/:partnerId/equipment-unavailability", async (req, res) => {
+    try {
+      const { partnerId } = req.params;
+      // Mock data - replace with database query
+      const unavailabilityPeriods = [
+        {
+          id: 1,
+          partnerId: parseInt(partnerId),
+          equipmentId: 1,
+          equipmentName: "Camion benne 15 T",
+          startDate: new Date("2025-01-25").toISOString(),
+          endDate: new Date("2025-01-30").toISOString(),
+          reason: "maintenance",
+          description: "Révision générale programmée",
+          isRecurring: false,
+          createdAt: new Date().toISOString()
+        },
+        {
+          id: 2,
+          partnerId: parseInt(partnerId),
+          equipmentId: 3,
+          equipmentName: "Camionnette Iveco",
+          startDate: new Date("2025-02-01").toISOString(),
+          endDate: new Date("2025-02-05").toISOString(),
+          reason: "personal_use",
+          description: "Utilisation personnelle pour déménagement",
+          isRecurring: false,
+          createdAt: new Date().toISOString()
+        }
+      ];
+      res.json(unavailabilityPeriods);
+    } catch (error) {
+      console.error("Error fetching equipment unavailability:", error);
+      res.status(500).json({ message: "Failed to fetch equipment unavailability" });
+    }
+  });
+
+  app.post("/api/partners/:partnerId/equipment-unavailability", async (req, res) => {
+    try {
+      const { partnerId } = req.params;
+      const unavailabilityData = req.body;
+      
+      // Mock creation - replace with database insertion
+      const newPeriod = {
+        id: Math.floor(Math.random() * 1000),
+        partnerId: parseInt(partnerId),
+        ...unavailabilityData,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      };
+      
+      res.status(201).json(newPeriod);
+    } catch (error) {
+      console.error("Error creating equipment unavailability:", error);
+      res.status(500).json({ message: "Failed to create equipment unavailability" });
+    }
+  });
+
+  app.put("/api/partners/:partnerId/equipment-unavailability/:id", async (req, res) => {
+    try {
+      const { partnerId, id } = req.params;
+      const updateData = req.body;
+      
+      // Mock update - replace with database update
+      const updatedPeriod = {
+        id: parseInt(id),
+        partnerId: parseInt(partnerId),
+        ...updateData,
+        updatedAt: new Date().toISOString()
+      };
+      
+      res.json(updatedPeriod);
+    } catch (error) {
+      console.error("Error updating equipment unavailability:", error);
+      res.status(500).json({ message: "Failed to update equipment unavailability" });
+    }
+  });
+
+  app.delete("/api/partners/:partnerId/equipment-unavailability/:id", async (req, res) => {
+    try {
+      const { partnerId, id } = req.params;
+      // Mock deletion - replace with database deletion
+      res.json({ message: "Equipment unavailability period deleted successfully" });
+    } catch (error) {
+      console.error("Error deleting equipment unavailability:", error);
+      res.status(500).json({ message: "Failed to delete equipment unavailability" });
+    }
+  });
+
   app.get("/api/admin/partner-requests", async (req, res) => {
     try {
       // Mock partner requests data - replace with actual database query
@@ -1011,6 +1101,73 @@ ${validatedData.message}`
     } catch (error) {
       console.error("Error fetching partner requests stats:", error);
       res.status(500).json({ message: "Failed to fetch partner requests stats" });
+    }
+  });
+
+  // Equipment unavailability routes for partners
+  
+  // GET equipment unavailability periods for a partner
+  app.get("/api/partners/:partnerId/equipment-unavailability", async (req, res) => {
+    try {
+      const partnerId = parseInt(req.params.partnerId);
+      const periods = await storage.getEquipmentUnavailabilityByPartner(partnerId);
+      res.json(periods);
+    } catch (error) {
+      console.error("Error fetching unavailability periods:", error);
+      res.status(500).json({ message: "Failed to fetch unavailability periods" });
+    }
+  });
+
+  // POST new equipment unavailability period
+  app.post("/api/partners/:partnerId/equipment-unavailability", async (req, res) => {
+    try {
+      const partnerId = parseInt(req.params.partnerId);
+      const unavailabilityData = {
+        ...req.body,
+        partnerId
+      };
+      
+      const period = await storage.createEquipmentUnavailability(unavailabilityData);
+      res.status(201).json(period);
+    } catch (error) {
+      console.error("Error creating unavailability period:", error);
+      res.status(500).json({ message: "Failed to create unavailability period" });
+    }
+  });
+
+  // PUT update equipment unavailability period
+  app.put("/api/partners/:partnerId/equipment-unavailability/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const partnerId = parseInt(req.params.partnerId);
+      
+      const updated = await storage.updateEquipmentUnavailability(id, req.body);
+      if (!updated) {
+        return res.status(404).json({ message: "Unavailability period not found" });
+      }
+      
+      res.json(updated);
+    } catch (error) {
+      console.error("Error updating unavailability period:", error);
+      res.status(500).json({ message: "Failed to update unavailability period" });
+    }
+  });
+
+  // DELETE equipment unavailability period
+  app.delete("/api/partners/:partnerId/equipment-unavailability/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const partnerId = parseInt(req.params.partnerId);
+      
+      const success = await storage.deleteEquipmentUnavailability(id);
+      if (!success) {
+        return res.status(404).json({ message: "Unavailability period not found" });
+      }
+      
+      res.status(204).send();
+    } catch (error) {
+      console.error("Error deleting unavailability period:", error);
+      res.status(500).json({ message: "Failed to delete unavailability period" });
     }
   });
 

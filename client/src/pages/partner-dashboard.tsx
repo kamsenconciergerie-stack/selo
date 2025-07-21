@@ -42,6 +42,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
+import { EquipmentUnavailabilityManager } from "@/components/EquipmentUnavailabilityManager";
 
 interface PartnerBooking {
   id: number;
@@ -425,8 +426,9 @@ function PartnerDashboardContent() {
 
         {/* Main Content */}
         <Tabs defaultValue="bookings" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3">
+          <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="bookings">Réservations</TabsTrigger>
+            <TabsTrigger value="unavailability">Indisponibilités</TabsTrigger>
             <TabsTrigger value="analytics">Analyses</TabsTrigger>
             <TabsTrigger value="profile">Profil</TabsTrigger>
           </TabsList>
@@ -542,6 +544,11 @@ function PartnerDashboardContent() {
                 </CardContent>
               </Card>
             )}
+          </TabsContent>
+
+          {/* Equipment Unavailability Tab */}
+          <TabsContent value="unavailability" className="space-y-6">
+            <EquipmentUnavailabilityManager partnerId={partner.id} />
           </TabsContent>
 
           {/* Analytics Tab */}

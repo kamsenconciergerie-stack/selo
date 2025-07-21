@@ -143,6 +143,12 @@ export interface IStorage {
   // Booking history methods
   getBookingHistory(bookingId: number): Promise<any[]>;
   recordBookingChange(bookingId: number, field: string, oldValue: string, newValue: string, modifiedBy: string, reason?: string): Promise<void>;
+  
+  // Equipment unavailability management
+  getEquipmentUnavailabilityByPartner(partnerId: number): Promise<any[]>;
+  createEquipmentUnavailability(data: any): Promise<any>;
+  updateEquipmentUnavailability(id: number, data: any): Promise<any>;
+  deleteEquipmentUnavailability(id: number): Promise<boolean>;
 }
 
 export class DbStorage implements IStorage {
@@ -1946,6 +1952,106 @@ export class MemStorage implements IStorage {
 
   async getAnalytics(metric: string, startDate: Date, endDate: Date): Promise<any[]> {
     return [];
+  }
+
+  // Equipment unavailability management methods
+  async getEquipmentUnavailabilityByPartner(partnerId: number): Promise<any[]> {
+    try {
+      // Mock data for demo purposes
+      const mockPeriods = [
+        {
+          id: 1,
+          partnerId: partnerId,
+          equipmentId: 1,
+          equipmentName: "Camion benne 15 T",
+          startDate: "2025-01-25T00:00:00.000Z",
+          endDate: "2025-01-27T00:00:00.000Z",
+          reason: "maintenance",
+          description: "Révision générale programmée",
+          isRecurring: false,
+          recurringPattern: null,
+          createdAt: "2025-01-21T00:00:00.000Z"
+        },
+        {
+          id: 2,
+          partnerId: partnerId,
+          equipmentId: 2,
+          equipmentName: "Camion benne 20 T",
+          startDate: "2025-02-01T00:00:00.000Z",
+          endDate: "2025-02-03T00:00:00.000Z",
+          reason: "rented_externally",
+          description: "Location directe client habituel",
+          isRecurring: false,
+          recurringPattern: null,
+          createdAt: "2025-01-21T00:00:00.000Z"
+        }
+      ];
+      
+      return mockPeriods.filter(p => p.partnerId === partnerId);
+    } catch (error) {
+      console.error("Error fetching unavailability periods:", error);
+      throw error;
+    }
+  }
+
+  async createEquipmentUnavailability(data: any): Promise<any> {
+    try {
+      // Mock creation - in real implementation would insert into database
+      const newPeriod = {
+        id: Math.floor(Math.random() * 10000),
+        partnerId: data.partnerId,
+        equipmentId: data.equipmentId,
+        equipmentName: data.equipmentName,
+        startDate: data.startDate,
+        endDate: data.endDate,
+        reason: data.reason,
+        description: data.description,
+        isRecurring: data.isRecurring || false,
+        recurringPattern: data.recurringPattern || null,
+        createdAt: new Date().toISOString()
+      };
+      
+      return newPeriod;
+    } catch (error) {
+      console.error("Error creating unavailability period:", error);
+      throw error;
+    }
+  }
+
+  async updateEquipmentUnavailability(id: number, data: any): Promise<any> {
+    try {
+      // Mock update - in real implementation would update database record
+      const updatedPeriod = {
+        id: id,
+        partnerId: data.partnerId,
+        equipmentId: data.equipmentId,
+        equipmentName: data.equipmentName,
+        startDate: data.startDate,
+        endDate: data.endDate,
+        reason: data.reason,
+        description: data.description,
+        isRecurring: data.isRecurring || false,
+        recurringPattern: data.recurringPattern || null,
+        createdAt: data.createdAt,
+        updatedAt: new Date().toISOString()
+      };
+      
+      return updatedPeriod;
+    } catch (error) {
+      console.error("Error updating unavailability period:", error);
+      throw error;
+    }
+  }
+
+  async deleteEquipmentUnavailability(id: number): Promise<boolean> {
+    try {
+      // Mock deletion - in real implementation would delete from database
+      console.log(`Deleting unavailability period ${id}`);
+      return true;
+    } catch (error) {
+      console.error("Error deleting unavailability period:", error);
+      return false;
+    }
   }
 }
 

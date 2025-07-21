@@ -345,6 +345,21 @@ export const analytics = pgTable("analytics", {
   metadata: jsonb("metadata"), // additional data like equipment_id, location_id
 });
 
+// Equipment unavailability periods set by partners
+export const equipmentUnavailability = pgTable("equipment_unavailability", {
+  id: serial("id").primaryKey(),
+  partnerId: integer("partner_id").notNull(),
+  equipmentId: integer("equipment_id").notNull(),
+  startDate: timestamp("start_date").notNull(),
+  endDate: timestamp("end_date").notNull(),
+  reason: text("reason").notNull(), // maintenance, rented_externally, personal_use, repair, other
+  description: text("description"),
+  isRecurring: boolean("is_recurring").notNull().default(false),
+  recurringPattern: text("recurring_pattern"), // weekly, monthly, yearly
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+});
+
 // Update existing tables with relations
 export const equipmentRelations = relations(equipment, ({ many, one }) => ({
   bookings: many(bookings),
