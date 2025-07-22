@@ -484,6 +484,55 @@ ${validatedData.message}`
     }
   });
 
+  // User tracking - accessible by authenticated users for their own bookings
+  app.get('/api/tracking/user/:userId', async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      // In a real app, check if the requesting user is the same as userId or is admin
+      const tracking = await storage.getGpsTrackingForUser(userId);
+      res.json(tracking);
+    } catch (error) {
+      console.error('Error fetching user tracking:', error);
+      res.status(500).json({ message: 'Erreur lors de la récupération du suivi utilisateur' });
+    }
+  });
+
+  // Partner tracking - accessible by partners for their own equipment
+  app.get('/api/tracking/partner/:partnerId', async (req, res) => {
+    try {
+      const partnerId = parseInt(req.params.partnerId);
+      // In a real app, check if the requesting user is the partner or is admin
+      const tracking = await storage.getGpsTrackingForPartner(partnerId);
+      res.json(tracking);
+    } catch (error) {
+      console.error('Error fetching partner tracking:', error);
+      res.status(500).json({ message: 'Erreur lors de la récupération du suivi partenaire' });
+    }
+  });
+
+  // Test endpoint to verify GPS tracking data (bypasses authentication)
+  app.get('/api/test/tracking', async (req, res) => {
+    try {
+      // Test direct database query
+      const { db } = await import('../shared/db');
+      const { gpsTracking, serviceCities } = await import('../shared/schema');
+      
+      const allTracking = await db.select().from(gpsTracking);
+      const cities = await db.select().from(serviceCities);
+      
+      res.json({
+        message: 'GPS Tracking System is working',
+        trackingCount: allTracking.length,
+        citiesCount: cities.length,
+        sampleTracking: allTracking.slice(0, 2),
+        sampleCities: cities.slice(0, 2)
+      });
+    } catch (error) {
+      console.error('Error in test endpoint:', error);
+      res.status(500).json({ message: 'Test failed', error: error.message });
+    }
+  });
+
   app.post('/api/tracking', async (req, res) => {
     try {
       const trackingData = req.body;

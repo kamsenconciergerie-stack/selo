@@ -9,7 +9,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
-import { LogOut, Calendar, CreditCard, Star, Phone, Mail, User, Truck, AlertCircle } from "lucide-react";
+import { LogOut, Calendar, CreditCard, Star, Phone, Mail, User, Truck, AlertCircle, MapPin } from "lucide-react";
+import TrackingCard from "@/components/TrackingCard";
 
 interface UserProfile {
   user: {
@@ -48,6 +49,24 @@ interface Booking {
     imageUrl: string;
     pricePerDay: number;
   };
+}
+
+interface GpsTracking {
+  id: number;
+  equipmentId: number;
+  bookingId: number | null;
+  latitude: number;
+  longitude: number;
+  address: string | null;
+  city: string;
+  status: string;
+  driverName: string | null;
+  driverPhone: string | null;
+  estimatedArrival: string | null;
+  actualArrival: string | null;
+  deliveryNotes: string | null;
+  createdAt: string;
+  updatedAt: string;
 }
 
 interface Payment {
@@ -129,6 +148,18 @@ export default function DashboardPage() {
       });
     },
     enabled: !!authToken
+  });
+
+  // User GPS tracking query
+  const { data: userTracking = [] } = useQuery<GpsTracking[]>({
+    queryKey: ["/api/tracking/user", profile?.user?.id],
+    queryFn: async () => {
+      if (!profile?.user?.id) return [];
+      return await fetch(`/api/tracking/user/${profile.user.id}`)
+        .then(res => res.json())
+        .catch(() => []);
+    },
+    enabled: !!profile?.user?.id
   });
 
   // Logout mutation
@@ -293,10 +324,14 @@ export default function DashboardPage() {
         </div>
 
         <Tabs defaultValue="bookings" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-5">
             <TabsTrigger value="bookings" className="flex items-center gap-2">
               <Calendar className="h-4 w-4" />
               Réservations
+            </TabsTrigger>
+            <TabsTrigger value="tracking" className="flex items-center gap-2">
+              <MapPin className="h-4 w-4" />
+              Suivi GPS
             </TabsTrigger>
             <TabsTrigger value="payments" className="flex items-center gap-2">
               <CreditCard className="h-4 w-4" />
@@ -311,6 +346,43 @@ export default function DashboardPage() {
               Profil
             </TabsTrigger>
           </TabsList>
+
+          {/* GPS Tracking Tab */}
+          <TabsContent value="tracking">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <MapPin className="h-5 w-5" />
+                  Suivi GPS de mes équipements
+                </CardTitle>
+                <CardDescription>
+                  Suivez la position en temps réel de vos équipements en cours de livraison
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                {userTracking.length === 0 ? (
+                  <div className="text-center py-8">
+                    <MapPin className="h-12 w-12 text-gray-300 mx-auto mb-4" />
+                    <p className="text-gray-600 mb-2">Aucun suivi GPS actif</p>
+                    <p className="text-sm text-gray-500">
+                      Vos équipements en cours de livraison apparaîtront ici
+                    </p>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {userTracking.map((tracking) => (
+                      <TrackingCard
+                        key={tracking.id}
+                        tracking={tracking}
+                        showEquipmentInfo={true}
+                        showBookingInfo={true}
+                      />
+                    ))}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </TabsContent>
 
           {/* Bookings Tab */}
           <TabsContent value="bookings">

@@ -44,6 +44,7 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { EquipmentUnavailabilityManager } from "@/components/EquipmentUnavailabilityManager";
 import { formatPrice, formatPriceWithPrefix } from "@/lib/constants";
+import TrackingCard from "@/components/TrackingCard";
 
 interface PartnerBooking {
   id: number;
@@ -58,6 +59,24 @@ interface PartnerBooking {
   status: 'pending' | 'confirmed' | 'in_progress' | 'completed' | 'cancelled';
   createdAt: string;
   paymentStatus: 'pending' | 'paid' | 'refunded';
+}
+
+interface GpsTracking {
+  id: number;
+  equipmentId: number;
+  bookingId: number | null;
+  latitude: number;
+  longitude: number;
+  address: string | null;
+  city: string;
+  status: string;
+  driverName: string | null;
+  driverPhone: string | null;
+  estimatedArrival: string | null;
+  actualArrival: string | null;
+  deliveryNotes: string | null;
+  createdAt: string;
+  updatedAt: string;
 }
 
 interface PartnerStats {

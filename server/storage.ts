@@ -53,7 +53,7 @@ import {
   deliveryRoutes,
   serviceCities
 } from "../shared/schema";
-import { eq, ilike, or } from "drizzle-orm";
+import { eq, ilike, or, desc } from "drizzle-orm";
 import { db } from "../shared/db";
 
 export interface IStorage {
@@ -172,6 +172,22 @@ export interface IStorage {
   deleteEquipmentUnavailability(id: number): Promise<boolean>;
   getUnavailabilityByEquipment(equipmentId: number): Promise<any[]>;
   getEquipmentPartnerInfo(equipmentId: number): Promise<any>;
+  
+  // GPS Tracking methods
+  getAllServiceCities(): Promise<ServiceCity[]>;
+  createServiceCity(cityData: InsertServiceCity): Promise<ServiceCity>;
+  getServiceCityById(id: number): Promise<ServiceCity | undefined>;
+  updateServiceCity(id: number, updates: Partial<InsertServiceCity>): Promise<ServiceCity | undefined>;
+  deleteServiceCity(id: number): Promise<boolean>;
+  
+  createGpsTracking(trackingData: InsertGpsTracking): Promise<GpsTracking>;
+  getAllGpsTracking(): Promise<GpsTracking[]>;
+  getGpsTrackingByEquipment(equipmentId: number): Promise<GpsTracking[]>;
+  getGpsTrackingByBooking(bookingId: number): Promise<GpsTracking[]>;
+  updateGpsTracking(id: number, updates: Partial<InsertGpsTracking>): Promise<GpsTracking | undefined>;
+  getGpsTrackingForUser(userId: number): Promise<GpsTracking[]>;
+  getGpsTrackingForPartner(partnerId: number): Promise<GpsTracking[]>;
+  getActiveGpsTracking(): Promise<GpsTracking[]>;
 }
 
 export class DbStorage implements IStorage {
@@ -722,6 +738,34 @@ export class DbStorage implements IStorage {
       .orderBy(desc(gpsTracking.createdAt));
   }
 
+  async getGpsTrackingForUser(userId: number): Promise<GpsTracking[]> {
+    // Get tracking for all bookings made by this user
+    const userBookings = await db.select().from(bookings)
+      .where(eq(bookings.userId, userId));
+    
+    const bookingIds = userBookings.map(b => b.id);
+    
+    if (bookingIds.length === 0) return [];
+    
+    return await db.select().from(gpsTracking)
+      .where(or(...bookingIds.map(id => eq(gpsTracking.bookingId, id))))
+      .orderBy(desc(gpsTracking.createdAt));
+  }
+
+  async getGpsTrackingForPartner(partnerId: number): Promise<GpsTracking[]> {
+    // Get tracking for all equipment owned by this partner
+    const partnerEquipment = await db.select().from(equipment)
+      .where(eq(equipment.partnerId, partnerId));
+    
+    const equipmentIds = partnerEquipment.map(e => e.id);
+    
+    if (equipmentIds.length === 0) return [];
+    
+    return await db.select().from(gpsTracking)
+      .where(or(...equipmentIds.map(id => eq(gpsTracking.equipmentId, id))))
+      .orderBy(desc(gpsTracking.createdAt));
+  }
+
   async updateGpsLocation(id: number, latitude: number, longitude: number, address?: string): Promise<GpsTracking | undefined> {
     const [updated] = await db.update(gpsTracking)
       .set({ 
@@ -770,9 +814,76 @@ export class DbStorage implements IStorage {
   }
 
   async getAllServiceCities(): Promise<ServiceCity[]> {
-    return await db.select().from(serviceCities)
-      .where(eq(serviceCities.isActive, true))
-      .orderBy(serviceCities.name);
+    try {
+      return await db.select().from(serviceCities)
+        .where(eq(serviceCities.isActive, true))
+        .orderBy(serviceCities.name);
+    } catch (error) {
+      console.error('Error fetching service cities:', error);
+      return [];
+    }
+  }
+
+  // Interface methods for GPS Tracking  
+  async getGpsTrackingForUser(userId: number): Promise<GpsTracking[]> {
+    try {
+      // Get tracking for all bookings made by this user
+      const userBookings = await db.select().from(bookings)
+        .where(eq(bookings.userId, userId));
+      
+      const bookingIds = userBookings.map(b => b.id);
+      
+      if (bookingIds.length === 0) return [];
+      
+      return await db.select().from(gpsTracking)
+        .where(or(...bookingIds.map(id => eq(gpsTracking.bookingId, id))))
+        .orderBy(desc(gpsTracking.createdAt));
+    } catch (error) {
+      console.error('Error fetching user GPS tracking:', error);
+      return [];
+    }
+  }
+
+  async getGpsTrackingForPartner(partnerId: number): Promise<GpsTracking[]> {
+    try {
+      // Get tracking for all equipment owned by this partner
+      const partnerEquipment = await db.select().from(equipment)
+        .where(eq(equipment.partnerId, partnerId));
+      
+      const equipmentIds = partnerEquipment.map(e => e.id);
+      
+      if (equipmentIds.length === 0) return [];
+      
+      return await db.select().from(gpsTracking)
+        .where(or(...equipmentIds.map(id => eq(gpsTracking.equipmentId, id))))
+        .orderBy(desc(gpsTracking.createdAt));
+    } catch (error) {
+      console.error('Error fetching partner GPS tracking:', error);
+      return [];
+    }
+  }
+
+  async getActiveGpsTracking(): Promise<GpsTracking[]> {
+    try {
+      return await db.select().from(gpsTracking)
+        .where(or(
+          eq(gpsTracking.status, 'in_transit'),
+          eq(gpsTracking.status, 'delivered')
+        ))
+        .orderBy(desc(gpsTracking.createdAt));
+    } catch (error) {
+      console.error('Error fetching active GPS tracking:', error);
+      return [];
+    }
+  }
+
+  async getAllGpsTracking(): Promise<GpsTracking[]> {
+    try {
+      return await db.select().from(gpsTracking).orderBy(desc(gpsTracking.createdAt));
+    } catch (error) {
+      console.error('Error fetching all GPS tracking:', error);
+      return [];
+    }
   }
 
   async getServiceCityById(id: number): Promise<ServiceCity | undefined> {
