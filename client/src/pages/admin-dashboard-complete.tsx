@@ -26,6 +26,7 @@ import {
   ExternalLink,
   Clock
 } from "lucide-react";
+import { formatPrice, formatPriceWithPrefix } from "@/lib/constants";
 
 interface Booking {
   id: number;
@@ -207,7 +208,7 @@ function PartnerRequestsList() {
   );
 }
 
-function formatPrice(price: number): string {
+function formatPriceLocal(price: number): string {
   return `${price.toLocaleString('fr-FR')} FCFA`;
 }
 
@@ -250,7 +251,7 @@ function EquipmentWithUnavailabilityList() {
                   <MapPin className="h-4 w-4" />
                   {equipment.location}
                 </div>
-                <p className="font-bold text-orange-600">{formatPrice(equipment.pricePerDay)}/jour</p>
+                <p className="font-bold text-orange-600">{formatPriceWithPrefix(equipment.pricePerDay)}/jour</p>
               </div>
 
               {/* Informations partenaire */}
@@ -462,7 +463,7 @@ function AdminDashboardContent() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-600">Chiffre d'Affaires</p>
-                <p className="text-2xl font-bold text-green-600">{formatPrice(stats.totalRevenue)}</p>
+                <p className="text-2xl font-bold text-green-600">{formatPriceLocal(stats.totalRevenue)}</p>
               </div>
               <DollarSign className="h-8 w-8 text-green-500" />
             </div>
@@ -549,7 +550,7 @@ function AdminDashboardContent() {
                            booking.status === 'pending' ? 'En attente' :
                            booking.status === 'completed' ? 'Terminée' : 'Annulée'}
                         </Badge>
-                        <span className="font-bold text-sm">{formatPrice(booking.totalPrice)}</span>
+                        <span className="font-bold text-sm">{formatPriceLocal(booking.totalPrice)}</span>
                       </div>
                     </div>
                   ))}
@@ -579,7 +580,7 @@ function AdminDashboardContent() {
                       </div>
                       <div className="text-right">
                         <p className="font-bold text-sm">{equipment.bookingCount} réservations</p>
-                        <p className="text-xs text-gray-500">{formatPrice(equipment.pricePerDay)}/jour</p>
+                        <p className="text-xs text-gray-500">{formatPriceWithPrefix(equipment.pricePerDay)}/jour</p>
                       </div>
                     </div>
                   ))}
@@ -612,7 +613,7 @@ function AdminDashboardContent() {
                       <p className="text-sm text-gray-600">au {formatDate(booking.endDate)}</p>
                     </div>
                     <div>
-                      <p className="font-bold">{formatPrice(booking.totalPrice)}</p>
+                      <p className="font-bold">{formatPriceLocal(booking.totalPrice)}</p>
                       <Badge 
                         className={
                           booking.status === 'confirmed' ? 'bg-green-100 text-green-800' :

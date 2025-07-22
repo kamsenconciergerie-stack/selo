@@ -43,6 +43,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { EquipmentUnavailabilityManager } from "@/components/EquipmentUnavailabilityManager";
+import { formatPrice, formatPriceWithPrefix } from "@/lib/constants";
 
 interface PartnerBooking {
   id: number;
@@ -91,6 +92,10 @@ const statusConfig = {
 };
 
 const COLORS = ['#FF8800', '#00C49F', '#FFBB28', '#FF8042'];
+
+function formatPriceLocal(price: number): string {
+  return `${price.toLocaleString('fr-FR')} FCFA`;
+}
 
 function PartnerDashboardContent() {
   const [partner, setPartner] = useState<PartnerInfo | null>(null);
@@ -403,7 +408,7 @@ function PartnerDashboardContent() {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm font-medium text-gray-600">Revenus ce mois</p>
-                    <p className="text-3xl font-bold text-primary-orange">{formatPrice(stats.monthlyRevenue)}</p>
+                    <p className="text-3xl font-bold text-primary-orange">{formatPriceLocal(stats.monthlyRevenue)}</p>
                   </div>
                   <DollarSign className="h-8 w-8 text-orange-500" />
                 </div>
@@ -472,7 +477,7 @@ function PartnerDashboardContent() {
                         </div>
                         <div className="flex items-center gap-3">
                           <div className="text-right">
-                            <p className="font-bold text-lg">{formatPrice(booking.totalPrice)}</p>
+                            <p className="font-bold text-lg">{formatPriceLocal(booking.totalPrice)}</p>
                             <p className="text-sm text-gray-500">{booking.paymentStatus === 'paid' ? '✓ Payé' : 'En attente'}</p>
                           </div>
                           <Dialog>
@@ -519,7 +524,7 @@ function PartnerDashboardContent() {
                         </div>
                         <div className="flex items-center gap-3">
                           <div className="text-right mr-4">
-                            <p className="font-bold text-lg">{formatPrice(booking.totalPrice)}</p>
+                            <p className="font-bold text-lg">{formatPriceLocal(booking.totalPrice)}</p>
                           </div>
                           <div className="flex gap-2">
                             <Button 
@@ -565,7 +570,7 @@ function PartnerDashboardContent() {
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis dataKey="month" />
                         <YAxis tickFormatter={(value) => `${(value / 1000000).toFixed(1)}M`} />
-                        <Tooltip formatter={(value) => formatPrice(Number(value))} />
+                        <Tooltip formatter={(value) => formatPriceLocal(Number(value))} />
                         <Line type="monotone" dataKey="revenus" stroke="#FF8800" strokeWidth={3} />
                       </LineChart>
                     </ResponsiveContainer>
@@ -666,7 +671,7 @@ function PartnerDashboardContent() {
                       <p><strong>Équipement:</strong> {selectedBooking.equipmentName}</p>
                       <p><strong>Début:</strong> {format(new Date(selectedBooking.startDate), "dd/MM/yyyy HH:mm", { locale: fr })}</p>
                       <p><strong>Fin:</strong> {format(new Date(selectedBooking.endDate), "dd/MM/yyyy HH:mm", { locale: fr })}</p>
-                      <p><strong>Prix total:</strong> {formatPrice(selectedBooking.totalPrice)}</p>
+                      <p><strong>Prix total:</strong> {formatPriceLocal(selectedBooking.totalPrice)}</p>
                     </div>
                   </div>
                 </div>
