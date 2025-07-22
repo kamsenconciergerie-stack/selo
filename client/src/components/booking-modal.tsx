@@ -52,8 +52,7 @@ export default function BookingModal({ equipment, open, onOpenChange }: BookingM
 
   const createBookingMutation = useMutation({
     mutationFn: async (data: BookingFormData) => {
-      const response = await apiRequest("POST", "/api/bookings", data);
-      return response.json();
+      return await apiRequest("POST", "/api/bookings", data);
     },
     onSuccess: (booking) => {
       toast({
@@ -230,7 +229,8 @@ export default function BookingModal({ equipment, open, onOpenChange }: BookingM
                     <FormControl>
                       <Textarea 
                         placeholder="Informations supplémentaires sur votre projet..."
-                        {...field} 
+                        {...field}
+                        value={field.value || ""}
                       />
                     </FormControl>
                     <FormMessage />

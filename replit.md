@@ -137,6 +137,9 @@ Aywa est une application web full-stack pour les services de location d'équipem
 - January 21, 2025. Interface de connexion sécurisée pour partenaires avec 3 comptes de démonstration
 - January 21, 2025. Tableau de bord partenaire avec gestion des réservations, statistiques et analyses de performance
 - January 21, 2025. Système d'approbation/rejet des réservations en temps réel pour chaque partenaire
+- January 22, 2025. Mise à jour globale du format des prix avec préfixe "À partir de" en petits caractères gris
+- January 22, 2025. Correction de tous les fichiers administratifs avec nouveau système de formatage des prix
+- January 22, 2025. Implémentation de formatPriceWithPrefix pour affichage public et formatPriceLocal pour usage interne
 
 ## User Preferences
 
