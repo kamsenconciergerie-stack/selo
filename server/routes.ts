@@ -1366,6 +1366,130 @@ ${validatedData.message}`
     }
   });
 
+  // Partner equipment management routes - SYNCHRONE avec la base principale
+  
+  // GET partner's equipment list
+  app.get("/api/partners/:partnerId/equipment", async (req, res) => {
+    try {
+      const partnerId = parseInt(req.params.partnerId);
+      const equipment = await storage.getEquipmentByPartnerId(partnerId);
+      res.json(equipment);
+    } catch (error) {
+      console.error("Error fetching partner equipment:", error);
+      res.status(500).json({ message: "Erreur lors de la récupération des équipements" });
+    }
+  });
+
+  // PUT update partner's equipment - DIRECTEMENT dans la base principale
+  app.put("/api/partners/:partnerId/equipment/:equipmentId", async (req, res) => {
+    try {
+      const partnerId = parseInt(req.params.partnerId);
+      const equipmentId = parseInt(req.params.equipmentId);
+      
+      // Vérifier que l'équipement appartient bien au partenaire
+      const existingEquipment = await storage.getEquipmentById(equipmentId);
+      if (!existingEquipment || existingEquipment.partnerId !== partnerId) {
+        return res.status(403).json({ message: "Accès non autorisé à cet équipement" });
+      }
+      
+      // Mettre à jour directement dans la base principale
+      const updatedEquipment = await storage.updateEquipment(equipmentId, {
+        ...req.body,
+        updatedAt: new Date(),
+      });
+      
+      if (!updatedEquipment) {
+        return res.status(404).json({ message: "Équipement introuvable" });
+      }
+      
+      res.json(updatedEquipment);
+    } catch (error) {
+      console.error("Error updating partner equipment:", error);
+      res.status(500).json({ message: "Erreur lors de la mise à jour de l'équipement" });
+    }
+  });
+
+  // POST add new equipment by partner - DIRECTEMENT dans la base principale
+  app.post("/api/partners/:partnerId/equipment", async (req, res) => {
+    try {
+      const partnerId = parseInt(req.params.partnerId);
+      
+      // Créer directement dans la base principale avec partnerId
+      const newEquipment = await storage.createEquipment({
+        ...req.body,
+        partnerId,
+        status: 'available',
+        isActive: true,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+      
+      res.status(201).json(newEquipment);
+    } catch (error) {
+      console.error("Error creating partner equipment:", error);
+      res.status(500).json({ message: "Erreur lors de l'ajout de l'équipement" });
+    }
+  });
+
+  // Partner drivers management routes
+  
+  // GET partner's drivers
+  app.get("/api/partners/:partnerId/drivers", async (req, res) => {
+    try {
+      const partnerId = parseInt(req.params.partnerId);
+      const drivers = await storage.getPartnerDrivers(partnerId);
+      res.json(drivers);
+    } catch (error) {
+      console.error("Error fetching partner drivers:", error);
+      res.status(500).json({ message: "Erreur lors de la récupération des chauffeurs" });
+    }
+  });
+
+  // POST add new driver
+  app.post("/api/partners/:partnerId/drivers", async (req, res) => {
+    try {
+      const partnerId = parseInt(req.params.partnerId);
+      const newDriver = await storage.createPartnerDriver({
+        ...req.body,
+        partnerId,
+      });
+      res.status(201).json(newDriver);
+    } catch (error) {
+      console.error("Error creating partner driver:", error);
+      res.status(500).json({ message: "Erreur lors de l'ajout du chauffeur" });
+    }
+  });
+
+  // PATCH update driver status
+  app.patch("/api/partners/:partnerId/drivers/:driverId", async (req, res) => {
+    try {
+      const partnerId = parseInt(req.params.partnerId);
+      const driverId = parseInt(req.params.driverId);
+      
+      const updatedDriver = await storage.updatePartnerDriver(driverId, req.body);
+      if (!updatedDriver) {
+        return res.status(404).json({ message: "Chauffeur introuvable" });
+      }
+      
+      res.json(updatedDriver);
+    } catch (error) {
+      console.error("Error updating partner driver:", error);
+      res.status(500).json({ message: "Erreur lors de la mise à jour du chauffeur" });
+    }
+  });
+
+  // GET partner's driver assignments
+  app.get("/api/partners/:partnerId/driver-assignments", async (req, res) => {
+    try {
+      const partnerId = parseInt(req.params.partnerId);
+      const assignments = await storage.getDriverAssignmentsByPartner(partnerId);
+      res.json(assignments);
+    } catch (error) {
+      console.error("Error fetching driver assignments:", error);
+      res.status(500).json({ message: "Erreur lors de la récupération des affectations" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
