@@ -13,13 +13,7 @@ import EquipementsPopulaires from "@/pages/equipements-populaires";
 import QuoteRequest from "@/pages/quote-request";
 import LoginPage from "@/pages/login";
 import DashboardPage from "@/pages/dashboard";
-import SimpleAdmin from "@/pages/simple-admin";
-import AdminReservations from "@/pages/admin-reservations-simple";
 import AdminDashboardComplete from "@/pages/admin-dashboard-complete";
-import AdminEquipment from "@/pages/admin-equipment";
-import AdminNotifications from "@/pages/admin-notifications";
-import AdminPartners from "@/pages/admin-partners";
-import AdminPartnersAnalytics from "@/pages/admin-partners-analytics";
 import PartnerLogin from "@/pages/partner-login";
 import PartnerDashboard from "@/pages/partner-dashboard";
 import NotFound from "@/pages/not-found";
@@ -37,12 +31,7 @@ function Router() {
       <Route path="/devis" component={QuoteRequest} />
       <Route path="/login" component={LoginPage} />
       <Route path="/dashboard" component={DashboardPage} />
-      <Route path="/admin" component={SimpleAdmin} />
-      <Route path="/admin/reservations" component={AdminReservations} />
-      <Route path="/admin/equipment" component={AdminEquipment} />
-      <Route path="/admin/notifications" component={AdminNotifications} />
-      <Route path="/admin/partners" component={AdminPartners} />
-      <Route path="/admin/partners/analytics" component={AdminPartnersAnalytics} />
+      <Route path="/admin" component={AdminDashboardComplete} />
       <Route path="/adminpartners" component={PartnerLogin} />
       <Route path="/adminpartners/dashboard" component={PartnerDashboard} />
       <Route path="/adminone" component={AdminDashboardComplete} />

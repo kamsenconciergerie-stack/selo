@@ -140,6 +140,9 @@ Aywa est une application web full-stack pour les services de location d'équipem
 - January 22, 2025. Mise à jour globale du format des prix avec préfixe "À partir de" en petits caractères gris
 - January 22, 2025. Correction de tous les fichiers administratifs avec nouveau système de formatage des prix
 - January 22, 2025. Implémentation de formatPriceWithPrefix pour affichage public et formatPriceLocal pour usage interne
+- January 22, 2025. Suppression page /admin "en cours de développement" et consolidation sur /adminone uniquement
+- January 22, 2025. Création système d'authentification intégré pour /adminone avec formulaire de connexion direct
+- January 22, 2025. Page d'administration unifiée accessible via /admin et /adminone avec identifiants admin/aywadmin2025
 
 ## User Preferences
 
