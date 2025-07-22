@@ -341,17 +341,24 @@ function AdminDashboardContent() {
     try {
       setIsLoading(true);
       
-      // Load admin stats first
-      const statsResponse = await fetch("/api/admin/stats");
-      if (statsResponse.ok) {
-        const statsData = await statsResponse.json();
-        setStats(statsData);
+      // Load admin stats first (fallback to manual calculation if API fails)
+      try {
+        const statsResponse = await fetch("/api/admin/stats");
+        if (statsResponse.ok) {
+          const statsData = await statsResponse.json();
+          setStats(statsData);
+        } else {
+          console.log("Admin stats API failed, will calculate manually from other data");
+        }
+      } catch (statsError) {
+        console.log("Stats API error, will calculate manually:", statsError);
       }
 
       // Load bookings
+      let bookingsData: any[] = [];
       const bookingsResponse = await fetch("/api/admin/bookings");
       if (bookingsResponse.ok) {
-        const bookingsData = await bookingsResponse.json();
+        bookingsData = await bookingsResponse.json();
         setBookings(bookingsData);
       }
 
@@ -360,6 +367,23 @@ function AdminDashboardContent() {
       if (equipmentResponse.ok) {
         const equipmentData = await equipmentResponse.json();
         setEquipment(equipmentData);
+        
+        // Calculate stats manually since we have the data
+        if (bookingsData && equipmentData) {
+          const totalRevenue = bookingsData
+            .filter((b: any) => b.status === 'confirmed' || b.status === 'completed')
+            .reduce((sum: number, b: any) => sum + b.totalPrice, 0);
+
+          setStats({
+            totalBookings: bookingsData.length,
+            totalRevenue,
+            pendingBookings: bookingsData.filter((b: any) => b.status === 'pending').length,
+            confirmedBookings: bookingsData.filter((b: any) => b.status === 'confirmed').length,
+            totalEquipment: equipmentData.length,
+            availableEquipment: equipmentData.filter((e: any) => e.isAvailable).length,
+            partnerRequests: { total: 0, pending: 0, approved: 0 }
+          });
+        }
       }
 
     } catch (error) {
