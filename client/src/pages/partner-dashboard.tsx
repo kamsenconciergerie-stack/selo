@@ -44,7 +44,7 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { EquipmentUnavailabilityManager } from "@/components/EquipmentUnavailabilityManager";
 import { formatPrice, formatPriceWithPrefix } from "@/lib/constants";
-import TrackingCard from "@/components/TrackingCard";
+import TrackingDashboard from "@/components/TrackingDashboard";
 
 interface PartnerBooking {
   id: number;
@@ -450,9 +450,10 @@ function PartnerDashboardContent() {
 
         {/* Main Content */}
         <Tabs defaultValue="bookings" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-5">
             <TabsTrigger value="bookings">Réservations</TabsTrigger>
             <TabsTrigger value="unavailability">Indisponibilités</TabsTrigger>
+            <TabsTrigger value="gps-admin">GPS Admin</TabsTrigger>
             <TabsTrigger value="analytics">Analyses</TabsTrigger>
             <TabsTrigger value="profile">Profil</TabsTrigger>
           </TabsList>
@@ -573,6 +574,21 @@ function PartnerDashboardContent() {
           {/* Equipment Unavailability Tab */}
           <TabsContent value="unavailability" className="space-y-6">
             <EquipmentUnavailabilityManager partnerId={partner.id} />
+          </TabsContent>
+
+          {/* GPS Admin Tab */}
+          <TabsContent value="gps-admin" className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <MapPin className="h-5 w-5" />
+                  Suivi GPS de Vos Équipements
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <TrackingDashboard userType="partner" partnerId={partner.id} />
+              </CardContent>
+            </Card>
           </TabsContent>
 
           {/* Analytics Tab */}

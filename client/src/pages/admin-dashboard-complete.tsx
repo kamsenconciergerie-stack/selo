@@ -24,9 +24,11 @@ import {
   MapPin,
   DollarSign,
   ExternalLink,
-  Clock
+  Clock,
+  Navigation
 } from "lucide-react";
 import { formatPrice, formatPriceWithPrefix } from "@/lib/constants";
+import TrackingDashboard from "@/components/TrackingDashboard";
 
 interface Booking {
   id: number;
@@ -526,11 +528,12 @@ function AdminDashboardContent() {
 
       {/* Contenu par onglets */}
       <Tabs defaultValue="overview" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-5">
+        <TabsList className="grid w-full grid-cols-6">
           <TabsTrigger value="overview">Vue d'ensemble</TabsTrigger>
           <TabsTrigger value="bookings">Réservations</TabsTrigger>
           <TabsTrigger value="equipment">Équipements</TabsTrigger>
           <TabsTrigger value="partners">Partenaires</TabsTrigger>
+          <TabsTrigger value="tracking">Suivi GPS</TabsTrigger>
           <TabsTrigger value="analytics">Analyses</TabsTrigger>
         </TabsList>
 
@@ -959,6 +962,22 @@ function AdminDashboardContent() {
                     <PartnerRequestsList />
                   </div>
                 </div>
+              </CardContent>
+            </Card>
+          </div>
+        </TabsContent>
+
+        <TabsContent value="tracking" className="space-y-6">
+          <div className="grid grid-cols-1 gap-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Navigation className="h-5 w-5" />
+                  Suivi GPS des Équipements en Temps Réel
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <TrackingDashboard userType="admin" />
               </CardContent>
             </Card>
           </div>
