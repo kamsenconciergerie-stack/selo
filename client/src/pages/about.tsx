@@ -305,42 +305,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* Mission Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
-              Notre Mission
-            </h2>
-            <p className="text-lg text-gray-700 mb-6 max-w-3xl mx-auto">
-              Aywa vise à accompagner les professionnels et les particuliers dans leurs projets en fournissant des moyens de transport de colis et équipements de qualité et un service personnalisé partout au Sénégal.
-            </p>
-            <p className="text-lg text-gray-700 mb-8 max-w-3xl mx-auto">
-              Nous nous engageons à offrir des solutions de transport fiables, 
-              des prix compétitifs et un accompagnement personnalisé pour garantir 
-              la réussite de vos projets.
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-4xl mx-auto">
-              {values.map((value) => {
-                const Icon = value.icon;
-                return (
-                  <div key={value.title} className="text-center">
-                    <div className="bg-aywa-blue/10 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
-                      <Icon className="h-6 w-6 text-aywa-blue" />
-                    </div>
-                    <h3 className="font-semibold text-gray-900 mb-2">
-                      {value.title}
-                    </h3>
-                    <p className="text-sm text-gray-600">
-                      {value.description}
-                    </p>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      </section>
+
 
       <Footer />
     </div>
