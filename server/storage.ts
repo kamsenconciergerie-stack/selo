@@ -26,6 +26,7 @@ import {
   InsertCommercialManager,
   InsertUserSession
 } from "@shared/schema";
+import bcrypt from "bcrypt";
 import { 
   equipment, 
   bookings, 
@@ -40,7 +41,8 @@ import {
   notifications,
   analytics,
   commercialManagers,
-  userSessions
+  userSessions,
+  partnerRequests
 } from "../shared/schema";
 import { eq, ilike, or } from "drizzle-orm";
 import { db } from "../shared/db";
@@ -60,6 +62,9 @@ export interface IStorage {
   createBooking(booking: InsertBooking): Promise<Booking>;
   getBookingsByEquipment(equipmentId: number): Promise<Booking[]>;
   getBookingsByUser(userId: number): Promise<Booking[]>;
+  getAllBookings(): Promise<Booking[]>;
+  updateBooking(id: number, booking: Partial<InsertBooking>): Promise<Booking | undefined>;
+  deleteBooking(id: number): Promise<boolean>;
   updateBookingPaymentStatus(bookingId: number, paymentStatus: string, paymentReference?: string): Promise<void>;
   
   // Payment methods
@@ -143,6 +148,13 @@ export interface IStorage {
   // Booking history methods
   getBookingHistory(bookingId: number): Promise<any[]>;
   recordBookingChange(bookingId: number, field: string, oldValue: string, newValue: string, modifiedBy: string, reason?: string): Promise<void>;
+  
+  // Partner request methods
+  getAllPartnerRequests(): Promise<any[]>;
+  updatePartnerRequestStatus(id: number, status: string, notes?: string): Promise<any>;
+  
+  // Admin stats methods
+  getAdminStats(): Promise<any>;
   
   // Equipment unavailability management
   getEquipmentUnavailabilityByPartner(partnerId: number): Promise<any[]>;
@@ -663,6 +675,52 @@ export class DbStorage implements IStorage {
   async recordBookingChange(bookingId: number, field: string, oldValue: string, newValue: string, modifiedBy: string, reason?: string): Promise<void> {
     // Mock implementation - log change for now
     console.log(`Booking ${bookingId} change: ${field} from ${oldValue} to ${newValue} by ${modifiedBy}`, reason);
+  }
+
+  // Partner request methods
+  async getAllPartnerRequests(): Promise<any[]> {
+    return await db.select().from(partnerRequests);
+  }
+
+  async updatePartnerRequestStatus(id: number, status: string, notes?: string): Promise<any> {
+    const [updated] = await db.update(partnerRequests)
+      .set({ 
+        status, 
+        notes,
+        processedAt: new Date(),
+        processedBy: 'admin'
+      })
+      .where(eq(partnerRequests.id, id))
+      .returning();
+    return updated;
+  }
+
+  // Admin stats methods
+  async getAdminStats(): Promise<any> {
+    const totalBookings = await db.select().from(bookings);
+    const totalEquipment = await db.select().from(equipment);
+    const pendingBookings = totalBookings.filter(b => b.status === 'pending').length;
+    const confirmedBookings = totalBookings.filter(b => b.status === 'confirmed').length;
+    const totalRevenue = totalBookings
+      .filter(b => b.status === 'completed')
+      .reduce((sum, b) => sum + b.totalPrice, 0);
+
+    // Partner stats
+    const partnerRequestsData = await db.select().from(partnerRequests);
+    
+    return {
+      totalBookings: totalBookings.length,
+      totalRevenue,
+      pendingBookings,
+      confirmedBookings,
+      totalEquipment: totalEquipment.length,
+      availableEquipment: totalEquipment.filter(e => e.isAvailable).length,
+      partnerRequests: {
+        total: partnerRequestsData.length,
+        pending: partnerRequestsData.filter(p => p.status === 'pending').length,
+        approved: partnerRequestsData.filter(p => p.status === 'approved').length
+      }
+    };
   }
 
   // User authentication methods

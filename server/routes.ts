@@ -440,6 +440,27 @@ ${validatedData.message}`
     }
   });
 
+  // Admin API routes
+  app.get("/api/admin/bookings", async (req, res) => {
+    try {
+      const bookings = await storage.getAllBookings();
+      res.json(bookings);
+    } catch (error) {
+      console.error("Error fetching admin bookings:", error);
+      res.status(500).json({ message: "Erreur lors de la récupération des réservations" });
+    }
+  });
+
+  app.get("/api/admin/stats", async (req, res) => {
+    try {
+      const stats = await storage.getAdminStats();
+      res.json(stats);
+    } catch (error) {
+      console.error("Error fetching admin stats:", error);
+      res.status(500).json({ message: "Erreur lors de la récupération des statistiques" });
+    }
+  });
+
   // Register payment routes
   registerPaymentRoutes(app);
 

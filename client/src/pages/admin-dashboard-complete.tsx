@@ -341,36 +341,26 @@ function AdminDashboardContent() {
     try {
       setIsLoading(true);
       
+      // Load admin stats first
+      const statsResponse = await fetch("/api/admin/stats");
+      if (statsResponse.ok) {
+        const statsData = await statsResponse.json();
+        setStats(statsData);
+      }
+
       // Load bookings
       const bookingsResponse = await fetch("/api/admin/bookings");
-      const bookingsData = bookingsResponse.ok ? await bookingsResponse.json() : [];
-      setBookings(bookingsData);
+      if (bookingsResponse.ok) {
+        const bookingsData = await bookingsResponse.json();
+        setBookings(bookingsData);
+      }
 
       // Load equipment
       const equipmentResponse = await fetch("/api/equipment");
-      const equipmentData = equipmentResponse.ok ? await equipmentResponse.json() : [];
-      setEquipment(equipmentData);
-
-      // Load partner requests stats
-      const partnerRequestsResponse = await fetch("/api/admin/partner-requests/stats");
-      const partnerRequestsStats = partnerRequestsResponse.ok ? await partnerRequestsResponse.json() : {
-        total: 0, pending: 0, approved: 0, rejected: 0
-      };
-
-      // Calculate stats
-      const totalRevenue = bookingsData
-        .filter((b: Booking) => b.status === 'confirmed' || b.status === 'completed')
-        .reduce((sum: number, b: Booking) => sum + b.totalPrice, 0);
-
-      setStats({
-        totalBookings: bookingsData.length,
-        totalRevenue,
-        pendingBookings: bookingsData.filter((b: Booking) => b.status === 'pending').length,
-        confirmedBookings: bookingsData.filter((b: Booking) => b.status === 'confirmed').length,
-        totalEquipment: equipmentData.length,
-        availableEquipment: equipmentData.filter((e: Equipment) => e.isAvailable).length,
-        partnerRequests: partnerRequestsStats
-      });
+      if (equipmentResponse.ok) {
+        const equipmentData = await equipmentResponse.json();
+        setEquipment(equipmentData);
+      }
 
     } catch (error) {
       console.error("Erreur lors du chargement des données:", error);
