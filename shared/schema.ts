@@ -101,21 +101,63 @@ export const partnerRequests = pgTable("partner_requests", {
   notes: text("notes"),
 });
 
-// GPS Tracking for equipment delivery
+// Partner Drivers table - Les chauffeurs de chaque partenaire
+export const partnerDrivers = pgTable("partner_drivers", {
+  id: serial("id").primaryKey(),
+  partnerId: integer("partner_id").references(() => partners.id).notNull(),
+  firstName: text("first_name").notNull(),
+  lastName: text("last_name").notNull(),
+  phone: text("phone").notNull(),
+  email: text("email"),
+  licenseNumber: text("license_number"),
+  licenseCategory: text("license_category"), // A, B, C, D, E
+  experienceYears: integer("experience_years"),
+  specializations: jsonb("specializations"), // Array of equipment types they can operate
+  isActive: boolean("is_active").default(true),
+  notes: text("notes"),
+  profilePicture: text("profile_picture"),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+});
+
+// GPS Tracking for equipment delivery - Enhanced with driver assignment
 export const gpsTracking = pgTable("gps_tracking", {
   id: serial("id").primaryKey(),
   equipmentId: integer("equipment_id").notNull(),
   bookingId: integer("booking_id"),
+  partnerId: integer("partner_id").notNull(), // Partner qui possède l'équipement
+  assignedDriverId: integer("assigned_driver_id").references(() => partnerDrivers.id), // Chauffeur assigné
   latitude: real("latitude").notNull(),
   longitude: real("longitude").notNull(),
   address: text("address"),
   city: text("city").notNull().default("Dakar"),
   status: text("status").notNull().default("in_transit"), // in_transit, delivered, returned, maintenance
-  driverName: text("driver_name"),
-  driverPhone: text("driver_phone"),
+  driverName: text("driver_name"), // Nom du chauffeur (redondant mais utile historique)
+  driverPhone: text("driver_phone"), // Téléphone du chauffeur
   estimatedArrival: timestamp("estimated_arrival"),
   actualArrival: timestamp("actual_arrival"),
   deliveryNotes: text("delivery_notes"),
+  trackingMethod: text("tracking_method").default("manual"), // manual, gps_device, mobile_app
+  lastPingAt: timestamp("last_ping_at"),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+});
+
+// Driver Assignments - Affectations chauffeur-équipement par réservation
+export const driverAssignments = pgTable("driver_assignments", {
+  id: serial("id").primaryKey(),
+  bookingId: integer("booking_id").references(() => bookings.id).notNull(),
+  partnerId: integer("partner_id").references(() => partners.id).notNull(),
+  driverId: integer("driver_id").references(() => partnerDrivers.id).notNull(),
+  equipmentId: integer("equipment_id").references(() => equipment.id).notNull(),
+  assignedAt: timestamp("assigned_at").defaultNow(),
+  assignedBy: integer("assigned_by").references(() => users.id), // Partenaire qui a fait l'affectation
+  status: text("status").default("assigned"), // assigned, in_progress, completed, cancelled
+  startTime: timestamp("start_time"),
+  endTime: timestamp("end_time"),
+  deliveryInstructions: text("delivery_instructions"),
+  pickupInstructions: text("pickup_instructions"),
+  notes: text("notes"),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
@@ -571,6 +613,18 @@ export const insertPartnerApplicationSchema = createInsertSchema(partnerApplicat
   updatedAt: true,
 });
 
+export const insertPartnerDriverSchema = createInsertSchema(partnerDrivers).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertDriverAssignmentSchema = createInsertSchema(driverAssignments).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
 // Types
 export type Equipment = typeof equipment.$inferSelect;
 export type InsertEquipment = z.infer<typeof insertEquipmentSchema>;
@@ -600,6 +654,10 @@ export type Notification = typeof notifications.$inferSelect;
 export type InsertNotification = z.infer<typeof insertNotificationSchema>;
 export type Partner = typeof partners.$inferSelect;
 export type InsertPartner = z.infer<typeof insertPartnerSchema>;
+export type InsertPartnerDriver = z.infer<typeof insertPartnerDriverSchema>;
+export type PartnerDriver = typeof partnerDrivers.$inferSelect;
+export type InsertDriverAssignment = z.infer<typeof insertDriverAssignmentSchema>;
+export type DriverAssignment = typeof driverAssignments.$inferSelect;
 export type InsertGpsTracking = z.infer<typeof insertGpsTrackingSchema>;
 export type InsertDeliveryRoute = z.infer<typeof insertDeliveryRouteSchema>;
 export type InsertServiceCity = z.infer<typeof insertServiceCitySchema>;

@@ -45,6 +45,7 @@ import { useToast } from "@/hooks/use-toast";
 import { EquipmentUnavailabilityManager } from "@/components/EquipmentUnavailabilityManager";
 import { formatPrice, formatPriceWithPrefix } from "@/lib/constants";
 import TrackingDashboard from "@/components/TrackingDashboard";
+import DriverManagement from "@/components/DriverManagement";
 
 interface PartnerBooking {
   id: number;
@@ -450,9 +451,10 @@ function PartnerDashboardContent() {
 
         {/* Main Content */}
         <Tabs defaultValue="bookings" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-5">
+          <TabsList className="grid w-full grid-cols-6">
             <TabsTrigger value="bookings">Réservations</TabsTrigger>
             <TabsTrigger value="unavailability">Indisponibilités</TabsTrigger>
+            <TabsTrigger value="drivers">Chauffeurs</TabsTrigger>
             <TabsTrigger value="gps-admin">GPS Admin</TabsTrigger>
             <TabsTrigger value="analytics">Analyses</TabsTrigger>
             <TabsTrigger value="profile">Profil</TabsTrigger>
@@ -574,6 +576,11 @@ function PartnerDashboardContent() {
           {/* Equipment Unavailability Tab */}
           <TabsContent value="unavailability" className="space-y-6">
             <EquipmentUnavailabilityManager partnerId={partner.id} />
+          </TabsContent>
+
+          {/* Drivers Tab */}
+          <TabsContent value="drivers" className="space-y-6">
+            <DriverManagement partnerId={partner.id} />
           </TabsContent>
 
           {/* GPS Admin Tab */}
