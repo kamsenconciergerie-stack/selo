@@ -123,8 +123,8 @@ function PartnerDashboardContent() {
   const [stats, setStats] = useState<PartnerStats | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedBooking, setSelectedBooking] = useState<PartnerBooking | null>(null);
-  const [revenueData, setRevenueData] = useState([]);
-  const [bookingTrends, setBookingTrends] = useState([]);
+  const [revenueData, setRevenueData] = useState<any[]>([]);
+  const [bookingTrends, setBookingTrends] = useState<any[]>([]);
   const { toast } = useToast();
 
   useEffect(() => {

@@ -162,6 +162,14 @@ export interface IStorage {
   getAllPartnerRequests(): Promise<any[]>;
   updatePartnerRequestStatus(id: number, status: string, notes?: string): Promise<any>;
   
+  // Partner equipment sync methods
+  getEquipmentByPartnerId(partnerId: number): Promise<Equipment[]>;
+  getPartnerDrivers(partnerId: number): Promise<PartnerDriver[]>;
+  createPartnerDriver(driverData: InsertPartnerDriver): Promise<PartnerDriver>;
+  updatePartnerDriver(driverId: number, updateData: Partial<InsertPartnerDriver>): Promise<PartnerDriver | null>;
+  getDriverAssignmentsByPartner(partnerId: number): Promise<any[]>;
+  getBookingsByEquipment(equipmentId: number): Promise<Booking[]>;
+  
   // Admin stats methods
   getAdminStats(): Promise<any>;
   
@@ -198,6 +206,76 @@ export class DbStorage implements IStorage {
   async getEquipmentById(id: number): Promise<Equipment | undefined> {
     const result = await db.select().from(equipment).where(eq(equipment.id, id));
     return result[0];
+  }
+
+  async getEquipmentByPartnerId(partnerId: number): Promise<Equipment[]> {
+    return await db.select().from(equipment).where(eq(equipment.partnerId, partnerId));
+  }
+
+  // Partner drivers management
+  async getPartnerDrivers(partnerId: number): Promise<PartnerDriver[]> {
+    return await db.select().from(partnerDrivers).where(eq(partnerDrivers.partnerId, partnerId));
+  }
+
+  async createPartnerDriver(driverData: InsertPartnerDriver): Promise<PartnerDriver> {
+    const [driver] = await db.insert(partnerDrivers).values(driverData).returning();
+    return driver;
+  }
+
+  async updatePartnerDriver(driverId: number, updateData: Partial<InsertPartnerDriver>): Promise<PartnerDriver | null> {
+    const [driver] = await db
+      .update(partnerDrivers)
+      .set({ ...updateData, updatedAt: new Date() })
+      .where(eq(partnerDrivers.id, driverId))
+      .returning();
+    return driver || null;
+  }
+
+  async getDriverAssignmentsByPartner(partnerId: number): Promise<any[]> {
+    // Join with drivers, equipment, and bookings tables
+    const assignments = await db
+      .select({
+        id: driverAssignments.id,
+        bookingId: driverAssignments.bookingId,
+        partnerId: driverAssignments.partnerId,
+        driverId: driverAssignments.driverId,
+        equipmentId: driverAssignments.equipmentId,
+        assignedAt: driverAssignments.assignedAt,
+        status: driverAssignments.status,
+        deliveryInstructions: driverAssignments.deliveryInstructions,
+        driverFirstName: partnerDrivers.firstName,
+        driverLastName: partnerDrivers.lastName,
+        equipmentName: equipment.name,
+        equipmentCategory: equipment.category,
+      })
+      .from(driverAssignments)
+      .leftJoin(partnerDrivers, eq(driverAssignments.driverId, partnerDrivers.id))
+      .leftJoin(equipment, eq(driverAssignments.equipmentId, equipment.id))
+      .where(eq(driverAssignments.partnerId, partnerId));
+
+    return assignments.map(assignment => ({
+      id: assignment.id,
+      bookingId: assignment.bookingId,
+      partnerId: assignment.partnerId,
+      driverId: assignment.driverId,
+      equipmentId: assignment.equipmentId,
+      assignedAt: assignment.assignedAt,
+      status: assignment.status,
+      deliveryInstructions: assignment.deliveryInstructions,
+      driver: {
+        firstName: assignment.driverFirstName,
+        lastName: assignment.driverLastName,
+      },
+      equipment: {
+        id: assignment.equipmentId,
+        name: assignment.equipmentName,
+        category: assignment.equipmentCategory,
+      },
+    }));
+  }
+
+  async getBookingsByEquipment(equipmentId: number): Promise<Booking[]> {
+    return await db.select().from(bookings).where(eq(bookings.equipmentId, equipmentId));
   }
 
   async getEquipmentByCategory(category: string): Promise<Equipment[]> {

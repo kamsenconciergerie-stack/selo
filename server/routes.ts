@@ -1,6 +1,9 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
-import { storage } from "./storage";
+import { unifiedData } from "./data-sync";
+import { MemStorage, type IStorage } from "./storage";
+
+const storage: IStorage = new MemStorage();
 import { insertBookingSchema, insertInquirySchema, insertUserSchema } from "@shared/schema";
 import { registerPaymentRoutes } from "./payment-routes";
 import { authRoutes } from "./auth-routes";
@@ -1366,13 +1369,13 @@ ${validatedData.message}`
     }
   });
 
-  // Partner equipment management routes - SYNCHRONE avec la base principale
+  // Partner equipment management routes - UNIFIÉ avec base PostgreSQL
   
-  // GET partner's equipment list
+  // GET partner's equipment list - DONNÉES UNIFIÉES
   app.get("/api/partners/:partnerId/equipment", async (req, res) => {
     try {
       const partnerId = parseInt(req.params.partnerId);
-      const equipment = await storage.getEquipmentByPartnerId(partnerId);
+      const equipment = await unifiedData.getEquipmentByPartnerId(partnerId);
       res.json(equipment);
     } catch (error) {
       console.error("Error fetching partner equipment:", error);
@@ -1380,22 +1383,16 @@ ${validatedData.message}`
     }
   });
 
-  // PUT update partner's equipment - DIRECTEMENT dans la base principale
+  // PUT update partner's equipment - SYNCHRONISATION UNIFIÉE
   app.put("/api/partners/:partnerId/equipment/:equipmentId", async (req, res) => {
     try {
       const partnerId = parseInt(req.params.partnerId);
       const equipmentId = parseInt(req.params.equipmentId);
       
-      // Vérifier que l'équipement appartient bien au partenaire
-      const existingEquipment = await storage.getEquipmentById(equipmentId);
-      if (!existingEquipment || existingEquipment.partnerId !== partnerId) {
-        return res.status(403).json({ message: "Accès non autorisé à cet équipement" });
-      }
-      
-      // Mettre à jour directement dans la base principale
-      const updatedEquipment = await storage.updateEquipment(equipmentId, {
+      // Utiliser le service unifié pour synchronisation automatique
+      const updatedEquipment = await unifiedData.syncPartnerEquipment(partnerId, {
+        id: equipmentId,
         ...req.body,
-        updatedAt: new Date(),
       });
       
       if (!updatedEquipment) {
@@ -1433,11 +1430,11 @@ ${validatedData.message}`
 
   // Partner drivers management routes
   
-  // GET partner's drivers
+  // GET partner's drivers - DONNÉES UNIFIÉES
   app.get("/api/partners/:partnerId/drivers", async (req, res) => {
     try {
       const partnerId = parseInt(req.params.partnerId);
-      const drivers = await storage.getPartnerDrivers(partnerId);
+      const drivers = await unifiedData.getPartnerDrivers(partnerId);
       res.json(drivers);
     } catch (error) {
       console.error("Error fetching partner drivers:", error);
