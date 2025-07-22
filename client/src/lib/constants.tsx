@@ -74,10 +74,11 @@ export const SERVICE_AREAS = [
 ];
 
 export const formatPrice = (price: number) => {
-  return new Intl.NumberFormat('fr-SN', {
+  const formattedPrice = new Intl.NumberFormat('fr-SN', {
     style: 'currency',
     currency: 'XOF',
     minimumFractionDigits: 0,
     maximumFractionDigits: 0
   }).format(price);
+  return `À partir de ${formattedPrice}`;
 };
