@@ -101,6 +101,53 @@ export const partnerRequests = pgTable("partner_requests", {
   notes: text("notes"),
 });
 
+// GPS Tracking for equipment delivery
+export const gpsTracking = pgTable("gps_tracking", {
+  id: serial("id").primaryKey(),
+  equipmentId: integer("equipment_id").notNull(),
+  bookingId: integer("booking_id"),
+  latitude: real("latitude").notNull(),
+  longitude: real("longitude").notNull(),
+  address: text("address"),
+  city: text("city").notNull().default("Dakar"),
+  status: text("status").notNull().default("in_transit"), // in_transit, delivered, returned, maintenance
+  driverName: text("driver_name"),
+  driverPhone: text("driver_phone"),
+  estimatedArrival: timestamp("estimated_arrival"),
+  actualArrival: timestamp("actual_arrival"),
+  deliveryNotes: text("delivery_notes"),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+});
+
+// Delivery routes and waypoints
+export const deliveryRoutes = pgTable("delivery_routes", {
+  id: serial("id").primaryKey(),
+  trackingId: integer("tracking_id").notNull(),
+  waypointOrder: integer("waypoint_order").notNull(),
+  latitude: real("latitude").notNull(),
+  longitude: real("longitude").notNull(),
+  address: text("address"),
+  estimatedTime: timestamp("estimated_time"),
+  actualTime: timestamp("actual_time"),
+  status: text("status").notNull().default("pending"), // pending, reached, skipped
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
+
+// Cities and service areas for GPS tracking
+export const serviceCities = pgTable("service_cities", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  region: text("region").notNull(),
+  centerLatitude: real("center_latitude").notNull(),
+  centerLongitude: real("center_longitude").notNull(),
+  radiusKm: integer("radius_km").notNull().default(50),
+  isActive: boolean("is_active").notNull().default(true),
+  deliveryFeeBase: integer("delivery_fee_base").notNull().default(0), // in XOF
+  deliveryFeePerKm: integer("delivery_fee_per_km").notNull().default(500), // in XOF
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
+
 export const insertEquipmentSchema = createInsertSchema(equipment).omit({
   id: true,
 });
@@ -118,6 +165,22 @@ export const insertPaymentSchema = createInsertSchema(payments).omit({
 });
 
 export const insertInquirySchema = createInsertSchema(inquiries).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertGpsTrackingSchema = createInsertSchema(gpsTracking).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertDeliveryRouteSchema = createInsertSchema(deliveryRoutes).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertServiceCitySchema = createInsertSchema(serviceCities).omit({
   id: true,
   createdAt: true,
 });
@@ -537,6 +600,13 @@ export type Notification = typeof notifications.$inferSelect;
 export type InsertNotification = z.infer<typeof insertNotificationSchema>;
 export type Partner = typeof partners.$inferSelect;
 export type InsertPartner = z.infer<typeof insertPartnerSchema>;
+export type InsertGpsTracking = z.infer<typeof insertGpsTrackingSchema>;
+export type InsertDeliveryRoute = z.infer<typeof insertDeliveryRouteSchema>;
+export type InsertServiceCity = z.infer<typeof insertServiceCitySchema>;
+
+export type GpsTracking = typeof gpsTracking.$inferSelect;
+export type DeliveryRoute = typeof deliveryRoutes.$inferSelect;
+export type ServiceCity = typeof serviceCities.$inferSelect;
 export type PartnerDocument = typeof partnerDocuments.$inferSelect;
 export type InsertPartnerDocument = z.infer<typeof insertPartnerDocumentSchema>;
 export type PartnerFleet = typeof partnerFleet.$inferSelect;

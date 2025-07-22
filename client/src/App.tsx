@@ -17,6 +17,7 @@ import AdminDashboardComplete from "@/pages/admin-dashboard-complete";
 import PartnerLogin from "@/pages/partner-login";
 import PartnerDashboard from "@/pages/partner-dashboard";
 import NotFound from "@/pages/not-found";
+import GpsTracking from "@/pages/gps-tracking";
 
 function Router() {
   return (
@@ -35,6 +36,7 @@ function Router() {
       <Route path="/adminpartners" component={PartnerLogin} />
       <Route path="/adminpartners/dashboard" component={PartnerDashboard} />
       <Route path="/adminone" component={AdminDashboardComplete} />
+      <Route path="/gps-tracking" component={GpsTracking} />
       <Route component={NotFound} />
     </Switch>
   );

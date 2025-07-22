@@ -451,6 +451,108 @@ ${validatedData.message}`
     }
   });
 
+  // GPS Tracking API routes
+  app.get('/api/tracking/active', async (req, res) => {
+    try {
+      const activeTracking = await storage.getAllActiveTracking();
+      res.json(activeTracking);
+    } catch (error) {
+      console.error('Error fetching active tracking:', error);
+      res.status(500).json({ message: 'Erreur lors de la récupération du suivi GPS' });
+    }
+  });
+
+  app.get('/api/tracking/equipment/:id', async (req, res) => {
+    try {
+      const equipmentId = parseInt(req.params.id);
+      const tracking = await storage.getGpsTrackingByEquipment(equipmentId);
+      res.json(tracking);
+    } catch (error) {
+      console.error('Error fetching equipment tracking:', error);
+      res.status(500).json({ message: 'Erreur lors de la récupération du suivi équipement' });
+    }
+  });
+
+  app.get('/api/tracking/booking/:id', async (req, res) => {
+    try {
+      const bookingId = parseInt(req.params.id);
+      const tracking = await storage.getGpsTrackingByBooking(bookingId);
+      res.json(tracking);
+    } catch (error) {
+      console.error('Error fetching booking tracking:', error);
+      res.status(500).json({ message: 'Erreur lors de la récupération du suivi réservation' });
+    }
+  });
+
+  app.post('/api/tracking', async (req, res) => {
+    try {
+      const trackingData = req.body;
+      const newTracking = await storage.createGpsTracking(trackingData);
+      res.json(newTracking);
+    } catch (error) {
+      console.error('Error creating GPS tracking:', error);
+      res.status(500).json({ message: 'Erreur lors de la création du suivi GPS' });
+    }
+  });
+
+  app.put('/api/tracking/:id/location', async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const { latitude, longitude, address } = req.body;
+      const updated = await storage.updateGpsLocation(id, latitude, longitude, address);
+      res.json(updated);
+    } catch (error) {
+      console.error('Error updating GPS location:', error);
+      res.status(500).json({ message: 'Erreur lors de la mise à jour de la position' });
+    }
+  });
+
+  app.put('/api/tracking/:id/status', async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const { status, actualArrival, deliveryNotes } = req.body;
+      const updated = await storage.updateTrackingStatus(id, status, actualArrival, deliveryNotes);
+      res.json(updated);
+    } catch (error) {
+      console.error('Error updating tracking status:', error);
+      res.status(500).json({ message: 'Erreur lors de la mise à jour du statut' });
+    }
+  });
+
+  // Service Cities API routes
+  app.get('/api/cities', async (req, res) => {
+    try {
+      const cities = await storage.getAllServiceCities();
+      res.json(cities);
+    } catch (error) {
+      console.error('Error fetching cities:', error);
+      res.status(500).json({ message: 'Erreur lors de la récupération des villes' });
+    }
+  });
+
+  app.post('/api/cities', async (req, res) => {
+    try {
+      const cityData = req.body;
+      const newCity = await storage.createServiceCity(cityData);
+      res.json(newCity);
+    } catch (error) {
+      console.error('Error creating city:', error);
+      res.status(500).json({ message: 'Erreur lors de la création de la ville' });
+    }
+  });
+
+  app.get('/api/cities/:id/delivery-fee', async (req, res) => {
+    try {
+      const cityId = parseInt(req.params.id);
+      const distanceKm = parseFloat(req.query.distance as string) || 0;
+      const fee = await storage.calculateDeliveryFee(cityId, distanceKm);
+      res.json({ fee });
+    } catch (error) {
+      console.error('Error calculating delivery fee:', error);
+      res.status(500).json({ message: 'Erreur lors du calcul des frais de livraison' });
+    }
+  });
+
   app.get("/api/admin/stats", async (req, res) => {
     try {
       const stats = await storage.getAdminStats();

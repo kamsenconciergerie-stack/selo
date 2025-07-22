@@ -12,6 +12,9 @@ import {
   Notification,
   CommercialManager,
   UserSession,
+  GpsTracking,
+  DeliveryRoute,
+  ServiceCity,
   InsertEquipment, 
   InsertBooking, 
   InsertPayment, 
@@ -24,7 +27,10 @@ import {
   InsertInventory,
   InsertNotification,
   InsertCommercialManager,
-  InsertUserSession
+  InsertUserSession,
+  InsertGpsTracking,
+  InsertDeliveryRoute,
+  InsertServiceCity
 } from "@shared/schema";
 import bcrypt from "bcrypt";
 import { 
@@ -42,7 +48,10 @@ import {
   analytics,
   commercialManagers,
   userSessions,
-  partnerRequests
+  partnerRequests,
+  gpsTracking,
+  deliveryRoutes,
+  serviceCities
 } from "../shared/schema";
 import { eq, ilike, or } from "drizzle-orm";
 import { db } from "../shared/db";
@@ -691,6 +700,113 @@ export class DbStorage implements IStorage {
         processedBy: 'admin'
       })
       .where(eq(partnerRequests.id, id))
+      .returning();
+    return updated;
+  }
+
+  // GPS Tracking methods
+  async createGpsTracking(trackingData: InsertGpsTracking): Promise<GpsTracking> {
+    const result = await db.insert(gpsTracking).values(trackingData).returning();
+    return result[0];
+  }
+
+  async getGpsTrackingByEquipment(equipmentId: number): Promise<GpsTracking[]> {
+    return await db.select().from(gpsTracking)
+      .where(eq(gpsTracking.equipmentId, equipmentId))
+      .orderBy(desc(gpsTracking.createdAt));
+  }
+
+  async getGpsTrackingByBooking(bookingId: number): Promise<GpsTracking[]> {
+    return await db.select().from(gpsTracking)
+      .where(eq(gpsTracking.bookingId, bookingId))
+      .orderBy(desc(gpsTracking.createdAt));
+  }
+
+  async updateGpsLocation(id: number, latitude: number, longitude: number, address?: string): Promise<GpsTracking | undefined> {
+    const [updated] = await db.update(gpsTracking)
+      .set({ 
+        latitude, 
+        longitude, 
+        address,
+        updatedAt: new Date() 
+      })
+      .where(eq(gpsTracking.id, id))
+      .returning();
+    return updated;
+  }
+
+  async updateTrackingStatus(id: number, status: string, actualArrival?: Date, deliveryNotes?: string): Promise<GpsTracking | undefined> {
+    const updateData: any = { 
+      status,
+      updatedAt: new Date() 
+    };
+    
+    if (actualArrival) updateData.actualArrival = actualArrival;
+    if (deliveryNotes) updateData.deliveryNotes = deliveryNotes;
+
+    const [updated] = await db.update(gpsTracking)
+      .set(updateData)
+      .where(eq(gpsTracking.id, id))
+      .returning();
+    return updated;
+  }
+
+  async getAllActiveTracking(): Promise<GpsTracking[]> {
+    return await db.select().from(gpsTracking)
+      .where(eq(gpsTracking.status, 'in_transit'))
+      .orderBy(desc(gpsTracking.createdAt));
+  }
+
+  async getTrackingByCity(city: string): Promise<GpsTracking[]> {
+    return await db.select().from(gpsTracking)
+      .where(eq(gpsTracking.city, city))
+      .orderBy(desc(gpsTracking.createdAt));
+  }
+
+  // Service Cities methods
+  async createServiceCity(cityData: InsertServiceCity): Promise<ServiceCity> {
+    const result = await db.insert(serviceCities).values(cityData).returning();
+    return result[0];
+  }
+
+  async getAllServiceCities(): Promise<ServiceCity[]> {
+    return await db.select().from(serviceCities)
+      .where(eq(serviceCities.isActive, true))
+      .orderBy(serviceCities.name);
+  }
+
+  async getServiceCityById(id: number): Promise<ServiceCity | undefined> {
+    const result = await db.select().from(serviceCities)
+      .where(eq(serviceCities.id, id));
+    return result[0];
+  }
+
+  async calculateDeliveryFee(cityId: number, distanceKm: number): Promise<number> {
+    const city = await this.getServiceCityById(cityId);
+    if (!city) return 0;
+    
+    return city.deliveryFeeBase + (city.deliveryFeePerKm * distanceKm);
+  }
+
+  // Delivery Routes methods
+  async createDeliveryRoute(routeData: InsertDeliveryRoute): Promise<DeliveryRoute> {
+    const result = await db.insert(deliveryRoutes).values(routeData).returning();
+    return result[0];
+  }
+
+  async getDeliveryRoutesByTracking(trackingId: number): Promise<DeliveryRoute[]> {
+    return await db.select().from(deliveryRoutes)
+      .where(eq(deliveryRoutes.trackingId, trackingId))
+      .orderBy(deliveryRoutes.waypointOrder);
+  }
+
+  async updateRouteWaypoint(id: number, status: string, actualTime?: Date): Promise<DeliveryRoute | undefined> {
+    const updateData: any = { status };
+    if (actualTime) updateData.actualTime = actualTime;
+
+    const [updated] = await db.update(deliveryRoutes)
+      .set(updateData)
+      .where(eq(deliveryRoutes.id, id))
       .returning();
     return updated;
   }
