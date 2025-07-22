@@ -273,6 +273,24 @@ export default function About() {
               <p className="text-lg text-gray-600 mb-8">
                 Aywa vise à accompagner les professionnels et les particuliers dans leurs projets en fournissant des moyens de transport de colis et équipements de qualité et un service personnalisé partout au Sénégal.
               </p>
+              
+              {/* Rejoignez notre réseau de partenaires */}
+              <div className="bg-gradient-to-r from-primary-orange/10 to-aywa-blue/10 p-6 rounded-lg mb-8">
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">
+                  🤝 Rejoignez notre réseau de partenaires
+                </h3>
+                <p className="text-gray-700 mb-4">
+                  Vous possédez des équipements de transport ou de logistique ? Développez votre activité en rejoignant notre réseau de partenaires de confiance.
+                </p>
+                <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+                  <DialogTrigger asChild>
+                    <Button className="bg-primary-orange hover:bg-primary-orange/90 text-white">
+                      Devenir Partenaire
+                    </Button>
+                  </DialogTrigger>
+                </Dialog>
+              </div>
+              
               <div className="space-y-4">
                 <div className="flex items-center gap-3">
                   <div className="flex-shrink-0 w-8 h-8 bg-primary-orange rounded-full flex items-center justify-center">
