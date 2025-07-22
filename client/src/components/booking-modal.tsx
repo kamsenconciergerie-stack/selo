@@ -10,7 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { insertBookingSchema, Booking } from "@shared/schema";
 import { z } from "zod";
 import { Equipment } from "@shared/schema";
-import { formatPrice } from "@/lib/constants";
+import { formatPrice, formatPriceWithPrefix } from "@/lib/constants";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -134,7 +134,7 @@ export default function BookingModal({ equipment, open, onOpenChange }: BookingM
               </div>
               <div className="flex items-center text-sm text-gray-600">
                 <Clock className="mr-2 h-4 w-4" />
-                {formatPrice(equipment.pricePerDay)}/jour
+                {formatPriceWithPrefix(equipment.pricePerDay)}/jour
               </div>
             </div>
 

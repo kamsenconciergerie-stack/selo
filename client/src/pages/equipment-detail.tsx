@@ -10,7 +10,7 @@ import { Equipment } from "@shared/schema";
 import { useParams, Link } from "wouter";
 import { useState } from "react";
 import { ArrowLeft, MapPin, Weight, Fuel, Calendar, Shield, Clock, Phone } from "lucide-react";
-import { formatPrice, SERVICE_AREAS } from "@/lib/constants";
+import { formatPriceWithPrefix, SERVICE_AREAS } from "@/lib/constants";
 
 export default function EquipmentDetail() {
   const { id } = useParams();
@@ -119,7 +119,7 @@ export default function EquipmentDetail() {
               <CardContent className="p-6">
                 <div className="text-center">
                   <div className="text-4xl font-bold text-primary-orange mb-2">
-                    {formatPrice(equipment.pricePerDay)}
+                    {formatPriceWithPrefix(equipment.pricePerDay)}
                   </div>
                   <div className="text-gray-600">par jour</div>
 

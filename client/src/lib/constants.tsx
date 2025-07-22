@@ -74,11 +74,21 @@ export const SERVICE_AREAS = [
 ];
 
 export const formatPrice = (price: number) => {
-  const formattedPrice = new Intl.NumberFormat('fr-SN', {
+  return new Intl.NumberFormat('fr-SN', {
     style: 'currency',
     currency: 'XOF',
     minimumFractionDigits: 0,
     maximumFractionDigits: 0
   }).format(price);
-  return `À partir de ${formattedPrice}`;
+};
+
+// Function to get JSX for price with "À partir de" prefix
+export const formatPriceWithPrefix = (price: number) => {
+  const formattedPrice = formatPrice(price);
+  return (
+    <>
+      <span className="text-xs font-normal text-gray-600">À partir de </span>
+      {formattedPrice}
+    </>
+  );
 };

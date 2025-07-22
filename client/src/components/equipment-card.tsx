@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { MapPin, Weight, Fuel } from "lucide-react";
 import { Equipment } from "@shared/schema";
-import { formatPrice } from "@/lib/constants";
+import { formatPriceWithPrefix } from "@/lib/constants";
 import { Link } from "wouter";
 import BookingModal from "./booking-modal";
 import { useState } from "react";
@@ -44,7 +44,7 @@ export default function EquipmentCard({ equipment }: EquipmentCardProps) {
           
           <div className="flex justify-between items-center mb-4">
             <div className="text-2xl font-bold text-primary-orange">
-              {formatPrice(equipment.pricePerDay)}
+              {formatPriceWithPrefix(equipment.pricePerDay)}
               <span className="text-sm font-normal text-gray-500">/jour</span>
             </div>
             <div className="text-sm text-gray-500 flex items-center">
