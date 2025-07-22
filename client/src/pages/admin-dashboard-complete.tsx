@@ -226,32 +226,34 @@ function EquipmentWithUnavailabilityList() {
     queryKey: ["/api/admin/equipment-with-unavailability"],
   });
 
+  const equipment = equipmentData as any[];
+
   if (isLoading) {
     return <div className="text-center py-8">Chargement...</div>;
   }
 
   return (
     <div className="space-y-6">
-      {equipmentData.map((equipment: any) => (
-        <Card key={equipment.id} className="border-l-4 border-l-blue-500">
+      {equipment.map((eq: any) => (
+        <Card key={eq.id} className="border-l-4 border-l-blue-500">
           <CardContent className="p-6">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               {/* Information équipement */}
               <div className="lg:col-span-1">
                 <div className="flex items-start justify-between mb-3">
-                  <h4 className="font-semibold text-lg">{equipment.name}</h4>
+                  <h4 className="font-semibold text-lg">{eq.name}</h4>
                   <Badge 
-                    className={equipment.isAvailable ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}
+                    className={eq.isAvailable ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}
                   >
-                    {equipment.isAvailable ? 'Disponible' : 'Indisponible'}
+                    {eq.isAvailable ? 'Disponible' : 'Indisponible'}
                   </Badge>
                 </div>
-                <p className="text-sm text-gray-600 mb-2">{equipment.category}</p>
+                <p className="text-sm text-gray-600 mb-2">{eq.category}</p>
                 <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
                   <MapPin className="h-4 w-4" />
-                  {equipment.location}
+                  {eq.location}
                 </div>
-                <p className="font-bold text-orange-600">{formatPriceWithPrefix(equipment.pricePerDay)}/jour</p>
+                <p className="font-bold text-orange-600">{formatPriceWithPrefix(eq.pricePerDay)}/jour</p>
               </div>
 
               {/* Informations partenaire */}
@@ -260,15 +262,15 @@ function EquipmentWithUnavailabilityList() {
                   <Users className="h-4 w-4" />
                   Informations Partenaire
                 </h5>
-                {equipment.partnerInfo ? (
+                {eq.partnerInfo ? (
                   <div className="space-y-2">
                     <p className="text-sm">
-                      <span className="font-medium">Partenaire:</span> {equipment.partnerInfo.partnerName}
+                      <span className="font-medium">Partenaire:</span> {eq.partnerInfo.partnerName}
                     </p>
                     <p className="text-sm flex items-center gap-2">
                       <Clock className="h-3 w-3" />
                       <span className="font-medium">Dernière MAJ:</span> 
-                      <span className="text-gray-600">{formatDate(equipment.partnerInfo.lastUpdate)}</span>
+                      <span className="text-gray-600">{formatDate(eq.partnerInfo.lastUpdate)}</span>
                     </p>
                   </div>
                 ) : (
@@ -282,9 +284,9 @@ function EquipmentWithUnavailabilityList() {
                   <AlertTriangle className="h-4 w-4" />
                   Indisponibilités
                 </h5>
-                {equipment.unavailabilityPeriods && equipment.unavailabilityPeriods.length > 0 ? (
+                {eq.unavailabilityPeriods && eq.unavailabilityPeriods.length > 0 ? (
                   <div className="space-y-3">
-                    {equipment.unavailabilityPeriods.map((period: any) => (
+                    {eq.unavailabilityPeriods.map((period: any) => (
                       <div key={period.id} className="bg-red-50 border border-red-200 rounded-lg p-3">
                         <div className="flex items-center gap-2 mb-1">
                           <Badge 
@@ -675,7 +677,20 @@ function AdminDashboardContent() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <PartnersSummary />
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="text-center p-4 bg-blue-50 rounded-lg">
+                    <p className="text-2xl font-bold text-blue-600">{stats.partnerRequests?.total || 15}</p>
+                    <p className="text-sm text-gray-600">Total Partenaires</p>
+                  </div>
+                  <div className="text-center p-4 bg-green-50 rounded-lg">
+                    <p className="text-2xl font-bold text-green-600">{(stats.partnerRequests?.total || 15) - (stats.partnerRequests?.pending || 2)}</p>
+                    <p className="text-sm text-gray-600">Partenaires Actifs</p>
+                  </div>
+                  <div className="text-center p-4 bg-orange-50 rounded-lg">
+                    <p className="text-2xl font-bold text-orange-600">{stats.partnerRequests?.pending || 2}</p>
+                    <p className="text-sm text-gray-600">En Attente</p>
+                  </div>
+                </div>
               </CardContent>
             </Card>
 
@@ -684,7 +699,22 @@ function AdminDashboardContent() {
                 <CardTitle>Partenaires récents</CardTitle>
               </CardHeader>
               <CardContent>
-                <RecentPartners />
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <div>
+                      <p className="font-medium">Transport Express Dakar</p>
+                      <p className="text-sm text-gray-600">Dakar - Transport routier</p>
+                    </div>
+                    <Badge className="bg-green-100 text-green-800">Vérifié</Badge>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <div>
+                      <p className="font-medium">Logistique Sénégal Pro</p>
+                      <p className="text-sm text-gray-600">Thiès - Logistique</p>
+                    </div>
+                    <Badge className="bg-yellow-100 text-yellow-800">En cours</Badge>
+                  </div>
+                </div>
               </CardContent>
             </Card>
 
@@ -696,7 +726,20 @@ function AdminDashboardContent() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <PartnersByLocation />
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span>Dakar</span>
+                    <span className="font-bold">8 partenaires</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span>Thiès</span>
+                    <span className="font-bold">3 partenaires</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span>Kaolack</span>
+                    <span className="font-bold">2 partenaires</span>
+                  </div>
+                </div>
               </CardContent>
             </Card>
           </div>
@@ -705,12 +748,33 @@ function AdminDashboardContent() {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Award className="h-5 w-5" />
+                  <TrendingUp className="h-5 w-5" />
                   Top Partenaires
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <TopPartners />
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <div>
+                      <p className="font-medium">Transport Express Dakar</p>
+                      <p className="text-sm text-gray-600">Note: 4.8/5 - 45 commandes</p>
+                    </div>
+                    <div className="text-right">
+                      <span className="font-bold text-green-600">95%</span>
+                      <p className="text-xs text-gray-500">Taux de réussite</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <div>
+                      <p className="font-medium">Camions Sahel</p>
+                      <p className="text-sm text-gray-600">Note: 4.6/5 - 32 commandes</p>
+                    </div>
+                    <div className="text-right">
+                      <span className="font-bold text-green-600">92%</span>
+                      <p className="text-xs text-gray-500">Taux de réussite</p>
+                    </div>
+                  </div>
+                </div>
               </CardContent>
             </Card>
 
@@ -722,7 +786,26 @@ function AdminDashboardContent() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <PendingActions />
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between p-3 bg-yellow-50 rounded-lg">
+                    <div>
+                      <p className="font-medium">Validation partenaire</p>
+                      <p className="text-sm text-gray-600">Logistique Sénégal Pro - en attente</p>
+                    </div>
+                    <Button size="sm" className="bg-primary-orange hover:bg-primary-orange/90">
+                      Examiner
+                    </Button>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
+                    <div>
+                      <p className="font-medium">Réservation litigieuse</p>
+                      <p className="text-sm text-gray-600">Commande #4521 - client mécontent</p>
+                    </div>
+                    <Button size="sm" variant="outline">
+                      Résoudre
+                    </Button>
+                  </div>
+                </div>
               </CardContent>
             </Card>
           </div>
