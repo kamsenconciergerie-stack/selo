@@ -176,6 +176,149 @@ Cette notification a été générée automatiquement par la plateforme Aywa.
     }
   }
 
+  // Nouvelle méthode pour envoyer un email de confirmation de réservation
+  static async sendBookingConfirmationEmail(data: {
+    bookingId: number;
+    customerName: string;
+    customerEmail: string;
+    customerPhone: string;
+    equipmentName: string;
+    startDate: string;
+    endDate: string;
+    totalPrice: number;
+    location: string;
+    status: string;
+    createdAt: string;
+  }): Promise<boolean> {
+    if (!process.env.SENDGRID_API_KEY) {
+      console.log("SendGrid API key not configured, skipping confirmation email");
+      return false;
+    }
+
+    try {
+      const formatPrice = (price: number) => {
+        return new Intl.NumberFormat('fr-FR').format(price);
+      };
+
+      const htmlContent = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <meta charset="utf-8">
+          <title>Confirmation de réservation - Aywa</title>
+        </head>
+        <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+          <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+            <div style="background: linear-gradient(135deg, #FF6B35, #F7931E); color: white; padding: 30px; border-radius: 8px 8px 0 0; text-align: center;">
+              <h1 style="margin: 0; font-size: 28px;">✅ Réservation Confirmée</h1>
+              <p style="margin: 10px 0 0 0; font-size: 18px; opacity: 0.9;">Merci ${data.customerName} !</p>
+            </div>
+            
+            <div style="background: white; padding: 30px; border: 1px solid #e5e5e5;">
+              <h2 style="margin: 0 0 20px 0; color: #FF6B35;">📋 Détails de votre réservation</h2>
+              
+              <div style="background: #f8f9fa; padding: 20px; border-radius: 6px; margin-bottom: 20px;">
+                <p style="margin: 0 0 10px 0;"><strong>Numéro de réservation :</strong> #${data.bookingId}</p>
+                <p style="margin: 0 0 10px 0;"><strong>Équipement réservé :</strong> ${data.equipmentName}</p>
+                <p style="margin: 0 0 10px 0;"><strong>Période de location :</strong></p>
+                <ul style="margin: 5px 0 0 20px;">
+                  <li>Du ${new Date(data.startDate).toLocaleDateString('fr-FR', {
+                    weekday: 'long',
+                    day: '2-digit',
+                    month: 'long',
+                    year: 'numeric'
+                  })}</li>
+                  <li>Au ${new Date(data.endDate).toLocaleDateString('fr-FR', {
+                    weekday: 'long',
+                    day: '2-digit',
+                    month: 'long',
+                    year: 'numeric'
+                  })}</li>
+                </ul>
+                <p style="margin: 15px 0 10px 0;"><strong>Lieu de récupération :</strong> ${data.location}</p>
+                <p style="margin: 0 0 10px 0;"><strong>Prix total :</strong> ${formatPrice(data.totalPrice)} XOF</p>
+                <p style="margin: 0;"><strong>Statut :</strong> <span style="color: #10b981; font-weight: bold;">Confirmé</span></p>
+              </div>
+
+              <div style="background: #e0f2fe; padding: 20px; border-radius: 6px; margin-bottom: 20px; border-left: 4px solid #0288d1;">
+                <h3 style="margin: 0 0 15px 0; color: #0277bd;">📞 Prochaines étapes</h3>
+                <ul style="margin: 0; padding-left: 20px;">
+                  <li style="margin-bottom: 8px;">Nous vous contacterons 24h avant la livraison pour confirmer l'heure exacte</li>
+                  <li style="margin-bottom: 8px;">Préparez une pièce d'identité valide pour la récupération</li>
+                  <li style="margin-bottom: 8px;">Vérifiez l'équipement à la livraison</li>
+                  <li>Contactez-nous pour toute question au +221 78 606 70 13</li>
+                </ul>
+              </div>
+
+              <div style="text-align: center; margin: 30px 0;">
+                <p style="margin: 0 0 15px 0; color: #666;">Besoin d'aide ou de modification ?</p>
+                <a href="tel:+22178606713" style="display: inline-block; background: #FF6B35; color: white; padding: 12px 25px; text-decoration: none; border-radius: 6px; margin: 0 10px;">
+                  📞 +221 78 606 70 13
+                </a>
+                <a href="mailto:contact@aywalogistic.com" style="display: inline-block; background: #1e3a8a; color: white; padding: 12px 25px; text-decoration: none; border-radius: 6px; margin: 0 10px;">
+                  ✉️ contact@aywalogistic.com
+                </a>
+              </div>
+            </div>
+
+            <div style="text-align: center; padding: 20px; background: #f8f9fa; border-radius: 0 0 8px 8px;">
+              <p style="margin: 0; font-size: 14px; color: #6b7280;">
+                <strong>Aywa Logistics</strong> - Solutions de transport et location d'équipements au Sénégal<br>
+                Cette confirmation a été générée automatiquement le ${new Date(data.createdAt).toLocaleDateString('fr-FR')}
+              </p>
+            </div>
+          </div>
+        </body>
+        </html>
+      `;
+
+      const textContent = `
+CONFIRMATION DE RÉSERVATION - AYWA
+
+Bonjour ${data.customerName},
+
+Votre réservation a été confirmée avec succès !
+
+DÉTAILS DE LA RÉSERVATION:
+- Numéro: #${data.bookingId}
+- Équipement: ${data.equipmentName}
+- Du: ${new Date(data.startDate).toLocaleDateString('fr-FR')}
+- Au: ${new Date(data.endDate).toLocaleDateString('fr-FR')}
+- Lieu: ${data.location}
+- Prix total: ${formatPrice(data.totalPrice)} XOF
+- Statut: Confirmé
+
+PROCHAINES ÉTAPES:
+- Nous vous contacterons 24h avant la livraison
+- Préparez une pièce d'identité valide
+- Vérifiez l'équipement à la réception
+
+CONTACT:
+Téléphone: +221 78 606 70 13
+Email: contact@aywalogistic.com
+
+Merci de votre confiance !
+L'équipe Aywa Logistics
+      `;
+
+      const msg = {
+        to: data.customerEmail,
+        from: 'noreply@aywalogistic.com',
+        subject: `✅ Réservation #${data.bookingId} confirmée - ${data.equipmentName}`,
+        text: textContent,
+        html: htmlContent,
+      };
+
+      await sgMail.send(msg);
+      console.log(`✅ Email de confirmation envoyé à ${data.customerEmail} pour réservation #${data.bookingId}`);
+      return true;
+
+    } catch (error) {
+      console.error('❌ Erreur envoi email confirmation réservation:', error);
+      return false;
+    }
+  }
+
   private static getFieldDisplayName(field: string): string {
     const fieldNames: Record<string, string> = {
       'startDate': 'Date de début',

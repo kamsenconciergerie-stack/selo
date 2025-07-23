@@ -8,9 +8,9 @@ import { insertBookingSchema, insertInquirySchema, insertUserSchema } from "@sha
 import { registerPaymentRoutes } from "./payment-routes";
 import { authRoutes } from "./auth-routes";
 import { partnerRoutes } from "./partner-routes";
+import { EmailService } from "./email-service";
 import { authenticate, generateSessionToken, type AuthenticatedRequest } from "./auth-middleware";
 import { setupAuth, isAuthenticated, isAdmin } from "./replitAuth";
-import { EmailService } from "./email-service";
 import { z } from "zod";
 import multer from "multer";
 import path from "path";
@@ -86,6 +86,30 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const validatedData = insertBookingSchema.parse(req.body);
       const booking = await storage.createBooking(validatedData);
+      
+      // 🚀 NOUVEAU: Envoi automatique d'email de confirmation
+      if (booking && booking.customerEmail) {
+        // Récupérer les détails de l'équipement pour l'email
+        const equipment = await storage.getEquipmentById(parseInt(booking.equipmentId as any));
+        
+        // Envoyer l'email de confirmation au client
+        await EmailService.sendBookingConfirmationEmail({
+          bookingId: booking.id,
+          customerName: booking.customerName,
+          customerEmail: booking.customerEmail,
+          customerPhone: booking.customerPhone,
+          equipmentName: equipment?.name || 'Équipement',
+          startDate: booking.startDate,
+          endDate: booking.endDate,
+          totalPrice: booking.totalPrice,
+          location: 'Dakar',
+          status: booking.status || 'confirmed',
+          createdAt: booking.createdAt ? booking.createdAt.toISOString() : new Date().toISOString(),
+        });
+        
+        console.log(`📧 Email de confirmation automatique envoyé pour réservation #${booking.id}`);
+      }
+      
       res.status(201).json(booking);
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -94,6 +118,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           errors: error.errors 
         });
       }
+      console.error("Erreur création réservation:", error);
       res.status(500).json({ message: "Erreur lors de la création de la réservation" });
     }
   });
