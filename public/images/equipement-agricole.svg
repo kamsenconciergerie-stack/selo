@@ -1,0 +1,45 @@
+<svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="tractorGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff6b35;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f39c12;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="400" height="300" fill="#f8f9fa"/>
+  
+  <!-- Tractor body -->
+  <rect x="120" y="140" width="160" height="60" fill="url(#tractorGradient)" rx="10"/>
+  
+  <!-- Cabin -->
+  <rect x="200" y="110" width="60" height="50" fill="url(#tractorGradient)" rx="8"/>
+  
+  <!-- Cabin windows -->
+  <rect x="205" y="115" width="50" height="20" fill="#87ceeb" rx="3"/>
+  <rect x="205" y="140" width="15" height="15" fill="#87ceeb" rx="2"/>
+  <rect x="240" y="140" width="15" height="15" fill="#87ceeb" rx="2"/>
+  
+  <!-- Engine hood -->
+  <rect x="120" y="130" width="40" height="30" fill="url(#tractorGradient)" rx="5"/>
+  
+  <!-- Front wheel -->
+  <circle cx="150" cy="220" r="25" fill="#2c3e50"/>
+  <circle cx="150" cy="220" r="15" fill="#34495e"/>
+  
+  <!-- Rear wheel -->
+  <circle cx="250" cy="230" r="35" fill="#2c3e50"/>
+  <circle cx="250" cy="230" r="25" fill="#34495e"/>
+  
+  <!-- Exhaust pipe -->
+  <rect x="160" y="100" width="8" height="30" fill="#34495e" rx="4"/>
+  <ellipse cx="164" cy="95" rx="6" ry="3" fill="#34495e"/>
+  
+  <!-- AYWA branding -->
+  <text x="200" y="175" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white">AYWA</text>
+  <text x="200" y="188" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="white">FARM</text>
+  
+  <!-- Agricultural elements -->
+  <path d="M 60 250 Q 80 240 100 250 Q 120 260 140 250" stroke="#27ae60" stroke-width="3" fill="none"/>
+  <path d="M 300 240 Q 320 230 340 240 Q 360 250 380 240" stroke="#27ae60" stroke-width="3" fill="none"/>
+</svg>

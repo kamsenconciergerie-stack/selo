@@ -1,0 +1,26 @@
+<svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="aywaGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff6b35;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f39c12;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="400" height="300" fill="#f8f9fa"/>
+  
+  <!-- Equipment silhouette -->
+  <rect x="80" y="120" width="240" height="120" fill="url(#aywaGradient)" rx="10"/>
+  
+  <!-- Wheels -->
+  <circle cx="120" cy="220" r="25" fill="#2c3e50"/>
+  <circle cx="280" cy="220" r="25" fill="#2c3e50"/>
+  
+  <!-- AYWA branding -->
+  <text x="200" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white">AYWA</text>
+  <text x="200" y="200" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="white">ÉQUIPEMENT</text>
+  
+  <!-- Decorative elements -->
+  <circle cx="350" cy="50" r="20" fill="#ff6b35" opacity="0.3"/>
+  <circle cx="50" cy="80" r="15" fill="#f39c12" opacity="0.3"/>
+</svg>

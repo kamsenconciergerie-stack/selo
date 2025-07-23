@@ -1,0 +1,36 @@
+<svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="constructionGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff6b35;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f39c12;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="400" height="300" fill="#f8f9fa"/>
+  
+  <!-- Excavator body -->
+  <rect x="120" y="140" width="160" height="80" fill="url(#constructionGradient)" rx="10"/>
+  
+  <!-- Excavator arm -->
+  <rect x="80" y="100" width="60" height="20" fill="url(#constructionGradient)" rx="10" transform="rotate(30 110 110)"/>
+  <rect x="40" y="80" width="50" height="15" fill="#f39c12" rx="7" transform="rotate(60 65 87)"/>
+  
+  <!-- Bucket -->
+  <path d="M 30 70 L 50 85 L 45 95 L 25 80 Z" fill="#2c3e50"/>
+  
+  <!-- Tracks -->
+  <ellipse cx="140" cy="230" rx="40" ry="15" fill="#2c3e50"/>
+  <ellipse cx="260" cy="230" rx="40" ry="15" fill="#2c3e50"/>
+  
+  <!-- Cabin -->
+  <rect x="200" y="120" width="60" height="40" fill="url(#constructionGradient)" rx="5"/>
+  
+  <!-- AYWA branding -->
+  <text x="200" y="185" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="white">AYWA</text>
+  <text x="200" y="200" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">BTP</text>
+  
+  <!-- Safety stripes -->
+  <rect x="120" y="205" width="160" height="4" fill="#f1c40f"/>
+  <rect x="130" y="210" width="140" height="2" fill="#f1c40f"/>
+</svg>
