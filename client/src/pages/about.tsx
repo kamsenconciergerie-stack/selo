@@ -57,7 +57,13 @@ export default function About() {
   const onSubmit = async (data: PartnerFormData) => {
     setIsSubmitting(true);
     try {
-      await apiRequest('/api/partner-inquiry', 'POST', data);
+      await apiRequest('/api/partner-inquiry', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
       
       toast({
         title: "Demande envoyée",
