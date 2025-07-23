@@ -16,10 +16,13 @@ export const CITIES = [
 ];
 
 export const CATEGORIES = [
-  "Outils à Main",
-  "Engins de Chantier",
-  "Équipement Électrique", 
-  "Sécurité & EPI"
+  "Camions et Transport",
+  "BTP et Construction", 
+  "Électricité et Énergie",
+  "Pompage et Irrigation",
+  "Équipement Agricole",
+  "Équipement Spécialisé",
+  "Manutention"
 ];
 
 export const SERVICE_AREAS = [

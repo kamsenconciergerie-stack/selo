@@ -38,8 +38,12 @@ export default function EquipmentCard({ equipment }: EquipmentCardProps) {
             </Badge>
           </div>
           
-          <p className="text-gray-600 mb-4 line-clamp-2">
+          <p className="text-gray-600 mb-2 line-clamp-2">
             {equipment.description}
+          </p>
+          
+          <p className="text-xs text-gray-500 mb-4 font-medium">
+            {equipment.category}
           </p>
           
           <div className="flex justify-between items-center mb-4">
