@@ -1,9 +1,9 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { unifiedData } from "./data-sync";
-import { MemStorage, type IStorage } from "./storage";
+import { DbStorage, type IStorage } from "./storage";
 
-const storage: IStorage = new MemStorage();
+const storage: IStorage = new DbStorage();
 import { insertBookingSchema, insertInquirySchema, insertUserSchema } from "@shared/schema";
 import { registerPaymentRoutes } from "./payment-routes";
 import { authRoutes } from "./auth-routes";
@@ -476,6 +476,29 @@ ${validatedData.message}`
     } catch (error) {
       console.error("Error fetching admin bookings:", error);
       res.status(500).json({ message: "Erreur lors de la récupération des réservations" });
+    }
+  });
+
+  // Category update route (admin only)
+  app.post("/api/admin/update-categories", async (req, res) => {
+    try {
+      const { updateEquipmentCategories } = await import('./category-update');
+      const result = await updateEquipmentCategories();
+      
+      if (result.success) {
+        res.json({ 
+          message: `Catégories mises à jour avec succès: ${result.updated} équipements`,
+          updated: result.updated 
+        });
+      } else {
+        res.status(500).json({ 
+          message: "Erreur lors de la mise à jour des catégories", 
+          error: result.error 
+        });
+      }
+    } catch (error) {
+      console.error("Category update error:", error);
+      res.status(500).json({ message: "Erreur serveur lors de la mise à jour" });
     }
   });
 
