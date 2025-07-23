@@ -148,6 +148,7 @@ Aywa est une application web full-stack pour les services de location d'équipem
 - January 22, 2025. Console d'administration intégralement connectée - toutes les données (réservations, équipements, partenaires, stats) proviennent des vraies bases PostgreSQL
 - January 22, 2025. Nettoyage complet application et cache pour redéploiement optimisé - correction erreurs LSP et synchronisation unifiée
 - January 22, 2025. Système d'email automatique de confirmation de réservation implémenté avec templates HTML professionnels
+- January 22, 2025. Système de suivi GPS en temps réel pour livraisons d'équipements à Dakar et autres villes sénégalaises
 
 ## User Preferences
 

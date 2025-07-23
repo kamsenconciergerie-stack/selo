@@ -479,10 +479,165 @@ ${validatedData.message}`
     }
   });
 
+  // Enhanced GPS tracking routes for Dakar and other cities
+  app.get("/api/gps-tracking", async (req, res) => {
+    try {
+      const { city, status } = req.query;
+      
+      // Generate sample GPS tracking data for demonstration
+      const sampleTracking = [
+        {
+          id: 1,
+          equipmentId: 101,
+          bookingId: 2001,
+          currentLatitude: 14.7167,
+          currentLongitude: -17.4677,
+          currentAddress: "Avenue Cheikh Anta Diop, Dakar",
+          currentCity: "Dakar",
+          destinationLatitude: 14.6928,
+          destinationLongitude: -17.4467,
+          destinationAddress: "Plateau, Dakar",
+          destinationCity: "Dakar",
+          status: "in_transit",
+          driverName: "Mamadou Diop",
+          driverPhone: "+221 77 123 45 67",
+          vehiclePlate: "DK-1234-AB",
+          totalDistanceKm: 15.2,
+          remainingDistanceKm: 3.8,
+          currentSpeed: 45,
+          estimatedArrival: new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString(),
+          deliveryNotes: "",
+          lastPingAt: new Date().toISOString(),
+          signalStrength: 4,
+          batteryLevel: 78
+        },
+        {
+          id: 2,
+          equipmentId: 102,
+          bookingId: 2002,
+          currentLatitude: 14.8085,
+          currentLongitude: -16.9348,
+          currentAddress: "Thiès Centre",
+          currentCity: "Thiès",
+          destinationLatitude: 14.7833,
+          destinationLongitude: -16.9167,
+          destinationAddress: "Zone industrielle Thiès",
+          destinationCity: "Thiès",
+          status: "arrived",
+          driverName: "Ousmane Fall",
+          driverPhone: "+221 78 987 65 43",
+          vehiclePlate: "TH-5678-CD",
+          totalDistanceKm: 8.5,
+          remainingDistanceKm: 0,
+          currentSpeed: 0,
+          estimatedArrival: new Date(Date.now() - 30 * 60 * 1000).toISOString(),
+          actualArrival: new Date(Date.now() - 15 * 60 * 1000).toISOString(),
+          deliveryNotes: "Client contacté, livraison en cours",
+          lastPingAt: new Date().toISOString(),
+          signalStrength: 5,
+          batteryLevel: 92
+        },
+        {
+          id: 3,
+          equipmentId: 103,
+          bookingId: 2003,
+          currentLatitude: 16.0367,
+          currentLongitude: -16.2644,
+          currentAddress: "Saint-Louis Centre",
+          currentCity: "Saint-Louis",
+          destinationLatitude: 16.0300,
+          destinationLongitude: -16.2500,
+          destinationAddress: "Quartier Sor, Saint-Louis",
+          destinationCity: "Saint-Louis",
+          status: "delivered",
+          driverName: "Abdou Seck",
+          driverPhone: "+221 76 555 44 33",
+          vehiclePlate: "SL-9999-EF",
+          totalDistanceKm: 5.0,
+          remainingDistanceKm: 0,
+          currentSpeed: 0,
+          estimatedArrival: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
+          actualArrival: new Date(Date.now() - 90 * 60 * 1000).toISOString(),
+          deliveryNotes: "Livraison effectuée avec succès. Équipement vérifié par le client.",
+          lastPingAt: new Date(Date.now() - 60 * 60 * 1000).toISOString(),
+          signalStrength: 3,
+          batteryLevel: 45
+        }
+      ];
+
+      let filteredTracking = sampleTracking;
+
+      if (city && city !== 'all') {
+        filteredTracking = filteredTracking.filter(t => t.currentCity.toLowerCase() === (city as string).toLowerCase());
+      }
+      
+      if (status && status !== 'all') {
+        filteredTracking = filteredTracking.filter(t => t.status === status);
+      }
+
+      res.json(filteredTracking);
+    } catch (error) {
+      console.error("GPS tracking error:", error);
+      res.status(500).json({ message: "Erreur lors de la récupération du tracking GPS" });
+    }
+  });
+
+  // Update GPS location in real-time
+  app.post("/api/gps-tracking/update-location", async (req, res) => {
+    try {
+      const { trackingId, latitude, longitude, address, speed } = req.body;
+      
+      console.log(`📍 Mise à jour position GPS #${trackingId}: ${latitude}, ${longitude} - ${address || 'Adresse inconnue'}`);
+      
+      // In a real implementation, this would update the database
+      const updatedTracking = {
+        id: trackingId,
+        currentLatitude: latitude,
+        currentLongitude: longitude,
+        currentAddress: address,
+        currentSpeed: speed,
+        lastPingAt: new Date().toISOString()
+      };
+      
+      res.json({ success: true, tracking: updatedTracking });
+    } catch (error) {
+      console.error("GPS location update error:", error);
+      res.status(500).json({ message: "Erreur lors de la mise à jour de la position GPS" });
+    }
+  });
+
+  // Update tracking status (dispatched, in_transit, arrived, delivered, etc.)
+  app.post("/api/gps-tracking/update-status", async (req, res) => {
+    try {
+      const { trackingId, status, notes, deliveryPhoto } = req.body;
+      
+      console.log(`🔄 Mise à jour statut GPS #${trackingId}: ${status} - ${notes || 'Aucune note'}`);
+      
+      const updateData: any = {
+        status,
+        lastPingAt: new Date().toISOString()
+      };
+      
+      if (notes) updateData.deliveryNotes = notes;
+      if (deliveryPhoto) updateData.deliveryPhotos = [deliveryPhoto];
+      
+      // Set timestamps based on status
+      if (status === 'dispatched') updateData.dispatchTime = new Date().toISOString();
+      if (status === 'in_transit') updateData.departureTime = new Date().toISOString();
+      if (status === 'arrived') updateData.actualArrival = new Date().toISOString();
+      if (status === 'delivered') updateData.deliveryTime = new Date().toISOString();
+      
+      res.json({ success: true, tracking: updateData });
+    } catch (error) {
+      console.error("GPS status update error:", error);
+      res.status(500).json({ message: "Erreur lors de la mise à jour du statut de livraison" });
+    }
+  });
+
   // GPS Tracking API routes
   app.get('/api/tracking/active', async (req, res) => {
     try {
-      const activeTracking = await storage.getAllActiveTracking();
+      const activeTracking = await storage.getActiveGpsTracking();
       res.json(activeTracking);
     } catch (error) {
       console.error('Error fetching active tracking:', error);

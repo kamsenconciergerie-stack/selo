@@ -120,25 +120,65 @@ export const partnerDrivers = pgTable("partner_drivers", {
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
 
-// GPS Tracking for equipment delivery - Enhanced with driver assignment
+// Enhanced GPS Tracking for equipment delivery across Senegal
 export const gpsTracking = pgTable("gps_tracking", {
   id: serial("id").primaryKey(),
   equipmentId: integer("equipment_id").notNull(),
   bookingId: integer("booking_id"),
   partnerId: integer("partner_id").notNull(), // Partner qui possède l'équipement
   assignedDriverId: integer("assigned_driver_id").references(() => partnerDrivers.id), // Chauffeur assigné
-  latitude: real("latitude").notNull(),
-  longitude: real("longitude").notNull(),
-  address: text("address"),
-  city: text("city").notNull().default("Dakar"),
-  status: text("status").notNull().default("in_transit"), // in_transit, delivered, returned, maintenance
-  driverName: text("driver_name"), // Nom du chauffeur (redondant mais utile historique)
-  driverPhone: text("driver_phone"), // Téléphone du chauffeur
+  
+  // Current position and tracking data
+  currentLatitude: real("current_latitude").notNull(),
+  currentLongitude: real("current_longitude").notNull(),
+  currentAddress: text("current_address"),
+  currentCity: text("current_city").notNull().default("Dakar"),
+  
+  // Origin and destination coordinates
+  originLatitude: real("origin_latitude"),
+  originLongitude: real("origin_longitude"),
+  originAddress: text("origin_address"),
+  destinationLatitude: real("destination_latitude").notNull(),
+  destinationLongitude: real("destination_longitude").notNull(),
+  destinationAddress: text("destination_address").notNull(),
+  destinationCity: text("destination_city").notNull().default("Dakar"),
+  
+  // Tracking status and timeline
+  status: text("status").notNull().default("pending"), // pending, dispatched, in_transit, arrived, delivered, returned, cancelled
+  dispatchTime: timestamp("dispatch_time"),
+  departureTime: timestamp("departure_time"),
   estimatedArrival: timestamp("estimated_arrival"),
   actualArrival: timestamp("actual_arrival"),
+  deliveryTime: timestamp("delivery_time"),
+  
+  // Distance and route information
+  totalDistanceKm: real("total_distance_km"),
+  remainingDistanceKm: real("remaining_distance_km"),
+  currentSpeed: real("current_speed"), // km/h
+  averageSpeed: real("average_speed"), // km/h
+  routeOptimized: boolean("route_optimized").default(false),
+  
+  // Driver and delivery details
+  driverName: text("driver_name"),
+  driverPhone: text("driver_phone"),
+  vehiclePlate: text("vehicle_plate"),
+  vehicleType: text("vehicle_type"),
   deliveryNotes: text("delivery_notes"),
-  trackingMethod: text("tracking_method").default("manual"), // manual, gps_device, mobile_app
+  customerSignature: text("customer_signature"),
+  deliveryPhotos: jsonb("delivery_photos"),
+  
+  // Technical tracking data
+  trackingMethod: text("tracking_method").default("mobile_app"), // manual, gps_device, mobile_app
+  batteryLevel: integer("battery_level"), // for GPS devices
+  signalStrength: integer("signal_strength"), // signal quality 1-5
   lastPingAt: timestamp("last_ping_at"),
+  pingIntervalSeconds: integer("ping_interval_seconds").default(30),
+  
+  // Delivery fee calculation  
+  baseFeeXOF: integer("base_fee_xof").default(0),
+  distanceFeeXOF: integer("distance_fee_xof").default(0),
+  totalFeeXOF: integer("total_fee_xof").default(0),
+  
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
