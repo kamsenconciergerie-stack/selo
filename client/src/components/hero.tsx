@@ -14,14 +14,13 @@ export default function Hero() {
   const [startDate, setStartDate] = useState("");
 
   const equipmentCategories = [
-    "Camion porteur",
-    "Camion semi-remorque", 
-    "Camionnette / Fourgon",
-    "Camion benne",
-    "Engins de Chantier",
-    "Outils à Main",
-    "Équipement Électrique",
-    "Sécurité & EPI"
+    "Camions et Transport",
+    "BTP et Construction",
+    "Électricité et Énergie", 
+    "Pompage et Irrigation",
+    "Équipement Agricole",
+    "Équipement Spécialisé",
+    "Manutention"
   ];
 
   const handleSearch = () => {
