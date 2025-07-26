@@ -85,7 +85,7 @@ export default function PartnerLogin() {
             <Building className="h-8 w-8 text-white" />
           </div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Espace Partenaire</h1>
-          <p className="text-gray-600">Plateforme Aywa Logistics</p>
+          <p className="text-gray-600">Plateforme Kamsen Logistics</p>
         </div>
 
         {/* Login Card */}
@@ -187,7 +187,7 @@ export default function PartnerLogin() {
             <div className="mt-6 text-center text-sm text-gray-600">
               <p>Pas encore partenaire ?</p>
               <Button variant="link" className="text-primary-orange" onClick={() => window.location.href = "/contact"}>
-                Devenir partenaire Aywa
+                Devenir partenaire Kamsen
               </Button>
             </div>
           </CardContent>

@@ -35,8 +35,8 @@
   <!-- Base -->
   <rect x="140" y="220" width="120" height="15" fill="#2c3e50" rx="7"/>
   
-  <!-- AYWA branding -->
-  <text x="200" y="195" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white">AYWA</text>
+  <!-- KAMSEN branding -->
+  <text x="200" y="195" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white">KAMSEN</text>
   <text x="200" y="208" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="white">PUMP</text>
   
   <!-- Water flow indicator -->

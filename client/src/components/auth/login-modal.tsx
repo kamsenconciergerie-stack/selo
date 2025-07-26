@@ -44,11 +44,11 @@ export function LoginModal({ open, onOpenChange, onSwitchToRegister, onSwitchToP
       });
     },
     onSuccess: (data) => {
-      localStorage.setItem('aywa_token', data.token);
+      localStorage.setItem('kamsen_token', data.token);
       queryClient.invalidateQueries({ queryKey: ['/api/auth/user'] });
       toast({
         title: "Connexion réussie",
-        description: "Bienvenue sur Aywa !",
+        description: "Bienvenue sur Kamsen !",
       });
       onOpenChange(false);
       form.reset();
@@ -70,7 +70,7 @@ export function LoginModal({ open, onOpenChange, onSwitchToRegister, onSwitchToP
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Connexion à Aywa</DialogTitle>
+          <DialogTitle>Connexion à Kamsen</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -131,7 +131,7 @@ export function LoginModal({ open, onOpenChange, onSwitchToRegister, onSwitchToP
                 onClick={onSwitchToPartnerRegister}
                 className="text-sm text-blue-600"
               >
-                Devenir partenaire Aywa
+                Devenir partenaire Kamsen
               </Button>
             </div>
           </form>

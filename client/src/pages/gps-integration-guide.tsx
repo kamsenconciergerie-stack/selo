@@ -21,7 +21,7 @@ export default function GpsIntegrationGuide() {
     <div className="container mx-auto px-4 py-8 max-w-6xl">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-4">
-          Solutions de Traçage GPS pour Équipements Aywa
+          Solutions de Traçage GPS pour Équipements Kamsen
         </h1>
         <p className="text-lg text-gray-600">
           Guide complet des technologies disponibles pour localiser et suivre vos équipements en temps réel
@@ -192,7 +192,7 @@ export default function GpsIntegrationGuide() {
         <TabsContent value="mobile" className="space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle>Application Chauffeur Aywa GPS</CardTitle>
+              <CardTitle>Application Chauffeur Kamsen GPS</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -373,7 +373,7 @@ export default function GpsIntegrationGuide() {
                     <div className="text-sm text-gray-600 space-y-1 mt-2">
                       <p>• <strong>Digital Africa</strong> - Plateau, Dakar</p>
                       <p>• <strong>Jokkolabs</strong> - Écosystème tech</p>
-                      <p>• <strong>Équipe interne Aywa</strong> - Recommandé</p>
+                      <p>• <strong>Équipe interne Kamsen</strong> - Recommandé</p>
                     </div>
                   </div>
                 </div>

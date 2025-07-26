@@ -83,7 +83,7 @@ export function RegisterModal({ open, onOpenChange, onSwitchToLogin }: RegisterM
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Créer un compte Aywa</DialogTitle>
+          <DialogTitle>Créer un compte Kamsen</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">

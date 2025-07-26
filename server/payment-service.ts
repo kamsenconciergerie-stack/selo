@@ -133,7 +133,7 @@ export class WaveProvider implements PaymentProvider {
         success_url: `${process.env.REPLIT_DOMAINS}/payment/success`,
         customer_phone: formattedPhone,
         merchant_reference: `AYWA-${reference}`,
-        description: `Location équipement Aywa - ${reference}`,
+        description: `Location équipement Kamsen - ${reference}`,
       };
 
       const response = await fetch(`${this.apiUrl}/checkout/sessions`, {

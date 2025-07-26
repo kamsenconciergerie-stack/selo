@@ -28,8 +28,8 @@ class OrangeSMSProvider implements SMSProvider {
         });
 
         await transporter.sendMail({
-          from: 'notifications@aywa.sn',
-          to: 'admin@aywa.com',
+          from: 'notifications@kamsen.sn',
+          to: 'admin@kamsen.com',
           subject: `SMS to ${phone}`,
           text: message,
         });
@@ -100,17 +100,17 @@ export class SMSService {
   }
 
   async sendBookingConfirmation(phone: string, bookingId: number, equipmentName: string): Promise<boolean> {
-    const message = `Aywa: Votre réservation #${bookingId} pour ${equipmentName} a été confirmée. Merci de votre confiance!`;
+    const message = `Kamsen: Votre réservation #${bookingId} pour ${equipmentName} a été confirmée. Merci de votre confiance!`;
     return this.sendSMS(phone, message);
   }
 
   async sendPaymentReminder(phone: string, bookingId: number, amount: number): Promise<boolean> {
-    const message = `Aywa: Rappel paiement pour réservation #${bookingId}. Montant: ${amount} FCFA. Payez via Orange Money/Wave.`;
+    const message = `Kamsen: Rappel paiement pour réservation #${bookingId}. Montant: ${amount} FCFA. Payez via Orange Money/Wave.`;
     return this.sendSMS(phone, message);
   }
 
   async sendMaintenanceAlert(phone: string, equipmentName: string, maintenanceDate: string): Promise<boolean> {
-    const message = `Aywa: Maintenance programmée pour ${equipmentName} le ${maintenanceDate}. Contact: +221 78 606 70 13`;
+    const message = `Kamsen: Maintenance programmée pour ${equipmentName} le ${maintenanceDate}. Contact: +221 78 606 70 13`;
     return this.sendSMS(phone, message);
   }
 }

@@ -3,7 +3,7 @@ import { Link } from "wouter";
 
 export default function Footer() {
   return (
-    <footer className="bg-aywa-blue text-gray-300 py-12">
+    <footer className="bg-kamsen-blue text-gray-300 py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
@@ -12,8 +12,8 @@ export default function Footer() {
                 <Truck className="text-white h-6 w-6" />
               </div>
               <span className="font-bold text-2xl">
-                <span className="text-white">AY</span>
-                <span className="text-primary-orange">WA</span>
+                <span className="text-white">KAM</span>
+                <span className="text-primary-orange">SEN</span>
               </span>
             </div>
             <p className="text-gray-400 mb-4">
@@ -66,7 +66,7 @@ export default function Footer() {
         </div>
         
         <div className="border-t border-gray-700 mt-8 pt-8 text-center">
-          <p>&copy; 2025 Aywa. Tous droits réservés.</p>
+          <p>&copy; 2025 Kamsen. Tous droits réservés.</p>
         </div>
       </div>
     </footer>

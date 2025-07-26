@@ -110,7 +110,7 @@ export default function About() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h1 className="text-4xl lg:text-5xl font-bold mb-6">
-              Rejoignez le réseau Aywa
+              Rejoignez le réseau Kamsen
             </h1>
             <p className="text-xl text-orange-100 max-w-3xl mx-auto">
               Développez votre activité de location d'équipements en rejoignant la première plateforme du Sénégal
@@ -123,12 +123,12 @@ export default function About() {
             <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
               <DialogTrigger asChild>
                 <Button className="bg-white text-primary-orange hover:bg-gray-100 px-8 py-3 text-lg font-semibold">
-                  Devenir Partenaire Aywa
+                  Devenir Partenaire Kamsen
                 </Button>
               </DialogTrigger>
               <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
                 <DialogHeader>
-                  <DialogTitle>Rejoindre le réseau de partenaires Aywa</DialogTitle>
+                  <DialogTitle>Rejoindre le réseau de partenaires Kamsen</DialogTitle>
                 </DialogHeader>
                 
                 <Form {...form}>
@@ -274,10 +274,10 @@ export default function About() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-3xl lg:text-4xl font-bold mb-6 text-gray-900">
-                À Propos d'Aywa
+                À Propos d'Kamsen
               </h2>
               <p className="text-lg text-gray-600 mb-8">
-                Aywa vise à accompagner les professionnels et les particuliers dans leurs projets en fournissant des moyens de transport de colis et équipements de qualité et un service personnalisé partout au Sénégal.
+                Kamsen vise à accompagner les professionnels et les particuliers dans leurs projets en fournissant des moyens de transport de colis et équipements de qualité et un service personnalisé partout au Sénégal.
               </p>
               
               {/* Rejoignez notre réseau de partenaires */}

@@ -301,7 +301,7 @@ export default function AdminReservations() {
           Administration des Réservations
         </h1>
         <p className="text-gray-600">
-          Gérez toutes les réservations de la plateforme Aywa
+          Gérez toutes les réservations de la plateforme Kamsen
         </p>
       </div>
 

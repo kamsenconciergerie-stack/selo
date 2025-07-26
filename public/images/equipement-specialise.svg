@@ -44,7 +44,7 @@
   <path d="M 130 140 Q 150 120 170 140" stroke="#f39c12" stroke-width="2" fill="none" opacity="0.6"/>
   <path d="M 270 140 Q 250 120 230 140" stroke="#f39c12" stroke-width="2" fill="none" opacity="0.6"/>
   
-  <!-- AYWA branding -->
-  <text x="200" y="250" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#ff6b35">AYWA</text>
+  <!-- KAMSEN branding -->
+  <text x="200" y="250" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#ff6b35">KAMSEN</text>
   <text x="200" y="265" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#f39c12">SOUND</text>
 </svg>

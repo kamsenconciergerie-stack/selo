@@ -137,7 +137,7 @@ export function PartnerRegisterModal({ open, onOpenChange, onSwitchToLogin }: Pa
       <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-xl text-center">
-            Devenir Partenaire Aywa
+            Devenir Partenaire Kamsen
           </DialogTitle>
           <p className="text-center text-muted-foreground">
             Proposez vos équipements en location et développez votre activité
@@ -379,7 +379,7 @@ export function PartnerRegisterModal({ open, onOpenChange, onSwitchToLogin }: Pa
               <TabsContent value="financial" className="space-y-4">
                 <div className="bg-blue-50 p-4 rounded-lg">
                   <p className="text-sm text-blue-800">
-                    <strong>Commission Aywa :</strong> 15% sur chaque location
+                    <strong>Commission Kamsen :</strong> 15% sur chaque location
                   </p>
                 </div>
                 

@@ -300,7 +300,7 @@ export default function Home() {
           
           <div className="flex justify-center mt-12">
             <Link href="/equipements">
-              <Button className="bg-aywa-blue hover:bg-aywa-blue/90 text-white px-8 py-3 text-lg">
+              <Button className="bg-kamsen-blue hover:bg-kamsen-blue/90 text-white px-8 py-3 text-lg">
                 Voir tous les équipements
               </Button>
             </Link>

@@ -13,7 +13,7 @@ export default function ProtectedAdminRoute({ children }: ProtectedAdminRoutePro
     const username = sessionStorage.getItem("adminUsername");
     const password = sessionStorage.getItem("adminPassword");
     
-    if (username === "admin" && password === "aywadmin2025") {
+    if (username === "admin" && password === "kamsenadmin2025") {
       setIsAuthenticated(true);
     } else {
       // Show login form inline
@@ -38,7 +38,7 @@ export default function ProtectedAdminRoute({ children }: ProtectedAdminRoutePro
     <div className="min-h-screen bg-gray-50 flex items-center justify-center">
       <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-8">
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">Administration Aywa</h1>
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">Administration Kamsen</h1>
           <p className="text-gray-600">Connectez-vous pour accéder au tableau de bord</p>
         </div>
         
@@ -56,7 +56,7 @@ function AdminLoginForm({ onSuccess }: { onSuccess: () => void }) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (username === "admin" && password === "aywadmin2025") {
+    if (username === "admin" && password === "kamsenadmin2025") {
       sessionStorage.setItem("adminUsername", username);
       sessionStorage.setItem("adminPassword", password);
       setError("");

@@ -156,7 +156,7 @@ export default function Services() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-aywa-blue">
+      <section className="py-16 bg-kamsen-blue">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
             Prêt à commencer votre projet ?
@@ -171,7 +171,7 @@ export default function Services() {
               </Button>
             </Link>
             <Link href="/equipements">
-              <Button variant="outline" className="border-white text-white hover:bg-white hover:text-aywa-blue px-8 py-3 text-lg">
+              <Button variant="outline" className="border-white text-white hover:bg-white hover:text-kamsen-blue px-8 py-3 text-lg">
                 Voir les équipements
               </Button>
             </Link>

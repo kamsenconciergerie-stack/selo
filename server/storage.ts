@@ -1332,7 +1332,7 @@ export class MemStorage implements IStorage {
         userId: 1, // Will be created later
         name: "Mamadou Diallo",
         phone: "+221 77 123 45 67",
-        email: "mamadou.diallo@aywalogistic.com",
+        email: "mamadou.diallo@kamsenlogistic.com",
         specialization: "trucks",
         isActive: true
       },
@@ -1340,7 +1340,7 @@ export class MemStorage implements IStorage {
         userId: 2,
         name: "Fatou Seck",
         phone: "+221 76 234 56 78",
-        email: "fatou.seck@aywalogistic.com",
+        email: "fatou.seck@kamsenlogistic.com",
         specialization: "agricultural",
         isActive: true
       },
@@ -1348,7 +1348,7 @@ export class MemStorage implements IStorage {
         userId: 3,
         name: "Ousmane Fall",
         phone: "+221 78 345 67 89",
-        email: "ousmane.fall@aywalogistic.com",
+        email: "ousmane.fall@kamsenlogistic.com",
         specialization: "industrial",
         isActive: true
       }

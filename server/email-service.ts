@@ -46,13 +46,13 @@ export class EmailService {
         <html>
         <head>
           <meta charset="utf-8">
-          <title>Modification de réservation - Aywa</title>
+          <title>Modification de réservation - Kamsen</title>
         </head>
         <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
           <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
             <div style="background: linear-gradient(135deg, #FF6B35, #F7931E); color: white; padding: 20px; border-radius: 8px 8px 0 0;">
               <h1 style="margin: 0; font-size: 24px;">🔔 Modification de Réservation</h1>
-              <p style="margin: 10px 0 0 0; opacity: 0.9;">Plateforme Aywa - Notification automatique</p>
+              <p style="margin: 10px 0 0 0; opacity: 0.9;">Plateforme Kamsen - Notification automatique</p>
             </div>
             
             <div style="background: #f8f9fa; padding: 20px; border-left: 4px solid #FF6B35;">
@@ -98,8 +98,8 @@ export class EmailService {
 
             <div style="text-align: center; padding: 20px; background: #f8f9fa; border-radius: 0 0 8px 8px;">
               <p style="margin: 0; font-size: 12px; color: #6b7280;">
-                Cette notification a été générée automatiquement par la plateforme Aywa.<br>
-                Email envoyé à reservations@aywalogistic.com
+                Cette notification a été générée automatiquement par la plateforme Kamsen.<br>
+                Email envoyé à reservations@kamsenlogistic.com
               </p>
             </div>
           </div>
@@ -108,7 +108,7 @@ export class EmailService {
       `;
 
       const textContent = `
-MODIFICATION DE RÉSERVATION - AYWA
+MODIFICATION DE RÉSERVATION - KAMSEN
 
 Réservation #: ${data.bookingId}
 Client: ${data.customerName}
@@ -124,12 +124,12 @@ ${data.changes.map(change =>
 ).join('\n')}
 
 ---
-Cette notification a été générée automatiquement par la plateforme Aywa.
+Cette notification a été générée automatiquement par la plateforme Kamsen.
       `;
 
       const msg = {
-        to: 'reservations@aywalogistic.com',
-        from: 'noreply@aywalogistic.com',
+        to: 'reservations@kamsenlogistic.com',
+        from: 'noreply@kamsenlogistic.com',
         subject: `🔔 Réservation #${data.bookingId} modifiée - ${data.customerName}`,
         text: textContent,
         html: htmlContent,
@@ -152,11 +152,11 @@ Cette notification a été générée automatiquement par la plateforme Aywa.
 
     try {
       const msg = {
-        to: 'reservations@aywalogistic.com',
-        from: 'noreply@aywalogistic.com',
+        to: 'reservations@kamsenlogistic.com',
+        from: 'noreply@kamsenlogistic.com',
         subject: `🆕 Nouvelle réservation #${bookingData.id} - ${bookingData.customerName}`,
         html: `
-          <h2>Nouvelle réservation sur Aywa</h2>
+          <h2>Nouvelle réservation sur Kamsen</h2>
           <p><strong>Réservation #:</strong> ${bookingData.id}</p>
           <p><strong>Client:</strong> ${bookingData.customerName}</p>
           <p><strong>Email:</strong> ${bookingData.customerEmail}</p>
@@ -205,7 +205,7 @@ Cette notification a été générée automatiquement par la plateforme Aywa.
         <html>
         <head>
           <meta charset="utf-8">
-          <title>Confirmation de réservation - Aywa</title>
+          <title>Confirmation de réservation - Kamsen</title>
         </head>
         <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
           <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
@@ -255,15 +255,15 @@ Cette notification a été générée automatiquement par la plateforme Aywa.
                 <a href="tel:+22178606713" style="display: inline-block; background: #FF6B35; color: white; padding: 12px 25px; text-decoration: none; border-radius: 6px; margin: 0 10px;">
                   📞 +221 78 606 70 13
                 </a>
-                <a href="mailto:contact@aywalogistic.com" style="display: inline-block; background: #1e3a8a; color: white; padding: 12px 25px; text-decoration: none; border-radius: 6px; margin: 0 10px;">
-                  ✉️ contact@aywalogistic.com
+                <a href="mailto:contact@kamsenlogistic.com" style="display: inline-block; background: #1e3a8a; color: white; padding: 12px 25px; text-decoration: none; border-radius: 6px; margin: 0 10px;">
+                  ✉️ contact@kamsenlogistic.com
                 </a>
               </div>
             </div>
 
             <div style="text-align: center; padding: 20px; background: #f8f9fa; border-radius: 0 0 8px 8px;">
               <p style="margin: 0; font-size: 14px; color: #6b7280;">
-                <strong>Aywa Logistics</strong> - Solutions de transport et location d'équipements au Sénégal<br>
+                <strong>Kamsen Logistics</strong> - Solutions de transport et location d'équipements au Sénégal<br>
                 Cette confirmation a été générée automatiquement le ${new Date(data.createdAt).toLocaleDateString('fr-FR')}
               </p>
             </div>
@@ -295,15 +295,15 @@ PROCHAINES ÉTAPES:
 
 CONTACT:
 Téléphone: +221 78 606 70 13
-Email: contact@aywalogistic.com
+Email: contact@kamsenlogistic.com
 
 Merci de votre confiance !
-L'équipe Aywa Logistics
+L'équipe Kamsen Logistics
       `;
 
       const msg = {
         to: data.customerEmail,
-        from: 'noreply@aywalogistic.com',
+        from: 'noreply@kamsenlogistic.com',
         subject: `✅ Réservation #${data.bookingId} confirmée - ${data.equipmentName}`,
         text: textContent,
         html: htmlContent,

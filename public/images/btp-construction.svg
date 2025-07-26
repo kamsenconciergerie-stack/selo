@@ -26,8 +26,8 @@
   <!-- Cabin -->
   <rect x="200" y="120" width="60" height="40" fill="url(#constructionGradient)" rx="5"/>
   
-  <!-- AYWA branding -->
-  <text x="200" y="185" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="white">AYWA</text>
+  <!-- KAMSEN branding -->
+  <text x="200" y="185" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="white">KAMSEN</text>
   <text x="200" y="200" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">BTP</text>
   
   <!-- Safety stripes -->
