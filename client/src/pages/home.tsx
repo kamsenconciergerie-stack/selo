@@ -389,57 +389,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Moyens de Paiement */}
-      <section className="py-12 bg-gradient-to-r from-blue-50 to-orange-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Paiement Simple et Sécurisé
-            </h2>
-            <p className="text-xl text-gray-600 mb-8">
-              Paiement mobile sécurisé et instantané
-            </p>
-          </div>
-          
-          <div className="max-w-2xl mx-auto">
-            <div className="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow text-center">
-              <div className="flex items-center justify-center mb-6">
-                <div className="w-20 h-20 bg-gradient-to-r from-kamsen-blue to-kamsen-orange rounded-xl flex items-center justify-center">
-                  <svg className="h-12 w-12 text-white" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                  </svg>
-                </div>
-              </div>
-              <h3 className="text-3xl font-bold text-gray-900 mb-6">
-                Paiement Sécurisé et Instantané
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-gray-600">
-                <div className="flex flex-col items-center">
-                  <CheckCircle className="h-8 w-8 text-green-500 mb-3" />
-                  <span className="font-semibold">Paiement instantané</span>
-                  <span className="text-sm text-gray-500">En quelques secondes</span>
-                </div>
-                <div className="flex flex-col items-center">
-                  <CheckCircle className="h-8 w-8 text-green-500 mb-3" />
-                  <span className="font-semibold">100% sécurisé</span>
-                  <span className="text-sm text-gray-500">Données protégées</span>
-                </div>
-                <div className="flex flex-col items-center">
-                  <CheckCircle className="h-8 w-8 text-green-500 mb-3" />
-                  <span className="font-semibold">Confirmation SMS</span>
-                  <span className="text-sm text-gray-500">Reçu immédiat</span>
-                </div>
-              </div>
-            </div>
-          </div>
 
-          <div className="text-center mt-8">
-            <p className="text-lg text-gray-700 font-medium">
-              ✓ Transactions sécurisées • ✓ Confirmation immédiate • ✓ Support client 24h/7j
-            </p>
-          </div>
-        </div>
-      </section>
 
       {/* How It Works */}
       <section className="py-16 bg-white">
