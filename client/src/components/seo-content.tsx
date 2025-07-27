@@ -57,18 +57,12 @@ export default function SEOContent() {
                 <span className="text-kamsen-orange font-bold mr-2">✓</span>
                 Plus de 500 équipements disponibles dans tout le Sénégal
               </li>
-              <li className="flex items-start">
-                <span className="text-kamsen-orange font-bold mr-2">✓</span>
-                Livraison et installation par nos techniciens qualifiés
-              </li>
+
               <li className="flex items-start">
                 <span className="text-kamsen-orange font-bold mr-2">✓</span>
                 Tarifs transparents et devis gratuit en 24h
               </li>
-              <li className="flex items-start">
-                <span className="text-kamsen-orange font-bold mr-2">✓</span>
-                Support technique 24h/7j et maintenance incluse
-              </li>
+
               <li className="flex items-start">
                 <span className="text-kamsen-orange font-bold mr-2">✓</span>
                 Équipements neufs et régulièrement entretenus
