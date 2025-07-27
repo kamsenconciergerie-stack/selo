@@ -38,7 +38,7 @@ export default function Hero() {
           <div className="mb-8">
             <img 
               src="/images/kamsen-logo.svg" 
-              alt="Kamsen - Une charge en moins" 
+              alt="Kamsen - Des charges en moins" 
               className="h-20 w-auto mx-auto mb-6"
             />
           </div>

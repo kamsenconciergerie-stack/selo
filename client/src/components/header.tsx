@@ -30,7 +30,7 @@ export default function Header() {
           <Link href="/" className="flex items-center">
             <img 
               src="/images/kamsen-logo.svg" 
-              alt="Kamsen - Une charge en moins" 
+              alt="Kamsen - Des charges en moins" 
               className="h-12 w-auto"
             />
           </Link>

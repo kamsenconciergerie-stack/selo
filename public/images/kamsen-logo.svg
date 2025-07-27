@@ -21,6 +21,6 @@
   <!-- Slogan background -->
   <rect x="140" y="85" width="240" height="35" fill="#4a4a4a"/>
   
-  <!-- UNE CHARGE EN MOINS text -->
-  <text x="150" y="107" font-family="Arial, sans-serif" font-size="16" font-weight="normal" fill="white">UNE CHARGE EN MOINS</text>
+  <!-- DES CHARGES EN MOINS text -->
+  <text x="150" y="107" font-family="Arial, sans-serif" font-size="16" font-weight="normal" fill="white">DES CHARGES EN MOINS</text>
 </svg>
