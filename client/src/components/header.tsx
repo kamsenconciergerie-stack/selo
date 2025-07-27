@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu, Phone, Truck } from "lucide-react";
 import { useState } from "react";
-import logoPath from "@assets/84129083_1753626050381.png";
+import logoPath from "@assets/Screenshot_20250727_142246_Samsung Internet - Edited - Edited_20250727_142800_0000_1753631575213.jpg";
 
 export default function Header() {
   const [location] = useLocation();
@@ -31,7 +31,7 @@ export default function Header() {
             <img 
               src={logoPath} 
               alt="Kamsen - Des charges en moins" 
-              className="h-12 w-auto"
+              className="h-10 w-auto"
             />
           </Link>
           

@@ -365,7 +365,7 @@ function PartnerDashboardContent() {
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-4">
               <img 
-                src="/images/kamsen-logo-new.svg" 
+                src="/assets/Screenshot_20250727_142246_Samsung Internet - Edited - Edited_20250727_142800_0000_1753631575213.jpg" 
                 alt="Kamsen - Des charges en moins" 
                 className="h-10 w-auto"
               />
