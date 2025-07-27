@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Fond bleu Kamsen -->
+  <rect width="64" height="64" fill="#2563eb" rx="8"/>
+  
+  <!-- Icône grue/chargeuse stylisée -->
+  <g fill="#ea580c">
+    <!-- Base de la machine -->
+    <rect x="12" y="42" width="40" height="8" rx="2"/>
+    
+    <!-- Cabine -->
+    <rect x="20" y="32" width="16" height="10" rx="2"/>
+    
+    <!-- Bras articulé -->
+    <rect x="36" y="35" width="12" height="3" rx="1"/>
+    <rect x="46" y="28" width="3" height="10" rx="1"/>
+    
+    <!-- Godet -->
+    <path d="M48 26 L54 26 L56 30 L50 32 Z"/>
+    
+    <!-- Chenilles -->
+    <rect x="14" y="48" width="8" height="4" rx="2"/>
+    <rect x="42" y="48" width="8" height="4" rx="2"/>
+  </g>
+  
+  <!-- Lettre K stylisée en blanc -->
+  <text x="32" y="24" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white" text-anchor="middle">K</text>
+</svg>
