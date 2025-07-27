@@ -36,10 +36,10 @@ export default function LocalSEO() {
   return (
     <section className="py-16 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-1 gap-8">
           
           {/* Contact & Hours */}
-          <Card className="lg:col-span-1">
+          <Card>
             <CardContent className="p-6">
               <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
                 <MapPin className="h-5 w-5 text-kamsen-orange mr-2" />
@@ -82,55 +82,7 @@ export default function LocalSEO() {
             </CardContent>
           </Card>
 
-          {/* Local Reviews */}
-          <Card className="lg:col-span-2">
-            <CardContent className="p-6">
-              <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
-                <Star className="h-5 w-5 text-kamsen-orange mr-2" />
-                Avis Clients au Sénégal
-              </h3>
-              
-              <div className="space-y-4">
-                {localReviews.map((review, index) => (
-                  <div key={index} className="bg-gray-50 p-4 rounded-lg">
-                    <div className="flex items-center justify-between mb-2">
-                      <div>
-                        <p className="font-semibold">{review.name}</p>
-                        <p className="text-sm text-gray-600">{review.location}, Sénégal</p>
-                      </div>
-                      <div className="flex items-center">
-                        {[...Array(review.rating)].map((_, i) => (
-                          <Star key={i} className="h-4 w-4 text-yellow-400 fill-current" />
-                        ))}
-                      </div>
-                    </div>
-                    <p className="text-gray-700 text-sm mb-2">"{review.comment}"</p>
-                    <p className="text-xs text-kamsen-blue font-medium">
-                      Équipement loué: {review.equipment}
-                    </p>
-                  </div>
-                ))}
-              </div>
 
-              <div className="mt-6 p-4 bg-kamsen-blue-light rounded-lg">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="font-semibold text-gray-900">Note Moyenne</p>
-                    <div className="flex items-center">
-                      <div className="flex">
-                        {[...Array(5)].map((_, i) => (
-                          <Star key={i} className="h-5 w-5 text-yellow-400 fill-current" />
-                        ))}
-                      </div>
-                      <span className="ml-2 text-lg font-bold">5.0/5</span>
-                    </div>
-                    <p className="text-sm text-gray-600">Basé sur 150+ avis clients</p>
-                  </div>
-                  <CheckCircle className="h-12 w-12 text-green-500" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
         </div>
 
         {/* Local Service Areas */}

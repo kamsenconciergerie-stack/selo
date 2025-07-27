@@ -130,9 +130,6 @@ export default function SEOContent() {
 
       {/* Local SEO Section */}
       <LocalSEO />
-
-      {/* Blog SEO Section */}
-      <BlogSEO />
     </section>
   );
 }

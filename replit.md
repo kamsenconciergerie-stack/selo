@@ -162,6 +162,7 @@ Kamsen est une application web full-stack pour les services de location d'équip
 - January 27, 2025. Intégration logo Kamsen haute qualité dans le header et préparation déclinaisons réseaux sociaux
 - January 27, 2025. Simplification paiement en un seul cadran unifié sans logos spécifiques Wave/Orange Money
 - January 27, 2025. Suppression section paiement de la page d'accueil sur demande utilisateur
+- January 27, 2025. Suppression sections avis clients et guides conseils pour interface plus épurée
 
 ## User Preferences
 
