@@ -155,6 +155,7 @@ Kamsen est une application web full-stack pour les services de location d'équip
 - January 27, 2025. Intégration du nouveau logo Kamsen officiel avec slogan "DES CHARGES EN MOINS" et adaptation complète des couleurs vers schéma gris/blanc professionnel
 - January 27, 2025. Transformation complète du design vers thème bleu-orange moderne avec nouvelles couleurs CSS et variables personnalisées Kamsen
 - January 27, 2025. Ajout bouton "Demander un devis" centré sous la section hero avec design orange attractif et animation hover
+- January 27, 2025. Slogan "DES CHARGES EN MOINS" mis en exergue avec badge orange bien visible sur la page d'accueil
 
 ## User Preferences
 
