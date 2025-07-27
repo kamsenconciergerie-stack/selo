@@ -95,16 +95,11 @@
 
 ### 5. Paiement Mobile (1080x1080px)
 **Description :**
-- Split vertical 50/50
-- Gauche : Fond orange avec logo Orange Money
-  - Smartphone avec interface OM
-  - Texte : "ORANGE MONEY"
-  - "Instantané & Sécurisé"
-- Droite : Fond bleu avec logo Wave
-  - Smartphone avec interface Wave
-  - Texte : "WAVE"
-  - "Simple & Rapide"
-- Centre : Logo Kamsen en overlay
+- Fond dégradé bleu Kamsen
+- Smartphone centré avec interface mobile money générique
+- Texte : "PAIEMENT MOBILE"
+- Sous-titre : "Sécurisé & Instantané"
+- Logo Kamsen en haut
 - Bas : "100% SÉCURISÉ"
 
 ## Stories Instagram (1080x1920px)

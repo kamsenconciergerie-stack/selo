@@ -121,23 +121,14 @@ export default function EquipmentDetail() {
                   <Smartphone className="h-5 w-5 mr-2" />
                   Moyens de Paiement Acceptés
                 </h3>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="flex items-center gap-3 p-3 bg-white rounded-lg border">
-                    <div className="w-10 h-10 bg-orange-500 rounded-lg flex items-center justify-center">
-                      <Smartphone className="h-6 w-6 text-white" />
+                <div className="flex items-center gap-4 justify-center">
+                  <div className="flex items-center gap-3 p-4 bg-white rounded-lg border">
+                    <div className="w-12 h-12 bg-kamsen-blue rounded-lg flex items-center justify-center">
+                      <Smartphone className="h-7 w-7 text-white" />
                     </div>
                     <div>
-                      <div className="font-semibold text-gray-900">Orange Money</div>
-                      <div className="text-sm text-gray-600">Paiement sécurisé</div>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3 p-3 bg-white rounded-lg border">
-                    <div className="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center">
-                      <CreditCard className="h-6 w-6 text-white" />
-                    </div>
-                    <div>
-                      <div className="font-semibold text-gray-900">Wave</div>
-                      <div className="text-sm text-gray-600">Paiement sécurisé</div>
+                      <div className="font-semibold text-gray-900">Mobile Money</div>
+                      <div className="text-sm text-gray-600">Paiement sécurisé et rapide</div>
                     </div>
                   </div>
                 </div>

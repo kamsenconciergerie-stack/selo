@@ -121,27 +121,23 @@ export default function BookingModal({ equipment, open, onOpenChange }: BookingM
         </DialogHeader>
 
         {/* Moyens de Paiement Acceptés */}
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-          <h3 className="font-semibold text-blue-900 mb-3 flex items-center">
+        <div className="bg-kamsen-blue-light border border-kamsen-blue rounded-lg p-4 mb-6">
+          <h3 className="font-semibold text-kamsen-blue mb-3 flex items-center">
             <Smartphone className="h-5 w-5 mr-2" />
             Moyens de Paiement Acceptés
           </h3>
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-orange-500 rounded flex items-center justify-center">
-                <Smartphone className="h-5 w-5 text-white" />
+          <div className="flex items-center gap-4 justify-center">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-kamsen-blue rounded flex items-center justify-center">
+                <Smartphone className="h-6 w-6 text-white" />
               </div>
-              <span className="text-sm font-medium text-gray-700">Orange Money</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-blue-500 rounded flex items-center justify-center">
-                <CreditCard className="h-5 w-5 text-white" />
+              <div>
+                <span className="text-sm font-medium text-kamsen-blue">Mobile Money</span>
+                <div className="text-xs text-green-600 font-medium">
+                  ✓ Paiement sécurisé et rapide
+                </div>
               </div>
-              <span className="text-sm font-medium text-gray-700">Wave</span>
             </div>
-            <span className="text-xs text-green-600 font-medium ml-auto">
-              ✓ Paiement sécurisé
-            </span>
           </div>
         </div>
 
