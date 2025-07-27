@@ -29,7 +29,7 @@ export default function Header() {
         <div className="flex justify-between items-center h-16">
           <Link href="/" className="flex items-center">
             <img 
-              src="/images/kamsen-logo.svg" 
+              src="/images/kamsen-logo-new.svg" 
               alt="Kamsen - Des charges en moins" 
               className="h-12 w-auto"
             />
