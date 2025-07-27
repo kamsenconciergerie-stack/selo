@@ -359,31 +359,39 @@ function PartnerDashboardContent() {
 
   return (
     <div className="min-h-screen bg-kamsen-blue-light">
-      {/* Header */}
+      {/* Header avec logo Kamsen */}
       <div className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-4">
-              <div className="h-12 w-12 bg-kamsen-blue rounded-lg flex items-center justify-center">
-                <Building className="h-6 w-6 text-white" />
-              </div>
-              <div>
-                <h1 className="text-xl font-bold text-kamsen-blue">{partner.companyName}</h1>
-                <div className="flex items-center gap-3 text-sm text-kamsen-gray">
-                  <div className="flex items-center gap-1">
-                    <MapPin className="h-4 w-4" />
-                    <span>{partner.city}</span>
+              <img 
+                src="/images/kamsen-logo-new.svg" 
+                alt="Kamsen - Des charges en moins" 
+                className="h-10 w-auto"
+              />
+              <div className="h-8 w-px bg-gray-300"></div>
+              <div className="flex items-center gap-3">
+                <div className="h-10 w-10 bg-kamsen-blue rounded-lg flex items-center justify-center">
+                  <Building className="h-5 w-5 text-white" />
+                </div>
+                <div>
+                  <h1 className="text-lg font-bold text-kamsen-blue">{partner.companyName}</h1>
+                  <div className="flex items-center gap-3 text-sm text-kamsen-gray">
+                    <div className="flex items-center gap-1">
+                      <MapPin className="h-4 w-4" />
+                      <span>{partner.city}</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <Star className="h-4 w-4 text-yellow-400 fill-current" />
+                      <span>{partner.rating}/5</span>
+                    </div>
+                    {partner.isVerified && (
+                      <Badge className="bg-kamsen-blue-light text-green-800">
+                        <CheckCircle className="h-3 w-3 mr-1" />
+                        Vérifié
+                      </Badge>
+                    )}
                   </div>
-                  <div className="flex items-center gap-1">
-                    <Star className="h-4 w-4 text-yellow-400 fill-current" />
-                    <span>{partner.rating}/5</span>
-                  </div>
-                  {partner.isVerified && (
-                    <Badge className="bg-kamsen-blue-light text-green-800">
-                      <CheckCircle className="h-3 w-3 mr-1" />
-                      Vérifié
-                    </Badge>
-                  )}
                 </div>
               </div>
             </div>

@@ -383,7 +383,7 @@ function AdminDashboardContent() {
             confirmedBookings: bookingsData.filter((b: any) => b.status === 'confirmed').length,
             totalEquipment: equipmentData.length,
             availableEquipment: equipmentData.filter((e: any) => e.isAvailable).length,
-            partnerRequests: { total: 0, pending: 0, approved: 0 }
+            partnerRequests: { total: 0, pending: 0, approved: 0, rejected: 0 }
           });
         }
       }
@@ -452,15 +452,44 @@ function AdminDashboardContent() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-7xl">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-kamsen-blue mb-2">
-          Dashboard Administrateur Kamsen
-        </h1>
-        <p className="text-kamsen-gray">
-          Vue d'ensemble de la plateforme de location d'équipements
-        </p>
+    <div className="min-h-screen bg-gray-50">
+      {/* Header avec logo Kamsen */}
+      <div className="bg-white shadow-sm border-b">
+        <div className="max-w-7xl mx-auto px-6 py-4">
+          <div className="flex justify-between items-center">
+            <div className="flex items-center gap-4">
+              <img 
+                src="/images/kamsen-logo-new.svg" 
+                alt="Kamsen - Des charges en moins" 
+                className="h-12 w-auto"
+              />
+              <div>
+                <h1 className="text-xl font-bold text-kamsen-blue">Dashboard Administrateur</h1>
+                <p className="text-sm text-kamsen-gray">Gestion complète de la plateforme Kamsen</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-3 text-sm text-kamsen-gray">
+              <span>Connecté en tant qu'administrateur</span>
+              <a 
+                href="/" 
+                className="bg-kamsen-orange hover:bg-orange-600 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+              >
+                Voir le Site
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
+
+      <div className="container mx-auto px-4 py-8 max-w-7xl">
+        <div className="mb-8">
+          <h2 className="text-3xl font-bold text-kamsen-blue mb-2">
+            Vue d'Ensemble
+          </h2>
+          <p className="text-kamsen-gray">
+            Statistiques et gestion de la plateforme de location d'équipements
+          </p>
+        </div>
 
       {/* Statistiques principales */}
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-8">
@@ -1020,6 +1049,7 @@ function AdminDashboardContent() {
           </div>
         </CardContent>
       </Card>
+      </div>
     </div>
   );
 }
