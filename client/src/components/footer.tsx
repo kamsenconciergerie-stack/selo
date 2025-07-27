@@ -76,7 +76,6 @@ export default function Footer() {
           
           <div>
             <p>&copy; 2025 Kamsen. Tous droits réservés.</p>
-            <p className="text-xs text-white/70 mt-2">un produit de ytech</p>
           </div>
         </div>
       </div>
