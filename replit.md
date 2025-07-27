@@ -153,6 +153,7 @@ Kamsen est une application web full-stack pour les services de location d'équip
 - January 23, 2025. Synchronisation complète des catégories d'équipements - migration de 27 équipements vers 7 nouvelles catégories alignées sur l'affichage homepage
 - January 23, 2025. Remplacement complet des noms d'équipements par des noms créatifs (TitanMax, PowerMax, EarthMover, etc.) et création d'images SVG personnalisées aux couleurs Kamsen pour chaque catégorie
 - January 27, 2025. Intégration du nouveau logo Kamsen officiel avec slogan "DES CHARGES EN MOINS" et adaptation complète des couleurs vers schéma gris/blanc professionnel
+- January 27, 2025. Transformation complète du design vers thème bleu-orange moderne avec nouvelles couleurs CSS et variables personnalisées Kamsen
 
 ## User Preferences
 

@@ -37,11 +37,11 @@ interface GpsTracking {
 }
 
 const statusColors = {
-  pending: 'bg-kamsen-light text-gray-800',
-  dispatched: 'bg-kamsen-light text-blue-800',
+  pending: 'bg-kamsen-blue-light text-gray-800',
+  dispatched: 'bg-kamsen-blue-light text-blue-800',
   in_transit: 'bg-yellow-100 text-yellow-800',
-  arrived: 'bg-kamsen-light text-green-800',
-  delivered: 'bg-green-600 text-kamsen-white',
+  arrived: 'bg-kamsen-blue-light text-green-800',
+  delivered: 'bg-green-600 text-white',
   returned: 'bg-purple-100 text-purple-800',
   cancelled: 'bg-red-100 text-red-800',
 };
@@ -137,7 +137,7 @@ export default function GpsTracking() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-kamsen-light p-6">
+      <div className="min-h-screen bg-kamsen-blue-light p-6">
         <div className="max-w-7xl mx-auto">
           <div className="animate-pulse space-y-4">
             {[1, 2, 3].map((i) => (
@@ -150,14 +150,14 @@ export default function GpsTracking() {
   }
 
   return (
-    <div className="min-h-screen bg-kamsen-light p-6">
+    <div className="min-h-screen bg-kamsen-blue-light p-6">
       <div className="max-w-7xl mx-auto space-y-6">
         {/* Header */}
-        <div className="bg-kamsen-white rounded-lg p-6 shadow-sm">
+        <div className="bg-white rounded-lg p-6 shadow-sm">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
-              <h1 className="text-3xl font-bold text-kamsen-dark">🚚 Suivi GPS en Temps Réel</h1>
-              <p className="text-kamsen-medium mt-1">
+              <h1 className="text-3xl font-bold text-kamsen-blue">🚚 Suivi GPS en Temps Réel</h1>
+              <p className="text-kamsen-gray mt-1">
                 Livraisons d'équipements à Dakar et dans tout le Sénégal
               </p>
             </div>
@@ -210,11 +210,11 @@ export default function GpsTracking() {
           <Card>
             <CardContent className="p-4">
               <div className="flex items-center gap-3">
-                <div className="bg-kamsen-light p-2 rounded-full">
-                  <Truck className="h-5 w-5 text-kamsen-dark" />
+                <div className="bg-kamsen-blue-light p-2 rounded-full">
+                  <Truck className="h-5 w-5 text-kamsen-blue" />
                 </div>
                 <div>
-                  <p className="text-sm text-kamsen-medium">En Transit</p>
+                  <p className="text-sm text-kamsen-gray">En Transit</p>
                   <p className="text-2xl font-bold">
                     {trackingData?.filter((t: GpsTracking) => t.status === 'in_transit').length || 0}
                   </p>
@@ -226,11 +226,11 @@ export default function GpsTracking() {
           <Card>
             <CardContent className="p-4">
               <div className="flex items-center gap-3">
-                <div className="bg-kamsen-light p-2 rounded-full">
-                  <CheckCircle className="h-5 w-5 text-kamsen-dark" />
+                <div className="bg-kamsen-blue-light p-2 rounded-full">
+                  <CheckCircle className="h-5 w-5 text-kamsen-blue" />
                 </div>
                 <div>
-                  <p className="text-sm text-kamsen-medium">Livrés Aujourd'hui</p>
+                  <p className="text-sm text-kamsen-gray">Livrés Aujourd'hui</p>
                   <p className="text-2xl font-bold">
                     {trackingData?.filter((t: GpsTracking) => 
                       t.status === 'delivered' && 
@@ -250,7 +250,7 @@ export default function GpsTracking() {
                   <Clock className="h-5 w-5 text-yellow-600" />
                 </div>
                 <div>
-                  <p className="text-sm text-kamsen-medium">En Attente</p>
+                  <p className="text-sm text-kamsen-gray">En Attente</p>
                   <p className="text-2xl font-bold">
                     {trackingData?.filter((t: GpsTracking) => t.status === 'pending').length || 0}
                   </p>
@@ -266,7 +266,7 @@ export default function GpsTracking() {
                   <AlertCircle className="h-5 w-5 text-red-600" />
                 </div>
                 <div>
-                  <p className="text-sm text-kamsen-medium">Retards</p>
+                  <p className="text-sm text-kamsen-gray">Retards</p>
                   <p className="text-2xl font-bold">
                     {trackingData?.filter((t: GpsTracking) => 
                       new Date(t.estimatedArrival) < new Date() && 
@@ -286,14 +286,14 @@ export default function GpsTracking() {
               <CardHeader className="bg-gradient-to-r from-blue-50 to-indigo-50 pb-3">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div className="flex items-center gap-3">
-                    <div className="bg-kamsen-white p-2 rounded-full shadow-sm">
-                      <MapPin className="h-5 w-5 text-kamsen-dark" />
+                    <div className="bg-white p-2 rounded-full shadow-sm">
+                      <MapPin className="h-5 w-5 text-kamsen-blue" />
                     </div>
                     <div>
                       <CardTitle className="text-lg">
                         Livraison #{tracking.bookingId} - Équipement #{tracking.equipmentId}
                       </CardTitle>
-                      <p className="text-sm text-kamsen-medium">
+                      <p className="text-sm text-kamsen-gray">
                         {tracking.currentCity} → {tracking.destinationCity}
                       </p>
                     </div>
@@ -308,27 +308,27 @@ export default function GpsTracking() {
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                   {/* Driver and Vehicle Info */}
                   <div className="space-y-4">
-                    <h3 className="font-semibold text-kamsen-dark flex items-center gap-2">
+                    <h3 className="font-semibold text-kamsen-blue flex items-center gap-2">
                       <Truck className="h-4 w-4" />
                       Chauffeur & Véhicule
                     </h3>
                     <div className="space-y-2 text-sm">
                       <div className="flex justify-between">
-                        <span className="text-kamsen-medium">Chauffeur:</span>
+                        <span className="text-kamsen-gray">Chauffeur:</span>
                         <span className="font-medium">{tracking.driverName}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-kamsen-medium">Téléphone:</span>
-                        <a href={`tel:${tracking.driverPhone}`} className="text-kamsen-dark hover:underline">
+                        <span className="text-kamsen-gray">Téléphone:</span>
+                        <a href={`tel:${tracking.driverPhone}`} className="text-kamsen-blue hover:underline">
                           {tracking.driverPhone}
                         </a>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-kamsen-medium">Véhicule:</span>
+                        <span className="text-kamsen-gray">Véhicule:</span>
                         <span className="font-medium">{tracking.vehiclePlate}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-kamsen-medium">Signal GPS:</span>
+                        <span className="text-kamsen-gray">Signal GPS:</span>
                         <div className="flex items-center gap-1">
                           <div className={`w-2 h-2 rounded-full ${
                             tracking.signalStrength >= 4 ? 'bg-green-500' :
@@ -339,9 +339,9 @@ export default function GpsTracking() {
                       </div>
                       {tracking.batteryLevel && (
                         <div className="flex justify-between">
-                          <span className="text-kamsen-medium">Batterie GPS:</span>
+                          <span className="text-kamsen-gray">Batterie GPS:</span>
                           <span className={`text-xs ${
-                            tracking.batteryLevel > 50 ? 'text-kamsen-dark' :
+                            tracking.batteryLevel > 50 ? 'text-kamsen-blue' :
                             tracking.batteryLevel > 20 ? 'text-yellow-600' : 'text-red-600'
                           }`}>
                             {tracking.batteryLevel}%
@@ -353,33 +353,33 @@ export default function GpsTracking() {
 
                   {/* Location and Route Info */}
                   <div className="space-y-4">
-                    <h3 className="font-semibold text-kamsen-dark flex items-center gap-2">
+                    <h3 className="font-semibold text-kamsen-blue flex items-center gap-2">
                       <Navigation className="h-4 w-4" />
                       Itinéraire & Position
                     </h3>
                     <div className="space-y-2 text-sm">
                       <div>
-                        <span className="text-kamsen-medium">Position actuelle:</span>
+                        <span className="text-kamsen-gray">Position actuelle:</span>
                         <p className="font-medium">{tracking.currentAddress}</p>
-                        <p className="text-xs text-kamsen-medium">
+                        <p className="text-xs text-kamsen-gray">
                           {tracking.currentLatitude?.toFixed(4)}, {tracking.currentLongitude?.toFixed(4)}
                         </p>
                       </div>
                       <div>
-                        <span className="text-kamsen-medium">Destination:</span>
+                        <span className="text-kamsen-gray">Destination:</span>
                         <p className="font-medium">{tracking.destinationAddress}</p>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-kamsen-medium">Distance restante:</span>
+                        <span className="text-kamsen-gray">Distance restante:</span>
                         <span className="font-medium">{tracking.remainingDistanceKm?.toFixed(1)} km</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-kamsen-medium">Vitesse actuelle:</span>
+                        <span className="text-kamsen-gray">Vitesse actuelle:</span>
                         <span className="font-medium">{tracking.currentSpeed?.toFixed(0)} km/h</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-kamsen-medium">Dernière position:</span>
-                        <span className="text-xs text-kamsen-medium">
+                        <span className="text-kamsen-gray">Dernière position:</span>
+                        <span className="text-xs text-kamsen-gray">
                           {formatTime(tracking.lastPingAt)}
                         </span>
                       </div>
@@ -388,26 +388,26 @@ export default function GpsTracking() {
 
                   {/* Timeline and Actions */}
                   <div className="space-y-4">
-                    <h3 className="font-semibold text-kamsen-dark flex items-center gap-2">
+                    <h3 className="font-semibold text-kamsen-blue flex items-center gap-2">
                       <Clock className="h-4 w-4" />
                       Planning & Actions
                     </h3>
                     <div className="space-y-2 text-sm">
                       <div className="flex justify-between">
-                        <span className="text-kamsen-medium">Arrivée prévue:</span>
+                        <span className="text-kamsen-gray">Arrivée prévue:</span>
                         <span className="font-medium">{formatTime(tracking.estimatedArrival)}</span>
                       </div>
                       {tracking.actualArrival && (
                         <div className="flex justify-between">
-                          <span className="text-kamsen-medium">Arrivée réelle:</span>
-                          <span className="font-medium text-kamsen-dark">
+                          <span className="text-kamsen-gray">Arrivée réelle:</span>
+                          <span className="font-medium text-kamsen-blue">
                             {formatTime(tracking.actualArrival)}
                           </span>
                         </div>
                       )}
                       <div className="flex justify-between">
-                        <span className="text-kamsen-medium">ETA calculé:</span>
-                        <span className="text-xs text-kamsen-medium">
+                        <span className="text-kamsen-gray">ETA calculé:</span>
+                        <span className="text-xs text-kamsen-gray">
                           {calculateETA(tracking.remainingDistanceKm, tracking.currentSpeed)}
                         </span>
                       </div>
@@ -450,8 +450,8 @@ export default function GpsTracking() {
 
                     {tracking.deliveryNotes && (
                       <div className="pt-2 border-t">
-                        <span className="text-kamsen-medium text-sm">Notes:</span>
-                        <p className="text-sm mt-1 p-2 bg-kamsen-light rounded">
+                        <span className="text-kamsen-gray text-sm">Notes:</span>
+                        <p className="text-sm mt-1 p-2 bg-kamsen-blue-light rounded">
                           {tracking.deliveryNotes}
                         </p>
                       </div>
@@ -465,11 +465,11 @@ export default function GpsTracking() {
           {trackingData?.length === 0 && (
             <Card>
               <CardContent className="p-12 text-center">
-                <MapPin className="h-12 w-12 text-kamsen-light mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-kamsen-dark mb-2">
+                <MapPin className="h-12 w-12 text-kamsen-gray mx-auto mb-4" />
+                <h3 className="text-lg font-semibold text-kamsen-blue mb-2">
                   Aucune livraison en cours
                 </h3>
-                <p className="text-kamsen-medium">
+                <p className="text-kamsen-gray">
                   Aucune livraison GPS n'est actuellement active pour les critères sélectionnés.
                 </p>
               </CardContent>

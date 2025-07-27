@@ -98,11 +98,11 @@ export default function Contact() {
   ];
 
   return (
-    <div className="min-h-screen bg-kamsen-light">
+    <div className="min-h-screen bg-kamsen-blue-light">
       <Header />
       
       {/* Hero Section */}
-      <section className="bg-kamsen-gradient text-kamsen-white py-16">
+      <section className="bg-kamsen-gradient text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl lg:text-5xl font-bold mb-4">
             Contactez-nous
@@ -118,38 +118,38 @@ export default function Contact() {
           {/* Contact Information */}
           <div className="space-y-8">
             <div>
-              <h2 className="text-3xl font-bold text-kamsen-dark mb-6">
+              <h2 className="text-3xl font-bold text-kamsen-blue mb-6">
                 Parlons de votre projet
               </h2>
-              <p className="text-lg text-kamsen-medium mb-8">
+              <p className="text-lg text-kamsen-gray mb-8">
                 Que vous ayez besoin d'un équipement spécifique ou de conseils pour votre projet, 
                 notre équipe d'experts est là pour vous accompagner.
               </p>
             </div>
 
             {/* Section emails spécialisés */}
-            <div className="bg-kamsen-dark/5 p-6 rounded-lg border border-aywa-blue/20 mb-8">
-              <h3 className="text-xl font-semibold text-kamsen-dark mb-4">
+            <div className="bg-kamsen-blue/5 p-6 rounded-lg border border-aywa-blue/20 mb-8">
+              <h3 className="text-xl font-semibold text-kamsen-blue mb-4">
                 📧 Contactez le bon service directement
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="text-center p-4 bg-kamsen-white rounded-lg shadow-sm">
+                <div className="text-center p-4 bg-white rounded-lg shadow-sm">
                   <div className="text-2xl mb-2">📞</div>
-                  <h4 className="font-semibold text-kamsen-dark">Support Client</h4>
-                  <p className="text-kamsen-dark font-medium">contact@kamsenlogistic.com</p>
-                  <p className="text-sm text-kamsen-medium">Questions générales</p>
+                  <h4 className="font-semibold text-kamsen-blue">Support Client</h4>
+                  <p className="text-kamsen-blue font-medium">contact@kamsenlogistic.com</p>
+                  <p className="text-sm text-kamsen-gray">Questions générales</p>
                 </div>
-                <div className="text-center p-4 bg-kamsen-white rounded-lg shadow-sm">
+                <div className="text-center p-4 bg-white rounded-lg shadow-sm">
                   <div className="text-2xl mb-2">📋</div>
-                  <h4 className="font-semibold text-kamsen-dark">Réservations</h4>
-                  <p className="text-kamsen-dark font-medium">reservation@kamsenlogistic.com</p>
-                  <p className="text-sm text-kamsen-medium">Location d'équipements</p>
+                  <h4 className="font-semibold text-kamsen-blue">Réservations</h4>
+                  <p className="text-kamsen-blue font-medium">reservation@kamsenlogistic.com</p>
+                  <p className="text-sm text-kamsen-gray">Location d'équipements</p>
                 </div>
-                <div className="text-center p-4 bg-kamsen-white rounded-lg shadow-sm">
+                <div className="text-center p-4 bg-white rounded-lg shadow-sm">
                   <div className="text-2xl mb-2">🤝</div>
-                  <h4 className="font-semibold text-kamsen-dark">Partenaires</h4>
-                  <p className="text-kamsen-dark font-medium">partenaires@kamsenlogistic.com</p>
-                  <p className="text-sm text-kamsen-medium">Rejoignez notre réseau</p>
+                  <h4 className="font-semibold text-kamsen-blue">Partenaires</h4>
+                  <p className="text-kamsen-blue font-medium">partenaires@kamsenlogistic.com</p>
+                  <p className="text-sm text-kamsen-gray">Rejoignez notre réseau</p>
                 </div>
               </div>
             </div>
@@ -161,17 +161,17 @@ export default function Contact() {
                   <Card key={info.title}>
                     <CardContent className="p-6">
                       <div className="flex items-start space-x-4">
-                        <div className="bg-kamsen-dark/10 p-3 rounded-lg">
-                          <Icon className="h-6 w-6 text-kamsen-dark" />
+                        <div className="bg-kamsen-blue/10 p-3 rounded-lg">
+                          <Icon className="h-6 w-6 text-kamsen-blue" />
                         </div>
                         <div>
-                          <h3 className="font-semibold text-kamsen-dark mb-1">
+                          <h3 className="font-semibold text-kamsen-blue mb-1">
                             {info.title}
                           </h3>
-                          <p className="text-kamsen-dark font-medium">
+                          <p className="text-kamsen-blue font-medium">
                             {info.value}
                           </p>
-                          <p className="text-sm text-kamsen-medium">
+                          <p className="text-sm text-kamsen-gray">
                             {info.description}
                           </p>
                         </div>
@@ -190,7 +190,7 @@ export default function Contact() {
                   alt="Localisation"
                   className="w-full h-48 object-cover rounded-lg"
                 />
-                <p className="text-center text-kamsen-medium mt-4">
+                <p className="text-center text-kamsen-gray mt-4">
                   Zone Industrielle de Dakar - Facile d'accès depuis toute la région
                 </p>
               </CardContent>
@@ -200,7 +200,7 @@ export default function Contact() {
           {/* Contact Form */}
           <Card>
             <CardContent className="p-8">
-              <h3 className="text-2xl font-bold text-kamsen-dark mb-6">
+              <h3 className="text-2xl font-bold text-kamsen-blue mb-6">
                 Demande de renseignements
               </h3>
               
@@ -311,7 +311,7 @@ export default function Contact() {
                   <Button 
                     type="submit" 
                     disabled={createInquiryMutation.isPending}
-                    className="w-full bg-kamsen-dark hover:bg-kamsen-dark/90 text-kamsen-white py-3 text-lg"
+                    className="w-full bg-kamsen-blue hover:bg-kamsen-blue/90 text-white py-3 text-lg"
                   >
                     {createInquiryMutation.isPending ? "Envoi en cours..." : "Envoyer la demande"}
                   </Button>
@@ -325,11 +325,11 @@ export default function Contact() {
         <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
           <Card>
             <CardContent className="p-6 text-center">
-              <div className="bg-kamsen-light w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Clock className="h-8 w-8 text-kamsen-dark" />
+              <div className="bg-kamsen-blue-light w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Clock className="h-8 w-8 text-kamsen-blue" />
               </div>
-              <h3 className="font-semibold text-kamsen-dark mb-2">Réponse rapide</h3>
-              <p className="text-kamsen-medium">
+              <h3 className="font-semibold text-kamsen-blue mb-2">Réponse rapide</h3>
+              <p className="text-kamsen-gray">
                 Nous nous engageons à vous répondre dans les 2 heures ouvrables
               </p>
             </CardContent>
@@ -337,11 +337,11 @@ export default function Contact() {
 
           <Card>
             <CardContent className="p-6 text-center">
-              <div className="bg-kamsen-light w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Phone className="h-8 w-8 text-kamsen-dark" />
+              <div className="bg-kamsen-blue-light w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Phone className="h-8 w-8 text-kamsen-blue" />
               </div>
-              <h3 className="font-semibold text-kamsen-dark mb-2">Support expert</h3>
-              <p className="text-kamsen-medium">
+              <h3 className="font-semibold text-kamsen-blue mb-2">Support expert</h3>
+              <p className="text-kamsen-gray">
                 Nos techniciens vous conseillent sur le choix de vos équipements
               </p>
             </CardContent>
@@ -349,11 +349,11 @@ export default function Contact() {
 
           <Card>
             <CardContent className="p-6 text-center">
-              <div className="bg-kamsen-dark/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <MapPin className="h-8 w-8 text-kamsen-dark" />
+              <div className="bg-kamsen-blue/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <MapPin className="h-8 w-8 text-kamsen-blue" />
               </div>
-              <h3 className="font-semibold text-kamsen-dark mb-2">Service local</h3>
-              <p className="text-kamsen-medium">
+              <h3 className="font-semibold text-kamsen-blue mb-2">Service local</h3>
+              <p className="text-kamsen-gray">
                 Présents dans toutes les grandes villes du Sénégal
               </p>
             </CardContent>

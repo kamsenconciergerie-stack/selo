@@ -83,11 +83,11 @@ export default function QuoteRequest() {
   };
 
   return (
-    <div className="min-h-screen bg-kamsen-light">
+    <div className="min-h-screen bg-kamsen-blue-light">
       <Header />
       
       {/* Hero Section */}
-      <section className="bg-kamsen-gradient text-kamsen-white py-16">
+      <section className="bg-kamsen-gradient text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-4xl lg:text-5xl font-bold mb-6">
@@ -106,25 +106,25 @@ export default function QuoteRequest() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
             <Card className="text-center">
               <CardContent className="p-6">
-                <Calculator className="h-12 w-12 text-kamsen-dark mx-auto mb-4" />
-                <h3 className="font-semibold text-kamsen-dark mb-2">Devis Gratuit</h3>
-                <p className="text-kamsen-medium">Obtenez un devis détaillé sans frais</p>
+                <Calculator className="h-12 w-12 text-kamsen-blue mx-auto mb-4" />
+                <h3 className="font-semibold text-kamsen-blue mb-2">Devis Gratuit</h3>
+                <p className="text-kamsen-gray">Obtenez un devis détaillé sans frais</p>
               </CardContent>
             </Card>
             
             <Card className="text-center">
               <CardContent className="p-6">
-                <Clock className="h-12 w-12 text-kamsen-dark mx-auto mb-4" />
-                <h3 className="font-semibold text-kamsen-dark mb-2">Réponse Rapide</h3>
-                <p className="text-kamsen-medium">Réponse sous 24h ouvrées</p>
+                <Clock className="h-12 w-12 text-kamsen-blue mx-auto mb-4" />
+                <h3 className="font-semibold text-kamsen-blue mb-2">Réponse Rapide</h3>
+                <p className="text-kamsen-gray">Réponse sous 24h ouvrées</p>
               </CardContent>
             </Card>
             
             <Card className="text-center">
               <CardContent className="p-6">
-                <FileText className="h-12 w-12 text-kamsen-dark mx-auto mb-4" />
-                <h3 className="font-semibold text-kamsen-dark mb-2">Devis Détaillé</h3>
-                <p className="text-kamsen-medium">Prix transparents et conditions claires</p>
+                <FileText className="h-12 w-12 text-kamsen-blue mx-auto mb-4" />
+                <h3 className="font-semibold text-kamsen-blue mb-2">Devis Détaillé</h3>
+                <p className="text-kamsen-gray">Prix transparents et conditions claires</p>
               </CardContent>
             </Card>
           </div>
@@ -299,13 +299,13 @@ export default function QuoteRequest() {
                     )}
                   />
 
-                  <div className="bg-kamsen-dark/10 rounded-lg p-6 border-l-4 border-primary-orange">
-                    <p className="text-kamsen-dark font-medium mb-2">
+                  <div className="bg-kamsen-blue/10 rounded-lg p-6 border-l-4 border-primary-orange">
+                    <p className="text-kamsen-blue font-medium mb-2">
                       📞 Besoin d'aide pour remplir ce formulaire ?
                     </p>
-                    <p className="text-kamsen-medium">
+                    <p className="text-kamsen-gray">
                       Contactez notre équipe commerciale au{" "}
-                      <a href="tel:+221786067013" className="text-kamsen-dark font-bold hover:underline">
+                      <a href="tel:+221786067013" className="text-kamsen-blue font-bold hover:underline">
                         78 606 70 13
                       </a>
                     </p>
@@ -315,7 +315,7 @@ export default function QuoteRequest() {
                     <Button 
                       type="submit" 
                       disabled={isSubmitting}
-                      className="flex-1 bg-kamsen-dark hover:bg-kamsen-dark/90 text-lg py-3"
+                      className="flex-1 bg-kamsen-blue hover:bg-kamsen-blue/90 text-lg py-3"
                     >
                       {isSubmitting ? "Envoi en cours..." : "Envoyer ma demande de devis"}
                     </Button>

@@ -61,8 +61,8 @@ function formatPrice(price: number): string {
 
 const statusConfig = {
   pending: { label: "En attente", color: "bg-yellow-100 text-yellow-800", icon: AlertCircle },
-  confirmed: { label: "Confirmée", color: "bg-kamsen-light text-green-800", icon: CheckCircle },
-  completed: { label: "Terminée", color: "bg-kamsen-light text-blue-800", icon: CheckCircle },
+  confirmed: { label: "Confirmée", color: "bg-kamsen-blue-light text-green-800", icon: CheckCircle },
+  completed: { label: "Terminée", color: "bg-kamsen-blue-light text-blue-800", icon: CheckCircle },
   cancelled: { label: "Annulée", color: "bg-red-100 text-red-800", icon: XCircle }
 };
 
@@ -297,10 +297,10 @@ export default function AdminReservations() {
   return (
     <div className="container mx-auto px-4 py-8 max-w-7xl">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-kamsen-dark mb-2">
+        <h1 className="text-3xl font-bold text-kamsen-blue mb-2">
           Administration des Réservations
         </h1>
-        <p className="text-kamsen-medium">
+        <p className="text-kamsen-gray">
           Gérez toutes les réservations de la plateforme Kamsen
         </p>
       </div>
@@ -311,10 +311,10 @@ export default function AdminReservations() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-kamsen-medium">Total</p>
-                <p className="text-2xl font-bold text-kamsen-dark">{bookings.length}</p>
+                <p className="text-sm font-medium text-kamsen-gray">Total</p>
+                <p className="text-2xl font-bold text-kamsen-blue">{bookings.length}</p>
               </div>
-              <Calendar className="h-8 w-8 text-kamsen-light" />
+              <Calendar className="h-8 w-8 text-kamsen-gray" />
             </div>
           </CardContent>
         </Card>
@@ -323,7 +323,7 @@ export default function AdminReservations() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-kamsen-medium">En attente</p>
+                <p className="text-sm font-medium text-kamsen-gray">En attente</p>
                 <p className="text-2xl font-bold text-yellow-600">
                   {bookings.filter((b: Booking) => b.status === 'pending').length}
                 </p>
@@ -337,8 +337,8 @@ export default function AdminReservations() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-kamsen-medium">Confirmées</p>
-                <p className="text-2xl font-bold text-kamsen-dark">
+                <p className="text-sm font-medium text-kamsen-gray">Confirmées</p>
+                <p className="text-2xl font-bold text-kamsen-blue">
                   {bookings.filter((b: Booking) => b.status === 'confirmed').length}
                 </p>
               </div>
@@ -351,8 +351,8 @@ export default function AdminReservations() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-kamsen-medium">Revenus</p>
-                <p className="text-2xl font-bold text-kamsen-dark">
+                <p className="text-sm font-medium text-kamsen-gray">Revenus</p>
+                <p className="text-2xl font-bold text-kamsen-blue">
                   {formatPrice(bookings
                     .filter((b: Booking) => b.status === 'confirmed' || b.status === 'completed')
                     .reduce((sum: number, b: Booking) => sum + b.totalPrice, 0)
@@ -376,7 +376,7 @@ export default function AdminReservations() {
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div className="relative">
-              <Search className="absolute left-3 top-3 h-4 w-4 text-kamsen-light" />
+              <Search className="absolute left-3 top-3 h-4 w-4 text-kamsen-gray" />
               <Input
                 placeholder="Rechercher par nom, email, téléphone..."
                 value={searchTerm}
@@ -427,11 +427,11 @@ export default function AdminReservations() {
         {filteredBookings.length === 0 ? (
           <Card>
             <CardContent className="p-8 text-center">
-              <Calendar className="h-12 w-12 text-kamsen-light mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-kamsen-dark mb-2">
+              <Calendar className="h-12 w-12 text-kamsen-gray mx-auto mb-4" />
+              <h3 className="text-lg font-medium text-kamsen-blue mb-2">
                 Aucune réservation trouvée
               </h3>
-              <p className="text-kamsen-medium">
+              <p className="text-kamsen-gray">
                 Aucune réservation ne correspond aux critères de recherche.
               </p>
             </CardContent>
@@ -447,14 +447,14 @@ export default function AdminReservations() {
                     {/* Informations client */}
                     <div className="space-y-2">
                       <div className="flex items-center gap-2">
-                        <User className="h-4 w-4 text-kamsen-light" />
+                        <User className="h-4 w-4 text-kamsen-gray" />
                         <span className="font-medium">{booking.customerName}</span>
                       </div>
-                      <div className="flex items-center gap-2 text-sm text-kamsen-medium">
+                      <div className="flex items-center gap-2 text-sm text-kamsen-gray">
                         <Mail className="h-4 w-4" />
                         <span>{booking.customerEmail}</span>
                       </div>
-                      <div className="flex items-center gap-2 text-sm text-kamsen-medium">
+                      <div className="flex items-center gap-2 text-sm text-kamsen-gray">
                         <Phone className="h-4 w-4" />
                         <span>{booking.customerPhone}</span>
                       </div>
@@ -466,11 +466,11 @@ export default function AdminReservations() {
                         {booking.equipmentName || `Équipement #${booking.equipmentId}`}
                       </div>
                       {booking.equipmentCategory && (
-                        <div className="text-sm text-kamsen-medium">
+                        <div className="text-sm text-kamsen-gray">
                           {booking.equipmentCategory}
                         </div>
                       )}
-                      <div className="flex items-center gap-2 text-sm text-kamsen-medium">
+                      <div className="flex items-center gap-2 text-sm text-kamsen-gray">
                         <Calendar className="h-4 w-4" />
                         <span>
                           {format(new Date(booking.startDate), "dd MMM", { locale: fr })} - {" "}
@@ -481,7 +481,7 @@ export default function AdminReservations() {
 
                     {/* Prix et statut */}
                     <div className="space-y-2">
-                      <div className="text-lg font-bold text-kamsen-dark">
+                      <div className="text-lg font-bold text-kamsen-blue">
                         {formatPrice(booking.totalPrice)}
                       </div>
                       <Badge className={statusConfig[booking.status].color}>
@@ -489,7 +489,7 @@ export default function AdminReservations() {
                         {statusConfig[booking.status].label}
                       </Badge>
                       {booking.paymentStatus && (
-                        <div className="text-sm text-kamsen-medium">
+                        <div className="text-sm text-kamsen-gray">
                           Paiement: {booking.paymentStatus}
                         </div>
                       )}
@@ -544,8 +544,8 @@ export default function AdminReservations() {
                   </div>
 
                   {booking.notes && (
-                    <div className="mt-4 p-3 bg-kamsen-light rounded-lg">
-                      <p className="text-sm text-kamsen-dark">
+                    <div className="mt-4 p-3 bg-kamsen-blue-light rounded-lg">
+                      <p className="text-sm text-kamsen-blue">
                         <strong>Notes:</strong> {booking.notes}
                       </p>
                     </div>
@@ -555,16 +555,16 @@ export default function AdminReservations() {
                   {expandedBookings.has(booking.id) && (
                     <div className="mt-4 border-t pt-4">
                       <div className="flex items-center gap-2 mb-3">
-                        <History className="h-4 w-4 text-kamsen-medium" />
-                        <h4 className="font-medium text-kamsen-dark">Historique des modifications</h4>
+                        <History className="h-4 w-4 text-kamsen-gray" />
+                        <h4 className="font-medium text-kamsen-blue">Historique des modifications</h4>
                       </div>
                       
                       {bookingHistories[booking.id]?.length > 0 ? (
                         <div className="space-y-2">
                           {bookingHistories[booking.id].map((entry: BookingHistoryEntry) => (
-                            <div key={entry.id} className="bg-kamsen-light rounded-lg p-3 text-sm">
+                            <div key={entry.id} className="bg-kamsen-blue-light rounded-lg p-3 text-sm">
                               <div className="flex items-center justify-between mb-1">
-                                <span className="font-medium text-kamsen-dark">
+                                <span className="font-medium text-kamsen-blue">
                                   {entry.field === 'startDate' ? 'Date de début' :
                                    entry.field === 'endDate' ? 'Date de fin' :
                                    entry.field === 'totalPrice' ? 'Prix total' :
@@ -576,19 +576,19 @@ export default function AdminReservations() {
                                 </Badge>
                               </div>
                               
-                              <div className="text-kamsen-medium mb-1">
+                              <div className="text-kamsen-gray mb-1">
                                 <span className="line-through text-red-600">{entry.oldValue}</span>
                                 {' → '}
-                                <span className="text-kamsen-dark">{entry.newValue}</span>
+                                <span className="text-kamsen-blue">{entry.newValue}</span>
                               </div>
                               
                               {entry.reason && (
-                                <p className="text-kamsen-medium italic text-xs mb-1">
+                                <p className="text-kamsen-gray italic text-xs mb-1">
                                   Raison: {entry.reason}
                                 </p>
                               )}
                               
-                              <p className="text-xs text-kamsen-light">
+                              <p className="text-xs text-kamsen-gray">
                                 {new Date(entry.createdAt).toLocaleDateString('fr-FR', {
                                   day: '2-digit',
                                   month: 'long',
@@ -601,7 +601,7 @@ export default function AdminReservations() {
                           ))}
                         </div>
                       ) : (
-                        <div className="bg-kamsen-light rounded-lg p-4 text-center text-kamsen-medium text-sm">
+                        <div className="bg-kamsen-blue-light rounded-lg p-4 text-center text-kamsen-gray text-sm">
                           <History className="h-8 w-8 mx-auto mb-2 opacity-50" />
                           <p>Aucune modification enregistrée pour cette réservation</p>
                         </div>
@@ -609,7 +609,7 @@ export default function AdminReservations() {
                     </div>
                   )}
 
-                  <div className="mt-4 text-xs text-kamsen-medium">
+                  <div className="mt-4 text-xs text-kamsen-gray">
                     Créée le {format(new Date(booking.createdAt), "dd/MM/yyyy à HH:mm", { locale: fr })}
                   </div>
                 </CardContent>

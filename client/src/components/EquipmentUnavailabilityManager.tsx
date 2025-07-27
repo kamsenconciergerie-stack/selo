@@ -228,13 +228,13 @@ export function EquipmentUnavailabilityManager({ partnerId }: EquipmentUnavailab
 
   const getReasonColor = (reason: string) => {
     const colors = {
-      maintenance: 'bg-kamsen-light text-blue-800',
-      rented_externally: 'bg-kamsen-light text-green-800',
+      maintenance: 'bg-kamsen-blue-light text-blue-800',
+      rented_externally: 'bg-kamsen-blue-light text-green-800',
       personal_use: 'bg-purple-100 text-purple-800',
       repair: 'bg-red-100 text-red-800',
-      other: 'bg-kamsen-light text-gray-800'
+      other: 'bg-kamsen-blue-light text-gray-800'
     };
-    return colors[reason as keyof typeof colors] || 'bg-kamsen-light text-gray-800';
+    return colors[reason as keyof typeof colors] || 'bg-kamsen-blue-light text-gray-800';
   };
 
   if (isLoading) {
@@ -246,7 +246,7 @@ export function EquipmentUnavailabilityManager({ partnerId }: EquipmentUnavailab
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold">Gestion des Indisponibilités</h2>
-          <p className="text-kamsen-medium">Définissez les périodes où vos équipements ne sont pas disponibles à la location</p>
+          <p className="text-kamsen-gray">Définissez les périodes où vos équipements ne sont pas disponibles à la location</p>
         </div>
         <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
           <DialogTrigger asChild>
@@ -368,9 +368,9 @@ export function EquipmentUnavailabilityManager({ partnerId }: EquipmentUnavailab
         {unavailabilityPeriods.length === 0 ? (
           <Card>
             <CardContent className="py-8 text-center">
-              <Calendar className="h-12 w-12 text-kamsen-light mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-kamsen-dark mb-2">Aucune période d'indisponibilité</h3>
-              <p className="text-kamsen-medium">Cliquez sur "Nouvelle Période" pour définir quand vos équipements ne sont pas disponibles.</p>
+              <Calendar className="h-12 w-12 text-kamsen-gray mx-auto mb-4" />
+              <h3 className="text-lg font-medium text-kamsen-blue mb-2">Aucune période d'indisponibilité</h3>
+              <p className="text-kamsen-gray">Cliquez sur "Nouvelle Période" pour définir quand vos équipements ne sont pas disponibles.</p>
             </CardContent>
           </Card>
         ) : (
@@ -380,14 +380,14 @@ export function EquipmentUnavailabilityManager({ partnerId }: EquipmentUnavailab
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-2">
-                      <Truck className="h-4 w-4 text-kamsen-medium" />
+                      <Truck className="h-4 w-4 text-kamsen-gray" />
                       <h3 className="font-semibold">{period.equipmentName}</h3>
                       <Badge className={getReasonColor(period.reason)}>
                         {getReasonLabel(period.reason)}
                       </Badge>
                     </div>
                     
-                    <div className="flex items-center gap-4 text-sm text-kamsen-medium mb-2">
+                    <div className="flex items-center gap-4 text-sm text-kamsen-gray mb-2">
                       <div className="flex items-center gap-1">
                         <Calendar className="h-4 w-4" />
                         <span>
@@ -403,7 +403,7 @@ export function EquipmentUnavailabilityManager({ partnerId }: EquipmentUnavailab
                     </div>
 
                     {period.description && (
-                      <p className="text-sm text-kamsen-dark">{period.description}</p>
+                      <p className="text-sm text-kamsen-blue">{period.description}</p>
                     )}
                   </div>
 

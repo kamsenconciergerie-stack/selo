@@ -32,7 +32,7 @@ export default function Hero() {
   };
 
   return (
-    <section className="bg-kamsen-gradient text-kamsen-white py-16 lg:py-24">
+    <section className="bg-kamsen-gradient text-white py-16 lg:py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <div className="mb-8">
@@ -50,14 +50,14 @@ export default function Hero() {
             Des centaines d'équipements disponibles partout au Sénégal
           </p>
           
-          <div className="max-w-4xl mx-auto bg-kamsen-white rounded-lg shadow-lg p-6 border border-kamsen">
+          <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-6 border border-kamsen-orange">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               <div>
-                <label className="block text-sm font-medium text-kamsen-dark mb-2">
+                <label className="block text-sm font-medium text-kamsen-blue mb-2">
                   Que cherchez-vous ?
                 </label>
                 <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                  <SelectTrigger className="text-kamsen-dark">
+                  <SelectTrigger className="text-kamsen-blue">
                     <SelectValue placeholder="Choisir une catégorie" />
                   </SelectTrigger>
                   <SelectContent>
@@ -70,11 +70,11 @@ export default function Hero() {
                 </Select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-kamsen-dark mb-2">
+                <label className="block text-sm font-medium text-kamsen-blue mb-2">
                   Ville
                 </label>
                 <Select value={selectedCity} onValueChange={setSelectedCity}>
-                  <SelectTrigger className="text-kamsen-dark">
+                  <SelectTrigger className="text-kamsen-blue">
                     <SelectValue placeholder="Sélectionner une ville" />
                   </SelectTrigger>
                   <SelectContent>
@@ -87,20 +87,20 @@ export default function Hero() {
                 </Select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-kamsen-dark mb-2">
+                <label className="block text-sm font-medium text-kamsen-blue mb-2">
                   Date de début
                 </label>
                 <Input
                   type="date"
                   value={startDate}
                   onChange={(e) => setStartDate(e.target.value)}
-                  className="text-kamsen-dark"
+                  className="text-kamsen-blue"
                 />
               </div>
               <div className="flex items-end">
                 <Button 
                   onClick={handleSearch}
-                  className="w-full bg-kamsen-dark hover:bg-kamsen-dark/90 text-kamsen-white font-semibold"
+                  className="w-full bg-kamsen-blue hover:bg-kamsen-blue/90 text-white font-semibold"
                 >
                   <Search className="mr-2 h-4 w-4" />
                   Rechercher

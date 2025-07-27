@@ -23,7 +23,7 @@ export default function EquipmentDetail() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-kamsen-light">
+      <div className="min-h-screen bg-kamsen-blue-light">
         <Header />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="animate-pulse">
@@ -45,18 +45,18 @@ export default function EquipmentDetail() {
 
   if (error || !equipment) {
     return (
-      <div className="min-h-screen bg-kamsen-light">
+      <div className="min-h-screen bg-kamsen-blue-light">
         <Header />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="text-center">
-            <h1 className="text-2xl font-bold text-kamsen-dark mb-4">
+            <h1 className="text-2xl font-bold text-kamsen-blue mb-4">
               Équipement non trouvé
             </h1>
-            <p className="text-kamsen-medium mb-6">
+            <p className="text-kamsen-gray mb-6">
               L'équipement que vous recherchez n'existe pas ou n'est plus disponible.
             </p>
             <Link href="/equipements">
-              <Button className="bg-kamsen-dark hover:bg-kamsen-dark/90">
+              <Button className="bg-kamsen-blue hover:bg-kamsen-blue/90">
                 Retour aux équipements
               </Button>
             </Link>
@@ -70,13 +70,13 @@ export default function EquipmentDetail() {
   const serviceArea = SERVICE_AREAS.find(area => area.city === equipment.location);
 
   return (
-    <div className="min-h-screen bg-kamsen-light">
+    <div className="min-h-screen bg-kamsen-blue-light">
       <Header />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Breadcrumb */}
         <div className="mb-8">
-          <Link href="/equipements" className="flex items-center text-kamsen-medium hover:text-kamsen-dark mb-4">
+          <Link href="/equipements" className="flex items-center text-kamsen-gray hover:text-kamsen-blue mb-4">
             <ArrowLeft className="h-4 w-4 mr-2" />
             Retour aux équipements
           </Link>
@@ -96,7 +96,7 @@ export default function EquipmentDetail() {
           <div className="space-y-6">
             <div>
               <div className="flex items-center justify-between mb-4">
-                <h1 className="text-3xl font-bold text-kamsen-dark">
+                <h1 className="text-3xl font-bold text-kamsen-blue">
                   {equipment.name}
                 </h1>
                 <Badge variant={equipment.isAvailable ? "default" : "secondary"} className="text-sm">
@@ -104,12 +104,12 @@ export default function EquipmentDetail() {
                 </Badge>
               </div>
               
-              <div className="flex items-center text-kamsen-medium mb-4">
+              <div className="flex items-center text-kamsen-gray mb-4">
                 <MapPin className="h-4 w-4 mr-2" />
                 {equipment.location}
               </div>
 
-              <p className="text-kamsen-dark text-lg leading-relaxed">
+              <p className="text-kamsen-blue text-lg leading-relaxed">
                 {equipment.description}
               </p>
             </div>
@@ -118,10 +118,10 @@ export default function EquipmentDetail() {
             <Card>
               <CardContent className="p-6">
                 <div className="text-center">
-                  <div className="text-4xl font-bold text-kamsen-dark mb-2">
+                  <div className="text-4xl font-bold text-kamsen-blue mb-2">
                     {formatPriceWithPrefix(equipment.pricePerDay)}
                   </div>
-                  <div className="text-kamsen-medium">par jour</div>
+                  <div className="text-kamsen-gray">par jour</div>
 
                 </div>
               </CardContent>
@@ -132,7 +132,7 @@ export default function EquipmentDetail() {
               <Button 
                 onClick={() => setShowBookingModal(true)}
                 disabled={!equipment.isAvailable}
-                className="flex-1 bg-kamsen-dark hover:bg-kamsen-dark/90 text-kamsen-white text-lg py-3"
+                className="flex-1 bg-kamsen-blue hover:bg-kamsen-blue/90 text-white text-lg py-3"
               >
                 {equipment.isAvailable ? "Réserver maintenant" : "Non disponible"}
               </Button>
@@ -148,8 +148,8 @@ export default function EquipmentDetail() {
                 <CardContent className="p-4">
                   <div className="flex items-center justify-between">
                     <div>
-                      <div className="font-semibold text-kamsen-dark">Livraison à {equipment.location}</div>
-                      <div className="text-sm text-kamsen-medium">{serviceArea.deliveryTime}</div>
+                      <div className="font-semibold text-kamsen-blue">Livraison à {equipment.location}</div>
+                      <div className="text-sm text-kamsen-gray">{serviceArea.deliveryTime}</div>
                     </div>
 
                   </div>
@@ -161,15 +161,15 @@ export default function EquipmentDetail() {
 
         {/* Specifications */}
         <div className="mt-12">
-          <h2 className="text-2xl font-bold text-kamsen-dark mb-6">Spécifications</h2>
+          <h2 className="text-2xl font-bold text-kamsen-blue mb-6">Spécifications</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {equipment.weight && (
               <Card>
                 <CardContent className="p-6 text-center">
-                  <Weight className="h-8 w-8 text-kamsen-dark mx-auto mb-2" />
-                  <div className="font-semibold text-kamsen-dark">Poids</div>
-                  <div className="text-kamsen-medium">{equipment.weight}</div>
+                  <Weight className="h-8 w-8 text-kamsen-blue mx-auto mb-2" />
+                  <div className="font-semibold text-kamsen-blue">Poids</div>
+                  <div className="text-kamsen-gray">{equipment.weight}</div>
                 </CardContent>
               </Card>
             )}
@@ -177,9 +177,9 @@ export default function EquipmentDetail() {
             {equipment.fuelType && (
               <Card>
                 <CardContent className="p-6 text-center">
-                  <Fuel className="h-8 w-8 text-kamsen-dark mx-auto mb-2" />
-                  <div className="font-semibold text-kamsen-dark">Carburant</div>
-                  <div className="text-kamsen-medium">{equipment.fuelType}</div>
+                  <Fuel className="h-8 w-8 text-kamsen-blue mx-auto mb-2" />
+                  <div className="font-semibold text-kamsen-blue">Carburant</div>
+                  <div className="text-kamsen-gray">{equipment.fuelType}</div>
                 </CardContent>
               </Card>
             )}
@@ -187,18 +187,18 @@ export default function EquipmentDetail() {
             {equipment.power && (
               <Card>
                 <CardContent className="p-6 text-center">
-                  <Fuel className="h-8 w-8 text-kamsen-dark mx-auto mb-2" />
-                  <div className="font-semibold text-kamsen-dark">Puissance</div>
-                  <div className="text-kamsen-medium">{equipment.power}</div>
+                  <Fuel className="h-8 w-8 text-kamsen-blue mx-auto mb-2" />
+                  <div className="font-semibold text-kamsen-blue">Puissance</div>
+                  <div className="text-kamsen-gray">{equipment.power}</div>
                 </CardContent>
               </Card>
             )}
 
             <Card>
               <CardContent className="p-6 text-center">
-                <Shield className="h-8 w-8 text-kamsen-dark mx-auto mb-2" />
-                <div className="font-semibold text-kamsen-dark">Catégorie</div>
-                <div className="text-kamsen-medium">{equipment.category}</div>
+                <Shield className="h-8 w-8 text-kamsen-blue mx-auto mb-2" />
+                <div className="font-semibold text-kamsen-blue">Catégorie</div>
+                <div className="text-kamsen-gray">{equipment.category}</div>
               </CardContent>
             </Card>
           </div>
@@ -206,11 +206,11 @@ export default function EquipmentDetail() {
           {equipment.specifications && equipment.specifications.length > 0 && (
             <Card className="mt-6">
               <CardContent className="p-6">
-                <h3 className="font-semibold text-kamsen-dark mb-4">Caractéristiques supplémentaires</h3>
+                <h3 className="font-semibold text-kamsen-blue mb-4">Caractéristiques supplémentaires</h3>
                 <ul className="space-y-2">
                   {equipment.specifications.map((spec, index) => (
-                    <li key={index} className="flex items-center text-kamsen-dark">
-                      <div className="w-2 h-2 bg-kamsen-dark rounded-full mr-3"></div>
+                    <li key={index} className="flex items-center text-kamsen-blue">
+                      <div className="w-2 h-2 bg-kamsen-blue rounded-full mr-3"></div>
                       {spec}
                     </li>
                   ))}
@@ -223,10 +223,10 @@ export default function EquipmentDetail() {
         {/* Terms and Conditions */}
         <Card className="mt-8">
           <CardContent className="p-6">
-            <h3 className="font-semibold text-kamsen-dark mb-4">Conditions de location</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-kamsen-medium">
+            <h3 className="font-semibold text-kamsen-blue mb-4">Conditions de location</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-kamsen-gray">
               <div>
-                <h4 className="font-semibold text-kamsen-dark mb-2">Location</h4>
+                <h4 className="font-semibold text-kamsen-blue mb-2">Location</h4>
                 <ul className="space-y-1">
                   <li>• Durée minimum : 1 jour</li>
                   <li>• Paiement à la réservation</li>
@@ -234,7 +234,7 @@ export default function EquipmentDetail() {
                 </ul>
               </div>
               <div>
-                <h4 className="font-semibold text-kamsen-dark mb-2">Livraison</h4>
+                <h4 className="font-semibold text-kamsen-blue mb-2">Livraison</h4>
                 <ul className="space-y-1">
                   <li>• Livraison et reprise incluses</li>
                   <li>• Opérateur disponible sur demande</li>
@@ -242,10 +242,10 @@ export default function EquipmentDetail() {
                 </ul>
               </div>
             </div>
-            <div className="mt-6 p-4 bg-kamsen-dark/10 rounded-lg border-l-4 border-primary-orange">
-              <p className="text-kamsen-dark font-medium">
+            <div className="mt-6 p-4 bg-kamsen-blue/10 rounded-lg border-l-4 border-primary-orange">
+              <p className="text-kamsen-blue font-medium">
                 📞 Contactez l'équipe commerciale d'Kamsen pour en savoir plus au{" "}
-                <a href="tel:+221786067013" className="text-kamsen-dark font-bold hover:underline">
+                <a href="tel:+221786067013" className="text-kamsen-blue font-bold hover:underline">
                   78 606 70 13
                 </a>
               </p>

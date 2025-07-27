@@ -105,9 +105,9 @@ interface PartnerInfo {
 
 const statusConfig = {
   pending: { label: "En attente", color: "bg-yellow-100 text-yellow-800", icon: Clock },
-  confirmed: { label: "Confirmée", color: "bg-kamsen-light text-blue-800", icon: CheckCircle },
+  confirmed: { label: "Confirmée", color: "bg-kamsen-blue-light text-blue-800", icon: CheckCircle },
   in_progress: { label: "En cours", color: "bg-purple-100 text-purple-800", icon: Truck },
-  completed: { label: "Terminée", color: "bg-kamsen-light text-green-800", icon: CheckCircle },
+  completed: { label: "Terminée", color: "bg-kamsen-blue-light text-green-800", icon: CheckCircle },
   cancelled: { label: "Annulée", color: "bg-red-100 text-red-800", icon: XCircle }
 };
 
@@ -336,7 +336,7 @@ function PartnerDashboardContent() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-kamsen-light">
+      <div className="min-h-screen flex items-center justify-center bg-kamsen-blue-light">
         <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary-orange"></div>
       </div>
     );
@@ -344,11 +344,11 @@ function PartnerDashboardContent() {
 
   if (!partner) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-kamsen-light">
+      <div className="min-h-screen flex items-center justify-center bg-kamsen-blue-light">
         <div className="text-center">
-          <Building className="h-16 w-16 mx-auto text-kamsen-light mb-4" />
-          <h2 className="text-xl font-semibold text-kamsen-dark mb-2">Accès refusé</h2>
-          <p className="text-kamsen-medium mb-4">Impossible de charger les informations du partenaire</p>
+          <Building className="h-16 w-16 mx-auto text-kamsen-gray mb-4" />
+          <h2 className="text-xl font-semibold text-kamsen-blue mb-2">Accès refusé</h2>
+          <p className="text-kamsen-gray mb-4">Impossible de charger les informations du partenaire</p>
           <Button onClick={() => window.location.href = "/adminpartners"}>
             Retour à la connexion
           </Button>
@@ -358,18 +358,18 @@ function PartnerDashboardContent() {
   }
 
   return (
-    <div className="min-h-screen bg-kamsen-light">
+    <div className="min-h-screen bg-kamsen-blue-light">
       {/* Header */}
-      <div className="bg-kamsen-white shadow-sm border-b">
+      <div className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-4">
-              <div className="h-12 w-12 bg-kamsen-dark rounded-lg flex items-center justify-center">
-                <Building className="h-6 w-6 text-kamsen-white" />
+              <div className="h-12 w-12 bg-kamsen-blue rounded-lg flex items-center justify-center">
+                <Building className="h-6 w-6 text-white" />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-kamsen-dark">{partner.companyName}</h1>
-                <div className="flex items-center gap-3 text-sm text-kamsen-medium">
+                <h1 className="text-xl font-bold text-kamsen-blue">{partner.companyName}</h1>
+                <div className="flex items-center gap-3 text-sm text-kamsen-gray">
                   <div className="flex items-center gap-1">
                     <MapPin className="h-4 w-4" />
                     <span>{partner.city}</span>
@@ -379,7 +379,7 @@ function PartnerDashboardContent() {
                     <span>{partner.rating}/5</span>
                   </div>
                   {partner.isVerified && (
-                    <Badge className="bg-kamsen-light text-green-800">
+                    <Badge className="bg-kamsen-blue-light text-green-800">
                       <CheckCircle className="h-3 w-3 mr-1" />
                       Vérifié
                     </Badge>
@@ -403,8 +403,8 @@ function PartnerDashboardContent() {
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-kamsen-medium">Réservations actives</p>
-                    <p className="text-3xl font-bold text-kamsen-dark">{stats.activeBookings}</p>
+                    <p className="text-sm font-medium text-kamsen-gray">Réservations actives</p>
+                    <p className="text-3xl font-bold text-kamsen-blue">{stats.activeBookings}</p>
                   </div>
                   <Truck className="h-8 w-8 text-blue-500" />
                 </div>
@@ -415,8 +415,8 @@ function PartnerDashboardContent() {
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-kamsen-medium">Total réservations</p>
-                    <p className="text-3xl font-bold text-kamsen-dark">{stats.totalBookings}</p>
+                    <p className="text-sm font-medium text-kamsen-gray">Total réservations</p>
+                    <p className="text-3xl font-bold text-kamsen-blue">{stats.totalBookings}</p>
                   </div>
                   <Calendar className="h-8 w-8 text-green-500" />
                 </div>
@@ -427,8 +427,8 @@ function PartnerDashboardContent() {
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-kamsen-medium">Revenus ce mois</p>
-                    <p className="text-3xl font-bold text-kamsen-dark">{formatPriceLocal(stats.monthlyRevenue)}</p>
+                    <p className="text-sm font-medium text-kamsen-gray">Revenus ce mois</p>
+                    <p className="text-3xl font-bold text-kamsen-blue">{formatPriceLocal(stats.monthlyRevenue)}</p>
                   </div>
                   <DollarSign className="h-8 w-8 text-orange-500" />
                 </div>
@@ -439,7 +439,7 @@ function PartnerDashboardContent() {
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-kamsen-medium">Note moyenne</p>
+                    <p className="text-sm font-medium text-kamsen-gray">Note moyenne</p>
                     <p className="text-3xl font-bold text-yellow-600">{stats.averageRating}/5</p>
                   </div>
                   <Star className="h-8 w-8 text-yellow-500" />
@@ -463,7 +463,7 @@ function PartnerDashboardContent() {
           {/* Bookings Tab */}
           <TabsContent value="bookings" className="space-y-6">
             <div className="flex justify-between items-center">
-              <h2 className="text-2xl font-bold text-kamsen-dark">Gestion des Réservations</h2>
+              <h2 className="text-2xl font-bold text-kamsen-blue">Gestion des Réservations</h2>
               <Button onClick={exportBookingsData} className="flex items-center gap-2">
                 <Download className="h-4 w-4" />
                 Exporter
@@ -483,7 +483,7 @@ function PartnerDashboardContent() {
                   {getActiveBookings().map((booking) => {
                     const StatusIcon = statusConfig[booking.status].icon;
                     return (
-                      <div key={booking.id} className="flex items-center justify-between p-4 bg-kamsen-light rounded-lg">
+                      <div key={booking.id} className="flex items-center justify-between p-4 bg-kamsen-blue-light rounded-lg">
                         <div className="flex-1">
                           <div className="flex items-center gap-3 mb-2">
                             <span className="font-semibold">{booking.customerName}</span>
@@ -492,15 +492,15 @@ function PartnerDashboardContent() {
                               {statusConfig[booking.status].label}
                             </Badge>
                           </div>
-                          <p className="text-sm text-kamsen-medium mb-1">{booking.equipmentName}</p>
-                          <p className="text-sm text-kamsen-medium">
+                          <p className="text-sm text-kamsen-gray mb-1">{booking.equipmentName}</p>
+                          <p className="text-sm text-kamsen-gray">
                             {format(new Date(booking.startDate), "dd/MM/yyyy", { locale: fr })} - {format(new Date(booking.endDate), "dd/MM/yyyy", { locale: fr })}
                           </p>
                         </div>
                         <div className="flex items-center gap-3">
                           <div className="text-right">
                             <p className="font-bold text-lg">{formatPriceLocal(booking.totalPrice)}</p>
-                            <p className="text-sm text-kamsen-medium">{booking.paymentStatus === 'paid' ? '✓ Payé' : 'En attente'}</p>
+                            <p className="text-sm text-kamsen-gray">{booking.paymentStatus === 'paid' ? '✓ Payé' : 'En attente'}</p>
                           </div>
                           <Dialog>
                             <DialogTrigger asChild>
@@ -539,8 +539,8 @@ function PartnerDashboardContent() {
                             <span className="font-semibold">{booking.customerName}</span>
                             <Badge className="bg-yellow-100 text-yellow-800">Nouveau</Badge>
                           </div>
-                          <p className="text-sm text-kamsen-medium mb-1">{booking.equipmentName}</p>
-                          <p className="text-sm text-kamsen-medium">
+                          <p className="text-sm text-kamsen-gray mb-1">{booking.equipmentName}</p>
+                          <p className="text-sm text-kamsen-gray">
                             {format(new Date(booking.startDate), "dd/MM/yyyy", { locale: fr })} - {format(new Date(booking.endDate), "dd/MM/yyyy", { locale: fr })}
                           </p>
                         </div>
@@ -656,29 +656,29 @@ function PartnerDashboardContent() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-4">
                     <div>
-                      <label className="text-sm font-medium text-kamsen-medium">Nom de l'entreprise</label>
+                      <label className="text-sm font-medium text-kamsen-gray">Nom de l'entreprise</label>
                       <Input value={partner.companyName} disabled />
                     </div>
                     <div>
-                      <label className="text-sm font-medium text-kamsen-medium">Email</label>
+                      <label className="text-sm font-medium text-kamsen-gray">Email</label>
                       <Input value={partner.email} disabled />
                     </div>
                     <div>
-                      <label className="text-sm font-medium text-kamsen-medium">Téléphone</label>
+                      <label className="text-sm font-medium text-kamsen-gray">Téléphone</label>
                       <Input value={partner.phone} disabled />
                     </div>
                   </div>
                   <div className="space-y-4">
                     <div>
-                      <label className="text-sm font-medium text-kamsen-medium">Ville</label>
+                      <label className="text-sm font-medium text-kamsen-gray">Ville</label>
                       <Input value={partner.city} disabled />
                     </div>
                     <div>
-                      <label className="text-sm font-medium text-kamsen-medium">Type d'activité</label>
+                      <label className="text-sm font-medium text-kamsen-gray">Type d'activité</label>
                       <Input value={partner.businessType} disabled />
                     </div>
                     <div>
-                      <label className="text-sm font-medium text-kamsen-medium">Membre depuis</label>
+                      <label className="text-sm font-medium text-kamsen-gray">Membre depuis</label>
                       <Input value={format(new Date(partner.joinedAt), "dd/MM/yyyy", { locale: fr })} disabled />
                     </div>
                   </div>
@@ -723,7 +723,7 @@ function PartnerDashboardContent() {
                     <Badge className={statusConfig[selectedBooking.status].color}>
                       {statusConfig[selectedBooking.status].label}
                     </Badge>
-                    <Badge className={selectedBooking.paymentStatus === 'paid' ? 'bg-kamsen-light text-green-800' : 'bg-yellow-100 text-yellow-800'}>
+                    <Badge className={selectedBooking.paymentStatus === 'paid' ? 'bg-kamsen-blue-light text-green-800' : 'bg-yellow-100 text-yellow-800'}>
                       {selectedBooking.paymentStatus === 'paid' ? 'Payé' : 'Paiement en attente'}
                     </Badge>
                   </div>

@@ -41,24 +41,24 @@ export default function PopularEquipment() {
       title: "Eau & Hydraulique", 
       description: "Équipements vitaux pour l'accès à l'eau potable en zones rurales",
       equipment: ["Foreuses", "Motopompes", "Citernes"],
-      bgColor: "bg-kamsen-light",
-      iconColor: "text-kamsen-dark"
+      bgColor: "bg-kamsen-blue-light",
+      iconColor: "text-kamsen-blue"
     },
     {
       icon: Building,
       title: "Construction & BTP",
       description: "Boom immobilier et grands projets d'infrastructure du PSE",
       equipment: ["Pelleteuses", "Grues", "Échafaudages"],
-      bgColor: "bg-kamsen-light",
-      iconColor: "text-kamsen-dark"
+      bgColor: "bg-kamsen-blue-light",
+      iconColor: "text-kamsen-blue"
     },
     {
       icon: Tractor,
       title: "Agriculture",
       description: "Modernisation agricole pour la sécurité alimentaire",
       equipment: ["Tracteurs", "Moissonneuses", "Irrigation"],
-      bgColor: "bg-kamsen-light",
-      iconColor: "text-kamsen-dark"
+      bgColor: "bg-kamsen-blue-light",
+      iconColor: "text-kamsen-blue"
     },
     {
       icon: Volume2,
@@ -90,15 +90,15 @@ export default function PopularEquipment() {
   ];
 
   return (
-    <div className="min-h-screen bg-kamsen-light">
+    <div className="min-h-screen bg-kamsen-blue-light">
       <Header />
       
       {/* Hero Section */}
-      <section className="bg-kamsen-gradient text-kamsen-white py-16">
+      <section className="bg-kamsen-gradient text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <div className="flex items-center justify-center mb-6">
-              <TrendingUp className="h-12 w-12 text-kamsen-dark mr-4" />
+              <TrendingUp className="h-12 w-12 text-kamsen-blue mr-4" />
               <h1 className="text-4xl lg:text-5xl font-bold">
                 Équipements les Plus Demandés
               </h1>
@@ -112,13 +112,13 @@ export default function PopularEquipment() {
       </section>
 
       {/* Secteurs Clés */}
-      <section className="py-16 bg-kamsen-white">
+      <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-4xl font-bold text-kamsen-dark mb-4">
+            <h2 className="text-3xl lg:text-4xl font-bold text-kamsen-blue mb-4">
               Secteurs Économiques Clés du Sénégal
             </h2>
-            <p className="text-xl text-kamsen-medium">
+            <p className="text-xl text-kamsen-gray">
               Nos équipements répondent aux besoins des secteurs porteurs
             </p>
           </div>
@@ -132,16 +132,16 @@ export default function PopularEquipment() {
                     <div className={`${sector.bgColor} w-16 h-16 rounded-full flex items-center justify-center mb-4`}>
                       <Icon className={`h-8 w-8 ${sector.iconColor}`} />
                     </div>
-                    <h3 className="text-xl font-semibold text-kamsen-dark mb-3">
+                    <h3 className="text-xl font-semibold text-kamsen-blue mb-3">
                       {sector.title}
                     </h3>
-                    <p className="text-kamsen-medium mb-4">
+                    <p className="text-kamsen-gray mb-4">
                       {sector.description}
                     </p>
                     <div className="space-y-1">
                       {sector.equipment.map((item, index) => (
-                        <div key={index} className="flex items-center text-sm text-kamsen-dark">
-                          <div className="w-2 h-2 bg-kamsen-dark rounded-full mr-2"></div>
+                        <div key={index} className="flex items-center text-sm text-kamsen-blue">
+                          <div className="w-2 h-2 bg-kamsen-blue rounded-full mr-2"></div>
                           {item}
                         </div>
                       ))}
@@ -155,13 +155,13 @@ export default function PopularEquipment() {
       </section>
 
       {/* Équipements Populaires */}
-      <section className="py-16 bg-kamsen-light">
+      <section className="py-16 bg-kamsen-blue-light">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-4xl font-bold text-kamsen-dark mb-4">
+            <h2 className="text-3xl lg:text-4xl font-bold text-kamsen-blue mb-4">
               Top Équipements Demandés
             </h2>
-            <p className="text-xl text-kamsen-medium">
+            <p className="text-xl text-kamsen-gray">
               Sélection basée sur l'analyse du marché sénégalais
             </p>
           </div>
@@ -190,13 +190,13 @@ export default function PopularEquipment() {
       </section>
 
       {/* Insights du Marché */}
-      <section className="py-16 bg-kamsen-white">
+      <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-4xl font-bold text-kamsen-dark mb-4">
+            <h2 className="text-3xl lg:text-4xl font-bold text-kamsen-blue mb-4">
               Analyse du Marché Sénégalais
             </h2>
-            <p className="text-xl text-kamsen-medium">
+            <p className="text-xl text-kamsen-gray">
               Pourquoi ces équipements sont-ils si demandés ?
             </p>
           </div>
@@ -205,10 +205,10 @@ export default function PopularEquipment() {
             {insights.map((insight, index) => (
               <Card key={index} className="border-l-4 border-l-primary-orange">
                 <CardContent className="p-6">
-                  <h3 className="text-xl font-semibold text-kamsen-dark mb-3">
+                  <h3 className="text-xl font-semibold text-kamsen-blue mb-3">
                     {insight.title}
                   </h3>
-                  <p className="text-kamsen-medium">
+                  <p className="text-kamsen-gray">
                     {insight.description}
                   </p>
                 </CardContent>
@@ -219,24 +219,24 @@ export default function PopularEquipment() {
       </section>
 
       {/* Statistiques */}
-      <section className="py-16 bg-kamsen-dark">
+      <section className="py-16 bg-kamsen-blue">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center text-kamsen-white">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center text-white">
             <div>
-              <div className="text-4xl font-bold text-kamsen-dark mb-2">35%</div>
-              <p className="text-kamsen-light">Générateurs électriques</p>
+              <div className="text-4xl font-bold text-kamsen-blue mb-2">35%</div>
+              <p className="text-kamsen-gray">Générateurs électriques</p>
             </div>
             <div>
-              <div className="text-4xl font-bold text-kamsen-dark mb-2">28%</div>
-              <p className="text-kamsen-light">Engins de construction</p>
+              <div className="text-4xl font-bold text-kamsen-blue mb-2">28%</div>
+              <p className="text-kamsen-gray">Engins de construction</p>
             </div>
             <div>
-              <div className="text-4xl font-bold text-kamsen-dark mb-2">20%</div>
-              <p className="text-kamsen-light">Équipements agricoles</p>
+              <div className="text-4xl font-bold text-kamsen-blue mb-2">20%</div>
+              <p className="text-kamsen-gray">Équipements agricoles</p>
             </div>
             <div>
-              <div className="text-4xl font-bold text-kamsen-dark mb-2">17%</div>
-              <p className="text-kamsen-light">Matériel hydraulique</p>
+              <div className="text-4xl font-bold text-kamsen-blue mb-2">17%</div>
+              <p className="text-kamsen-gray">Matériel hydraulique</p>
             </div>
           </div>
         </div>

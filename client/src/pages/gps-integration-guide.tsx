@@ -20,10 +20,10 @@ export default function GpsIntegrationGuide() {
   return (
     <div className="container mx-auto px-4 py-8 max-w-6xl">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-kamsen-dark mb-4">
+        <h1 className="text-3xl font-bold text-kamsen-blue mb-4">
           Solutions de Traçage GPS pour Équipements Kamsen
         </h1>
-        <p className="text-lg text-kamsen-medium">
+        <p className="text-lg text-kamsen-gray">
           Guide complet des technologies disponibles pour localiser et suivre vos équipements en temps réel
         </p>
       </div>
@@ -42,22 +42,22 @@ export default function GpsIntegrationGuide() {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Satellite className="h-5 w-5 text-kamsen-dark" />
+                  <Satellite className="h-5 w-5 text-kamsen-blue" />
                   Trackers GPS dédiés
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-kamsen-medium mb-4">
+                <p className="text-sm text-kamsen-gray mb-4">
                   Boîtiers GPS autonomes fixés directement sur les équipements
                 </p>
                 <div className="space-y-2">
-                  <Badge variant="secondary" className="bg-kamsen-light text-green-800">
+                  <Badge variant="secondary" className="bg-kamsen-blue-light text-green-800">
                     ✓ Précision maximale
                   </Badge>
-                  <Badge variant="secondary" className="bg-kamsen-light text-green-800">
+                  <Badge variant="secondary" className="bg-kamsen-blue-light text-green-800">
                     ✓ Autonomie longue durée
                   </Badge>
-                  <Badge variant="secondary" className="bg-kamsen-light text-green-800">
+                  <Badge variant="secondary" className="bg-kamsen-blue-light text-green-800">
                     ✓ Résistant aux intempéries
                   </Badge>
                 </div>
@@ -72,17 +72,17 @@ export default function GpsIntegrationGuide() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-kamsen-medium mb-4">
+                <p className="text-sm text-kamsen-gray mb-4">
                   Apps mobiles utilisées par les chauffeurs/opérateurs
                 </p>
                 <div className="space-y-2">
-                  <Badge variant="secondary" className="bg-kamsen-light text-blue-800">
+                  <Badge variant="secondary" className="bg-kamsen-blue-light text-blue-800">
                     ✓ Mise en œuvre rapide
                   </Badge>
-                  <Badge variant="secondary" className="bg-kamsen-light text-blue-800">
+                  <Badge variant="secondary" className="bg-kamsen-blue-light text-blue-800">
                     ✓ Coût réduit
                   </Badge>
-                  <Badge variant="secondary" className="bg-kamsen-light text-blue-800">
+                  <Badge variant="secondary" className="bg-kamsen-blue-light text-blue-800">
                     ✓ Communication directe
                   </Badge>
                 </div>
@@ -97,7 +97,7 @@ export default function GpsIntegrationGuide() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-kamsen-medium mb-4">
+                <p className="text-sm text-kamsen-gray mb-4">
                   Capteurs connectés avec données complémentaires
                 </p>
                 <div className="space-y-2">
@@ -143,7 +143,7 @@ export default function GpsIntegrationGuide() {
                         <span>2G/3G/4G compatibles Orange/Tigo</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <DollarSign className="h-4 w-4 text-kamsen-medium" />
+                        <DollarSign className="h-4 w-4 text-kamsen-gray" />
                         <span>Prix: 45,000 - 65,000 FCFA</span>
                       </div>
                     </div>
@@ -168,7 +168,7 @@ export default function GpsIntegrationGuide() {
                         <span>2G/3G Orange/Tigo/Expresso</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <DollarSign className="h-4 w-4 text-kamsen-medium" />
+                        <DollarSign className="h-4 w-4 text-kamsen-gray" />
                         <span>Prix: 25,000 - 35,000 FCFA</span>
                       </div>
                     </div>
@@ -221,16 +221,16 @@ export default function GpsIntegrationGuide() {
                 <div>
                   <h4 className="font-semibold mb-3">Avantages:</h4>
                   <div className="space-y-2 text-sm">
-                    <Badge variant="secondary" className="bg-kamsen-light text-green-800 block w-fit">
+                    <Badge variant="secondary" className="bg-kamsen-blue-light text-green-800 block w-fit">
                       ✓ Aucun coût matériel
                     </Badge>
-                    <Badge variant="secondary" className="bg-kamsen-light text-green-800 block w-fit">
+                    <Badge variant="secondary" className="bg-kamsen-blue-light text-green-800 block w-fit">
                       ✓ Déploiement immédiat
                     </Badge>
-                    <Badge variant="secondary" className="bg-kamsen-light text-green-800 block w-fit">
+                    <Badge variant="secondary" className="bg-kamsen-blue-light text-green-800 block w-fit">
                       ✓ Communication client-chauffeur
                     </Badge>
-                    <Badge variant="secondary" className="bg-kamsen-light text-green-800 block w-fit">
+                    <Badge variant="secondary" className="bg-kamsen-blue-light text-green-800 block w-fit">
                       ✓ Interface intuitive en français
                     </Badge>
                   </div>
@@ -259,10 +259,10 @@ export default function GpsIntegrationGuide() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <div className="border rounded-lg p-4">
                   <div className="flex items-center gap-2 mb-2">
-                    <MapPin className="h-5 w-5 text-kamsen-dark" />
+                    <MapPin className="h-5 w-5 text-kamsen-blue" />
                     <h4 className="font-semibold">Localisation GPS</h4>
                   </div>
-                  <p className="text-sm text-kamsen-medium">Position précise en temps réel</p>
+                  <p className="text-sm text-kamsen-gray">Position précise en temps réel</p>
                 </div>
 
                 <div className="border rounded-lg p-4">
@@ -270,15 +270,15 @@ export default function GpsIntegrationGuide() {
                     <Zap className="h-5 w-5 text-yellow-600" />
                     <h4 className="font-semibold">État moteur</h4>
                   </div>
-                  <p className="text-sm text-kamsen-medium">Marche/arrêt, heures d'utilisation</p>
+                  <p className="text-sm text-kamsen-gray">Marche/arrêt, heures d'utilisation</p>
                 </div>
 
                 <div className="border rounded-lg p-4">
                   <div className="flex items-center gap-2 mb-2">
-                    <Battery className="h-5 w-5 text-kamsen-dark" />
+                    <Battery className="h-5 w-5 text-kamsen-blue" />
                     <h4 className="font-semibold">Niveau carburant</h4>
                   </div>
-                  <p className="text-sm text-kamsen-medium">Suivi consommation</p>
+                  <p className="text-sm text-kamsen-gray">Suivi consommation</p>
                 </div>
 
                 <div className="border rounded-lg p-4">
@@ -286,7 +286,7 @@ export default function GpsIntegrationGuide() {
                     <Shield className="h-5 w-5 text-red-600" />
                     <h4 className="font-semibold">Sécurité</h4>
                   </div>
-                  <p className="text-sm text-kamsen-medium">Alertes vol, zone interdite</p>
+                  <p className="text-sm text-kamsen-gray">Alertes vol, zone interdite</p>
                 </div>
 
                 <div className="border rounded-lg p-4">
@@ -294,7 +294,7 @@ export default function GpsIntegrationGuide() {
                     <Truck className="h-5 w-5 text-purple-600" />
                     <h4 className="font-semibold">Maintenance</h4>
                   </div>
-                  <p className="text-sm text-kamsen-medium">Diagnostics préventifs</p>
+                  <p className="text-sm text-kamsen-gray">Diagnostics préventifs</p>
                 </div>
 
                 <div className="border rounded-lg p-4">
@@ -302,7 +302,7 @@ export default function GpsIntegrationGuide() {
                     <Clock className="h-5 w-5 text-orange-600" />
                     <h4 className="font-semibold">Utilisation</h4>
                   </div>
-                  <p className="text-sm text-kamsen-medium">Statistiques d'usage détaillées</p>
+                  <p className="text-sm text-kamsen-gray">Statistiques d'usage détaillées</p>
                 </div>
               </div>
             </CardContent>
@@ -319,8 +319,8 @@ export default function GpsIntegrationGuide() {
                 <div className="space-y-6">
                   <div className="border-l-4 border-l-blue-500 pl-4">
                     <h4 className="font-semibold text-blue-900">Phase 1: Démarrage immédiat (0-2 semaines)</h4>
-                    <p className="text-sm text-kamsen-medium mt-1">Application mobile chauffeur</p>
-                    <ul className="text-sm text-kamsen-medium mt-2 space-y-1">
+                    <p className="text-sm text-kamsen-gray mt-1">Application mobile chauffeur</p>
+                    <ul className="text-sm text-kamsen-gray mt-2 space-y-1">
                       <li>• Développement app Android/iOS simple</li>
                       <li>• Formation équipe chauffeurs</li>
                       <li>• Test sur 5-10 équipements pilotes</li>
@@ -330,8 +330,8 @@ export default function GpsIntegrationGuide() {
 
                   <div className="border-l-4 border-l-orange-500 pl-4">
                     <h4 className="font-semibold text-orange-900">Phase 2: Équipements critiques (1-2 mois)</h4>
-                    <p className="text-sm text-kamsen-medium mt-1">Trackers GPS sur gros équipements</p>
-                    <ul className="text-sm text-kamsen-medium mt-2 space-y-1">
+                    <p className="text-sm text-kamsen-gray mt-1">Trackers GPS sur gros équipements</p>
+                    <ul className="text-sm text-kamsen-gray mt-2 space-y-1">
                       <li>• Installation trackers sur pelleteuses, grues</li>
                       <li>• Abonnements data Orange/Tigo</li>
                       <li>• Formation équipe technique</li>
@@ -341,8 +341,8 @@ export default function GpsIntegrationGuide() {
 
                   <div className="border-l-4 border-l-green-500 pl-4">
                     <h4 className="font-semibold text-green-900">Phase 3: Déploiement complet (2-6 mois)</h4>
-                    <p className="text-sm text-kamsen-medium mt-1">IoT avancé sur toute la flotte</p>
-                    <ul className="text-sm text-kamsen-medium mt-2 space-y-1">
+                    <p className="text-sm text-kamsen-gray mt-1">IoT avancé sur toute la flotte</p>
+                    <ul className="text-sm text-kamsen-gray mt-2 space-y-1">
                       <li>• Capteurs IoT sur tous équipements</li>
                       <li>• Tableau de bord analytique avancé</li>
                       <li>• Maintenance prédictive</li>
@@ -361,7 +361,7 @@ export default function GpsIntegrationGuide() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="border rounded-lg p-4">
                     <h4 className="font-semibold">Matériel GPS</h4>
-                    <div className="text-sm text-kamsen-medium space-y-1 mt-2">
+                    <div className="text-sm text-kamsen-gray space-y-1 mt-2">
                       <p>• <strong>Senegal GPS</strong> - Rue 6 x Corniche, Dakar</p>
                       <p>• <strong>Orange Business</strong> - Solutions IoT</p>
                       <p>• <strong>Tigo Fleet</strong> - Gestion de flotte</p>
@@ -370,7 +370,7 @@ export default function GpsIntegrationGuide() {
                   
                   <div className="border rounded-lg p-4">
                     <h4 className="font-semibold">Développement Apps</h4>
-                    <div className="text-sm text-kamsen-medium space-y-1 mt-2">
+                    <div className="text-sm text-kamsen-gray space-y-1 mt-2">
                       <p>• <strong>Digital Africa</strong> - Plateau, Dakar</p>
                       <p>• <strong>Jokkolabs</strong> - Écosystème tech</p>
                       <p>• <strong>Équipe interne Kamsen</strong> - Recommandé</p>

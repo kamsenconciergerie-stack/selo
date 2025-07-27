@@ -127,19 +127,19 @@ export default function BookingModal({ equipment, open, onOpenChange }: BookingM
             />
             
             <div className="space-y-2">
-              <div className="flex items-center text-sm text-kamsen-medium">
+              <div className="flex items-center text-sm text-kamsen-gray">
                 <MapPin className="mr-2 h-4 w-4" />
                 {equipment.location}
               </div>
-              <div className="flex items-center text-sm text-kamsen-medium">
+              <div className="flex items-center text-sm text-kamsen-gray">
                 <Clock className="mr-2 h-4 w-4" />
                 {formatPriceWithPrefix(equipment.pricePerDay)}/jour
               </div>
             </div>
 
-            <div className="bg-kamsen-light p-4 rounded-lg">
+            <div className="bg-kamsen-blue-light p-4 rounded-lg">
               <h4 className="font-semibold mb-2">Total estimé</h4>
-              <div className="text-2xl font-bold text-kamsen-dark">
+              <div className="text-2xl font-bold text-kamsen-blue">
                 {formatPrice(calculateTotal())}
               </div>
             </div>
@@ -250,7 +250,7 @@ export default function BookingModal({ equipment, open, onOpenChange }: BookingM
                 <Button 
                   type="submit" 
                   disabled={createBookingMutation.isPending}
-                  className="flex-1 bg-kamsen-dark hover:bg-kamsen-dark/90"
+                  className="flex-1 bg-kamsen-blue hover:bg-kamsen-blue/90"
                 >
                   {createBookingMutation.isPending ? "Envoi..." : "Confirmer la réservation"}
                 </Button>

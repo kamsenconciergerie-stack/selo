@@ -111,7 +111,7 @@ function PartnerRequestsList() {
 
   if (requests.length === 0) {
     return (
-      <div className="text-center py-8 text-kamsen-medium">
+      <div className="text-center py-8 text-kamsen-gray">
         Aucune demande de partenariat enregistrée
       </div>
     );
@@ -139,13 +139,13 @@ function PartnerRequestsList() {
               {/* Info partenaire */}
               <div className="md:col-span-2">
                 <div className="flex items-start justify-between mb-2">
-                  <h5 className="font-semibold text-kamsen-dark">
+                  <h5 className="font-semibold text-kamsen-blue">
                     {request.firstName} {request.lastName}
                   </h5>
                   {getStatusBadge(request.status)}
                 </div>
                 
-                <div className="space-y-1 text-sm text-kamsen-medium">
+                <div className="space-y-1 text-sm text-kamsen-gray">
                   <div className="flex items-center gap-2">
                     <Mail className="h-4 w-4" />
                     <span>{request.email}</span>
@@ -161,7 +161,7 @@ function PartnerRequestsList() {
                         href={request.website} 
                         target="_blank" 
                         rel="noopener noreferrer"
-                        className="text-kamsen-dark hover:underline"
+                        className="text-kamsen-blue hover:underline"
                       >
                         {request.website}
                       </a>
@@ -176,7 +176,7 @@ function PartnerRequestsList() {
 
               {/* Catégories d'équipements */}
               <div>
-                <h6 className="font-medium text-kamsen-dark mb-2">Catégories d'intérêt</h6>
+                <h6 className="font-medium text-kamsen-blue mb-2">Catégories d'intérêt</h6>
                 <div className="flex flex-wrap gap-1">
                   {request.equipmentCategories.map((category) => (
                     <Badge 
@@ -245,13 +245,13 @@ function EquipmentWithUnavailabilityList() {
                 <div className="flex items-start justify-between mb-3">
                   <h4 className="font-semibold text-lg">{eq.name}</h4>
                   <Badge 
-                    className={eq.isAvailable ? 'bg-kamsen-light text-green-800' : 'bg-red-100 text-red-800'}
+                    className={eq.isAvailable ? 'bg-kamsen-blue-light text-green-800' : 'bg-red-100 text-red-800'}
                   >
                     {eq.isAvailable ? 'Disponible' : 'Indisponible'}
                   </Badge>
                 </div>
-                <p className="text-sm text-kamsen-medium mb-2">{eq.category}</p>
-                <div className="flex items-center gap-2 text-sm text-kamsen-medium mb-2">
+                <p className="text-sm text-kamsen-gray mb-2">{eq.category}</p>
+                <div className="flex items-center gap-2 text-sm text-kamsen-gray mb-2">
                   <MapPin className="h-4 w-4" />
                   {eq.location}
                 </div>
@@ -260,7 +260,7 @@ function EquipmentWithUnavailabilityList() {
 
               {/* Informations partenaire */}
               <div className="lg:col-span-1">
-                <h5 className="font-medium text-kamsen-dark mb-3 flex items-center gap-2">
+                <h5 className="font-medium text-kamsen-blue mb-3 flex items-center gap-2">
                   <Users className="h-4 w-4" />
                   Informations Partenaire
                 </h5>
@@ -272,17 +272,17 @@ function EquipmentWithUnavailabilityList() {
                     <p className="text-sm flex items-center gap-2">
                       <Clock className="h-3 w-3" />
                       <span className="font-medium">Dernière MAJ:</span> 
-                      <span className="text-kamsen-medium">{formatDate(eq.partnerInfo.lastUpdate)}</span>
+                      <span className="text-kamsen-gray">{formatDate(eq.partnerInfo.lastUpdate)}</span>
                     </p>
                   </div>
                 ) : (
-                  <p className="text-sm text-kamsen-medium">Aucune information partenaire</p>
+                  <p className="text-sm text-kamsen-gray">Aucune information partenaire</p>
                 )}
               </div>
 
               {/* Périodes d'indisponibilité */}
               <div className="lg:col-span-1">
-                <h5 className="font-medium text-kamsen-dark mb-3 flex items-center gap-2">
+                <h5 className="font-medium text-kamsen-blue mb-3 flex items-center gap-2">
                   <AlertTriangle className="h-4 w-4" />
                   Indisponibilités
                 </h5>
@@ -303,15 +303,15 @@ function EquipmentWithUnavailabilityList() {
                              period.reason === 'repair' ? 'Réparation' : 'Location externe'}
                           </Badge>
                         </div>
-                        <p className="text-xs text-kamsen-medium mb-1">
+                        <p className="text-xs text-kamsen-gray mb-1">
                           Du {format(new Date(period.startDate), 'dd MMM', { locale: fr })} au {format(new Date(period.endDate), 'dd MMM yyyy', { locale: fr })}
                         </p>
-                        <p className="text-xs text-kamsen-dark">{period.description}</p>
+                        <p className="text-xs text-kamsen-blue">{period.description}</p>
                       </div>
                     ))}
                   </div>
                 ) : (
-                  <p className="text-sm text-kamsen-medium">Aucune indisponibilité prévue</p>
+                  <p className="text-sm text-kamsen-gray">Aucune indisponibilité prévue</p>
                 )}
               </div>
             </div>
@@ -454,10 +454,10 @@ function AdminDashboardContent() {
   return (
     <div className="container mx-auto px-4 py-8 max-w-7xl">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-kamsen-dark mb-2">
+        <h1 className="text-3xl font-bold text-kamsen-blue mb-2">
           Dashboard Administrateur Kamsen
         </h1>
-        <p className="text-kamsen-medium">
+        <p className="text-kamsen-gray">
           Vue d'ensemble de la plateforme de location d'équipements
         </p>
       </div>
@@ -468,8 +468,8 @@ function AdminDashboardContent() {
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-kamsen-medium">Total Réservations</p>
-                <p className="text-3xl font-bold text-kamsen-dark">{stats.totalBookings}</p>
+                <p className="text-sm font-medium text-kamsen-gray">Total Réservations</p>
+                <p className="text-3xl font-bold text-kamsen-blue">{stats.totalBookings}</p>
               </div>
               <Calendar className="h-8 w-8 text-blue-500" />
             </div>
@@ -480,8 +480,8 @@ function AdminDashboardContent() {
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-kamsen-medium">Chiffre d'Affaires</p>
-                <p className="text-2xl font-bold text-kamsen-dark">{formatPriceLocal(stats.totalRevenue)}</p>
+                <p className="text-sm font-medium text-kamsen-gray">Chiffre d'Affaires</p>
+                <p className="text-2xl font-bold text-kamsen-blue">{formatPriceLocal(stats.totalRevenue)}</p>
               </div>
               <DollarSign className="h-8 w-8 text-green-500" />
             </div>
@@ -492,7 +492,7 @@ function AdminDashboardContent() {
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-kamsen-medium">En Attente</p>
+                <p className="text-sm font-medium text-kamsen-gray">En Attente</p>
                 <p className="text-3xl font-bold text-orange-600">{stats.pendingBookings}</p>
               </div>
               <AlertTriangle className="h-8 w-8 text-orange-500" />
@@ -504,7 +504,7 @@ function AdminDashboardContent() {
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-kamsen-medium">Demandes Partenaires</p>
+                <p className="text-sm font-medium text-kamsen-gray">Demandes Partenaires</p>
                 <p className="text-3xl font-bold text-purple-600">{stats.partnerRequests?.total || 0}</p>
                 <p className="text-xs text-purple-500 mt-1">{stats.partnerRequests?.pending || 0} en attente</p>
               </div>
@@ -517,8 +517,8 @@ function AdminDashboardContent() {
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-kamsen-medium">Équipements Actifs</p>
-                <p className="text-3xl font-bold text-kamsen-dark">{stats.availableEquipment}/{stats.totalEquipment}</p>
+                <p className="text-sm font-medium text-kamsen-gray">Équipements Actifs</p>
+                <p className="text-3xl font-bold text-kamsen-blue">{stats.availableEquipment}/{stats.totalEquipment}</p>
               </div>
               <Truck className="h-8 w-8 text-blue-500" />
             </div>
@@ -550,18 +550,18 @@ function AdminDashboardContent() {
               <CardContent>
                 <div className="space-y-4">
                   {getRecentBookings().map((booking) => (
-                    <div key={booking.id} className="flex items-center justify-between p-3 bg-kamsen-light rounded-lg">
+                    <div key={booking.id} className="flex items-center justify-between p-3 bg-kamsen-blue-light rounded-lg">
                       <div className="flex-1">
                         <p className="font-medium">{booking.customerName}</p>
-                        <p className="text-sm text-kamsen-medium">{booking.equipmentName || `Équipement #${booking.equipmentId}`}</p>
-                        <p className="text-sm text-kamsen-medium">{formatDate(booking.createdAt)}</p>
+                        <p className="text-sm text-kamsen-gray">{booking.equipmentName || `Équipement #${booking.equipmentId}`}</p>
+                        <p className="text-sm text-kamsen-gray">{formatDate(booking.createdAt)}</p>
                       </div>
                       <div className="flex items-center gap-2">
                         <Badge 
                           className={
-                            booking.status === 'confirmed' ? 'bg-kamsen-light text-green-800' :
+                            booking.status === 'confirmed' ? 'bg-kamsen-blue-light text-green-800' :
                             booking.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
-                            booking.status === 'completed' ? 'bg-kamsen-light text-blue-800' :
+                            booking.status === 'completed' ? 'bg-kamsen-blue-light text-blue-800' :
                             'bg-red-100 text-red-800'
                           }
                         >
@@ -588,18 +588,18 @@ function AdminDashboardContent() {
               <CardContent>
                 <div className="space-y-4">
                   {getPopularEquipment().map((equipment) => (
-                    <div key={equipment.id} className="flex items-center justify-between p-3 bg-kamsen-light rounded-lg">
+                    <div key={equipment.id} className="flex items-center justify-between p-3 bg-kamsen-blue-light rounded-lg">
                       <div className="flex-1">
                         <p className="font-medium">{equipment.name}</p>
-                        <p className="text-sm text-kamsen-medium">{equipment.category}</p>
-                        <div className="flex items-center gap-2 text-sm text-kamsen-medium">
+                        <p className="text-sm text-kamsen-gray">{equipment.category}</p>
+                        <div className="flex items-center gap-2 text-sm text-kamsen-gray">
                           <MapPin className="h-3 w-3" />
                           {equipment.location}
                         </div>
                       </div>
                       <div className="text-right">
                         <p className="font-bold text-sm">{equipment.bookingCount} réservations</p>
-                        <p className="text-xs text-kamsen-medium">{formatPriceWithPrefix(equipment.pricePerDay)}/jour</p>
+                        <p className="text-xs text-kamsen-gray">{formatPriceWithPrefix(equipment.pricePerDay)}/jour</p>
                       </div>
                     </div>
                   ))}
@@ -620,24 +620,24 @@ function AdminDashboardContent() {
                   <div key={booking.id} className="grid grid-cols-1 lg:grid-cols-5 gap-4 p-4 border rounded-lg">
                     <div>
                       <p className="font-medium">{booking.customerName}</p>
-                      <p className="text-sm text-kamsen-medium">{booking.customerEmail}</p>
-                      <p className="text-sm text-kamsen-medium">{booking.customerPhone}</p>
+                      <p className="text-sm text-kamsen-gray">{booking.customerEmail}</p>
+                      <p className="text-sm text-kamsen-gray">{booking.customerPhone}</p>
                     </div>
                     <div>
                       <p className="font-medium">{booking.equipmentName || `Équipement #${booking.equipmentId}`}</p>
-                      <p className="text-sm text-kamsen-medium">{booking.equipmentCategory}</p>
+                      <p className="text-sm text-kamsen-gray">{booking.equipmentCategory}</p>
                     </div>
                     <div>
                       <p className="text-sm font-medium">{formatDate(booking.startDate)}</p>
-                      <p className="text-sm text-kamsen-medium">au {formatDate(booking.endDate)}</p>
+                      <p className="text-sm text-kamsen-gray">au {formatDate(booking.endDate)}</p>
                     </div>
                     <div>
                       <p className="font-bold">{formatPriceLocal(booking.totalPrice)}</p>
                       <Badge 
                         className={
-                          booking.status === 'confirmed' ? 'bg-kamsen-light text-green-800' :
+                          booking.status === 'confirmed' ? 'bg-kamsen-blue-light text-green-800' :
                           booking.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
-                          booking.status === 'completed' ? 'bg-kamsen-light text-blue-800' :
+                          booking.status === 'completed' ? 'bg-kamsen-blue-light text-blue-800' :
                           'bg-red-100 text-red-800'
                         }
                       >
@@ -696,16 +696,16 @@ function AdminDashboardContent() {
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div className="text-center p-4 bg-blue-50 rounded-lg">
-                    <p className="text-2xl font-bold text-kamsen-dark">{stats.partnerRequests?.total || 15}</p>
-                    <p className="text-sm text-kamsen-medium">Total Partenaires</p>
+                    <p className="text-2xl font-bold text-kamsen-blue">{stats.partnerRequests?.total || 15}</p>
+                    <p className="text-sm text-kamsen-gray">Total Partenaires</p>
                   </div>
                   <div className="text-center p-4 bg-green-50 rounded-lg">
-                    <p className="text-2xl font-bold text-kamsen-dark">{(stats.partnerRequests?.total || 15) - (stats.partnerRequests?.pending || 2)}</p>
-                    <p className="text-sm text-kamsen-medium">Partenaires Actifs</p>
+                    <p className="text-2xl font-bold text-kamsen-blue">{(stats.partnerRequests?.total || 15) - (stats.partnerRequests?.pending || 2)}</p>
+                    <p className="text-sm text-kamsen-gray">Partenaires Actifs</p>
                   </div>
                   <div className="text-center p-4 bg-orange-50 rounded-lg">
                     <p className="text-2xl font-bold text-orange-600">{stats.partnerRequests?.pending || 2}</p>
-                    <p className="text-sm text-kamsen-medium">En Attente</p>
+                    <p className="text-sm text-kamsen-gray">En Attente</p>
                   </div>
                 </div>
               </CardContent>
@@ -717,17 +717,17 @@ function AdminDashboardContent() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
-                  <div className="flex items-center justify-between p-3 bg-kamsen-light rounded-lg">
+                  <div className="flex items-center justify-between p-3 bg-kamsen-blue-light rounded-lg">
                     <div>
                       <p className="font-medium">Transport Express Dakar</p>
-                      <p className="text-sm text-kamsen-medium">Dakar - Transport routier</p>
+                      <p className="text-sm text-kamsen-gray">Dakar - Transport routier</p>
                     </div>
-                    <Badge className="bg-kamsen-light text-green-800">Vérifié</Badge>
+                    <Badge className="bg-kamsen-blue-light text-green-800">Vérifié</Badge>
                   </div>
-                  <div className="flex items-center justify-between p-3 bg-kamsen-light rounded-lg">
+                  <div className="flex items-center justify-between p-3 bg-kamsen-blue-light rounded-lg">
                     <div>
                       <p className="font-medium">Logistique Sénégal Pro</p>
-                      <p className="text-sm text-kamsen-medium">Thiès - Logistique</p>
+                      <p className="text-sm text-kamsen-gray">Thiès - Logistique</p>
                     </div>
                     <Badge className="bg-yellow-100 text-yellow-800">En cours</Badge>
                   </div>
@@ -771,24 +771,24 @@ function AdminDashboardContent() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
-                  <div className="flex items-center justify-between p-3 bg-kamsen-light rounded-lg">
+                  <div className="flex items-center justify-between p-3 bg-kamsen-blue-light rounded-lg">
                     <div>
                       <p className="font-medium">Transport Express Dakar</p>
-                      <p className="text-sm text-kamsen-medium">Note: 4.8/5 - 45 commandes</p>
+                      <p className="text-sm text-kamsen-gray">Note: 4.8/5 - 45 commandes</p>
                     </div>
                     <div className="text-right">
-                      <span className="font-bold text-kamsen-dark">95%</span>
-                      <p className="text-xs text-kamsen-medium">Taux de réussite</p>
+                      <span className="font-bold text-kamsen-blue">95%</span>
+                      <p className="text-xs text-kamsen-gray">Taux de réussite</p>
                     </div>
                   </div>
-                  <div className="flex items-center justify-between p-3 bg-kamsen-light rounded-lg">
+                  <div className="flex items-center justify-between p-3 bg-kamsen-blue-light rounded-lg">
                     <div>
                       <p className="font-medium">Camions Sahel</p>
-                      <p className="text-sm text-kamsen-medium">Note: 4.6/5 - 32 commandes</p>
+                      <p className="text-sm text-kamsen-gray">Note: 4.6/5 - 32 commandes</p>
                     </div>
                     <div className="text-right">
-                      <span className="font-bold text-kamsen-dark">92%</span>
-                      <p className="text-xs text-kamsen-medium">Taux de réussite</p>
+                      <span className="font-bold text-kamsen-blue">92%</span>
+                      <p className="text-xs text-kamsen-gray">Taux de réussite</p>
                     </div>
                   </div>
                 </div>
@@ -807,16 +807,16 @@ function AdminDashboardContent() {
                   <div className="flex items-center justify-between p-3 bg-yellow-50 rounded-lg">
                     <div>
                       <p className="font-medium">Validation partenaire</p>
-                      <p className="text-sm text-kamsen-medium">Logistique Sénégal Pro - en attente</p>
+                      <p className="text-sm text-kamsen-gray">Logistique Sénégal Pro - en attente</p>
                     </div>
-                    <Button size="sm" className="bg-kamsen-dark hover:bg-kamsen-dark/90">
+                    <Button size="sm" className="bg-kamsen-blue hover:bg-kamsen-blue/90">
                       Examiner
                     </Button>
                   </div>
                   <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
                     <div>
                       <p className="font-medium">Réservation litigieuse</p>
-                      <p className="text-sm text-kamsen-medium">Commande #4521 - client mécontent</p>
+                      <p className="text-sm text-kamsen-gray">Commande #4521 - client mécontent</p>
                     </div>
                     <Button size="sm" variant="outline">
                       Résoudre
@@ -903,7 +903,7 @@ function AdminDashboardContent() {
                       <div className="flex items-center gap-2">
                         <div className="w-24 h-2 bg-gray-200 rounded">
                           <div 
-                            className="h-2 bg-kamsen-dark rounded" 
+                            className="h-2 bg-kamsen-blue rounded" 
                             style={{ width: `${(count / stats.totalBookings) * 100}%` }}
                           ></div>
                         </div>
@@ -934,15 +934,15 @@ function AdminDashboardContent() {
                       <CardContent className="p-4">
                         <div className="text-center">
                           <p className="text-2xl font-bold text-orange-600">{stats.partnerRequests?.pending || 0}</p>
-                          <p className="text-sm text-kamsen-medium">En Attente</p>
+                          <p className="text-sm text-kamsen-gray">En Attente</p>
                         </div>
                       </CardContent>
                     </Card>
                     <Card>
                       <CardContent className="p-4">
                         <div className="text-center">
-                          <p className="text-2xl font-bold text-kamsen-dark">{stats.partnerRequests?.approved || 0}</p>
-                          <p className="text-sm text-kamsen-medium">Approuvées</p>
+                          <p className="text-2xl font-bold text-kamsen-blue">{stats.partnerRequests?.approved || 0}</p>
+                          <p className="text-sm text-kamsen-gray">Approuvées</p>
                         </div>
                       </CardContent>
                     </Card>
@@ -950,7 +950,7 @@ function AdminDashboardContent() {
                       <CardContent className="p-4">
                         <div className="text-center">
                           <p className="text-2xl font-bold text-red-600">{stats.partnerRequests?.rejected || 0}</p>
-                          <p className="text-sm text-kamsen-medium">Rejetées</p>
+                          <p className="text-sm text-kamsen-gray">Rejetées</p>
                         </div>
                       </CardContent>
                     </Card>
@@ -958,7 +958,7 @@ function AdminDashboardContent() {
 
                   {/* Liste des demandes */}
                   <div className="space-y-4">
-                    <h4 className="font-semibold text-kamsen-dark">Demandes Récentes</h4>
+                    <h4 className="font-semibold text-kamsen-blue">Demandes Récentes</h4>
                     <PartnerRequestsList />
                   </div>
                 </div>

@@ -35,11 +35,11 @@ export default function ProtectedAdminRoute({ children }: ProtectedAdminRoutePro
 
   // Show login form
   return (
-    <div className="min-h-screen bg-kamsen-light flex items-center justify-center">
-      <div className="max-w-md w-full bg-kamsen-white rounded-lg shadow-lg p-8">
+    <div className="min-h-screen bg-kamsen-blue-light flex items-center justify-center">
+      <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-8">
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold text-kamsen-dark mb-2">Administration Kamsen</h1>
-          <p className="text-kamsen-medium">Connectez-vous pour accéder au tableau de bord</p>
+          <h1 className="text-2xl font-bold text-kamsen-blue mb-2">Administration Kamsen</h1>
+          <p className="text-kamsen-gray">Connectez-vous pour accéder au tableau de bord</p>
         </div>
         
         <AdminLoginForm onSuccess={() => setIsAuthenticated(true)} />
@@ -69,7 +69,7 @@ function AdminLoginForm({ onSuccess }: { onSuccess: () => void }) {
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div>
-        <label className="block text-sm font-medium text-kamsen-dark mb-2">
+        <label className="block text-sm font-medium text-kamsen-blue mb-2">
           Nom d'utilisateur
         </label>
         <input
@@ -82,7 +82,7 @@ function AdminLoginForm({ onSuccess }: { onSuccess: () => void }) {
       </div>
       
       <div>
-        <label className="block text-sm font-medium text-kamsen-dark mb-2">
+        <label className="block text-sm font-medium text-kamsen-blue mb-2">
           Mot de passe
         </label>
         <input
@@ -100,7 +100,7 @@ function AdminLoginForm({ onSuccess }: { onSuccess: () => void }) {
       
       <button
         type="submit"
-        className="w-full bg-kamsen-dark hover:bg-kamsen-dark/90 text-kamsen-white font-medium py-2 px-4 rounded-md transition-colors"
+        className="w-full bg-kamsen-blue hover:bg-kamsen-blue/90 text-white font-medium py-2 px-4 rounded-md transition-colors"
       >
         Se connecter
       </button>

@@ -129,7 +129,7 @@ export function LoginModal({ open, onOpenChange, onSwitchToRegister, onSwitchToP
                 type="button"
                 variant="link"
                 onClick={onSwitchToPartnerRegister}
-                className="text-sm text-kamsen-dark"
+                className="text-sm text-kamsen-blue"
               >
                 Devenir partenaire Kamsen
               </Button>

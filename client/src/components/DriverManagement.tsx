@@ -237,8 +237,8 @@ export default function DriverManagement({ partnerId }: DriverManagementProps) {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h3 className="text-lg font-semibold text-kamsen-dark">Gestion des Chauffeurs</h3>
-          <p className="text-sm text-kamsen-medium">
+          <h3 className="text-lg font-semibold text-kamsen-blue">Gestion des Chauffeurs</h3>
+          <p className="text-sm text-kamsen-gray">
             {drivers.length} chauffeur{drivers.length > 1 ? 's' : ''} enregistré{drivers.length > 1 ? 's' : ''}
           </p>
         </div>
@@ -402,7 +402,7 @@ export default function DriverManagement({ partnerId }: DriverManagementProps) {
 
         <TabsContent value="drivers" className="space-y-4">
           {drivers.length === 0 ? (
-            <div className="text-center py-8 text-kamsen-medium">
+            <div className="text-center py-8 text-kamsen-gray">
               <User className="h-16 w-16 mx-auto mb-4 opacity-50" />
               <p className="text-lg font-medium mb-2">Aucun chauffeur enregistré</p>
               <p className="text-sm mb-4">
@@ -421,14 +421,14 @@ export default function DriverManagement({ partnerId }: DriverManagementProps) {
                     <div className="flex justify-between items-start">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">
-                          <div className="w-10 h-10 bg-kamsen-light rounded-full flex items-center justify-center">
-                            <User className="h-5 w-5 text-kamsen-dark" />
+                          <div className="w-10 h-10 bg-kamsen-blue-light rounded-full flex items-center justify-center">
+                            <User className="h-5 w-5 text-kamsen-blue" />
                           </div>
                           <div>
                             <h4 className="font-semibold text-lg">
                               {driver.firstName} {driver.lastName}
                             </h4>
-                            <div className="flex items-center gap-4 text-sm text-kamsen-medium">
+                            <div className="flex items-center gap-4 text-sm text-kamsen-gray">
                               <div className="flex items-center gap-1">
                                 <Phone className="h-3 w-3" />
                                 <a href={`tel:${driver.phone}`} className="hover:underline">
@@ -450,17 +450,17 @@ export default function DriverManagement({ partnerId }: DriverManagementProps) {
                         <div className="space-y-2">
                           {driver.licenseCategory && (
                             <div className="flex items-center gap-2 text-sm">
-                              <Award className="h-4 w-4 text-kamsen-light" />
+                              <Award className="h-4 w-4 text-kamsen-gray" />
                               <span>Permis {driver.licenseCategory}</span>
                               {driver.licenseNumber && (
-                                <span className="text-kamsen-medium">({driver.licenseNumber})</span>
+                                <span className="text-kamsen-gray">({driver.licenseNumber})</span>
                               )}
                             </div>
                           )}
                           
                           {driver.experienceYears && driver.experienceYears > 0 && (
                             <div className="flex items-center gap-2 text-sm">
-                              <Clock className="h-4 w-4 text-kamsen-light" />
+                              <Clock className="h-4 w-4 text-kamsen-gray" />
                               <span>{driver.experienceYears} années d'expérience</span>
                             </div>
                           )}
@@ -476,7 +476,7 @@ export default function DriverManagement({ partnerId }: DriverManagementProps) {
                           )}
 
                           {driver.notes && (
-                            <p className="text-sm text-kamsen-medium mt-2 italic">
+                            <p className="text-sm text-kamsen-gray mt-2 italic">
                               {driver.notes}
                             </p>
                           )}
@@ -486,7 +486,7 @@ export default function DriverManagement({ partnerId }: DriverManagementProps) {
                       <div className="flex items-center gap-2">
                         <Badge 
                           variant={driver.isActive ? "default" : "secondary"}
-                          className={driver.isActive ? "bg-kamsen-light text-green-800" : "bg-kamsen-light text-kamsen-medium"}
+                          className={driver.isActive ? "bg-kamsen-blue-light text-green-800" : "bg-kamsen-blue-light text-kamsen-gray"}
                         >
                           {driver.isActive ? (
                             <>
@@ -527,7 +527,7 @@ export default function DriverManagement({ partnerId }: DriverManagementProps) {
 
         <TabsContent value="active-assignments" className="space-y-4">
           {getActiveAssignments().length === 0 ? (
-            <div className="text-center py-8 text-kamsen-medium">
+            <div className="text-center py-8 text-kamsen-gray">
               <Truck className="h-16 w-16 mx-auto mb-4 opacity-50" />
               <p className="text-lg font-medium mb-2">Aucune affectation active</p>
               <p className="text-sm">
@@ -542,24 +542,24 @@ export default function DriverManagement({ partnerId }: DriverManagementProps) {
                     <div className="flex justify-between items-start">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">
-                          <Badge className="bg-kamsen-light text-blue-800">
+                          <Badge className="bg-kamsen-blue-light text-blue-800">
                             {assignment.status === 'assigned' ? 'Assigné' : 'En cours'}
                           </Badge>
-                          <span className="text-sm text-kamsen-medium">
+                          <span className="text-sm text-kamsen-gray">
                             Réservation #{assignment.bookingId}
                           </span>
                         </div>
                         
                         <div className="space-y-2">
                           <div className="flex items-center gap-2">
-                            <User className="h-4 w-4 text-kamsen-light" />
+                            <User className="h-4 w-4 text-kamsen-gray" />
                             <span className="font-medium">
                               {assignment.driver?.firstName} {assignment.driver?.lastName}
                             </span>
                           </div>
                           
                           <div className="flex items-center gap-2">
-                            <Truck className="h-4 w-4 text-kamsen-light" />
+                            <Truck className="h-4 w-4 text-kamsen-gray" />
                             <span>{assignment.equipment?.name}</span>
                           </div>
 
@@ -571,7 +571,7 @@ export default function DriverManagement({ partnerId }: DriverManagementProps) {
                         </div>
                       </div>
                       
-                      <div className="text-right text-sm text-kamsen-medium">
+                      <div className="text-right text-sm text-kamsen-gray">
                         <div className="flex items-center gap-1">
                           <Calendar className="h-3 w-3" />
                           Assigné le {format(new Date(assignment.assignedAt), "dd/MM/yyyy", { locale: fr })}
@@ -587,7 +587,7 @@ export default function DriverManagement({ partnerId }: DriverManagementProps) {
 
         <TabsContent value="completed" className="space-y-4">
           {getCompletedAssignments().length === 0 ? (
-            <div className="text-center py-8 text-kamsen-medium">
+            <div className="text-center py-8 text-kamsen-gray">
               <Calendar className="h-16 w-16 mx-auto mb-4 opacity-50" />
               <p className="text-lg font-medium mb-2">Aucune mission terminée</p>
               <p className="text-sm">
@@ -602,10 +602,10 @@ export default function DriverManagement({ partnerId }: DriverManagementProps) {
                     <div className="flex justify-between items-start">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">
-                          <Badge className="bg-kamsen-light text-green-800">
+                          <Badge className="bg-kamsen-blue-light text-green-800">
                             Terminé
                           </Badge>
-                          <span className="text-sm text-kamsen-medium">
+                          <span className="text-sm text-kamsen-gray">
                             Réservation #{assignment.bookingId}
                           </span>
                         </div>

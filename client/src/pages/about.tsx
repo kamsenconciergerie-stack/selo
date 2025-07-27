@@ -102,11 +102,11 @@ export default function About() {
   ];
 
   return (
-    <div className="min-h-screen bg-kamsen-light">
+    <div className="min-h-screen bg-kamsen-blue-light">
       <Header />
       
       {/* Rejoignez-nous Section - En haut */}
-      <section className="bg-kamsen-gradient text-kamsen-white py-16">
+      <section className="bg-kamsen-gradient text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h1 className="text-4xl lg:text-5xl font-bold mb-6">
@@ -122,7 +122,7 @@ export default function About() {
           <div className="text-center">
             <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
               <DialogTrigger asChild>
-                <Button className="bg-kamsen-white text-kamsen-dark hover:bg-kamsen-light px-8 py-3 text-lg font-semibold">
+                <Button className="bg-white text-kamsen-blue hover:bg-kamsen-blue-light px-8 py-3 text-lg font-semibold">
                   Devenir Partenaire Kamsen
                 </Button>
               </DialogTrigger>
@@ -255,7 +255,7 @@ export default function About() {
 
                     <Button 
                       type="submit" 
-                      className="w-full bg-kamsen-dark hover:bg-kamsen-dark/90"
+                      className="w-full bg-kamsen-blue hover:bg-kamsen-blue/90"
                       disabled={isSubmitting}
                     >
                       {isSubmitting ? "Envoi en cours..." : "Envoyer ma demande"}
@@ -269,28 +269,28 @@ export default function About() {
       </section>
 
       {/* À Propos Section */}
-      <section className="py-16 bg-kamsen-white">
+      <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-3xl lg:text-4xl font-bold mb-6 text-kamsen-dark">
+              <h2 className="text-3xl lg:text-4xl font-bold mb-6 text-kamsen-blue">
                 À Propos d'Kamsen
               </h2>
-              <p className="text-lg text-kamsen-medium mb-8">
+              <p className="text-lg text-kamsen-gray mb-8">
                 Kamsen vise à accompagner les professionnels et les particuliers dans leurs projets en fournissant des moyens de transport de colis et équipements de qualité et un service personnalisé partout au Sénégal.
               </p>
               
               {/* Rejoignez notre réseau de partenaires */}
               <div className="bg-gradient-to-r from-primary-orange/10 to-aywa-blue/10 p-6 rounded-lg mb-8">
-                <h3 className="text-xl font-semibold text-kamsen-dark mb-4">
+                <h3 className="text-xl font-semibold text-kamsen-blue mb-4">
                   🤝 Rejoignez notre réseau de partenaires
                 </h3>
-                <p className="text-kamsen-dark mb-4">
+                <p className="text-kamsen-blue mb-4">
                   Vous possédez des équipements de transport ou de logistique ? Développez votre activité en rejoignant notre réseau de partenaires de confiance.
                 </p>
                 <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
                   <DialogTrigger asChild>
-                    <Button className="bg-kamsen-dark hover:bg-kamsen-dark/90 text-kamsen-white">
+                    <Button className="bg-kamsen-blue hover:bg-kamsen-blue/90 text-white">
                       Devenir Partenaire
                     </Button>
                   </DialogTrigger>
@@ -299,10 +299,10 @@ export default function About() {
               
               <div className="space-y-4">
                 <div className="flex items-center gap-3">
-                  <div className="flex-shrink-0 w-8 h-8 bg-kamsen-dark rounded-full flex items-center justify-center">
-                    <span className="text-kamsen-white font-bold">📞</span>
+                  <div className="flex-shrink-0 w-8 h-8 bg-kamsen-blue rounded-full flex items-center justify-center">
+                    <span className="text-white font-bold">📞</span>
                   </div>
-                  <span className="text-kamsen-dark">+221 78 606 70 13</span>
+                  <span className="text-kamsen-blue">+221 78 606 70 13</span>
                 </div>
               </div>
 
