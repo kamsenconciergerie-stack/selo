@@ -105,7 +105,7 @@ export default function SEOContent() {
 
         <div className="mt-16 bg-kamsen-blue text-white p-8 rounded-lg text-center">
           <h3 className="text-2xl font-bold mb-4">
-            Besoin d'un Devis pour Votre Projet au Sénégal ?
+            besoin d un devis?
           </h3>
           <p className="text-lg mb-6">
             Contactez-nous dès maintenant pour obtenir un devis personnalisé 
