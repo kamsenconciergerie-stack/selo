@@ -453,17 +453,21 @@ export default function Home() {
               ))}
             </div>
             
-            <Card className="p-6">
+            <div className="text-center">
               <img 
                 src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600"
                 alt="Carte du Sénégal" 
-                className="w-full h-64 object-cover rounded-lg mb-4"
+                className="w-full h-64 object-cover rounded-lg mb-6"
               />
-              <p className="text-center text-kamsen-gray">
-                <i className="fas fa-info-circle mr-2"></i>
-                Votre ville n'est pas listée ? Contactez-nous pour un devis personnalisé
+              <p className="text-kamsen-gray mb-4">
+                Votre ville n'est pas listée ?
               </p>
-            </Card>
+              <Link href="/contact">
+                <Button className="bg-kamsen-orange hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg">
+                  Demandez un devis
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
