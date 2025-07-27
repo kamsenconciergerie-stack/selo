@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu, Phone, Truck } from "lucide-react";
 import { useState } from "react";
-import logoPath from "@assets/Screenshot_20250624_164242_Canva_1750783591400.jpg";
+import logoPath from "@assets/84129083_1753626050381.png";
 
 export default function Header() {
   const [location] = useLocation();
@@ -29,7 +29,7 @@ export default function Header() {
         <div className="flex justify-between items-center h-16">
           <Link href="/" className="flex items-center">
             <img 
-              src="/images/kamsen-logo-new.svg" 
+              src={logoPath} 
               alt="Kamsen - Des charges en moins" 
               className="h-12 w-auto"
             />
