@@ -77,22 +77,22 @@ export default function PartnerLogin() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6">
+    <div className="min-h-screen bg-kamsen-light flex items-center justify-center p-6">
       <div className="w-full max-w-md">
         {/* Header */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-orange rounded-full mb-4">
-            <Building className="h-8 w-8 text-white" />
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-kamsen-dark rounded-full mb-4">
+            <Building className="h-8 w-8 text-kamsen-white" />
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Espace Partenaire</h1>
-          <p className="text-gray-600">Plateforme Kamsen Logistics</p>
+          <h1 className="text-3xl font-bold text-kamsen-dark mb-2">Espace Partenaire</h1>
+          <p className="text-kamsen-medium">Plateforme Kamsen Logistics</p>
         </div>
 
         {/* Login Card */}
         <Card className="shadow-lg">
           <CardHeader className="space-y-1">
             <CardTitle className="text-2xl text-center">Connexion</CardTitle>
-            <p className="text-sm text-gray-600 text-center">
+            <p className="text-sm text-kamsen-medium text-center">
               Accédez à votre tableau de bord partenaire
             </p>
           </CardHeader>
@@ -101,7 +101,7 @@ export default function PartnerLogin() {
               <div className="space-y-2">
                 <Label htmlFor="email">Email professionnel</Label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                  <Mail className="absolute left-3 top-3 h-4 w-4 text-kamsen-light" />
                   <Input
                     id="email"
                     type="email"
@@ -117,7 +117,7 @@ export default function PartnerLogin() {
               <div className="space-y-2">
                 <Label htmlFor="password">Mot de passe</Label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                  <Lock className="absolute left-3 top-3 h-4 w-4 text-kamsen-light" />
                   <Input
                     id="password"
                     type={showPassword ? "text" : "password"}
@@ -145,7 +145,7 @@ export default function PartnerLogin() {
 
               <Button 
                 type="submit" 
-                className="w-full bg-primary-orange hover:bg-orange-600" 
+                className="w-full bg-kamsen-dark hover:bg-orange-600" 
                 disabled={isLoading}
               >
                 {isLoading ? (
@@ -184,9 +184,9 @@ export default function PartnerLogin() {
               </div>
             </div>
 
-            <div className="mt-6 text-center text-sm text-gray-600">
+            <div className="mt-6 text-center text-sm text-kamsen-medium">
               <p>Pas encore partenaire ?</p>
-              <Button variant="link" className="text-primary-orange" onClick={() => window.location.href = "/contact"}>
+              <Button variant="link" className="text-kamsen-dark" onClick={() => window.location.href = "/contact"}>
                 Devenir partenaire Kamsen
               </Button>
             </div>
@@ -194,7 +194,7 @@ export default function PartnerLogin() {
         </Card>
 
         <div className="mt-8 text-center">
-          <Button variant="link" className="text-gray-600" onClick={() => window.location.href = "/"}>
+          <Button variant="link" className="text-kamsen-medium" onClick={() => window.location.href = "/"}>
             ← Retour à l'accueil
           </Button>
         </div>

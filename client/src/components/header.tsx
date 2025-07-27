@@ -24,7 +24,7 @@ export default function Header() {
   };
 
   return (
-    <header className="bg-white shadow-sm sticky top-0 z-50">
+    <header className="bg-kamsen-white shadow-sm sticky top-0 z-50 border-b border-kamsen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <Link href="/" className="flex items-center">
@@ -42,8 +42,8 @@ export default function Header() {
                 href={item.href}
                 className={`font-medium transition-colors ${
                   isActive(item.href)
-                    ? "text-primary-orange"
-                    : "text-gray-700 hover:text-primary-orange"
+                    ? "text-kamsen-dark"
+                    : "text-kamsen-medium hover:text-kamsen-dark"
                 }`}
               >
                 {item.name}
@@ -52,12 +52,12 @@ export default function Header() {
           </nav>
           
           <div className="flex items-center space-x-4">
-            <div className="hidden sm:flex items-center text-gray-700 hover:text-primary-orange">
+            <div className="hidden sm:flex items-center text-kamsen-medium hover:text-kamsen-dark">
               <Phone className="h-4 w-4 mr-2" />
               <span>+221 78 606 70 13</span>
             </div>
             <Link href="/devis">
-              <Button className="bg-primary-orange hover:bg-primary-orange/90 text-white">
+              <Button className="bg-kamsen-dark hover:bg-kamsen-medium text-kamsen-white">
                 Demande de devis
               </Button>
             </Link>
@@ -78,14 +78,14 @@ export default function Header() {
                       onClick={() => setIsOpen(false)}
                       className={`font-medium text-lg transition-colors ${
                         isActive(item.href)
-                          ? "text-primary-orange"
-                          : "text-gray-700 hover:text-primary-orange"
+                          ? "text-kamsen-dark"
+                          : "text-kamsen-dark hover:text-kamsen-dark"
                       }`}
                     >
                       {item.name}
                     </Link>
                   ))}
-                  <div className="flex items-center text-gray-700 pt-4">
+                  <div className="flex items-center text-kamsen-dark pt-4">
                     <Phone className="h-4 w-4 mr-2" />
                     <span>+221 78 606 70 13</span>
                   </div>

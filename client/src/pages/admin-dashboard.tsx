@@ -233,11 +233,11 @@ export default function AdminDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-kamsen-light">
       <Header />
       
       {/* Admin Header */}
-      <section className="bg-kamsen-dark text-white py-12">
+      <section className="bg-kamsen-dark text-kamsen-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center">
             <div>
@@ -251,7 +251,7 @@ export default function AdminDashboard() {
             
             <Dialog open={isAddModalOpen} onOpenChange={setIsAddModalOpen}>
               <DialogTrigger asChild>
-                <Button className="bg-primary-orange hover:bg-primary-orange/90">
+                <Button className="bg-kamsen-dark hover:bg-kamsen-dark/90">
                   <Plus className="mr-2 h-4 w-4" />
                   Ajouter un équipement
                 </Button>
@@ -389,7 +389,7 @@ export default function AdminDashboard() {
                       <Button 
                         type="submit" 
                         disabled={addMutation.isPending}
-                        className="flex-1 bg-primary-orange hover:bg-primary-orange/90"
+                        className="flex-1 bg-kamsen-dark hover:bg-kamsen-dark/90"
                       >
                         {addMutation.isPending ? "Ajout en cours..." : "Ajouter l'équipement"}
                       </Button>
@@ -414,7 +414,7 @@ export default function AdminDashboard() {
       <section className="py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Gestion des équipements</h2>
+            <h2 className="text-2xl font-bold text-kamsen-dark mb-4">Gestion des équipements</h2>
             <div className="bg-blue-50 border-l-4 border-blue-400 p-4 rounded">
               <p className="text-blue-700">
                 <strong>Total:</strong> {equipment.length} équipements • 
@@ -443,21 +443,21 @@ export default function AdminDashboard() {
                   <CardContent className="p-6">
                     <div className="flex justify-between items-start mb-4">
                       <div className="flex-1">
-                        <h3 className="font-semibold text-gray-900 mb-2">{eq.name}</h3>
+                        <h3 className="font-semibold text-kamsen-dark mb-2">{eq.name}</h3>
                         <Badge variant={eq.isAvailable ? "default" : "secondary"} className="mb-2">
                           {eq.isAvailable ? "Disponible" : "Non disponible"}
                         </Badge>
-                        <p className="text-sm text-gray-600 mb-2">{eq.category}</p>
-                        <p className="text-sm font-medium text-primary-orange">
+                        <p className="text-sm text-kamsen-medium mb-2">{eq.category}</p>
+                        <p className="text-sm font-medium text-kamsen-dark">
                           {eq.pricePerDay.toLocaleString()} XOF/jour
                         </p>
-                        <p className="text-xs text-gray-500 mt-1">📍 {eq.location}</p>
+                        <p className="text-xs text-kamsen-medium mt-1">📍 {eq.location}</p>
                       </div>
                     </div>
 
                     <div className="flex flex-col gap-2">
                       {/* Image Upload */}
-                      <div className="border border-dashed border-gray-300 rounded-lg p-4 text-center">
+                      <div className="border border-dashed border-kamsen rounded-lg p-4 text-center">
                         <input
                           type="file"
                           multiple
@@ -470,8 +470,8 @@ export default function AdminDashboard() {
                           htmlFor={`upload-${eq.id}`}
                           className="cursor-pointer flex flex-col items-center gap-2"
                         >
-                          <ImageIcon className="h-8 w-8 text-gray-400" />
-                          <span className="text-sm text-gray-600">
+                          <ImageIcon className="h-8 w-8 text-kamsen-light" />
+                          <span className="text-sm text-kamsen-medium">
                             Cliquer pour ajouter des images
                           </span>
                         </label>
@@ -661,7 +661,7 @@ export default function AdminDashboard() {
                   <Button 
                     type="submit" 
                     disabled={updateMutation.isPending}
-                    className="flex-1 bg-primary-orange hover:bg-primary-orange/90"
+                    className="flex-1 bg-kamsen-dark hover:bg-kamsen-dark/90"
                   >
                     {updateMutation.isPending ? "Modification en cours..." : "Modifier l'équipement"}
                   </Button>

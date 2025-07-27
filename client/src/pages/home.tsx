@@ -115,32 +115,32 @@ export default function Home() {
       icon: Search,
       title: "1. Recherchez",
       description: "Trouvez l'équipement dont vous avez besoin parmi notre large catalogue",
-      bgColor: "bg-orange-100",
-      iconColor: "text-primary-orange",
+      bgColor: "bg-kamsen-light",
+      iconColor: "text-kamsen-dark",
     },
     {
       icon: Calendar,
       title: "2. Réservez", 
       description: "Sélectionnez vos dates et confirmez votre réservation en ligne",
-      bgColor: "bg-blue-100",
-      iconColor: "text-blue-600",
+      bgColor: "bg-kamsen-light",
+      iconColor: "text-kamsen-dark",
     },
     {
       icon: Truck,
       title: "3. Recevez",
       description: "Nous livrons votre équipement directement sur votre site",
-      bgColor: "bg-green-100", 
-      iconColor: "text-green-600",
+      bgColor: "bg-kamsen-light", 
+      iconColor: "text-kamsen-dark",
     },
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-kamsen-white">
       <Header />
       <Hero />
       
       {/* Bannière Promo Magal de Touba 2025 - Version Créative */}
-      <div className="relative overflow-hidden bg-gradient-to-br from-orange-400 via-orange-500 to-orange-600 py-6 px-4 shadow-2xl border-b-4 border-orange-700">
+      <div className="relative overflow-hidden bg-gradient-to-br from-kamsen-medium via-orange-500 to-kamsen-dark py-6 px-4 shadow-2xl border-b-4 border-orange-700">
 
         
         {/* Motifs décoratifs orange/bleu */}
@@ -148,7 +148,7 @@ export default function Home() {
           <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-blue-300 to-blue-400 rounded-full transform -translate-x-16 -translate-y-16"></div>
           <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-orange-300 to-orange-400 rounded-full transform translate-x-12 -translate-y-12"></div>
           <div className="absolute bottom-0 left-1/4 w-20 h-20 bg-gradient-to-br from-blue-400 to-blue-500 rounded-full transform translate-y-10"></div>
-          <div className="absolute bottom-0 right-1/3 w-16 h-16 bg-gradient-to-br from-orange-400 to-orange-500 rounded-full transform translate-y-8"></div>
+          <div className="absolute bottom-0 right-1/3 w-16 h-16 bg-gradient-to-br from-kamsen-medium to-orange-500 rounded-full transform translate-y-8"></div>
         </div>
         
         {/* Contenu principal */}
@@ -161,7 +161,7 @@ export default function Home() {
                 <div className="bg-blue-500/30 backdrop-blur-sm p-3 rounded-full border border-blue-400/60 magal-banner-float shadow-lg">
                   <span className="text-3xl">🕌</span>
                 </div>
-                <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg magal-banner-shimmer">
+                <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-kamsen-white px-4 py-1 rounded-full text-sm font-bold shadow-lg magal-banner-shimmer">
                   GRAND MAGAL DE TOUBA 2025
                 </div>
               </div>
@@ -190,7 +190,7 @@ export default function Home() {
             </div>
 
             {/* Section droite - Actions */}
-            <div className="flex flex-col items-center gap-4 bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-blue-400/60 shadow-xl">
+            <div className="flex flex-col items-center gap-4 bg-kamsen-white/80 backdrop-blur-sm rounded-2xl p-6 border border-blue-400/60 shadow-xl">
               <div className="text-center">
                 <div className="text-blue-700 text-sm font-bold mb-1">Offre Limitée</div>
                 <div className="text-blue-900 text-2xl font-bold">*Jusqu'à -25%*</div>
@@ -199,7 +199,7 @@ export default function Home() {
               
               <Button 
                 asChild
-                className="bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-500 hover:to-blue-600 font-bold px-8 py-4 text-lg shadow-xl transform hover:scale-105 transition-all duration-200 border-0"
+                className="bg-gradient-to-r from-blue-600 to-blue-700 text-kamsen-white hover:from-blue-500 hover:to-blue-600 font-bold px-8 py-4 text-lg shadow-xl transform hover:scale-105 transition-all duration-200 border-0"
               >
                 <Link href="/contact">
                   <Phone className="h-5 w-5 mr-2" />
@@ -218,17 +218,17 @@ export default function Home() {
         </div>
         
         {/* Élément décoratif en bas */}
-        <div className="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 shadow-lg"></div>
+        <div className="absolute bottom-0 left-0 right-0 h-2 bg-kamsen-gradient shadow-lg"></div>
       </div>
 
       {/* Equipment Categories */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-kamsen-light">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl lg:text-4xl font-bold text-kamsen-dark mb-4">
               Nos Catégories d'Équipements
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-xl text-kamsen-medium max-w-3xl mx-auto">
               Découvrez notre gamme complète d'équipements professionnels disponibles à la location
             </p>
           </div>
@@ -241,14 +241,14 @@ export default function Home() {
                   <Card className="hover:shadow-lg transition-all duration-300 cursor-pointer group hover:scale-105 border-l-4 border-l-orange-500">
                     <CardContent className="p-6">
                       <div className="flex items-center justify-center mb-4">
-                        <div className="bg-orange-100 p-4 rounded-full">
+                        <div className="bg-kamsen-light p-4 rounded-full">
                           <span className="text-3xl">{category.emoji}</span>
                         </div>
                       </div>
                       <h3 className="text-lg font-semibold text-center mb-2 group-hover:text-orange-600">
                         {category.name}
                       </h3>
-                      <p className="text-gray-600 text-sm text-center mb-3">
+                      <p className="text-kamsen-medium text-sm text-center mb-3">
                         {category.description}
                       </p>
                       <div className="text-center">
@@ -266,13 +266,13 @@ export default function Home() {
       </section>
 
       {/* Featured Equipment */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 bg-kamsen-light">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl lg:text-4xl font-bold text-kamsen-dark mb-4">
               Les Plus Populaires
             </h2>
-            <p className="text-xl text-gray-600">
+            <p className="text-xl text-kamsen-medium">
               Tracteurs, charrues, camions benne, motopompes et équipements agricoles les plus demandés
             </p>
           </div>
@@ -300,7 +300,7 @@ export default function Home() {
           
           <div className="flex justify-center mt-12">
             <Link href="/equipements">
-              <Button className="bg-kamsen-dark hover:bg-kamsen-dark/90 text-white px-8 py-3 text-lg">
+              <Button className="bg-kamsen-dark hover:bg-kamsen-dark/90 text-kamsen-white px-8 py-3 text-lg">
                 Voir tous les équipements
               </Button>
             </Link>
@@ -309,13 +309,13 @@ export default function Home() {
       </section>
 
       {/* Package Examples Section */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-kamsen-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl lg:text-4xl font-bold text-kamsen-dark mb-4">
               Exemple de combinaisons populaires (forfait location)
             </h2>
-            <p className="text-xl text-gray-600">
+            <p className="text-xl text-kamsen-medium">
               Nos équipes vous proposent des forfaits complets pour vos projets
             </p>
           </div>
@@ -323,13 +323,13 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <Card className="hover:shadow-lg transition-shadow">
               <CardContent className="p-6">
-                <div className="bg-primary-orange/10 w-12 h-12 rounded-full flex items-center justify-center mb-4">
-                  <Truck className="h-6 w-6 text-primary-orange" />
+                <div className="bg-kamsen-dark/10 w-12 h-12 rounded-full flex items-center justify-center mb-4">
+                  <Truck className="h-6 w-6 text-kamsen-dark" />
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                <h3 className="text-xl font-semibold text-kamsen-dark mb-3">
                   Tracteur 75 CV + charrue + opérateur → pour 5 ha de maïs
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-kamsen-medium">
                   Solution complète pour la préparation et le labour de terrain agricole avec opérateur expérimenté inclus.
                 </p>
               </CardContent>
@@ -337,13 +337,13 @@ export default function Home() {
 
             <Card className="hover:shadow-lg transition-shadow">
               <CardContent className="p-6">
-                <div className="bg-green-100 w-12 h-12 rounded-full flex items-center justify-center mb-4">
-                  <Zap className="h-6 w-6 text-green-600" />
+                <div className="bg-kamsen-light w-12 h-12 rounded-full flex items-center justify-center mb-4">
+                  <Zap className="h-6 w-6 text-kamsen-dark" />
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                <h3 className="text-xl font-semibold text-kamsen-dark mb-3">
                   Tracteur + billonneuse + semoir + motopompe → pour périmètre maraîcher de 2 ha
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-kamsen-medium">
                   Kit complet pour l'aménagement et l'irrigation d'un périmètre maraîcher moderne.
                 </p>
               </CardContent>
@@ -351,13 +351,13 @@ export default function Home() {
 
             <Card className="hover:shadow-lg transition-shadow">
               <CardContent className="p-6">
-                <div className="bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center mb-4">
-                  <Truck className="h-6 w-6 text-blue-600" />
+                <div className="bg-kamsen-light w-12 h-12 rounded-full flex items-center justify-center mb-4">
+                  <Truck className="h-6 w-6 text-kamsen-dark" />
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                <h3 className="text-xl font-semibold text-kamsen-dark mb-3">
                   Camion benne 30 T + chargeur frontal → pour approvisionnement en gravier ou céréales
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-kamsen-medium">
                   Ensemble logistique pour le transport et la manutention de matériaux en vrac ou de produits agricoles.
                 </p>
               </CardContent>
@@ -368,10 +368,10 @@ export default function Home() {
                 <div className="bg-purple-100 w-12 h-12 rounded-full flex items-center justify-center mb-4">
                   <CheckCircle className="h-6 w-6 text-purple-600" />
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                <h3 className="text-xl font-semibold text-kamsen-dark mb-3">
                   Pick-up 4x4 + pulvérisateur + motopompe → pour suivi agricole multisite
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-kamsen-medium">
                   Solution mobile pour la surveillance et le traitement de plusieurs exploitations agricoles.
                 </p>
               </CardContent>
@@ -380,7 +380,7 @@ export default function Home() {
 
           <div className="text-center mt-12">
             <Link href="/contact">
-              <Button className="bg-primary-orange hover:bg-primary-orange/90 text-white px-8 py-3 text-lg">
+              <Button className="bg-kamsen-dark hover:bg-kamsen-dark/90 text-kamsen-white px-8 py-3 text-lg">
                 Demander un devis personnalisé
               </Button>
             </Link>
@@ -389,13 +389,13 @@ export default function Home() {
       </section>
 
       {/* How It Works */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-kamsen-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl lg:text-4xl font-bold text-kamsen-dark mb-4">
               Comment ça marche ?
             </h2>
-            <p className="text-xl text-gray-600">
+            <p className="text-xl text-kamsen-medium">
               Louer votre équipement en 3 étapes simples
             </p>
           </div>
@@ -408,10 +408,10 @@ export default function Home() {
                   <div className={`${step.bgColor} w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6`}>
                     <Icon className={`h-8 w-8 ${step.iconColor}`} />
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-4">
+                  <h3 className="text-xl font-semibold text-kamsen-dark mb-4">
                     {step.title}
                   </h3>
-                  <p className="text-gray-600">
+                  <p className="text-kamsen-medium">
                     {step.description}
                   </p>
                 </div>
@@ -425,10 +425,10 @@ export default function Home() {
       <section className="py-16 bg-blue-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl lg:text-4xl font-bold text-kamsen-dark mb-4">
               Zones de Service
             </h2>
-            <p className="text-xl text-gray-600">
+            <p className="text-xl text-kamsen-medium">
               Nous livrons dans les principales villes du Sénégal
             </p>
           </div>
@@ -439,14 +439,14 @@ export default function Home() {
                 <Card key={area.city} className="p-6">
                   <div className="flex items-center justify-between">
                     <div>
-                      <h3 className="text-lg font-semibold text-gray-900">
+                      <h3 className="text-lg font-semibold text-kamsen-dark">
                         {area.city}
                       </h3>
-                      <p className="text-gray-600">
+                      <p className="text-kamsen-medium">
                         {area.description}
                       </p>
                     </div>
-                    <CheckCircle className="h-8 w-8 text-green-600" />
+                    <CheckCircle className="h-8 w-8 text-kamsen-dark" />
                   </div>
                 </Card>
               ))}
@@ -458,7 +458,7 @@ export default function Home() {
                 alt="Carte du Sénégal" 
                 className="w-full h-64 object-cover rounded-lg mb-4"
               />
-              <p className="text-center text-gray-600">
+              <p className="text-center text-kamsen-medium">
                 <i className="fas fa-info-circle mr-2"></i>
                 Votre ville n'est pas listée ? Contactez-nous pour un devis personnalisé
               </p>

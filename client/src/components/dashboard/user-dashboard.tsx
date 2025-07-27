@@ -32,30 +32,30 @@ export function UserDashboard({ user }: UserDashboardProps) {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'confirmed': return 'bg-green-100 text-green-800';
+      case 'confirmed': return 'bg-kamsen-light text-green-800';
       case 'pending': return 'bg-yellow-100 text-yellow-800';
       case 'cancelled': return 'bg-red-100 text-red-800';
-      case 'completed': return 'bg-blue-100 text-blue-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'completed': return 'bg-kamsen-light text-blue-800';
+      default: return 'bg-kamsen-light text-gray-800';
     }
   };
 
   const getPaymentStatusColor = (status: string) => {
     switch (status) {
-      case 'completed': return 'bg-green-100 text-green-800';
-      case 'pending': return 'bg-orange-100 text-orange-800';
+      case 'completed': return 'bg-kamsen-light text-green-800';
+      case 'pending': return 'bg-kamsen-light text-orange-800';
       case 'failed': return 'bg-red-100 text-red-800';
-      default: return 'bg-gray-100 text-gray-800';
+      default: return 'bg-kamsen-light text-gray-800';
     }
   };
 
   return (
     <div className="max-w-6xl mx-auto p-6">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">
+        <h1 className="text-2xl font-bold text-kamsen-dark">
           Bonjour, {user.firstName} !
         </h1>
-        <p className="text-gray-600">
+        <p className="text-kamsen-medium">
           Gérez vos réservations et consultez votre historique
         </p>
       </div>
@@ -119,11 +119,11 @@ export function UserDashboard({ user }: UserDashboardProps) {
             {bookings.length === 0 ? (
               <Card>
                 <CardContent className="p-6 text-center">
-                  <Package className="mx-auto h-12 w-12 text-gray-400 mb-4" />
-                  <h3 className="text-lg font-medium text-gray-900 mb-2">
+                  <Package className="mx-auto h-12 w-12 text-kamsen-light mb-4" />
+                  <h3 className="text-lg font-medium text-kamsen-dark mb-2">
                     Aucune réservation
                   </h3>
-                  <p className="text-gray-500 mb-4">
+                  <p className="text-kamsen-medium mb-4">
                     Vous n'avez pas encore fait de réservation
                   </p>
                   <Button asChild>
@@ -179,8 +179,8 @@ export function UserDashboard({ user }: UserDashboardProps) {
                       </div>
                     </div>
                     {booking.notes && (
-                      <div className="mt-4 p-3 bg-gray-50 rounded-md">
-                        <p className="text-sm text-gray-700">{booking.notes}</p>
+                      <div className="mt-4 p-3 bg-kamsen-light rounded-md">
+                        <p className="text-sm text-kamsen-dark">{booking.notes}</p>
                       </div>
                     )}
                   </CardContent>
@@ -195,11 +195,11 @@ export function UserDashboard({ user }: UserDashboardProps) {
             {reviews.length === 0 ? (
               <Card>
                 <CardContent className="p-6 text-center">
-                  <Star className="mx-auto h-12 w-12 text-gray-400 mb-4" />
-                  <h3 className="text-lg font-medium text-gray-900 mb-2">
+                  <Star className="mx-auto h-12 w-12 text-kamsen-light mb-4" />
+                  <h3 className="text-lg font-medium text-kamsen-dark mb-2">
                     Aucun avis donné
                   </h3>
-                  <p className="text-gray-500">
+                  <p className="text-kamsen-medium">
                     Vos avis sur les équipements loués apparaîtront ici
                   </p>
                 </CardContent>
@@ -224,7 +224,7 @@ export function UserDashboard({ user }: UserDashboardProps) {
                             className={`h-4 w-4 ${
                               i < review.rating
                                 ? 'text-yellow-400 fill-current'
-                                : 'text-gray-300'
+                                : 'text-kamsen-light'
                             }`}
                           />
                         ))}
@@ -233,7 +233,7 @@ export function UserDashboard({ user }: UserDashboardProps) {
                   </CardHeader>
                   {review.comment && (
                     <CardContent>
-                      <p className="text-gray-700">{review.comment}</p>
+                      <p className="text-kamsen-dark">{review.comment}</p>
                     </CardContent>
                   )}
                 </Card>
@@ -253,26 +253,26 @@ export function UserDashboard({ user }: UserDashboardProps) {
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="text-sm font-medium text-gray-700">Prénom</label>
-                  <div className="mt-1 p-2 bg-gray-50 rounded-md">
+                  <label className="text-sm font-medium text-kamsen-dark">Prénom</label>
+                  <div className="mt-1 p-2 bg-kamsen-light rounded-md">
                     {user.firstName}
                   </div>
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-gray-700">Nom</label>
-                  <div className="mt-1 p-2 bg-gray-50 rounded-md">
+                  <label className="text-sm font-medium text-kamsen-dark">Nom</label>
+                  <div className="mt-1 p-2 bg-kamsen-light rounded-md">
                     {user.lastName}
                   </div>
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-gray-700">Email</label>
-                  <div className="mt-1 p-2 bg-gray-50 rounded-md">
+                  <label className="text-sm font-medium text-kamsen-dark">Email</label>
+                  <div className="mt-1 p-2 bg-kamsen-light rounded-md">
                     {user.email}
                   </div>
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-gray-700">Rôle</label>
-                  <div className="mt-1 p-2 bg-gray-50 rounded-md">
+                  <label className="text-sm font-medium text-kamsen-dark">Rôle</label>
+                  <div className="mt-1 p-2 bg-kamsen-light rounded-md">
                     <Badge>{user.role}</Badge>
                   </div>
                 </div>

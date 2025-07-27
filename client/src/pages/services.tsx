@@ -17,8 +17,8 @@ export default function Services() {
         "Assurance colis incluse",
         "Pickup à domicile disponible"
       ],
-      bgColor: "bg-blue-100",
-      iconColor: "text-blue-600"
+      bgColor: "bg-kamsen-light",
+      iconColor: "text-kamsen-dark"
     },
     {
       icon: Truck,
@@ -30,8 +30,8 @@ export default function Services() {
         "Assurance tous risques",
         "Maintenance incluse"
       ],
-      bgColor: "bg-green-100", 
-      iconColor: "text-green-600"
+      bgColor: "bg-kamsen-light", 
+      iconColor: "text-kamsen-dark"
     },
     {
       icon: Car,
@@ -43,8 +43,8 @@ export default function Services() {
         "Idéal e-commerce et artisans",
         "Tarifs dégressifs longue durée"
       ],
-      bgColor: "bg-orange-100",
-      iconColor: "text-primary-orange"
+      bgColor: "bg-kamsen-light",
+      iconColor: "text-kamsen-dark"
     }
   ];
 
@@ -67,11 +67,11 @@ export default function Services() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-kamsen-light">
       <Header />
       
       {/* Hero Section */}
-      <section className="bg-kamsen-gradient text-white py-16">
+      <section className="bg-kamsen-gradient text-kamsen-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl lg:text-5xl font-bold mb-4">
             🚛 Nos Services de Transport et Location
@@ -96,16 +96,16 @@ export default function Services() {
                         <Icon className={`h-8 w-8 ${service.iconColor}`} />
                       </div>
                       <div className="flex-1">
-                        <h3 className="text-2xl font-bold text-gray-900 mb-3">
+                        <h3 className="text-2xl font-bold text-kamsen-dark mb-3">
                           {service.title}
                         </h3>
-                        <p className="text-gray-600 mb-4">
+                        <p className="text-kamsen-medium mb-4">
                           {service.description}
                         </p>
                         <ul className="space-y-2">
                           {service.features.map((feature, index) => (
-                            <li key={index} className="flex items-center text-gray-700">
-                              <div className="w-2 h-2 bg-primary-orange rounded-full mr-3"></div>
+                            <li key={index} className="flex items-center text-kamsen-dark">
+                              <div className="w-2 h-2 bg-kamsen-dark rounded-full mr-3"></div>
                               {feature}
                             </li>
                           ))}
@@ -121,13 +121,13 @@ export default function Services() {
       </section>
 
       {/* Guarantees */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-kamsen-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl lg:text-4xl font-bold text-kamsen-dark mb-4">
               Nos Garanties
             </h2>
-            <p className="text-xl text-gray-600">
+            <p className="text-xl text-kamsen-medium">
               Votre satisfaction est notre priorité
             </p>
           </div>
@@ -138,13 +138,13 @@ export default function Services() {
               return (
                 <Card key={guarantee.title} className="text-center">
                   <CardContent className="p-8">
-                    <div className="bg-primary-orange/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
-                      <Icon className="h-8 w-8 text-primary-orange" />
+                    <div className="bg-kamsen-dark/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                      <Icon className="h-8 w-8 text-kamsen-dark" />
                     </div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-4">
+                    <h3 className="text-xl font-semibold text-kamsen-dark mb-4">
                       {guarantee.title}
                     </h3>
-                    <p className="text-gray-600">
+                    <p className="text-kamsen-medium">
                       {guarantee.description}
                     </p>
                   </CardContent>
@@ -158,20 +158,20 @@ export default function Services() {
       {/* CTA Section */}
       <section className="py-16 bg-kamsen-dark">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
+          <h2 className="text-3xl lg:text-4xl font-bold text-kamsen-white mb-4">
             Prêt à commencer votre projet ?
           </h2>
-          <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+          <p className="text-xl text-kamsen-light mb-8 max-w-2xl mx-auto">
             Contactez-nous dès aujourd'hui pour un devis personnalisé et gratuit
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/devis">
-              <Button className="bg-primary-orange hover:bg-primary-orange/90 text-white px-8 py-3 text-lg">
+              <Button className="bg-kamsen-dark hover:bg-kamsen-dark/90 text-kamsen-white px-8 py-3 text-lg">
                 Demander un devis
               </Button>
             </Link>
             <Link href="/equipements">
-              <Button variant="outline" className="border-white text-white hover:bg-white hover:text-kamsen-dark px-8 py-3 text-lg">
+              <Button variant="outline" className="border-white text-kamsen-white hover:bg-kamsen-white hover:text-kamsen-dark px-8 py-3 text-lg">
                 Voir les équipements
               </Button>
             </Link>

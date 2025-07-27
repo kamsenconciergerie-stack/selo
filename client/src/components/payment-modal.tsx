@@ -190,20 +190,20 @@ export default function PaymentModal({ booking, open, onOpenChange }: PaymentMod
             </CardHeader>
             <CardContent className="space-y-2">
               <div className="flex justify-between">
-                <span className="text-gray-600">Équipement:</span>
+                <span className="text-kamsen-medium">Équipement:</span>
                 <span className="font-medium">{booking.equipmentId}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-600">Client:</span>
+                <span className="text-kamsen-medium">Client:</span>
                 <span className="font-medium">{booking.customerName}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-600">Période:</span>
+                <span className="text-kamsen-medium">Période:</span>
                 <span className="font-medium">{booking.startDate} - {booking.endDate}</span>
               </div>
               <div className="flex justify-between text-lg font-bold border-t pt-2">
                 <span>Total:</span>
-                <span className="text-primary-orange">{formatPrice(booking.totalPrice)} XOF</span>
+                <span className="text-kamsen-dark">{formatPrice(booking.totalPrice)} XOF</span>
               </div>
             </CardContent>
           </Card>
@@ -223,7 +223,7 @@ export default function PaymentModal({ booking, open, onOpenChange }: PaymentMod
                       <div key={method.id} className="flex items-center space-x-3 border rounded-lg p-3">
                         <RadioGroupItem value={method.id} id={method.id} />
                         <Label htmlFor={method.id} className="flex items-center space-x-3 cursor-pointer flex-1">
-                          <div className="w-8 h-8 bg-gray-100 rounded flex items-center justify-center">
+                          <div className="w-8 h-8 bg-kamsen-light rounded flex items-center justify-center">
                             {method.id === "orange_money" ? (
                               <Smartphone className="h-5 w-5 text-orange-500" />
                             ) : (
@@ -232,7 +232,7 @@ export default function PaymentModal({ booking, open, onOpenChange }: PaymentMod
                           </div>
                           <div>
                             <div className="font-medium">{method.name}</div>
-                            <div className="text-sm text-gray-500">{method.description}</div>
+                            <div className="text-sm text-kamsen-medium">{method.description}</div>
                           </div>
                         </Label>
                       </div>
@@ -251,7 +251,7 @@ export default function PaymentModal({ booking, open, onOpenChange }: PaymentMod
                   value={phoneNumber}
                   onChange={(e) => setPhoneNumber(e.target.value)}
                 />
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-kamsen-medium">
                   Saisissez le numéro associé à votre compte {selectedMethod === "orange_money" ? "Orange Money" : "Wave"}
                 </p>
               </div>
@@ -278,13 +278,13 @@ export default function PaymentModal({ booking, open, onOpenChange }: PaymentMod
           {/* Payment Processing */}
           {paymentStatus === "processing" && (
             <div className="text-center space-y-4 py-8">
-              <Loader2 className="h-12 w-12 animate-spin mx-auto text-primary-orange" />
+              <Loader2 className="h-12 w-12 animate-spin mx-auto text-kamsen-dark" />
               <div>
                 <h3 className="font-medium text-lg">Paiement en cours...</h3>
-                <p className="text-gray-600 mt-2">
+                <p className="text-kamsen-medium mt-2">
                   Vérifiez votre téléphone et confirmez la transaction
                 </p>
-                <p className="text-sm text-gray-500 mt-2">
+                <p className="text-sm text-kamsen-medium mt-2">
                   Transaction ID: {transactionId}
                 </p>
               </div>
@@ -297,7 +297,7 @@ export default function PaymentModal({ booking, open, onOpenChange }: PaymentMod
               <CheckCircle className="h-12 w-12 mx-auto text-green-500" />
               <div>
                 <h3 className="font-medium text-lg text-green-700">Paiement réussi!</h3>
-                <p className="text-gray-600 mt-2">
+                <p className="text-kamsen-medium mt-2">
                   Votre réservation a été confirmée
                 </p>
               </div>
@@ -313,7 +313,7 @@ export default function PaymentModal({ booking, open, onOpenChange }: PaymentMod
               <XCircle className="h-12 w-12 mx-auto text-red-500" />
               <div>
                 <h3 className="font-medium text-lg text-red-700">Paiement échoué</h3>
-                <p className="text-gray-600 mt-2">
+                <p className="text-kamsen-medium mt-2">
                   Une erreur est survenue lors du paiement
                 </p>
               </div>

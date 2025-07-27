@@ -228,9 +228,9 @@ export default function DashboardPage() {
   const getStatusBadge = (status: string) => {
     const statusConfig = {
       pending: { color: "bg-yellow-100 text-yellow-800", text: "En attente" },
-      confirmed: { color: "bg-green-100 text-green-800", text: "Confirmée" },
+      confirmed: { color: "bg-kamsen-light text-green-800", text: "Confirmée" },
       cancelled: { color: "bg-red-100 text-red-800", text: "Annulée" },
-      completed: { color: "bg-blue-100 text-blue-800", text: "Terminée" }
+      completed: { color: "bg-kamsen-light text-blue-800", text: "Terminée" }
     };
     const config = statusConfig[status as keyof typeof statusConfig] || statusConfig.pending;
     return <Badge className={config.color}>{config.text}</Badge>;
@@ -258,19 +258,19 @@ export default function DashboardPage() {
 
   if (profileLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-kamsen-light flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Chargement de votre profil...</p>
+          <p className="mt-4 text-kamsen-medium">Chargement de votre profil...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-kamsen-light">
       {/* Header */}
-      <header className="bg-white shadow">
+      <header className="bg-kamsen-white shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
             <div className="flex items-center">
@@ -278,10 +278,10 @@ export default function DashboardPage() {
                 <h1 className="text-2xl font-bold text-orange-600">AYWA</h1>
               </Link>
               <nav className="ml-8 flex space-x-4">
-                <Link href="/equipment" className="text-gray-600 hover:text-gray-900">
+                <Link href="/equipment" className="text-kamsen-medium hover:text-kamsen-dark">
                   Équipements
                 </Link>
-                <Link href="/services" className="text-gray-600 hover:text-gray-900">
+                <Link href="/services" className="text-kamsen-medium hover:text-kamsen-dark">
                   Services
                 </Link>
               </nav>
@@ -315,10 +315,10 @@ export default function DashboardPage() {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+          <h1 className="text-3xl font-bold text-kamsen-dark mb-2">
             Tableau de bord
           </h1>
-          <p className="text-gray-600">
+          <p className="text-kamsen-medium">
             Gérez vos réservations, consultez votre historique et découvrez nos recommandations
           </p>
         </div>
@@ -362,9 +362,9 @@ export default function DashboardPage() {
               <CardContent>
                 {userTracking.length === 0 ? (
                   <div className="text-center py-8">
-                    <MapPin className="h-12 w-12 text-gray-300 mx-auto mb-4" />
-                    <p className="text-gray-600 mb-2">Aucun suivi GPS actif</p>
-                    <p className="text-sm text-gray-500">
+                    <MapPin className="h-12 w-12 text-kamsen-light mx-auto mb-4" />
+                    <p className="text-kamsen-medium mb-2">Aucun suivi GPS actif</p>
+                    <p className="text-sm text-kamsen-medium">
                       Vos équipements en cours de livraison apparaîtront ici
                     </p>
                   </div>
@@ -397,12 +397,12 @@ export default function DashboardPage() {
                 {bookingsLoading ? (
                   <div className="text-center py-8">
                     <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-600 mx-auto"></div>
-                    <p className="mt-2 text-gray-600">Chargement des réservations...</p>
+                    <p className="mt-2 text-kamsen-medium">Chargement des réservations...</p>
                   </div>
                 ) : bookings.length === 0 ? (
                   <div className="text-center py-8">
-                    <Truck className="h-12 w-12 text-gray-300 mx-auto mb-4" />
-                    <p className="text-gray-600 mb-4">Aucune réservation pour le moment</p>
+                    <Truck className="h-12 w-12 text-kamsen-light mx-auto mb-4" />
+                    <p className="text-kamsen-medium mb-4">Aucune réservation pour le moment</p>
                     <Link href="/equipment">
                       <Button className="bg-orange-600 hover:bg-orange-700">
                         Découvrir nos équipements
@@ -433,7 +433,7 @@ export default function DashboardPage() {
                                 />
                                 <div>
                                   <div className="font-medium">{booking.equipment?.name}</div>
-                                  <div className="text-sm text-gray-500">{booking.equipment?.category}</div>
+                                  <div className="text-sm text-kamsen-medium">{booking.equipment?.category}</div>
                                 </div>
                               </div>
                             </TableCell>
@@ -487,12 +487,12 @@ export default function DashboardPage() {
                 {paymentsLoading ? (
                   <div className="text-center py-8">
                     <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-600 mx-auto"></div>
-                    <p className="mt-2 text-gray-600">Chargement des paiements...</p>
+                    <p className="mt-2 text-kamsen-medium">Chargement des paiements...</p>
                   </div>
                 ) : payments.length === 0 ? (
                   <div className="text-center py-8">
-                    <CreditCard className="h-12 w-12 text-gray-300 mx-auto mb-4" />
-                    <p className="text-gray-600">Aucun paiement pour le moment</p>
+                    <CreditCard className="h-12 w-12 text-kamsen-light mx-auto mb-4" />
+                    <p className="text-kamsen-medium">Aucun paiement pour le moment</p>
                   </div>
                 ) : (
                   <div className="overflow-x-auto">
@@ -534,8 +534,8 @@ export default function DashboardPage() {
               <CardContent>
                 {recommendations.length === 0 ? (
                   <div className="text-center py-8">
-                    <Star className="h-12 w-12 text-gray-300 mx-auto mb-4" />
-                    <p className="text-gray-600">Aucune recommandation disponible</p>
+                    <Star className="h-12 w-12 text-kamsen-light mx-auto mb-4" />
+                    <p className="text-kamsen-medium">Aucune recommandation disponible</p>
                   </div>
                 ) : (
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -548,7 +548,7 @@ export default function DashboardPage() {
                             className="w-full h-48 object-cover rounded-lg mb-4"
                           />
                           <h3 className="font-semibold text-lg mb-2">{equipment.name}</h3>
-                          <p className="text-gray-600 text-sm mb-3 line-clamp-2">{equipment.description}</p>
+                          <p className="text-kamsen-medium text-sm mb-3 line-clamp-2">{equipment.description}</p>
                           <div className="flex justify-between items-center">
                             <span className="text-lg font-bold text-orange-600">
                               {formatPrice(equipment.pricePerDay)}/jour
@@ -590,22 +590,22 @@ export default function DashboardPage() {
                       <h3 className="text-lg font-semibold">
                         {profile?.user.firstName} {profile?.user.lastName}
                       </h3>
-                      <p className="text-gray-600">{profile?.user.email}</p>
+                      <p className="text-kamsen-medium">{profile?.user.email}</p>
                     </div>
                   </div>
                   
                   <div className="grid grid-cols-1 gap-4">
                     <div>
-                      <label className="text-sm font-medium text-gray-600">Téléphone</label>
-                      <p className="text-gray-900">{profile?.user.phone || "Non renseigné"}</p>
+                      <label className="text-sm font-medium text-kamsen-medium">Téléphone</label>
+                      <p className="text-kamsen-dark">{profile?.user.phone || "Non renseigné"}</p>
                     </div>
                     <div>
-                      <label className="text-sm font-medium text-gray-600">Ville</label>
-                      <p className="text-gray-900">{profile?.user.city || "Non renseignée"}</p>
+                      <label className="text-sm font-medium text-kamsen-medium">Ville</label>
+                      <p className="text-kamsen-dark">{profile?.user.city || "Non renseignée"}</p>
                     </div>
                     <div>
-                      <label className="text-sm font-medium text-gray-600">Adresse</label>
-                      <p className="text-gray-900">{profile?.user.address || "Non renseignée"}</p>
+                      <label className="text-sm font-medium text-kamsen-medium">Adresse</label>
+                      <p className="text-kamsen-dark">{profile?.user.address || "Non renseignée"}</p>
                     </div>
                   </div>
                 </CardContent>
@@ -621,30 +621,30 @@ export default function DashboardPage() {
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="text-center">
-                      <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <User className="h-8 w-8 text-blue-600" />
+                      <div className="w-16 h-16 bg-kamsen-light rounded-full flex items-center justify-center mx-auto mb-4">
+                        <User className="h-8 w-8 text-kamsen-dark" />
                       </div>
                       <h3 className="text-lg font-semibold">{profile.commercialManager.name}</h3>
-                      <p className="text-gray-600 capitalize">
+                      <p className="text-kamsen-medium capitalize">
                         Spécialiste {profile.commercialManager.specialization}
                       </p>
                     </div>
                     
                     <div className="space-y-3">
                       <div className="flex items-center space-x-3">
-                        <Phone className="h-5 w-5 text-gray-400" />
+                        <Phone className="h-5 w-5 text-kamsen-light" />
                         <a 
                           href={`tel:${profile.commercialManager.phone}`}
-                          className="text-blue-600 hover:underline"
+                          className="text-kamsen-dark hover:underline"
                         >
                           {profile.commercialManager.phone}
                         </a>
                       </div>
                       <div className="flex items-center space-x-3">
-                        <Mail className="h-5 w-5 text-gray-400" />
+                        <Mail className="h-5 w-5 text-kamsen-light" />
                         <a 
                           href={`mailto:${profile.commercialManager.email}`}
-                          className="text-blue-600 hover:underline"
+                          className="text-kamsen-dark hover:underline"
                         >
                           {profile.commercialManager.email}
                         </a>
@@ -653,7 +653,7 @@ export default function DashboardPage() {
 
                     <div className="bg-blue-50 p-4 rounded-lg">
                       <div className="flex items-start space-x-2">
-                        <AlertCircle className="h-5 w-5 text-blue-600 mt-0.5" />
+                        <AlertCircle className="h-5 w-5 text-kamsen-dark mt-0.5" />
                         <div>
                           <p className="text-sm font-medium text-blue-900">
                             Assistance personnalisée

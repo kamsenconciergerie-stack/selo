@@ -90,7 +90,7 @@ export const formatPriceWithPrefix = (price: number) => {
   const formattedPrice = formatPrice(price);
   return (
     <>
-      <span className="text-xs font-normal text-gray-600">À partir de </span>
+      <span className="text-xs font-normal text-kamsen-medium">À partir de </span>
       {formattedPrice}
     </>
   );

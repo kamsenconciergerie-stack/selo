@@ -17,7 +17,7 @@ export default function EquipmentCard({ equipment }: EquipmentCardProps) {
 
   return (
     <>
-      <Card className="overflow-hidden hover:shadow-xl transition-shadow">
+      <Card className="overflow-hidden hover:shadow-xl transition-shadow border-kamsen bg-kamsen-white">
         <img 
           src={`${equipment.imageUrl}?v=${Date.now()}`}
           alt={equipment.name}
@@ -30,7 +30,7 @@ export default function EquipmentCard({ equipment }: EquipmentCardProps) {
         
         <CardContent className="p-6">
           <div className="flex justify-between items-start mb-3">
-            <h3 className="text-xl font-semibold text-gray-900">
+            <h3 className="text-xl font-semibold text-kamsen-dark">
               {equipment.name}
             </h3>
             <Badge variant={equipment.isAvailable ? "default" : "secondary"}>
@@ -38,26 +38,26 @@ export default function EquipmentCard({ equipment }: EquipmentCardProps) {
             </Badge>
           </div>
           
-          <p className="text-gray-600 mb-2 line-clamp-2">
+          <p className="text-kamsen-medium mb-2 line-clamp-2">
             {equipment.description}
           </p>
           
-          <p className="text-xs text-gray-500 mb-4 font-medium">
+          <p className="text-xs text-kamsen-medium mb-4 font-medium">
             {equipment.category}
           </p>
           
           <div className="flex justify-between items-center mb-4">
-            <div className="text-2xl font-bold text-primary-orange">
+            <div className="text-2xl font-bold text-kamsen-dark">
               {formatPriceWithPrefix(equipment.pricePerDay)}
-              <span className="text-sm font-normal text-gray-500">/jour</span>
+              <span className="text-sm font-normal text-kamsen-medium">/jour</span>
             </div>
-            <div className="text-sm text-gray-500 flex items-center">
+            <div className="text-sm text-kamsen-medium flex items-center">
               <MapPin className="mr-1 h-4 w-4" />
               {equipment.location}
             </div>
           </div>
           
-          <div className="grid grid-cols-2 gap-4 mb-4 text-sm text-gray-600">
+          <div className="grid grid-cols-2 gap-4 mb-4 text-sm text-kamsen-medium">
             {equipment.weight && (
               <div className="flex items-center">
                 <Weight className="mr-2 h-4 w-4" />
@@ -81,7 +81,7 @@ export default function EquipmentCard({ equipment }: EquipmentCardProps) {
             <Button 
               onClick={() => setShowBookingModal(true)}
               disabled={!equipment.isAvailable}
-              className="flex-1 bg-primary-orange hover:bg-primary-orange/90 text-white"
+              className="flex-1 bg-kamsen-dark hover:bg-kamsen-dark/90 text-kamsen-white"
             >
               {equipment.isAvailable ? "Réserver" : "Non disponible"}
             </Button>

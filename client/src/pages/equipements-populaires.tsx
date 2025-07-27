@@ -46,19 +46,19 @@ export default function EquipementsPopulaires() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-kamsen-light flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary-orange mx-auto"></div>
-          <p className="mt-4 text-gray-600">Chargement des équipements...</p>
+          <p className="mt-4 text-kamsen-medium">Chargement des équipements...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-kamsen-light">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-aywa-blue to-primary-orange text-white py-16">
+      <section className="bg-gradient-to-r from-aywa-blue to-primary-orange text-kamsen-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-4xl lg:text-5xl font-bold mb-4">
@@ -85,10 +85,10 @@ export default function EquipementsPopulaires() {
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl font-bold text-kamsen-dark mb-4">
               Notre Top {popularEquipment.length} des Équipements
             </h2>
-            <p className="text-xl text-gray-600">
+            <p className="text-xl text-kamsen-medium">
               Ces équipements représentent 80% de nos locations au Sénégal
             </p>
           </div>
@@ -104,36 +104,36 @@ export default function EquipementsPopulaires() {
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                   <div className="absolute top-4 left-4">
-                    <Badge className="bg-primary-orange text-white">
+                    <Badge className="bg-kamsen-dark text-kamsen-white">
                       Populaire
                     </Badge>
                   </div>
                   <div className="absolute top-4 right-4">
-                    <div className="bg-white/90 backdrop-blur-sm rounded-full p-2">
+                    <div className="bg-kamsen-white/90 backdrop-blur-sm rounded-full p-2">
                       {getCategoryIcon(item.category)}
                     </div>
                   </div>
                 </div>
 
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-xl font-bold text-gray-900 group-hover:text-primary-orange transition-colors">
+                  <CardTitle className="text-xl font-bold text-kamsen-dark group-hover:text-kamsen-dark transition-colors">
                     {item.name}
                   </CardTitle>
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
+                  <div className="flex items-center gap-2 text-sm text-kamsen-medium">
                     <MapPin className="h-4 w-4" />
                     <span>{item.location}</span>
                   </div>
                 </CardHeader>
 
                 <CardContent className="space-y-4">
-                  <p className="text-gray-600 text-sm leading-relaxed">
+                  <p className="text-kamsen-medium text-sm leading-relaxed">
                     {item.description}
                   </p>
 
                   {/* Spécifications */}
                   {item.specifications && item.specifications.length > 0 && (
                     <div className="space-y-2">
-                      <h4 className="font-semibold text-gray-900 text-sm">Spécifications :</h4>
+                      <h4 className="font-semibold text-kamsen-dark text-sm">Spécifications :</h4>
                       <div className="flex flex-wrap gap-1">
                         {item.specifications.slice(0, 3).map((spec, index) => (
                           <Badge key={index} variant="secondary" className="text-xs">
@@ -153,14 +153,14 @@ export default function EquipementsPopulaires() {
                   <div className="grid grid-cols-2 gap-4 text-sm">
                     {item.power && (
                       <div className="flex items-center gap-2">
-                        <Zap className="h-4 w-4 text-gray-500" />
-                        <span className="text-gray-600">{item.power}</span>
+                        <Zap className="h-4 w-4 text-kamsen-medium" />
+                        <span className="text-kamsen-medium">{item.power}</span>
                       </div>
                     )}
                     {item.fuelType && item.fuelType !== "N/A" && (
                       <div className="flex items-center gap-2">
-                        <Fuel className="h-4 w-4 text-gray-500" />
-                        <span className="text-gray-600">{item.fuelType}</span>
+                        <Fuel className="h-4 w-4 text-kamsen-medium" />
+                        <span className="text-kamsen-medium">{item.fuelType}</span>
                       </div>
                     )}
                   </div>
@@ -169,14 +169,14 @@ export default function EquipementsPopulaires() {
                   <div className="border-t pt-4 space-y-3">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-2xl font-bold text-primary-orange">
+                        <p className="text-2xl font-bold text-kamsen-dark">
                           {formatPrice(item.pricePerDay)} FCFA
                         </p>
-                        <p className="text-sm text-gray-500">par jour</p>
+                        <p className="text-sm text-kamsen-medium">par jour</p>
                       </div>
                       <div className="text-right">
                         {item.isAvailable ? (
-                          <Badge className="bg-green-100 text-green-800">
+                          <Badge className="bg-kamsen-light text-green-800">
                             Disponible
                           </Badge>
                         ) : (
@@ -194,7 +194,7 @@ export default function EquipementsPopulaires() {
                         </Button>
                       </Link>
                       <Link href="/contact" className="flex-1">
-                        <Button variant="outline" className="w-full border-primary-orange text-primary-orange hover:bg-primary-orange hover:text-white">
+                        <Button variant="outline" className="w-full border-primary-orange text-kamsen-dark hover:bg-kamsen-dark hover:text-kamsen-white">
                           Réserver
                         </Button>
                       </Link>
@@ -208,7 +208,7 @@ export default function EquipementsPopulaires() {
       </section>
 
       {/* Call to Action */}
-      <section className="py-16 bg-kamsen-dark text-white">
+      <section className="py-16 bg-kamsen-dark text-kamsen-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold mb-4">
             Besoin d'un équipement spécifique ?
@@ -218,12 +218,12 @@ export default function EquipementsPopulaires() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/equipements">
-              <Button size="lg" variant="secondary" className="bg-white text-kamsen-dark hover:bg-gray-100">
+              <Button size="lg" variant="secondary" className="bg-kamsen-white text-kamsen-dark hover:bg-kamsen-light">
                 Voir tous les équipements
               </Button>
             </Link>
             <Link href="/contact">
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-kamsen-dark">
+              <Button size="lg" variant="outline" className="border-white text-kamsen-white hover:bg-kamsen-white hover:text-kamsen-dark">
                 Demander un devis
               </Button>
             </Link>

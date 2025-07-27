@@ -3,27 +3,28 @@
 @tailwind utilities;
 
 :root {
-  --background: hsl(0, 0%, 100%);
-  --foreground: hsl(216, 50%, 16%);
-  --muted: hsl(60, 4.8%, 95.9%);
-  --muted-foreground: hsl(25, 5.3%, 44.7%);
+  --background: hsl(0, 0%, 98%);
+  --foreground: hsl(0, 0%, 18%);
+  --muted: hsl(0, 0%, 94%);
+  --muted-foreground: hsl(0, 0%, 45%);
   --popover: hsl(0, 0%, 100%);
-  --popover-foreground: hsl(216, 50%, 16%);
+  --popover-foreground: hsl(0, 0%, 18%);
   --card: hsl(0, 0%, 100%);
-  --card-foreground: hsl(216, 50%, 16%);
-  --border: hsl(20, 5.9%, 90%);
-  --input: hsl(20, 5.9%, 90%);
+  --card-foreground: hsl(0, 0%, 18%);
+  --border: hsl(0, 0%, 88%);
+  --input: hsl(0, 0%, 94%);
   --primary: hsl(0, 0%, 29%);
-  --primary-foreground: hsl(0, 0%, 100%);
-  --secondary: hsl(0, 0%, 91%);
+  --primary-foreground: hsl(0, 0%, 98%);
+  --secondary: hsl(0, 0%, 94%);
   --secondary-foreground: hsl(0, 0%, 18%);
-  --accent: hsl(60, 4.8%, 95.9%);
-  --accent-foreground: hsl(24, 9.8%, 10%);
+  --accent: hsl(0, 0%, 91%);
+  --accent-foreground: hsl(0, 0%, 18%);
   --destructive: hsl(0, 84.2%, 60.2%);
-  --destructive-foreground: hsl(60, 9.1%, 97.8%);
-  --ring: hsl(216, 50%, 16%);
+  --destructive-foreground: hsl(0, 0%, 98%);
+  --ring: hsl(0, 0%, 29%);
   --radius: 0.5rem;
   --kamsen-dark: hsl(0, 0%, 29%);
+  --kamsen-medium: hsl(0, 0%, 45%);
   --kamsen-light: hsl(0, 0%, 91%);
   --kamsen-white: hsl(0, 0%, 98%);
 }
@@ -84,28 +85,28 @@
 }
 
 @layer utilities {
-  .text-primary-orange {
-    color: hsl(26, 100%, 60%);
-  }
-  
-  .bg-primary-orange {
-    background-color: hsl(26, 100%, 60%);
-  }
-  
-  .hover\:bg-primary-orange:hover {
-    background-color: hsl(26, 100%, 55%);
-  }
-  
   .text-kamsen-dark {
     color: hsl(0, 0%, 29%);
+  }
+  
+  .text-kamsen-medium {
+    color: hsl(0, 0%, 45%);
   }
   
   .bg-kamsen-dark {
     background-color: hsl(0, 0%, 29%);
   }
   
+  .bg-kamsen-medium {
+    background-color: hsl(0, 0%, 45%);
+  }
+  
   .bg-kamsen-light {
     background-color: hsl(0, 0%, 91%);
+  }
+  
+  .bg-kamsen-white {
+    background-color: hsl(0, 0%, 98%);
   }
   
   .bg-kamsen-gradient {
@@ -114,5 +115,13 @@
   
   .bg-hero-gradient {
     background: linear-gradient(135deg, hsl(0, 0%, 29%) 0%, hsl(0, 0%, 45%) 50%, hsl(0, 0%, 60%) 100%);
+  }
+  
+  .border-kamsen {
+    border-color: hsl(0, 0%, 88%);
+  }
+  
+  .hover\:bg-kamsen-medium:hover {
+    background-color: hsl(0, 0%, 45%);
   }
 }

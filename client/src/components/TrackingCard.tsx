@@ -53,15 +53,15 @@ export default function TrackingCard({
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'in_transit':
-        return 'bg-blue-100 text-blue-800';
+        return 'bg-kamsen-light text-blue-800';
       case 'delivered':
-        return 'bg-green-100 text-green-800';
+        return 'bg-kamsen-light text-green-800';
       case 'returned':
-        return 'bg-gray-100 text-gray-800';
+        return 'bg-kamsen-light text-gray-800';
       case 'maintenance':
-        return 'bg-orange-100 text-orange-800';
+        return 'bg-kamsen-light text-orange-800';
       default:
-        return 'bg-gray-100 text-gray-800';
+        return 'bg-kamsen-light text-gray-800';
     }
   };
 
@@ -90,7 +90,7 @@ export default function TrackingCard({
             </CardTitle>
           )}
           {showBookingInfo && tracking.bookingId && (
-            <div className="text-sm text-gray-500">
+            <div className="text-sm text-kamsen-medium">
               Réservation #{tracking.bookingId}
             </div>
           )}
@@ -106,7 +106,7 @@ export default function TrackingCard({
           <MapPin className="h-4 w-4 mt-1 text-red-500 flex-shrink-0" />
           <div className="flex-1">
             <p className="font-medium text-sm">{tracking.city}</p>
-            <p className="text-xs text-gray-600">
+            <p className="text-xs text-kamsen-medium">
               {tracking.address || `${tracking.latitude.toFixed(6)}, ${tracking.longitude.toFixed(6)}`}
             </p>
           </div>
@@ -119,7 +119,7 @@ export default function TrackingCard({
             <div className="flex-1">
               <p className="font-medium text-sm">{tracking.driverName}</p>
               {tracking.driverPhone && (
-                <p className="text-xs text-gray-600 flex items-center gap-1">
+                <p className="text-xs text-kamsen-medium flex items-center gap-1">
                   <Phone className="h-3 w-3" />
                   {tracking.driverPhone}
                 </p>
@@ -134,7 +134,7 @@ export default function TrackingCard({
             <Clock className="h-4 w-4 text-orange-500 flex-shrink-0" />
             <div>
               <p className="text-sm">Arrivée prévue</p>
-              <p className="text-xs text-gray-600">
+              <p className="text-xs text-kamsen-medium">
                 {new Date(tracking.estimatedArrival).toLocaleString('fr-FR')}
               </p>
             </div>
@@ -147,7 +147,7 @@ export default function TrackingCard({
             <CheckCircle className="h-4 w-4 text-green-500 flex-shrink-0" />
             <div>
               <p className="text-sm">Arrivée réelle</p>
-              <p className="text-xs text-gray-600">
+              <p className="text-xs text-kamsen-medium">
                 {new Date(tracking.actualArrival).toLocaleString('fr-FR')}
               </p>
             </div>
@@ -156,7 +156,7 @@ export default function TrackingCard({
 
         {/* Notes de livraison */}
         {tracking.deliveryNotes && (
-          <div className="bg-gray-50 p-2 rounded text-xs">
+          <div className="bg-kamsen-light p-2 rounded text-xs">
             <span className="font-medium">Notes:</span> {tracking.deliveryNotes}
           </div>
         )}
@@ -176,7 +176,7 @@ export default function TrackingCard({
           </div>
         )}
 
-        <div className="bg-gray-50 p-2 rounded text-xs">
+        <div className="bg-kamsen-light p-2 rounded text-xs">
           <span className="font-medium">Dernière mise à jour:</span> {new Date(tracking.updatedAt).toLocaleString('fr-FR')}
         </div>
       </CardContent>

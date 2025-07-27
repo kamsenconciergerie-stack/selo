@@ -126,7 +126,7 @@ export default function LoginPage() {
         <div className="text-center mb-8">
           <Link href="/">
             <h1 className="text-3xl font-bold text-orange-600">AYWA</h1>
-            <p className="text-gray-600 mt-2">Location d'équipements au Sénégal</p>
+            <p className="text-kamsen-medium mt-2">Location d'équipements au Sénégal</p>
           </Link>
         </div>
 
@@ -274,7 +274,7 @@ export default function LoginPage() {
             </Tabs>
 
             <div className="mt-6 text-center">
-              <Link href="/" className="text-sm text-gray-600 hover:text-orange-600">
+              <Link href="/" className="text-sm text-kamsen-medium hover:text-orange-600">
                 ← Retour à l'accueil
               </Link>
             </div>

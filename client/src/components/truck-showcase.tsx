@@ -53,10 +53,10 @@ export function TruckShowcase() {
     <section className="py-12 bg-gradient-to-b from-blue-50 to-white">
       <div className="container mx-auto px-4">
         <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">
+          <h2 className="text-3xl font-bold text-kamsen-dark mb-4">
             🚛 Camions & Véhicules Utilitaires
           </h2>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+          <p className="text-lg text-kamsen-medium max-w-3xl mx-auto">
             Location de camions et véhicules professionnels au Sénégal. 
             Du petit fourgon au camion semi-remorque, trouvez le véhicule adapté à vos besoins.
           </p>
@@ -113,7 +113,7 @@ export function TruckShowcase() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredTrucks.map((truck: any) => (
             <Card key={truck.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-              <div className="aspect-video relative bg-gray-100">
+              <div className="aspect-video relative bg-kamsen-light">
                 <img
                   src={truck.image_url}
                   alt={truck.name}
@@ -180,7 +180,7 @@ export function TruckShowcase() {
                 )}
                 
                 <div className="flex items-center justify-between pt-4 border-t">
-                  <div className="text-2xl font-bold text-blue-600">
+                  <div className="text-2xl font-bold text-kamsen-dark">
                     {formatPrice(truck.price_per_day)}/jour
                   </div>
                   <Button>
@@ -194,7 +194,7 @@ export function TruckShowcase() {
 
         {filteredTrucks.length === 0 && (
           <div className="text-center py-8">
-            <p className="text-gray-500">Aucun véhicule disponible dans cette catégorie.</p>
+            <p className="text-kamsen-medium">Aucun véhicule disponible dans cette catégorie.</p>
           </div>
         )}
       </div>

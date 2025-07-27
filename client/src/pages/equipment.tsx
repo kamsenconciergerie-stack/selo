@@ -63,11 +63,11 @@ export default function EquipmentPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-kamsen-light">
       <Header />
       
       {/* Hero Section */}
-      <section className="bg-kamsen-gradient text-white py-12">
+      <section className="bg-kamsen-gradient text-kamsen-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-4xl lg:text-5xl font-bold mb-4">
@@ -81,7 +81,7 @@ export default function EquipmentPage() {
       </section>
 
       {/* Filters */}
-      <section className="py-8 bg-white border-b">
+      <section className="py-8 bg-kamsen-white border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
             <Input
@@ -120,7 +120,7 @@ export default function EquipmentPage() {
             </Select>
             
             <div className="flex gap-2">
-              <Button onClick={handleSearch} className="bg-primary-orange hover:bg-primary-orange/90">
+              <Button onClick={handleSearch} className="bg-kamsen-dark hover:bg-kamsen-dark/90">
                 <Search className="h-4 w-4 mr-2" />
                 Rechercher
               </Button>
@@ -137,7 +137,7 @@ export default function EquipmentPage() {
       <section className="py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center mb-8">
-            <h2 className="text-2xl font-bold text-gray-900">
+            <h2 className="text-2xl font-bold text-kamsen-dark">
               {equipment.length} équipement{equipment.length !== 1 ? 's' : ''} trouvé{equipment.length !== 1 ? 's' : ''}
             </h2>
             {(selectedCategory && selectedCategory !== "all" || searchQuery || selectedLocation && selectedLocation !== "all") && (
@@ -169,13 +169,13 @@ export default function EquipmentPage() {
           ) : (
             <div className="text-center py-12">
               <div className="max-w-md mx-auto">
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">
+                <h3 className="text-xl font-semibold text-kamsen-dark mb-4">
                   Aucun équipement trouvé
                 </h3>
-                <p className="text-gray-600 mb-6">
+                <p className="text-kamsen-medium mb-6">
                   Essayez de modifier vos critères de recherche ou consultez toutes nos catégories.
                 </p>
-                <Button onClick={clearFilters} className="bg-primary-orange hover:bg-primary-orange/90">
+                <Button onClick={clearFilters} className="bg-kamsen-dark hover:bg-kamsen-dark/90">
                   Voir tous les équipements
                 </Button>
               </div>

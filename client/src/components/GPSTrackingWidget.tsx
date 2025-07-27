@@ -33,11 +33,11 @@ export default function GPSTrackingWidget({ bookingId, compact = false, autoRefr
   }, [autoRefresh, refetch]);
 
   const statusColors = {
-    pending: 'bg-gray-100 text-gray-800',
-    dispatched: 'bg-blue-100 text-blue-800',
+    pending: 'bg-kamsen-light text-gray-800',
+    dispatched: 'bg-kamsen-light text-blue-800',
     in_transit: 'bg-yellow-100 text-yellow-800',
-    arrived: 'bg-green-100 text-green-800',
-    delivered: 'bg-green-600 text-white',
+    arrived: 'bg-kamsen-light text-green-800',
+    delivered: 'bg-green-600 text-kamsen-white',
     cancelled: 'bg-red-100 text-red-800',
   };
 
@@ -79,7 +79,7 @@ export default function GPSTrackingWidget({ bookingId, compact = false, autoRefr
   if (!trackingData || trackingData.length === 0) {
     return (
       <Card className={compact ? 'p-3' : 'p-6'}>
-        <div className="text-center text-gray-500">
+        <div className="text-center text-kamsen-medium">
           <MapPin className="h-8 w-8 mx-auto mb-2 opacity-50" />
           <p className="text-sm">Aucun suivi GPS actif</p>
         </div>
@@ -98,12 +98,12 @@ export default function GPSTrackingWidget({ bookingId, compact = false, autoRefr
           <Card key={tracking.id} className="p-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <div className="bg-blue-100 p-1.5 rounded-full">
-                  <Truck className="h-3 w-3 text-blue-600" />
+                <div className="bg-kamsen-light p-1.5 rounded-full">
+                  <Truck className="h-3 w-3 text-kamsen-dark" />
                 </div>
                 <div>
                   <p className="font-medium text-sm">Livraison #{tracking.bookingId}</p>
-                  <p className="text-xs text-gray-600">{tracking.currentCity}</p>
+                  <p className="text-xs text-kamsen-medium">{tracking.currentCity}</p>
                 </div>
               </div>
               <Badge className={`${statusColors[tracking.status as keyof typeof statusColors]} text-xs px-2 py-0.5`}>
@@ -127,10 +127,10 @@ export default function GPSTrackingWidget({ bookingId, compact = false, autoRefr
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <h3 className="text-lg font-semibold flex items-center gap-2">
-          <Navigation className="h-5 w-5 text-blue-600" />
+          <Navigation className="h-5 w-5 text-kamsen-dark" />
           Suivi GPS en Temps Réel
         </h3>
-        <div className="text-xs text-gray-500">
+        <div className="text-xs text-kamsen-medium">
           Mis à jour: {formatTime(lastUpdate.toISOString())}
         </div>
       </div>
@@ -140,14 +140,14 @@ export default function GPSTrackingWidget({ bookingId, compact = false, autoRefr
           <CardHeader className="bg-gradient-to-r from-blue-50 to-indigo-50 pb-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="bg-white p-2 rounded-full shadow-sm">
-                  <MapPin className="h-4 w-4 text-blue-600" />
+                <div className="bg-kamsen-white p-2 rounded-full shadow-sm">
+                  <MapPin className="h-4 w-4 text-kamsen-dark" />
                 </div>
                 <div>
                   <CardTitle className="text-base">
                     Livraison #{tracking.bookingId}
                   </CardTitle>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-kamsen-medium">
                     {tracking.currentCity} → {tracking.destinationCity}
                   </p>
                 </div>
@@ -162,16 +162,16 @@ export default function GPSTrackingWidget({ bookingId, compact = false, autoRefr
             {/* Driver Info */}
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <p className="text-xs text-gray-600 mb-1">Chauffeur</p>
+                <p className="text-xs text-kamsen-medium mb-1">Chauffeur</p>
                 <p className="font-medium text-sm">{tracking.driverName}</p>
-                <a href={`tel:${tracking.driverPhone}`} className="text-blue-600 text-xs hover:underline">
+                <a href={`tel:${tracking.driverPhone}`} className="text-kamsen-dark text-xs hover:underline">
                   {tracking.driverPhone}
                 </a>
               </div>
               <div>
-                <p className="text-xs text-gray-600 mb-1">Véhicule</p>
+                <p className="text-xs text-kamsen-medium mb-1">Véhicule</p>
                 <p className="font-medium text-sm">{tracking.vehiclePlate}</p>
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-kamsen-medium">
                   Signal: {tracking.signalStrength}/5 | Batterie: {tracking.batteryLevel}%
                 </p>
               </div>
@@ -180,8 +180,8 @@ export default function GPSTrackingWidget({ bookingId, compact = false, autoRefr
             {/* Location & Progress */}
             <div className="border-t pt-3">
               <div className="flex justify-between items-center mb-2">
-                <span className="text-xs text-gray-600">Position actuelle</span>
-                <span className="text-xs text-gray-500">
+                <span className="text-xs text-kamsen-medium">Position actuelle</span>
+                <span className="text-xs text-kamsen-medium">
                   {formatTime(tracking.lastPingAt)}
                 </span>
               </div>
@@ -189,15 +189,15 @@ export default function GPSTrackingWidget({ bookingId, compact = false, autoRefr
               
               <div className="grid grid-cols-3 gap-2 text-xs">
                 <div className="text-center">
-                  <p className="text-gray-600">Distance restante</p>
+                  <p className="text-kamsen-medium">Distance restante</p>
                   <p className="font-medium">{tracking.remainingDistanceKm?.toFixed(1)} km</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-gray-600">Vitesse</p>
+                  <p className="text-kamsen-medium">Vitesse</p>
                   <p className="font-medium">{tracking.currentSpeed} km/h</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-gray-600">ETA</p>
+                  <p className="text-kamsen-medium">ETA</p>
                   <p className="font-medium">
                     {calculateETA(tracking.remainingDistanceKm, tracking.currentSpeed)}
                   </p>
@@ -223,8 +223,8 @@ export default function GPSTrackingWidget({ bookingId, compact = false, autoRefr
 
             {tracking.deliveryNotes && (
               <div className="border-t pt-3">
-                <p className="text-xs text-gray-600 mb-1">Notes de livraison</p>
-                <p className="text-sm bg-gray-50 p-2 rounded">
+                <p className="text-xs text-kamsen-medium mb-1">Notes de livraison</p>
+                <p className="text-sm bg-kamsen-light p-2 rounded">
                   {tracking.deliveryNotes}
                 </p>
               </div>
@@ -235,7 +235,7 @@ export default function GPSTrackingWidget({ bookingId, compact = false, autoRefr
 
       {activeTracking.length === 0 && (
         <Card className="p-6">
-          <div className="text-center text-gray-500">
+          <div className="text-center text-kamsen-medium">
             <Truck className="h-12 w-12 mx-auto mb-3 opacity-50" />
             <h3 className="font-semibold mb-2">Aucune livraison en cours</h3>
             <p className="text-sm">

@@ -104,15 +104,15 @@ export default function TrackingDashboard({ userType, partnerId, userId }: Track
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'in_transit':
-        return 'bg-blue-100 text-blue-800';
+        return 'bg-kamsen-light text-blue-800';
       case 'delivered':
-        return 'bg-green-100 text-green-800';
+        return 'bg-kamsen-light text-green-800';
       case 'returned':
-        return 'bg-gray-100 text-gray-800';
+        return 'bg-kamsen-light text-gray-800';
       case 'maintenance':
-        return 'bg-orange-100 text-orange-800';
+        return 'bg-kamsen-light text-orange-800';
       default:
-        return 'bg-gray-100 text-gray-800';
+        return 'bg-kamsen-light text-gray-800';
     }
   };
 
@@ -160,12 +160,12 @@ export default function TrackingDashboard({ userType, partnerId, userId }: Track
       {/* Header with refresh */}
       <div className="flex justify-between items-center">
         <div>
-          <h3 className="text-lg font-semibold text-gray-900">
+          <h3 className="text-lg font-semibold text-kamsen-dark">
             {userType === 'admin' ? 'Suivi Global des Équipements' : 
              userType === 'partner' ? 'Suivi de Vos Équipements' : 
              'Suivi de Vos Réservations'}
           </h3>
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-kamsen-medium">
             Dernière mise à jour: {format(lastUpdate, "HH:mm:ss", { locale: fr })}
           </p>
         </div>
@@ -187,8 +187,8 @@ export default function TrackingDashboard({ userType, partnerId, userId }: Track
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">Total Suivi</p>
-                <p className="text-2xl font-bold text-blue-600">{trackingData.length}</p>
+                <p className="text-sm font-medium text-kamsen-medium">Total Suivi</p>
+                <p className="text-2xl font-bold text-kamsen-dark">{trackingData.length}</p>
               </div>
               <Navigation className="h-8 w-8 text-blue-500" />
             </div>
@@ -199,7 +199,7 @@ export default function TrackingDashboard({ userType, partnerId, userId }: Track
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">En Transit</p>
+                <p className="text-sm font-medium text-kamsen-medium">En Transit</p>
                 <p className="text-2xl font-bold text-orange-600">{getInTransitTrackings().length}</p>
               </div>
               <Truck className="h-8 w-8 text-orange-500" />
@@ -211,8 +211,8 @@ export default function TrackingDashboard({ userType, partnerId, userId }: Track
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">Livrés</p>
-                <p className="text-2xl font-bold text-green-600">{getDeliveredTrackings().length}</p>
+                <p className="text-sm font-medium text-kamsen-medium">Livrés</p>
+                <p className="text-2xl font-bold text-kamsen-dark">{getDeliveredTrackings().length}</p>
               </div>
               <CheckCircle className="h-8 w-8 text-green-500" />
             </div>
@@ -230,7 +230,7 @@ export default function TrackingDashboard({ userType, partnerId, userId }: Track
 
         <TabsContent value="active" className="space-y-4">
           {getActiveTrackings().length === 0 ? (
-            <div className="text-center py-8 text-gray-500">
+            <div className="text-center py-8 text-kamsen-medium">
               <Package className="h-16 w-16 mx-auto mb-4 opacity-50" />
               <p>Aucun équipement actif en suivi</p>
             </div>
@@ -246,11 +246,11 @@ export default function TrackingDashboard({ userType, partnerId, userId }: Track
                             {getStatusIcon(tracking.status)}
                             <span className="ml-1">{getStatusLabel(tracking.status)}</span>
                           </Badge>
-                          <span className="text-sm text-gray-500">
+                          <span className="text-sm text-kamsen-medium">
                             Équipement #{tracking.equipmentId}
                           </span>
                           {tracking.bookingId && (
-                            <span className="text-sm text-gray-500">
+                            <span className="text-sm text-kamsen-medium">
                               Réservation #{tracking.bookingId}
                             </span>
                           )}
@@ -258,21 +258,21 @@ export default function TrackingDashboard({ userType, partnerId, userId }: Track
 
                         <div className="space-y-2">
                           <div className="flex items-center gap-2 text-sm">
-                            <MapPin className="h-4 w-4 text-gray-400" />
+                            <MapPin className="h-4 w-4 text-kamsen-light" />
                             <span className="font-medium">{tracking.city}</span>
                             {tracking.address && (
-                              <span className="text-gray-600">- {tracking.address}</span>
+                              <span className="text-kamsen-medium">- {tracking.address}</span>
                             )}
                           </div>
 
                           {tracking.driverName && (
                             <div className="flex items-center gap-2 text-sm">
-                              <User className="h-4 w-4 text-gray-400" />
+                              <User className="h-4 w-4 text-kamsen-light" />
                               <span>{tracking.driverName}</span>
                               {tracking.driverPhone && (
                                 <a 
                                   href={`tel:${tracking.driverPhone}`}
-                                  className="text-blue-600 hover:underline flex items-center gap-1"
+                                  className="text-kamsen-dark hover:underline flex items-center gap-1"
                                 >
                                   <Phone className="h-3 w-3" />
                                   {tracking.driverPhone}
@@ -283,8 +283,8 @@ export default function TrackingDashboard({ userType, partnerId, userId }: Track
 
                           {tracking.estimatedArrival && (
                             <div className="flex items-center gap-2 text-sm">
-                              <Clock className="h-4 w-4 text-gray-400" />
-                              <span className="text-gray-600">
+                              <Clock className="h-4 w-4 text-kamsen-light" />
+                              <span className="text-kamsen-medium">
                                 Arrivée prévue: {formatDateTime(tracking.estimatedArrival)}
                               </span>
                             </div>
@@ -306,8 +306,8 @@ export default function TrackingDashboard({ userType, partnerId, userId }: Track
                     </div>
 
                     {tracking.deliveryNotes && (
-                      <div className="mt-4 p-3 bg-gray-50 rounded-lg">
-                        <p className="text-sm text-gray-700">
+                      <div className="mt-4 p-3 bg-kamsen-light rounded-lg">
+                        <p className="text-sm text-kamsen-dark">
                           <strong>Notes:</strong> {tracking.deliveryNotes}
                         </p>
                       </div>
@@ -321,7 +321,7 @@ export default function TrackingDashboard({ userType, partnerId, userId }: Track
 
         <TabsContent value="in_transit" className="space-y-4">
           {getInTransitTrackings().length === 0 ? (
-            <div className="text-center py-8 text-gray-500">
+            <div className="text-center py-8 text-kamsen-medium">
               <Truck className="h-16 w-16 mx-auto mb-4 opacity-50" />
               <p>Aucun équipement en transit</p>
             </div>
@@ -333,28 +333,28 @@ export default function TrackingDashboard({ userType, partnerId, userId }: Track
                     <div className="flex justify-between items-start">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">
-                          <Badge className="bg-blue-100 text-blue-800">
+                          <Badge className="bg-kamsen-light text-blue-800">
                             <Truck className="h-4 w-4 mr-1" />
                             En transit
                           </Badge>
-                          <span className="text-sm text-gray-500">
+                          <span className="text-sm text-kamsen-medium">
                             Équipement #{tracking.equipmentId}
                           </span>
                         </div>
                         
                         <div className="space-y-2">
                           <div className="flex items-center gap-2 text-sm">
-                            <MapPin className="h-4 w-4 text-gray-400" />
+                            <MapPin className="h-4 w-4 text-kamsen-light" />
                             <span className="font-medium">{tracking.city}</span>
                             {tracking.address && (
-                              <span className="text-gray-600">- {tracking.address}</span>
+                              <span className="text-kamsen-medium">- {tracking.address}</span>
                             )}
                           </div>
 
                           {tracking.estimatedArrival && (
                             <div className="flex items-center gap-2 text-sm">
-                              <Clock className="h-4 w-4 text-gray-400" />
-                              <span className="text-gray-600">
+                              <Clock className="h-4 w-4 text-kamsen-light" />
+                              <span className="text-kamsen-medium">
                                 Arrivée prévue: {formatDateTime(tracking.estimatedArrival)}
                               </span>
                             </div>
@@ -381,7 +381,7 @@ export default function TrackingDashboard({ userType, partnerId, userId }: Track
 
         <TabsContent value="delivered" className="space-y-4">
           {getDeliveredTrackings().length === 0 ? (
-            <div className="text-center py-8 text-gray-500">
+            <div className="text-center py-8 text-kamsen-medium">
               <CheckCircle className="h-16 w-16 mx-auto mb-4 opacity-50" />
               <p>Aucune livraison récente</p>
             </div>
@@ -393,28 +393,28 @@ export default function TrackingDashboard({ userType, partnerId, userId }: Track
                     <div className="flex justify-between items-start">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">
-                          <Badge className="bg-green-100 text-green-800">
+                          <Badge className="bg-kamsen-light text-green-800">
                             <CheckCircle className="h-4 w-4 mr-1" />
                             Livré
                           </Badge>
-                          <span className="text-sm text-gray-500">
+                          <span className="text-sm text-kamsen-medium">
                             Équipement #{tracking.equipmentId}
                           </span>
                         </div>
                         
                         <div className="space-y-2">
                           <div className="flex items-center gap-2 text-sm">
-                            <MapPin className="h-4 w-4 text-gray-400" />
+                            <MapPin className="h-4 w-4 text-kamsen-light" />
                             <span className="font-medium">{tracking.city}</span>
                             {tracking.address && (
-                              <span className="text-gray-600">- {tracking.address}</span>
+                              <span className="text-kamsen-medium">- {tracking.address}</span>
                             )}
                           </div>
 
                           {tracking.actualArrival && (
                             <div className="flex items-center gap-2 text-sm">
-                              <Clock className="h-4 w-4 text-gray-400" />
-                              <span className="text-gray-600">
+                              <Clock className="h-4 w-4 text-kamsen-light" />
+                              <span className="text-kamsen-medium">
                                 Livré le: {formatDateTime(tracking.actualArrival)}
                               </span>
                             </div>
@@ -431,7 +431,7 @@ export default function TrackingDashboard({ userType, partnerId, userId }: Track
       </Tabs>
 
       {trackingData.length === 0 && (
-        <div className="text-center py-12 text-gray-500">
+        <div className="text-center py-12 text-kamsen-medium">
           <Navigation className="h-24 w-24 mx-auto mb-6 opacity-30" />
           <h3 className="text-lg font-medium mb-2">Aucun suivi GPS disponible</h3>
           <p className="text-sm">
