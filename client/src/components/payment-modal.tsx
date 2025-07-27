@@ -34,20 +34,13 @@ export default function PaymentModal({ booking, open, onOpenChange }: PaymentMod
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
-  // Default payment methods (Wave et Orange Money)
+  // Default payment methods (Paiement mobile sécurisé)
   const paymentMethods: PaymentMethod[] = [
     {
-      id: "orange_money",
-      name: "Orange Money",
-      description: "Paiement sécurisé via Orange Money",
-      logo: "🟠",
-      available: true
-    },
-    {
-      id: "wave",
-      name: "Wave",
-      description: "Paiement sécurisé via Wave",
-      logo: "🌊", 
+      id: "mobile_payment",
+      name: "Paiement Mobile",
+      description: "Paiement sécurisé et instantané",
+      logo: "💳",
       available: true
     }
   ];
@@ -57,7 +50,10 @@ export default function PaymentModal({ booking, open, onOpenChange }: PaymentMod
   // Initiate payment mutation
   const initializePayment = useMutation({
     mutationFn: async (data: { bookingId: number; paymentMethod: string; phoneNumber: string }) => {
-      const response = await apiRequest("POST", "/api/payment/initiate", data);
+      const response = await apiRequest("/api/payment/initiate", {
+        method: "POST",
+        body: JSON.stringify(data)
+      });
       return response;
     },
     onSuccess: (data) => {
@@ -97,7 +93,7 @@ export default function PaymentModal({ booking, open, onOpenChange }: PaymentMod
     
     const checkStatus = async () => {
       try {
-        const response = await apiRequest("GET", `/api/payment/status/${txId}?method=${selectedMethod}`);
+        const response = await apiRequest(`/api/payment/status/${txId}?method=${selectedMethod}`);
 
         if (response.status === "completed") {
           setPaymentStatus("success");
@@ -231,17 +227,9 @@ export default function PaymentModal({ booking, open, onOpenChange }: PaymentMod
                         <RadioGroupItem value={method.id} id={method.id} />
                         <Label htmlFor={method.id} className="flex items-center space-x-3 cursor-pointer flex-1">
                           <div className="w-12 h-12 rounded-lg flex items-center justify-center border-2 border-gray-200">
-                            {method.id === "orange_money" ? (
-                              <div className="w-10 h-10 bg-orange-500 rounded-lg flex items-center justify-center">
-                                <Smartphone className="h-6 w-6 text-white" />
-                              </div>
-                            ) : method.id === "wave" ? (
-                              <div className="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center">
-                                <CreditCard className="h-6 w-6 text-white" />
-                              </div>
-                            ) : (
-                              <CreditCard className="h-6 w-6 text-gray-500" />
-                            )}
+                            <div className="w-10 h-10 bg-gradient-to-r from-kamsen-blue to-kamsen-orange rounded-lg flex items-center justify-center">
+                              <CreditCard className="h-6 w-6 text-white" />
+                            </div>
                           </div>
                           <div className="flex-1">
                             <div className="font-semibold text-gray-900">{method.name}</div>

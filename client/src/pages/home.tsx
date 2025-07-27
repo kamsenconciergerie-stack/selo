@@ -397,61 +397,37 @@ export default function Home() {
               Paiement Simple et Sécurisé
             </h2>
             <p className="text-xl text-gray-600 mb-8">
-              Payez facilement avec vos moyens de paiement mobile préférés
+              Paiement mobile sécurisé et instantané
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <div className="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow">
+          <div className="max-w-2xl mx-auto">
+            <div className="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow text-center">
               <div className="flex items-center justify-center mb-6">
-                <div className="w-16 h-16 bg-orange-500 rounded-xl flex items-center justify-center">
-                  <svg className="h-10 w-10 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <div className="w-20 h-20 bg-gradient-to-r from-kamsen-blue to-kamsen-orange rounded-xl flex items-center justify-center">
+                  <svg className="h-12 w-12 text-white" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
                   </svg>
                 </div>
               </div>
-              <h3 className="text-2xl font-bold text-gray-900 text-center mb-4">
-                Orange Money
+              <h3 className="text-3xl font-bold text-gray-900 mb-6">
+                Paiement Sécurisé et Instantané
               </h3>
-              <div className="space-y-3 text-gray-600">
-                <div className="flex items-center">
-                  <CheckCircle className="h-5 w-5 text-green-500 mr-3" />
-                  <span>Paiement instantané</span>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-gray-600">
+                <div className="flex flex-col items-center">
+                  <CheckCircle className="h-8 w-8 text-green-500 mb-3" />
+                  <span className="font-semibold">Paiement instantané</span>
+                  <span className="text-sm text-gray-500">En quelques secondes</span>
                 </div>
-                <div className="flex items-center">
-                  <CheckCircle className="h-5 w-5 text-green-500 mr-3" />
-                  <span>100% sécurisé</span>
+                <div className="flex flex-col items-center">
+                  <CheckCircle className="h-8 w-8 text-green-500 mb-3" />
+                  <span className="font-semibold">100% sécurisé</span>
+                  <span className="text-sm text-gray-500">Données protégées</span>
                 </div>
-                <div className="flex items-center">
-                  <CheckCircle className="h-5 w-5 text-green-500 mr-3" />
-                  <span>Confirmé par SMS</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow">
-              <div className="flex items-center justify-center mb-6">
-                <div className="w-16 h-16 bg-blue-500 rounded-xl flex items-center justify-center">
-                  <svg className="h-10 w-10 text-white" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/>
-                  </svg>
-                </div>
-              </div>
-              <h3 className="text-2xl font-bold text-gray-900 text-center mb-4">
-                Wave
-              </h3>
-              <div className="space-y-3 text-gray-600">
-                <div className="flex items-center">
-                  <CheckCircle className="h-5 w-5 text-green-500 mr-3" />
-                  <span>Paiement rapide</span>
-                </div>
-                <div className="flex items-center">
-                  <CheckCircle className="h-5 w-5 text-green-500 mr-3" />
-                  <span>Sécurité maximale</span>
-                </div>
-                <div className="flex items-center">
-                  <CheckCircle className="h-5 w-5 text-green-500 mr-3" />
-                  <span>Interface simple</span>
+                <div className="flex flex-col items-center">
+                  <CheckCircle className="h-8 w-8 text-green-500 mb-3" />
+                  <span className="font-semibold">Confirmation SMS</span>
+                  <span className="text-sm text-gray-500">Reçu immédiat</span>
                 </div>
               </div>
             </div>
@@ -459,7 +435,7 @@ export default function Home() {
 
           <div className="text-center mt-8">
             <p className="text-lg text-gray-700 font-medium">
-              ✓ Transactions 100% sécurisées • ✓ Confirmation immédiate • ✓ Support client 24h/7j
+              ✓ Transactions sécurisées • ✓ Confirmation immédiate • ✓ Support client 24h/7j
             </p>
           </div>
         </div>
