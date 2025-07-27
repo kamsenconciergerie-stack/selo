@@ -13,19 +13,19 @@
   --card-foreground: hsl(216, 50%, 16%);
   --border: hsl(20, 5.9%, 90%);
   --input: hsl(20, 5.9%, 90%);
-  --primary: hsl(26, 100%, 60%);
+  --primary: hsl(0, 0%, 29%);
   --primary-foreground: hsl(0, 0%, 100%);
-  --secondary: hsl(216, 50%, 16%);
-  --secondary-foreground: hsl(0, 0%, 100%);
+  --secondary: hsl(0, 0%, 91%);
+  --secondary-foreground: hsl(0, 0%, 18%);
   --accent: hsl(60, 4.8%, 95.9%);
   --accent-foreground: hsl(24, 9.8%, 10%);
   --destructive: hsl(0, 84.2%, 60.2%);
   --destructive-foreground: hsl(60, 9.1%, 97.8%);
   --ring: hsl(216, 50%, 16%);
   --radius: 0.5rem;
-  --kamsen-blue: hsl(216, 50%, 16%);
-  --kamsen-orange: hsl(26, 100%, 60%);
-  --kamsen-blue-light: hsl(216, 50%, 25%);
+  --kamsen-dark: hsl(0, 0%, 29%);
+  --kamsen-light: hsl(0, 0%, 91%);
+  --kamsen-white: hsl(0, 0%, 98%);
 }
 
 .dark {
@@ -96,19 +96,23 @@
     background-color: hsl(26, 100%, 55%);
   }
   
-  .text-kamsen-blue {
-    color: hsl(216, 50%, 16%);
+  .text-kamsen-dark {
+    color: hsl(0, 0%, 29%);
   }
   
-  .bg-kamsen-blue {
-    background-color: hsl(216, 50%, 16%);
+  .bg-kamsen-dark {
+    background-color: hsl(0, 0%, 29%);
+  }
+  
+  .bg-kamsen-light {
+    background-color: hsl(0, 0%, 91%);
   }
   
   .bg-kamsen-gradient {
-    background: linear-gradient(135deg, hsl(216, 50%, 16%) 0%, hsl(216, 50%, 25%) 100%);
+    background: linear-gradient(135deg, hsl(0, 0%, 29%) 0%, hsl(0, 0%, 45%) 100%);
   }
   
   .bg-hero-gradient {
-    background: linear-gradient(135deg, hsl(216, 50%, 16%) 0%, hsl(216, 50%, 25%) 50%, hsl(26, 100%, 60%) 100%);
+    background: linear-gradient(135deg, hsl(0, 0%, 29%) 0%, hsl(0, 0%, 45%) 50%, hsl(0, 0%, 60%) 100%);
   }
 }

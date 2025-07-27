@@ -94,7 +94,7 @@ export default function PopularEquipment() {
       <Header />
       
       {/* Hero Section */}
-      <section className="bg-hero-gradient text-white py-16">
+      <section className="bg-kamsen-gradient text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <div className="flex items-center justify-center mb-6">
@@ -219,7 +219,7 @@ export default function PopularEquipment() {
       </section>
 
       {/* Statistiques */}
-      <section className="py-16 bg-kamsen-blue">
+      <section className="py-16 bg-kamsen-dark">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center text-white">
             <div>

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 150" width="400" height="150">
+  <!-- Background rectangles -->
+  <rect x="0" y="0" width="120" height="150" fill="#4a4a4a"/>
+  <rect x="120" y="0" width="280" height="150" fill="#e8e8e8"/>
+  
+  <!-- Building/Bridge icon on dark side -->
+  <g transform="translate(40, 40)" fill="white" stroke="white" stroke-width="2">
+    <!-- Main building structure -->
+    <rect x="0" y="20" width="8" height="40" fill="white"/>
+    <rect x="12" y="15" width="8" height="45" fill="white"/>
+    <rect x="24" y="10" width="8" height="50" fill="white"/>
+    <rect x="36" y="15" width="8" height="45" fill="white"/>
+    <!-- Bridge/road structure -->
+    <path d="M0 65 L44 65 L22 45 Z" fill="white"/>
+    <rect x="18" y="65" width="8" height="15" fill="white"/>
+  </g>
+  
+  <!-- KAMSEN text -->
+  <text x="140" y="70" font-family="Arial, sans-serif" font-size="36" font-weight="bold" fill="#2c2c2c">KAMSEN</text>
+  
+  <!-- Slogan background -->
+  <rect x="140" y="85" width="240" height="35" fill="#4a4a4a"/>
+  
+  <!-- UNE CHARGE EN MOINS text -->
+  <text x="150" y="107" font-family="Arial, sans-serif" font-size="16" font-weight="normal" fill="white">UNE CHARGE EN MOINS</text>
+</svg>

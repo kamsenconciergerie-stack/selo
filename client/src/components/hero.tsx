@@ -32,14 +32,21 @@ export default function Hero() {
   };
 
   return (
-    <section className="bg-hero-gradient text-white py-16 lg:py-24">
+    <section className="bg-kamsen-gradient text-white py-16 lg:py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
+          <div className="mb-8">
+            <img 
+              src="/images/kamsen-logo.svg" 
+              alt="Kamsen - Une charge en moins" 
+              className="h-20 w-auto mx-auto mb-6"
+            />
+          </div>
           <h1 className="text-4xl lg:text-6xl font-bold mb-6">
             Location de camions et d'équipements<br />
-            <span className="text-primary-orange">Professionnels</span> au Sénégal
+            <span className="text-gray-200">Professionnels</span> au Sénégal
           </h1>
-          <p className="text-xl lg:text-2xl mb-8 text-blue-100">
+          <p className="text-xl lg:text-2xl mb-8 text-gray-200">
             Des centaines d'équipements disponibles partout au Sénégal
           </p>
           
@@ -93,7 +100,7 @@ export default function Hero() {
               <div className="flex items-end">
                 <Button 
                   onClick={handleSearch}
-                  className="w-full bg-primary-orange hover:bg-primary-orange/90 text-white font-semibold"
+                  className="w-full bg-gray-800 hover:bg-gray-800/90 text-white font-semibold"
                 >
                   <Search className="mr-2 h-4 w-4" />
                   Rechercher

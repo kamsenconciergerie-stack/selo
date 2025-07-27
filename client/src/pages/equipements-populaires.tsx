@@ -189,7 +189,7 @@ export default function EquipementsPopulaires() {
 
                     <div className="flex gap-2">
                       <Link href={`/equipements/${item.id}`} className="flex-1">
-                        <Button className="w-full bg-kamsen-blue hover:bg-kamsen-blue/90">
+                        <Button className="w-full bg-kamsen-dark hover:bg-kamsen-dark/90">
                           Voir détails
                         </Button>
                       </Link>
@@ -208,7 +208,7 @@ export default function EquipementsPopulaires() {
       </section>
 
       {/* Call to Action */}
-      <section className="py-16 bg-kamsen-blue text-white">
+      <section className="py-16 bg-kamsen-dark text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold mb-4">
             Besoin d'un équipement spécifique ?
@@ -218,12 +218,12 @@ export default function EquipementsPopulaires() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/equipements">
-              <Button size="lg" variant="secondary" className="bg-white text-kamsen-blue hover:bg-gray-100">
+              <Button size="lg" variant="secondary" className="bg-white text-kamsen-dark hover:bg-gray-100">
                 Voir tous les équipements
               </Button>
             </Link>
             <Link href="/contact">
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-kamsen-blue">
+              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-kamsen-dark">
                 Demander un devis
               </Button>
             </Link>
