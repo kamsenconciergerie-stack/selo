@@ -80,6 +80,38 @@ export default function EquipmentPage() {
         </div>
       </section>
 
+      {/* Moyens de Paiement */}
+      <section className="py-6 bg-blue-50 border-b">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <h3 className="text-lg font-semibold text-blue-900 mb-4">
+              Moyens de Paiement Acceptés
+            </h3>
+            <div className="flex justify-center items-center gap-8">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 bg-orange-500 rounded flex items-center justify-center">
+                  <svg className="h-5 w-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm3.5 6L12 10.5 8.5 8 12 5.5 15.5 8zM8.5 16L12 13.5 15.5 16 12 18.5 8.5 16z"/>
+                  </svg>
+                </div>
+                <span className="font-medium text-gray-700">Orange Money</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 bg-blue-500 rounded flex items-center justify-center">
+                  <svg className="h-5 w-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M3 17h18c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2H3c-1.1 0-2 .9-2 2v6c0 1.1.9 2 2 2z"/>
+                  </svg>
+                </div>
+                <span className="font-medium text-gray-700">Wave</span>
+              </div>
+              <span className="text-sm text-green-600 font-medium">
+                ✓ Paiement 100% sécurisé
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Filters */}
       <section className="py-8 bg-white border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

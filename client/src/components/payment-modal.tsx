@@ -9,7 +9,7 @@ import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { Loader2, CreditCard, Smartphone, CheckCircle, XCircle } from "lucide-react";
 import { useToast } from "../hooks/use-toast";
 import { apiRequest } from "../lib/queryClient";
-import { Booking } from "../../shared/schema";
+import { Booking } from "@shared/schema";
 
 interface PaymentModalProps {
   booking: Booking;
@@ -34,20 +34,30 @@ export default function PaymentModal({ booking, open, onOpenChange }: PaymentMod
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
-  // Get available payment methods
-  const { data: paymentMethods, isLoading: methodsLoading } = useQuery<PaymentMethod[]>({
-    queryKey: ["/api/payment/methods"],
-    enabled: open,
-  });
+  // Default payment methods (Wave et Orange Money)
+  const paymentMethods: PaymentMethod[] = [
+    {
+      id: "orange_money",
+      name: "Orange Money",
+      description: "Paiement sécurisé via Orange Money",
+      logo: "🟠",
+      available: true
+    },
+    {
+      id: "wave",
+      name: "Wave",
+      description: "Paiement sécurisé via Wave",
+      logo: "🌊", 
+      available: true
+    }
+  ];
+
+  const methodsLoading = false;
 
   // Initiate payment mutation
   const initializePayment = useMutation({
     mutationFn: async (data: { bookingId: number; paymentMethod: string; phoneNumber: string }) => {
-      const response = await apiRequest({
-        url: "/api/payment/initiate",
-        method: "POST",
-        body: data,
-      });
+      const response = await apiRequest("POST", "/api/payment/initiate", data);
       return response;
     },
     onSuccess: (data) => {
@@ -87,10 +97,7 @@ export default function PaymentModal({ booking, open, onOpenChange }: PaymentMod
     
     const checkStatus = async () => {
       try {
-        const response = await apiRequest({
-          url: `/api/payment/status/${txId}?method=${selectedMethod}`,
-          method: "GET",
-        });
+        const response = await apiRequest("GET", `/api/payment/status/${txId}?method=${selectedMethod}`);
 
         if (response.status === "completed") {
           setPaymentStatus("success");
@@ -223,16 +230,25 @@ export default function PaymentModal({ booking, open, onOpenChange }: PaymentMod
                       <div key={method.id} className="flex items-center space-x-3 border rounded-lg p-3">
                         <RadioGroupItem value={method.id} id={method.id} />
                         <Label htmlFor={method.id} className="flex items-center space-x-3 cursor-pointer flex-1">
-                          <div className="w-8 h-8 bg-kamsen-blue-light rounded flex items-center justify-center">
+                          <div className="w-12 h-12 rounded-lg flex items-center justify-center border-2 border-gray-200">
                             {method.id === "orange_money" ? (
-                              <Smartphone className="h-5 w-5 text-orange-500" />
+                              <div className="w-10 h-10 bg-orange-500 rounded-lg flex items-center justify-center">
+                                <Smartphone className="h-6 w-6 text-white" />
+                              </div>
+                            ) : method.id === "wave" ? (
+                              <div className="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center">
+                                <CreditCard className="h-6 w-6 text-white" />
+                              </div>
                             ) : (
-                              <CreditCard className="h-5 w-5 text-blue-500" />
+                              <CreditCard className="h-6 w-6 text-gray-500" />
                             )}
                           </div>
-                          <div>
-                            <div className="font-medium">{method.name}</div>
-                            <div className="text-sm text-kamsen-gray">{method.description}</div>
+                          <div className="flex-1">
+                            <div className="font-semibold text-gray-900">{method.name}</div>
+                            <div className="text-sm text-gray-600">{method.description}</div>
+                          </div>
+                          <div className="text-xs text-green-600 font-medium">
+                            Disponible
                           </div>
                         </Label>
                       </div>
@@ -251,8 +267,8 @@ export default function PaymentModal({ booking, open, onOpenChange }: PaymentMod
                   value={phoneNumber}
                   onChange={(e) => setPhoneNumber(e.target.value)}
                 />
-                <p className="text-xs text-kamsen-gray">
-                  Saisissez le numéro associé à votre compte {selectedMethod === "orange_money" ? "Orange Money" : "Wave"}
+                <p className="text-xs text-gray-600">
+                  Saisissez le numéro associé à votre compte {selectedMethod === "orange_money" ? "Orange Money" : selectedMethod === "wave" ? "Wave" : "mobile money"}
                 </p>
               </div>
 

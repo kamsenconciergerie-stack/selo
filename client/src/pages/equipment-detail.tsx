@@ -9,7 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Equipment } from "@shared/schema";
 import { useParams, Link } from "wouter";
 import { useState } from "react";
-import { ArrowLeft, MapPin, Weight, Fuel, Calendar, Shield, Clock, Phone } from "lucide-react";
+import { ArrowLeft, MapPin, Weight, Fuel, Calendar, Shield, Clock, Phone, Smartphone, CreditCard } from "lucide-react";
 import { formatPriceWithPrefix, SERVICE_AREAS } from "@/lib/constants";
 
 export default function EquipmentDetail() {
@@ -113,6 +113,39 @@ export default function EquipmentDetail() {
                 {equipment.description}
               </p>
             </div>
+
+            {/* Moyens de Paiement */}
+            <Card className="bg-blue-50 border-blue-200">
+              <CardContent className="p-6">
+                <h3 className="font-semibold text-blue-900 mb-4 flex items-center">
+                  <Smartphone className="h-5 w-5 mr-2" />
+                  Moyens de Paiement Acceptés
+                </h3>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="flex items-center gap-3 p-3 bg-white rounded-lg border">
+                    <div className="w-10 h-10 bg-orange-500 rounded-lg flex items-center justify-center">
+                      <Smartphone className="h-6 w-6 text-white" />
+                    </div>
+                    <div>
+                      <div className="font-semibold text-gray-900">Orange Money</div>
+                      <div className="text-sm text-gray-600">Paiement sécurisé</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 p-3 bg-white rounded-lg border">
+                    <div className="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center">
+                      <CreditCard className="h-6 w-6 text-white" />
+                    </div>
+                    <div>
+                      <div className="font-semibold text-gray-900">Wave</div>
+                      <div className="text-sm text-gray-600">Paiement sécurisé</div>
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-3 text-center text-xs text-green-600 font-medium">
+                  ✓ Transactions 100% sécurisées
+                </div>
+              </CardContent>
+            </Card>
 
             {/* Price */}
             <Card>

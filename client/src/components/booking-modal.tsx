@@ -15,7 +15,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import PaymentModal from "./payment-modal";
-import { Calendar, MapPin, Clock } from "lucide-react";
+import { Calendar, MapPin, Clock, Smartphone, CreditCard } from "lucide-react";
 
 interface BookingModalProps {
   equipment: Equipment;
@@ -116,6 +116,31 @@ export default function BookingModal({ equipment, open, onOpenChange }: BookingM
             Réserver {equipment.name}
           </DialogTitle>
         </DialogHeader>
+
+        {/* Moyens de Paiement Acceptés */}
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+          <h3 className="font-semibold text-blue-900 mb-3 flex items-center">
+            <Smartphone className="h-5 w-5 mr-2" />
+            Moyens de Paiement Acceptés
+          </h3>
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 bg-orange-500 rounded flex items-center justify-center">
+                <Smartphone className="h-5 w-5 text-white" />
+              </div>
+              <span className="text-sm font-medium text-gray-700">Orange Money</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 bg-blue-500 rounded flex items-center justify-center">
+                <CreditCard className="h-5 w-5 text-white" />
+              </div>
+              <span className="text-sm font-medium text-gray-700">Wave</span>
+            </div>
+            <span className="text-xs text-green-600 font-medium ml-auto">
+              ✓ Paiement sécurisé
+            </span>
+          </div>
+        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Equipment Info */}
