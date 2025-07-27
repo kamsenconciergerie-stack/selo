@@ -65,8 +65,19 @@ export default function Footer() {
         </div>
         
         <div className="border-t border-kamsen-orange/30 mt-8 pt-8 text-center text-white">
-          <p>&copy; 2025 Kamsen. Tous droits réservés.</p>
-          <p className="text-xs text-white/70 mt-2">un produit de ytech</p>
+          <p className="mb-4">Votre ville n'est pas listée ? Contactez-nous pour un devis personnalisé</p>
+          
+          <a 
+            href="/contact" 
+            className="inline-block bg-kamsen-orange hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg mb-6"
+          >
+            Demandez un devis
+          </a>
+          
+          <div>
+            <p>&copy; 2025 Kamsen. Tous droits réservés.</p>
+            <p className="text-xs text-white/70 mt-2">un produit de ytech</p>
+          </div>
         </div>
       </div>
     </footer>
