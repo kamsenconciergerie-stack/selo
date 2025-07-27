@@ -20,6 +20,8 @@ import NotFound from "@/pages/not-found";
 import GpsTracking from "@/pages/gps-tracking";
 import GpsIntegrationGuide from "@/pages/gps-integration-guide";
 import LocationEquipementSenegal from "@/pages/location-equipement-senegal";
+import CamionsSenegal from "@/pages/camions-senegal";
+import EquipementAgricolesSenegal from "@/pages/equipement-agricoles-senegal";
 
 function Router() {
   return (
@@ -41,6 +43,8 @@ function Router() {
       <Route path="/gps-tracking" component={GpsTracking} />
       <Route path="/gps-guide" component={GpsIntegrationGuide} />
       <Route path="/location-equipement-senegal" component={LocationEquipementSenegal} />
+      <Route path="/camions-senegal" component={CamionsSenegal} />
+      <Route path="/equipement-agricoles-senegal" component={EquipementAgricolesSenegal} />
       <Route component={NotFound} />
     </Switch>
   );

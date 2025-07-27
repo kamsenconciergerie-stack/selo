@@ -47,16 +47,16 @@ export default function LocationEquipementSenegal() {
       equipment: ["Pelleteuses hydrauliques", "Chargeuses", "Compacteurs", "Bulldozers"]
     },
     {
-      name: "Transport et Logistique", 
+      name: "Camions Sénégal - Transport de Charges", 
       icon: "🚛",
       cities: ["Dakar", "Thiès", "Saint-Louis", "Kaolack"],
-      equipment: ["Camions bennes", "Camions plateaux", "Pick-ups 4x4", "Véhicules utilitaires"]
+      equipment: ["Camions Sénégal bennes", "Camions plateaux charges", "Pick-ups 4x4", "Véhicules transport"]
     },
     {
-      name: "Équipement Agricole",
+      name: "Équipement Agricoles Sénégal",
       icon: "🚜", 
       cities: ["Thiès", "Saint-Louis", "Kaolack"],
-      equipment: ["Tracteurs 75-90 CV", "Charrues", "Semoirs", "Décortiqueuses"]
+      equipment: ["Équipement agricoles tracteurs", "Charrues Sénégal", "Semoirs", "Machines agricoles"]
     },
     {
       name: "Équipement Électrique",
@@ -74,11 +74,11 @@ export default function LocationEquipementSenegal() {
       <section className="bg-gradient-to-br from-kamsen-blue to-blue-800 text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl lg:text-6xl font-bold mb-6">
-            Location d'Équipement Professionnel au Sénégal
+            Camions Sénégal | Équipement Agricoles | Transport de Charges
           </h1>
           <p className="text-xl lg:text-2xl mb-8 max-w-4xl mx-auto">
-            Louez vos équipements professionnels partout au Sénégal avec Kamsen. 
-            Pelleteuses, camions, tracteurs et générateurs disponibles dans toutes les régions.
+            Location camions Sénégal, équipement agricoles et transport de charges avec Kamsen. 
+            Camions bennes, tracteurs et machines agricoles disponibles dans toutes les régions.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button className="bg-kamsen-orange hover:bg-orange-600 text-white px-8 py-3 text-lg">

@@ -28,21 +28,21 @@ export default function SEOContent() {
 
           <div className="bg-gray-50 p-6 rounded-lg">
             <h3 className="text-xl font-semibold text-gray-900 mb-3">
-              Location de Camions au Sénégal
+              Camions Sénégal - Location et Transport de Charges
             </h3>
             <p className="text-gray-600">
-              Camions bennes, camions plateaux et véhicules utilitaires pour vos transports 
-              de marchandises et matériaux dans tout le Sénégal.
+              Camions Sénégal : location de camions bennes, camions plateaux et véhicules utilitaires 
+              pour transport de charges et marchandises dans tout le Sénégal. Service fiable et rapide.
             </p>
           </div>
 
           <div className="bg-gray-50 p-6 rounded-lg">
             <h3 className="text-xl font-semibold text-gray-900 mb-3">
-              Location de Générateurs Électriques
+              Équipement Agricoles Sénégal - Tracteurs et Machines
             </h3>
             <p className="text-gray-600">
-              Groupes électrogènes et générateurs de toutes puissances pour événements, 
-              chantiers et urgences. Maintenance incluse.
+              Équipement agricoles Sénégal : tracteurs, charrues, décortiqueuses et machines agricoles 
+              pour tous vos besoins farming au Sénégal. Location courte et longue durée.
             </p>
           </div>
         </div>
@@ -108,8 +108,8 @@ export default function SEOContent() {
             Besoin d'un Devis?
           </h3>
           <p className="text-lg mb-6">
-            Contactez-nous dès maintenant pour obtenir un devis personnalisé 
-            et gratuit pour la location de vos équipements professionnels.
+            Location camions Sénégal, transport de charges et équipement agricoles Sénégal. 
+            Contactez-nous pour un devis personnalisé gratuit en 24h.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a 
