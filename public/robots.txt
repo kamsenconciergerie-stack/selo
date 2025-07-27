@@ -1,0 +1,21 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://kamsenlogistic.com/sitemap.xml
+
+# Disallow admin areas
+Disallow: /admin
+Disallow: /adminone
+Disallow: /adminpartners
+
+# Allow important pages
+Allow: /equipements
+Allow: /services
+Allow: /contact
+Allow: /a-propos
+Allow: /equipements-populaires
+Allow: /devis
+
+# Crawl delay
+Crawl-delay: 1

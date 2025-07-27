@@ -157,6 +157,7 @@ Kamsen est une application web full-stack pour les services de location d'équip
 - January 27, 2025. Ajout bouton "Demander un devis" centré sous la section hero avec design orange attractif et animation hover
 - January 27, 2025. Ajout mention "un produit de ytech" en bas de page en très petit caractères
 - January 27, 2025. Ajout bouton "Demandez un devis" dans le footer avec texte d'appel personnalisé et suppression du cadre noir
+- January 27, 2025. Optimisation SEO complète : métadonnées avancées, sitemap.xml, robots.txt, contenu optimisé pour référencement Google première page
 
 ## User Preferences
 

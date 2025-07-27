@@ -10,6 +10,7 @@ import { Link } from "wouter";
 import { Hammer, Truck, Zap, HardHat, Search, Calendar, CheckCircle, Phone, Star } from "lucide-react";
 import EquipmentCard from "@/components/equipment-card";
 import { SERVICE_AREAS } from "@/lib/constants";
+import SEOContent from "@/components/seo-content";
 
 export default function Home() {
   const { data: equipment = [], isLoading } = useQuery<Equipment[]>({
@@ -466,6 +467,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* SEO Content Section */}
+      <SEOContent />
 
       <Footer />
     </div>

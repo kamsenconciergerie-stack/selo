@@ -19,6 +19,7 @@ import PartnerDashboard from "@/pages/partner-dashboard";
 import NotFound from "@/pages/not-found";
 import GpsTracking from "@/pages/gps-tracking";
 import GpsIntegrationGuide from "@/pages/gps-integration-guide";
+import LocationEquipementSenegal from "@/pages/location-equipement-senegal";
 
 function Router() {
   return (
@@ -39,6 +40,7 @@ function Router() {
       <Route path="/adminone" component={AdminDashboardComplete} />
       <Route path="/gps-tracking" component={GpsTracking} />
       <Route path="/gps-guide" component={GpsIntegrationGuide} />
+      <Route path="/location-equipement-senegal" component={LocationEquipementSenegal} />
       <Route component={NotFound} />
     </Switch>
   );
