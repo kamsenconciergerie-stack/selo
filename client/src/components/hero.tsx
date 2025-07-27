@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Search } from "lucide-react";
 import { useState } from "react";
-import { useLocation } from "wouter";
+import { useLocation, Link } from "wouter";
 import { CITIES } from "@/lib/constants";
 
 export default function Hero() {
@@ -107,6 +107,15 @@ export default function Hero() {
                 </Button>
               </div>
             </div>
+          </div>
+          
+          {/* Bouton Demander un devis */}
+          <div className="mt-8 text-center">
+            <Link href="/devis">
+              <Button className="bg-kamsen-orange hover:bg-kamsen-orange-dark text-white px-8 py-3 text-lg font-semibold rounded-lg shadow-lg transition-all transform hover:scale-105">
+                Demander un devis
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
