@@ -14,8 +14,8 @@ import { formatPrice, formatPriceWithPrefix } from "@/lib/constants";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
-import PaymentModal from "./payment-modal";
-import { Calendar, MapPin, Clock, Smartphone, CreditCard, Truck } from "lucide-react";
+
+import { Calendar, MapPin, Clock, Truck } from "lucide-react";
 
 interface BookingModalProps {
   equipment: Equipment;
@@ -26,16 +26,14 @@ interface BookingModalProps {
 const bookingFormSchema = insertBookingSchema.extend({
   startDate: z.string().min(1, "Date de début requise"),
   endDate: z.string().min(1, "Date de fin requise"),
-  paymentMethod: z.enum(["delivery", "mobile"], {
-    required_error: "Veuillez sélectionner un mode de paiement",
+  paymentMethod: z.string().refine((value) => value === "delivery", {
+    message: "Vous devez accepter le paiement à la livraison",
   }),
 });
 
 type BookingFormData = z.infer<typeof bookingFormSchema>;
 
 export default function BookingModal({ equipment, open, onOpenChange }: BookingModalProps) {
-  const [showPayment, setShowPayment] = useState(false);
-  const [createdBooking, setCreatedBooking] = useState<Booking | null>(null);
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -49,7 +47,7 @@ export default function BookingModal({ equipment, open, onOpenChange }: BookingM
       startDate: "",
       endDate: "",
       totalPrice: equipment.pricePerDay,
-      paymentMethod: "delivery",
+      paymentMethod: "",
       notes: "",
     },
   });
@@ -62,21 +60,11 @@ export default function BookingModal({ equipment, open, onOpenChange }: BookingM
       });
     },
     onSuccess: (booking) => {
-      const formData = form.getValues();
-      if (formData.paymentMethod === "delivery") {
-        toast({
-          title: "Réservation confirmée",
-          description: "Votre réservation est confirmée. Vous paierez à la réception de l'équipement.",
-        });
-        handleCloseBooking();
-      } else {
-        toast({
-          title: "Réservation créée",
-          description: "Procédez maintenant au paiement mobile pour confirmer votre réservation.",
-        });
-        setCreatedBooking(booking);
-        setShowPayment(true);
-      }
+      toast({
+        title: "Réservation confirmée",
+        description: "Votre réservation est confirmée. Vous paierez à la livraison de l'équipement.",
+      });
+      handleCloseBooking();
       queryClient.invalidateQueries({ queryKey: ["/api/equipment"] });
     },
     onError: () => {
@@ -114,18 +102,10 @@ export default function BookingModal({ equipment, open, onOpenChange }: BookingM
   const handleCloseBooking = () => {
     onOpenChange(false);
     form.reset();
-    setCreatedBooking(null);
-    setShowPayment(false);
-  };
-
-  const handlePaymentClose = () => {
-    setShowPayment(false);
-    handleCloseBooking();
   };
 
   return (
-    <>
-    <Dialog open={open && !showPayment} onOpenChange={handleCloseBooking}>
+    <Dialog open={open} onOpenChange={handleCloseBooking}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold">
@@ -133,33 +113,16 @@ export default function BookingModal({ equipment, open, onOpenChange }: BookingM
           </DialogTitle>
         </DialogHeader>
 
-        {/* Options de Paiement */}
+        {/* Information Paiement */}
         <div className="bg-kamsen-blue-light border border-kamsen-blue rounded-lg p-4 mb-6">
-          <h3 className="font-semibold text-kamsen-blue mb-3 flex items-center">
-            <CreditCard className="h-5 w-5 mr-2" />
-            Options de Paiement Disponibles
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-kamsen-orange rounded flex items-center justify-center">
-                <Truck className="h-6 w-6 text-white" />
-              </div>
-              <div>
-                <span className="text-sm font-medium text-kamsen-blue">Paiement à la livraison</span>
-                <div className="text-xs text-green-600 font-medium">
-                  ✓ Payez quand vous recevez l'équipement
-                </div>
-              </div>
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-kamsen-orange rounded flex items-center justify-center">
+              <Truck className="h-6 w-6 text-white" />
             </div>
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-kamsen-blue rounded flex items-center justify-center">
-                <Smartphone className="h-6 w-6 text-white" />
-              </div>
-              <div>
-                <span className="text-sm font-medium text-kamsen-blue">Mobile Money</span>
-                <div className="text-xs text-green-600 font-medium">
-                  ✓ Paiement immédiat et sécurisé
-                </div>
+            <div>
+              <span className="text-sm font-medium text-kamsen-blue">Paiement à la livraison de l'équipement</span>
+              <div className="text-xs text-green-600 font-medium">
+                ✓ Payez directement au technicien lors de la réception
               </div>
             </div>
           </div>
@@ -273,39 +236,19 @@ export default function BookingModal({ equipment, open, onOpenChange }: BookingM
                 name="paymentMethod"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Mode de paiement</FormLabel>
                     <FormControl>
-                      <div className="space-y-3">
-                        <div className="flex items-center space-x-2">
-                          <input 
-                            type="radio" 
-                            id="delivery" 
-                            name="paymentMethod"
-                            value="delivery"
-                            checked={field.value === "delivery"}
-                            onChange={() => field.onChange("delivery")}
-                            className="text-kamsen-blue"
-                          />
-                          <label htmlFor="delivery" className="text-sm font-medium flex items-center">
-                            <Truck className="w-4 h-4 mr-2 text-kamsen-blue" />
-                            Paiement à la réception de l'équipement
-                          </label>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <input 
-                            type="radio" 
-                            id="mobile" 
-                            name="paymentMethod"
-                            value="mobile"
-                            checked={field.value === "mobile"}
-                            onChange={() => field.onChange("mobile")}
-                            className="text-kamsen-blue"
-                          />
-                          <label htmlFor="mobile" className="text-sm font-medium flex items-center">
-                            <Smartphone className="w-4 h-4 mr-2 text-kamsen-blue" />
-                            Paiement mobile immédiat
-                          </label>
-                        </div>
+                      <div className="flex items-center space-x-2">
+                        <input 
+                          type="checkbox" 
+                          id="paymentAgreement" 
+                          checked={field.value === "delivery"}
+                          onChange={(e) => field.onChange(e.target.checked ? "delivery" : "")}
+                          className="text-kamsen-blue"
+                        />
+                        <label htmlFor="paymentAgreement" className="text-sm font-medium flex items-center">
+                          <Truck className="w-4 h-4 mr-2 text-kamsen-blue" />
+                          J'accepte de payer à la livraison de l'équipement
+                        </label>
                       </div>
                     </FormControl>
                     <FormMessage />
@@ -342,12 +285,10 @@ export default function BookingModal({ equipment, open, onOpenChange }: BookingM
                 </Button>
                 <Button 
                   type="submit" 
-                  disabled={createBookingMutation.isPending}
-                  className="flex-1 bg-kamsen-blue hover:bg-kamsen-blue/90"
+                  disabled={createBookingMutation.isPending || form.watch("paymentMethod") !== "delivery"}
+                  className="flex-1 bg-kamsen-blue hover:bg-kamsen-blue/90 disabled:bg-gray-300"
                 >
-                  {createBookingMutation.isPending ? "Envoi..." : 
-                    form.watch("paymentMethod") === "delivery" ? "Confirmer la réservation" : "Réserver et payer"
-                  }
+                  {createBookingMutation.isPending ? "Envoi..." : "Confirmer la réservation"}
                 </Button>
               </div>
             </form>
@@ -355,15 +296,5 @@ export default function BookingModal({ equipment, open, onOpenChange }: BookingM
         </div>
       </DialogContent>
     </Dialog>
-    
-    {/* Payment Modal */}
-    {createdBooking && (
-      <PaymentModal
-        booking={createdBooking}
-        open={showPayment}
-        onOpenChange={handlePaymentClose}
-      />
-    )}
-    </>
   );
 }
