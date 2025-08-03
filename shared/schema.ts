@@ -79,10 +79,13 @@ export const inquiries = pgTable("inquiries", {
   id: serial("id").primaryKey(),
   firstName: text("first_name").notNull(),
   lastName: text("last_name").notNull(),
-  email: text("email").notNull(),
+  email: text("email"),
   phone: text("phone").notNull(),
-  equipmentCategory: text("equipment_category"),
-  message: text("message").notNull(),
+  deliveryCity: text("delivery_city").notNull(),
+  startDate: text("start_date").notNull(),
+  endDate: text("end_date").notNull(),
+  equipmentCategories: text("equipment_categories").array().notNull(),
+  message: text("message"),
   createdAt: text("created_at").notNull(),
 });
 

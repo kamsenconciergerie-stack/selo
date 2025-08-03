@@ -6,6 +6,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { insertInquirySchema } from "@shared/schema";
@@ -21,14 +22,31 @@ type InquiryFormData = z.infer<typeof insertInquirySchema>;
 export default function Contact() {
   const { toast } = useToast();
 
+  const inquiryFormSchema = insertInquirySchema.extend({
+    firstName: z.string().min(1, "Le prénom est obligatoire"),
+    lastName: z.string().min(1, "Le nom est obligatoire"),
+    phone: z.string().min(1, "Le téléphone est obligatoire"),
+    deliveryCity: z.string().min(1, "La ville de livraison est obligatoire"),
+    startDate: z.string().min(1, "La date de début est obligatoire"),
+    endDate: z.string().min(1, "La date de fin est obligatoire"),
+    equipmentCategories: z.array(z.string()).min(1, "Sélectionnez au moins une catégorie d'équipement"),
+    email: z.string().email("Email invalide").optional().or(z.literal("")),
+    message: z.string().optional(),
+  });
+
+  type InquiryFormData = z.infer<typeof inquiryFormSchema>;
+
   const form = useForm<InquiryFormData>({
-    resolver: zodResolver(insertInquirySchema),
+    resolver: zodResolver(inquiryFormSchema),
     defaultValues: {
       firstName: "",
       lastName: "",
       email: "",
       phone: "",
-      equipmentCategory: "",
+      deliveryCity: "",
+      startDate: "",
+      endDate: "",
+      equipmentCategories: [],
       message: "",
     },
   });
@@ -40,15 +58,15 @@ export default function Contact() {
     },
     onSuccess: () => {
       toast({
-        title: "Message envoyé",
-        description: "Votre demande a été envoyée avec succès. Nous vous recontacterons bientôt.",
+        title: "Demande de devis envoyée",
+        description: "Votre demande de devis a été envoyée avec succès. Nous vous recontacterons sous 24h avec votre devis personnalisé.",
       });
       form.reset();
     },
     onError: () => {
       toast({
         title: "Erreur",
-        description: "Une erreur est survenue lors de l'envoi de votre message.",
+        description: "Une erreur est survenue lors de l'envoi de votre demande de devis.",
         variant: "destructive",
       });
     },
@@ -201,8 +219,12 @@ export default function Contact() {
           <Card>
             <CardContent className="p-8">
               <h3 className="text-2xl font-bold text-kamsen-blue mb-6">
-                Demande de renseignements
+                Demande de devis gratuit
               </h3>
+              <p className="text-kamsen-gray mb-6">
+                Remplissez ce formulaire pour recevoir un devis personnalisé. 
+                Les champs marqués d'un * sont obligatoires.
+              </p>
               
               <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -212,7 +234,7 @@ export default function Contact() {
                       name="firstName"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Prénom</FormLabel>
+                          <FormLabel>Prénom *</FormLabel>
                           <FormControl>
                             <Input placeholder="Votre prénom" {...field} />
                           </FormControl>
@@ -226,7 +248,7 @@ export default function Contact() {
                       name="lastName"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Nom</FormLabel>
+                          <FormLabel>Nom *</FormLabel>
                           <FormControl>
                             <Input placeholder="Votre nom" {...field} />
                           </FormControl>
@@ -236,55 +258,141 @@ export default function Contact() {
                     />
                   </div>
 
-                  <FormField
-                    control={form.control}
-                    name="email"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Email</FormLabel>
-                        <FormControl>
-                          <Input type="email" placeholder="votre@email.com" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="phone"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Téléphone</FormLabel>
-                        <FormControl>
-                          <Input placeholder="+221 XX XXX XXXX" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="equipmentCategory"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Type d'équipement recherché</FormLabel>
-                        <Select onValueChange={field.onChange} value={field.value}>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <FormField
+                      control={form.control}
+                      name="phone"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Téléphone *</FormLabel>
                           <FormControl>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Sélectionnez une catégorie" />
-                            </SelectTrigger>
+                            <Input placeholder="+221 XX XXX XXXX" {...field} />
                           </FormControl>
-                          <SelectContent>
-                            <SelectItem value="none">Pas de catégorie spécifique</SelectItem>
-                            {CATEGORIES.map((category) => (
-                              <SelectItem key={category} value={category}>
-                                {category}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="email"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Email (optionnel)</FormLabel>
+                          <FormControl>
+                            <Input type="email" placeholder="votre@email.com" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+
+                  <FormField
+                    control={form.control}
+                    name="deliveryCity"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Ville de livraison *</FormLabel>
+                        <FormControl>
+                          <Select onValueChange={field.onChange} value={field.value}>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Sélectionnez votre ville" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="dakar">Dakar</SelectItem>
+                              <SelectItem value="thies">Thiès</SelectItem>
+                              <SelectItem value="saint-louis">Saint-Louis</SelectItem>
+                              <SelectItem value="kaolack">Kaolack</SelectItem>
+                              <SelectItem value="ziguinchor">Ziguinchor</SelectItem>
+                              <SelectItem value="louga">Louga</SelectItem>
+                              <SelectItem value="fatick">Fatick</SelectItem>
+                              <SelectItem value="kolda">Kolda</SelectItem>
+                              <SelectItem value="tambacounda">Tambacounda</SelectItem>
+                              <SelectItem value="matam">Matam</SelectItem>
+                              <SelectItem value="kaffrine">Kaffrine</SelectItem>
+                              <SelectItem value="kedougou">Kédougou</SelectItem>
+                              <SelectItem value="sedhiou">Sédhiou</SelectItem>
+                              <SelectItem value="diourbel">Diourbel</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <FormField
+                      control={form.control}
+                      name="startDate"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Date de début *</FormLabel>
+                          <FormControl>
+                            <Input type="date" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="endDate"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Date de fin *</FormLabel>
+                          <FormControl>
+                            <Input type="date" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+
+                  <FormField
+                    control={form.control}
+                    name="equipmentCategories"
+                    render={() => (
+                      <FormItem>
+                        <FormLabel>Catégories d'équipements recherchés *</FormLabel>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
+                          {CATEGORIES.map((category) => (
+                            <FormField
+                              key={category.id}
+                              control={form.control}
+                              name="equipmentCategories"
+                              render={({ field }) => {
+                                return (
+                                  <FormItem
+                                    key={category.id}
+                                    className="flex flex-row items-start space-x-3 space-y-0"
+                                  >
+                                    <FormControl>
+                                      <Checkbox
+                                        checked={field.value?.includes(category.id)}
+                                        onCheckedChange={(checked) => {
+                                          return checked
+                                            ? field.onChange([...field.value, category.id])
+                                            : field.onChange(
+                                                field.value?.filter(
+                                                  (value) => value !== category.id
+                                                )
+                                              )
+                                        }}
+                                      />
+                                    </FormControl>
+                                    <FormLabel className="text-sm font-normal">
+                                      {category.name}
+                                    </FormLabel>
+                                  </FormItem>
+                                )
+                              }}
+                            />
+                          ))}
+                        </div>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -295,11 +403,11 @@ export default function Contact() {
                     name="message"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Message</FormLabel>
+                        <FormLabel>Informations complémentaires (optionnel)</FormLabel>
                         <FormControl>
                           <Textarea 
-                            rows={5}
-                            placeholder="Décrivez votre projet ou vos besoins en détail..."
+                            rows={4}
+                            placeholder="Décrivez votre projet, contraintes particulières, besoins spécifiques..."
                             {...field} 
                           />
                         </FormControl>
@@ -313,7 +421,7 @@ export default function Contact() {
                     disabled={createInquiryMutation.isPending}
                     className="w-full bg-kamsen-blue hover:bg-kamsen-blue/90 text-white py-3 text-lg"
                   >
-                    {createInquiryMutation.isPending ? "Envoi en cours..." : "Envoyer la demande"}
+                    {createInquiryMutation.isPending ? "Envoi en cours..." : "Demander un devis gratuit"}
                   </Button>
                 </form>
               </Form>

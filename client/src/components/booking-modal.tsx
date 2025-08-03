@@ -23,12 +23,17 @@ interface BookingModalProps {
   onOpenChange: (open: boolean) => void;
 }
 
-const bookingFormSchema = insertBookingSchema.extend({
+const bookingFormSchema = insertBookingSchema.pick({
+  equipmentId: true,
+  customerName: true,
+  customerEmail: true,
+  customerPhone: true,
+  totalPrice: true,
+  notes: true,
+}).extend({
   startDate: z.string().min(1, "Date de début requise"),
   endDate: z.string().min(1, "Date de fin requise"),
-  paymentMethod: z.string().refine((value) => value === "delivery", {
-    message: "Vous devez accepter le paiement à la livraison",
-  }),
+  paymentMethod: z.literal("delivery"),
 });
 
 type BookingFormData = z.infer<typeof bookingFormSchema>;
@@ -47,7 +52,7 @@ export default function BookingModal({ equipment, open, onOpenChange }: BookingM
       startDate: "",
       endDate: "",
       totalPrice: equipment.pricePerDay,
-      paymentMethod: "",
+      paymentMethod: "delivery" as const,
       notes: "",
     },
   });
