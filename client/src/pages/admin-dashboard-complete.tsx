@@ -1024,7 +1024,10 @@ function AdminDashboardContent() {
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <Button 
-              onClick={() => window.open('/admin/reservations', '_blank')}
+              onClick={() => {
+                const bookingsTab = document.querySelector('[data-value="bookings"]') as HTMLElement;
+                if (bookingsTab) bookingsTab.click();
+              }}
               className="flex items-center gap-2"
             >
               <FileText className="h-4 w-4" />
