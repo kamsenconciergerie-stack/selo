@@ -27,8 +27,18 @@ export default function Contact() {
     lastName: z.string().min(1, "Le nom est obligatoire"),
     phone: z.string().min(1, "Le téléphone est obligatoire"),
     deliveryCity: z.string().min(1, "La ville de livraison est obligatoire"),
-    startDate: z.string().min(1, "La date de début est obligatoire"),
-    endDate: z.string().min(1, "La date de fin est obligatoire"),
+    startDate: z.string().min(1, "La date de début est obligatoire").refine((date) => {
+      const selectedDate = new Date(date);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      return selectedDate >= today;
+    }, "La date de début ne peut pas être antérieure à aujourd'hui"),
+    endDate: z.string().min(1, "La date de fin est obligatoire").refine((date) => {
+      const selectedDate = new Date(date);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      return selectedDate >= today;
+    }, "La date de fin ne peut pas être antérieure à aujourd'hui"),
     equipmentCategories: z.array(z.string()).min(1, "Sélectionnez au moins une catégorie d'équipement"),
     email: z.string().email("Email invalide").optional().or(z.literal("")),
     message: z.string().optional(),
@@ -53,8 +63,10 @@ export default function Contact() {
 
   const createInquiryMutation = useMutation({
     mutationFn: async (data: InquiryFormData) => {
-      const response = await apiRequest("POST", "/api/inquiries", data);
-      return response.json();
+      return await apiRequest("/api/inquiries", {
+        method: "POST",
+        body: JSON.stringify(data)
+      });
     },
     onSuccess: () => {
       toast({
@@ -330,7 +342,11 @@ export default function Contact() {
                         <FormItem>
                           <FormLabel>Date de début *</FormLabel>
                           <FormControl>
-                            <Input type="date" {...field} />
+                            <Input 
+                              type="date" 
+                              min={new Date().toISOString().split('T')[0]}
+                              {...field} 
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -344,7 +360,11 @@ export default function Contact() {
                         <FormItem>
                           <FormLabel>Date de fin *</FormLabel>
                           <FormControl>
-                            <Input type="date" {...field} />
+                            <Input 
+                              type="date" 
+                              min={new Date().toISOString().split('T')[0]}
+                              {...field} 
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -361,31 +381,31 @@ export default function Contact() {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
                           {CATEGORIES.map((category) => (
                             <FormField
-                              key={category.id}
+                              key={category}
                               control={form.control}
                               name="equipmentCategories"
                               render={({ field }) => {
                                 return (
                                   <FormItem
-                                    key={category.id}
+                                    key={category}
                                     className="flex flex-row items-start space-x-3 space-y-0"
                                   >
                                     <FormControl>
                                       <Checkbox
-                                        checked={field.value?.includes(category.id)}
+                                        checked={field.value?.includes(category)}
                                         onCheckedChange={(checked) => {
                                           return checked
-                                            ? field.onChange([...field.value, category.id])
+                                            ? field.onChange([...field.value, category])
                                             : field.onChange(
                                                 field.value?.filter(
-                                                  (value) => value !== category.id
+                                                  (value) => value !== category
                                                 )
                                               )
                                         }}
                                       />
                                     </FormControl>
                                     <FormLabel className="text-sm font-normal">
-                                      {category.name}
+                                      {category}
                                     </FormLabel>
                                   </FormItem>
                                 )

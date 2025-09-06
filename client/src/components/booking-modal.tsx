@@ -31,8 +31,18 @@ const bookingFormSchema = insertBookingSchema.pick({
   totalPrice: true,
   notes: true,
 }).extend({
-  startDate: z.string().min(1, "Date de début requise"),
-  endDate: z.string().min(1, "Date de fin requise"),
+  startDate: z.string().min(1, "Date de début requise").refine((date) => {
+    const selectedDate = new Date(date);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return selectedDate >= today;
+  }, "La date de début ne peut pas être antérieure à aujourd'hui"),
+  endDate: z.string().min(1, "Date de fin requise").refine((date) => {
+    const selectedDate = new Date(date);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return selectedDate >= today;
+  }, "La date de fin ne peut pas être antérieure à aujourd'hui"),
   paymentMethod: z.literal("delivery"),
 });
 
@@ -214,7 +224,11 @@ export default function BookingModal({ equipment, open, onOpenChange }: BookingM
                     <FormItem>
                       <FormLabel>Date de début</FormLabel>
                       <FormControl>
-                        <Input type="date" {...field} />
+                        <Input 
+                          type="date" 
+                          min={new Date().toISOString().split('T')[0]}
+                          {...field} 
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -228,7 +242,11 @@ export default function BookingModal({ equipment, open, onOpenChange }: BookingM
                     <FormItem>
                       <FormLabel>Date de fin</FormLabel>
                       <FormControl>
-                        <Input type="date" {...field} />
+                        <Input 
+                          type="date" 
+                          min={new Date().toISOString().split('T')[0]}
+                          {...field} 
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
