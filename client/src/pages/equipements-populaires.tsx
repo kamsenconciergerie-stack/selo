@@ -170,7 +170,7 @@ export default function EquipementsPopulaires() {
                     <div className="flex items-center justify-between">
                       <div>
                         <p className="text-2xl font-bold text-kamsen-blue">
-                          {formatPrice(item.pricePerDay)} FCFA
+                          {formatPrice(item.pricePerDay)}
                         </p>
                         <p className="text-sm text-kamsen-gray">par jour</p>
                       </div>

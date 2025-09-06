@@ -6,5 +6,5 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function formatPrice(price: number): string {
-  return `${price.toLocaleString('fr-FR')} FCFA`;
+  return `${price.toLocaleString('fr-FR')} XOF`;
 }

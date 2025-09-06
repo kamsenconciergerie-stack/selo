@@ -163,7 +163,7 @@ Cette notification a été générée automatiquement par la plateforme Kamsen.
           <p><strong>Téléphone:</strong> ${bookingData.customerPhone}</p>
           <p><strong>Équipement:</strong> ${bookingData.equipmentName}</p>
           <p><strong>Période:</strong> Du ${bookingData.startDate} au ${bookingData.endDate}</p>
-          <p><strong>Prix total:</strong> ${bookingData.totalPrice.toLocaleString()} FCFA</p>
+          <p><strong>Prix total:</strong> ${bookingData.totalPrice.toLocaleString()} XOF</p>
         `
       };
 

@@ -212,7 +212,7 @@ function PartnerRequestsList() {
 }
 
 function formatPriceLocal(price: number): string {
-  return `${price.toLocaleString('fr-FR')} FCFA`;
+  return `${price.toLocaleString('fr-FR')} XOF`;
 }
 
 function formatDate(dateString: string): string {

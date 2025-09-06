@@ -128,7 +128,7 @@ const statusConfig = {
 const COLORS = ['#FF8800', '#00C49F', '#FFBB28', '#FF8042'];
 
 function formatPriceLocal(price: number): string {
-  return `${price.toLocaleString('fr-FR')} FCFA`;
+  return `${price.toLocaleString('fr-FR')} XOF`;
 }
 
 function PartnerDashboardContent() {

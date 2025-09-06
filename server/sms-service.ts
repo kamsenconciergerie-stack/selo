@@ -105,7 +105,7 @@ export class SMSService {
   }
 
   async sendPaymentReminder(phone: string, bookingId: number, amount: number): Promise<boolean> {
-    const message = `Kamsen: Rappel paiement pour réservation #${bookingId}. Montant: ${amount} FCFA. Payez via Orange Money/Wave.`;
+    const message = `Kamsen: Rappel paiement pour réservation #${bookingId}. Montant: ${amount} XOF. Payez via Orange Money/Wave.`;
     return this.sendSMS(phone, message);
   }
 

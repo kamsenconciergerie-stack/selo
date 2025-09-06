@@ -144,7 +144,7 @@ export default function GpsIntegrationGuide() {
                       </div>
                       <div className="flex items-center gap-2">
                         <DollarSign className="h-4 w-4 text-kamsen-gray" />
-                        <span>Prix: 45,000 - 65,000 FCFA</span>
+                        <span>Prix: 45,000 - 65,000 XOF</span>
                       </div>
                     </div>
                   </div>
@@ -169,7 +169,7 @@ export default function GpsIntegrationGuide() {
                       </div>
                       <div className="flex items-center gap-2">
                         <DollarSign className="h-4 w-4 text-kamsen-gray" />
-                        <span>Prix: 25,000 - 35,000 FCFA</span>
+                        <span>Prix: 25,000 - 35,000 XOF</span>
                       </div>
                     </div>
                   </div>
@@ -324,7 +324,7 @@ export default function GpsIntegrationGuide() {
                       <li>• Développement app Android/iOS simple</li>
                       <li>• Formation équipe chauffeurs</li>
                       <li>• Test sur 5-10 équipements pilotes</li>
-                      <li>• Coût: 500,000 - 800,000 FCFA</li>
+                      <li>• Coût: 500,000 - 800,000 XOF</li>
                     </ul>
                   </div>
 
@@ -335,7 +335,7 @@ export default function GpsIntegrationGuide() {
                       <li>• Installation trackers sur pelleteuses, grues</li>
                       <li>• Abonnements data Orange/Tigo</li>
                       <li>• Formation équipe technique</li>
-                      <li>• Coût: 1,500,000 - 2,500,000 FCFA</li>
+                      <li>• Coût: 1,500,000 - 2,500,000 XOF</li>
                     </ul>
                   </div>
 
@@ -346,7 +346,7 @@ export default function GpsIntegrationGuide() {
                       <li>• Capteurs IoT sur tous équipements</li>
                       <li>• Tableau de bord analytique avancé</li>
                       <li>• Maintenance prédictive</li>
-                      <li>• Coût: 3,000,000 - 5,000,000 FCFA</li>
+                      <li>• Coût: 3,000,000 - 5,000,000 XOF</li>
                     </ul>
                   </div>
                 </div>

@@ -360,7 +360,7 @@ export class DbStorage implements IStorage {
         payoutMethod: "mobile_money"
       });
       
-      console.log(`💰 Gains partenaires créés automatiquement: 85% de ${newBooking.totalPrice} FCFA = ${Math.round(newBooking.totalPrice * 0.85)} FCFA`);
+      console.log(`💰 Gains partenaires créés automatiquement: 85% de ${newBooking.totalPrice} XOF = ${Math.round(newBooking.totalPrice * 0.85)} XOF`);
     }
     
     return newBooking;
@@ -1538,7 +1538,7 @@ export class MemStorage implements IStorage {
         name: "Motopompe thermique",
         description: "Motopompe thermique pour irrigation",
         category: "Irrigation",
-        pricePerDay: 15000, // 10 000 FCFA/jour marché local + marge
+        pricePerDay: 15000, // 10 000 XOF/jour marché local + marge
         location: "Saint-Louis",
         imageUrl: "/images/motopompe.svg",
         specifications: ["500 m³/h", "Diesel", "Auto-amorçante", "Formation incluse"],
@@ -1840,7 +1840,7 @@ export class MemStorage implements IStorage {
         payoutMethod: "mobile_money"
       });
       
-      console.log(`💰 [MemStorage] Gains partenaires créés automatiquement: 85% de ${booking.totalPrice} FCFA = ${Math.round(booking.totalPrice * 0.85)} FCFA`);
+      console.log(`💰 [MemStorage] Gains partenaires créés automatiquement: 85% de ${booking.totalPrice} XOF = ${Math.round(booking.totalPrice * 0.85)} XOF`);
     }
     
     return booking;
