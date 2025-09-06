@@ -1,0 +1,82 @@
+{
+  "name": "Kamsen - Location d'Équipement Professionnel",
+  "short_name": "Kamsen",
+  "description": "Plateforme de location d'équipement professionnel au Sénégal - Pelleteuses, Camions, Générateurs",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1e40af",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "fr",
+  "categories": ["business", "productivity", "utilities"],
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon-512x512.png", 
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/images/screenshot-mobile-home.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Accueil Kamsen"
+    },
+    {
+      "src": "/images/screenshot-mobile-equipment.png", 
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Catalogue d'équipements"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Réserver un équipement",
+      "short_name": "Réserver",
+      "description": "Accès rapide aux réservations",
+      "url": "/equipements",
+      "icons": [
+        {
+          "src": "/favicon.svg",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Nous contacter",
+      "short_name": "Contact", 
+      "description": "Obtenir un devis personnalisé",
+      "url": "/contact",
+      "icons": [
+        {
+          "src": "/favicon.svg",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ],
+  "related_applications": [
+    {
+      "platform": "play",
+      "url": "https://play.google.com/store/apps/details?id=com.kamsen.app",
+      "id": "com.kamsen.app"
+    }
+  ]
+}
