@@ -345,20 +345,20 @@ export class DbStorage implements IStorage {
     const result = await db.insert(bookings).values(bookingData).returning();
     const newBooking = result[0];
     
-    // 🎯 AUTOMATIQUE: Créer les gains partenaires à 75% du montant total
+    // 🎯 AUTOMATIQUE: Créer les gains partenaires à 85% du montant total (15% commission Kamsen)
     if (newBooking && newBooking.totalPrice && newBooking.id) {
       await this.createPartnerEarning({
         partnerId: 1, // ID du partenaire assigné (pour l'instant, partenaire par défaut)
         bookingId: newBooking.id,
         rentalAmount: newBooking.totalPrice,
-        commissionRate: 0.25, // 25% pour Kamsen
-        commissionAmount: Math.round(newBooking.totalPrice * 0.25), // 25% commission Kamsen
-        partnerAmount: Math.round(newBooking.totalPrice * 0.75), // 75% pour le partenaire
+        commissionRate: 0.15, // 15% pour Kamsen
+        commissionAmount: Math.round(newBooking.totalPrice * 0.15), // 15% commission Kamsen
+        partnerAmount: Math.round(newBooking.totalPrice * 0.85), // 85% pour le partenaire
         status: "pending", // En attente de paiement
         payoutMethod: "mobile_money"
       });
       
-      console.log(`💰 Gains partenaires créés automatiquement: 75% de ${newBooking.totalPrice} FCFA = ${Math.round(newBooking.totalPrice * 0.75)} FCFA`);
+      console.log(`💰 Gains partenaires créés automatiquement: 85% de ${newBooking.totalPrice} FCFA = ${Math.round(newBooking.totalPrice * 0.85)} FCFA`);
     }
     
     return newBooking;
@@ -1805,20 +1805,20 @@ export class MemStorage implements IStorage {
     };
     this.bookings.set(id, booking);
     
-    // 🎯 AUTOMATIQUE: Créer les gains partenaires à 75% du montant total
+    // 🎯 AUTOMATIQUE: Créer les gains partenaires à 85% du montant total (15% commission Kamsen)
     if (booking.totalPrice) {
       await this.createPartnerEarning({
         partnerId: 1, // ID du partenaire assigné (pour l'instant, partenaire par défaut)
         bookingId: booking.id,
         rentalAmount: booking.totalPrice,
-        commissionRate: 0.25, // 25% pour Kamsen
-        commissionAmount: Math.round(booking.totalPrice * 0.25), // 25% commission Kamsen
-        partnerAmount: Math.round(booking.totalPrice * 0.75), // 75% pour le partenaire
+        commissionRate: 0.15, // 15% pour Kamsen
+        commissionAmount: Math.round(booking.totalPrice * 0.15), // 15% commission Kamsen
+        partnerAmount: Math.round(booking.totalPrice * 0.85), // 85% pour le partenaire
         status: "pending", // En attente de paiement
         payoutMethod: "mobile_money"
       });
       
-      console.log(`💰 [MemStorage] Gains partenaires créés automatiquement: 75% de ${booking.totalPrice} FCFA = ${Math.round(booking.totalPrice * 0.75)} FCFA`);
+      console.log(`💰 [MemStorage] Gains partenaires créés automatiquement: 85% de ${booking.totalPrice} FCFA = ${Math.round(booking.totalPrice * 0.85)} FCFA`);
     }
     
     return booking;
