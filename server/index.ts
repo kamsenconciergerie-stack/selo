@@ -51,6 +51,19 @@ app.use((req, res, next) => {
       }
     }
   }));
+
+  // Serve PWA files (manifest.json, service worker, icons)
+  app.use(express.static('public', {
+    setHeaders: (res, path) => {
+      if (path.endsWith('sw.js')) {
+        res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+        res.setHeader('Service-Worker-Allowed', '/');
+      }
+      if (path.endsWith('manifest.json')) {
+        res.setHeader('Content-Type', 'application/manifest+json');
+      }
+    }
+  }));
   
   const server = await registerRoutes(app);
 
