@@ -59,6 +59,7 @@ interface Equipment {
 interface DashboardStats {
   totalBookings: number;
   totalRevenue: number;
+  kamsenEarnings: number; // 💰 Gains totaux de Kamsen (15% de commission)
   pendingBookings: number;
   confirmedBookings: number;
   totalEquipment: number;
@@ -492,7 +493,7 @@ function AdminDashboardContent() {
         </div>
 
       {/* Statistiques principales */}
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-6 mb-8">
         <Card>
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
@@ -513,6 +514,18 @@ function AdminDashboardContent() {
                 <p className="text-2xl font-bold text-kamsen-blue">{formatPriceLocal(stats.totalRevenue)}</p>
               </div>
               <DollarSign className="h-8 w-8 text-green-500" />
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-kamsen-gray">Gains Kamsen (15%)</p>
+                <p className="text-2xl font-bold text-kamsen-orange">{formatPriceLocal(stats.kamsenEarnings)}</p>
+              </div>
+              <DollarSign className="h-8 w-8 text-kamsen-orange" />
             </div>
           </CardContent>
         </Card>

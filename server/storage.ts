@@ -979,6 +979,15 @@ export class DbStorage implements IStorage {
         .filter(b => b.status === 'completed')
         .reduce((sum, b) => sum + b.totalPrice, 0);
 
+      // Kamsen earnings - 15% de commission sur toutes les réservations
+      let kamsenEarnings = 0;
+      try {
+        const earningsData = await db.select().from(partnerEarnings);
+        kamsenEarnings = earningsData.reduce((sum, earning) => sum + earning.commissionAmount, 0);
+      } catch (earningsError) {
+        console.log("Partner earnings table not accessible, using default stats");
+      }
+
       // Partner stats - use try/catch in case table doesn't exist
       let partnerRequestsStats = { total: 0, pending: 0, approved: 0 };
       try {
@@ -995,6 +1004,7 @@ export class DbStorage implements IStorage {
       return {
         totalBookings: totalBookings.length,
         totalRevenue,
+        kamsenEarnings, // 💰 Gains totaux de Kamsen (15% de commission)
         pendingBookings,
         confirmedBookings,
         totalEquipment: totalEquipment.length,
@@ -1007,6 +1017,7 @@ export class DbStorage implements IStorage {
       return {
         totalBookings: 0,
         totalRevenue: 0,
+        kamsenEarnings: 0, // 💰 Gains totaux de Kamsen (15% de commission)
         pendingBookings: 0,
         confirmedBookings: 0,
         totalEquipment: 0,
