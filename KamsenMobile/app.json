@@ -1,0 +1,41 @@
+{
+  "expo": {
+    "name": "Kamsen - Location d'Équipement",
+    "slug": "kamsen-equipment-rental",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "description": "Plateforme de location d'équipement professionnel au Sénégal - Pelleteuses, Camions, Générateurs et bien plus.",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#f97316"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.ytech.kamsen"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#f97316"
+      },
+      "edgeToEdgeEnabled": true,
+      "package": "com.ytech.kamsen",
+      "permissions": [
+        "INTERNET",
+        "ACCESS_NETWORK_STATE",
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "apiUrl": "https://kamsenlogistic.com/api"
+    }
+  }
+}
