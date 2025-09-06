@@ -82,6 +82,8 @@ export interface IStorage {
   // Partner earnings methods
   createPartnerEarning(earning: InsertPartnerEarnings): Promise<PartnerEarnings>;
   getPartnerEarningsByBooking(bookingId: number): Promise<PartnerEarnings | undefined>;
+  getPartnerEarningsByPartnerId(partnerId: number): Promise<PartnerEarnings[]>;
+  getPartnerTotalEarnings(partnerId: number): Promise<number>;
   
   // Payment methods
   createPayment(payment: InsertPayment): Promise<Payment>;
@@ -383,6 +385,15 @@ export class DbStorage implements IStorage {
   async getPartnerEarningsByBooking(bookingId: number): Promise<PartnerEarnings | undefined> {
     const result = await db.select().from(partnerEarnings).where(eq(partnerEarnings.bookingId, bookingId));
     return result[0];
+  }
+
+  async getPartnerEarningsByPartnerId(partnerId: number): Promise<PartnerEarnings[]> {
+    return await db.select().from(partnerEarnings).where(eq(partnerEarnings.partnerId, partnerId)).orderBy(desc(partnerEarnings.createdAt));
+  }
+
+  async getPartnerTotalEarnings(partnerId: number): Promise<number> {
+    const earnings = await db.select().from(partnerEarnings).where(eq(partnerEarnings.partnerId, partnerId));
+    return earnings.reduce((sum, earning) => sum + earning.partnerAmount, 0);
   }
 
   async createPayment(paymentData: InsertPayment): Promise<Payment> {
@@ -1864,6 +1875,18 @@ export class MemStorage implements IStorage {
 
   async getPartnerEarningsByBooking(bookingId: number): Promise<PartnerEarnings | undefined> {
     return Array.from(this.partnerEarnings.values()).find(earning => earning.bookingId === bookingId);
+  }
+
+  async getPartnerEarningsByPartnerId(partnerId: number): Promise<PartnerEarnings[]> {
+    return Array.from(this.partnerEarnings.values())
+      .filter(earning => earning.partnerId === partnerId)
+      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  }
+
+  async getPartnerTotalEarnings(partnerId: number): Promise<number> {
+    return Array.from(this.partnerEarnings.values())
+      .filter(earning => earning.partnerId === partnerId)
+      .reduce((sum, earning) => sum + earning.partnerAmount, 0);
   }
 
   async createPayment(paymentData: InsertPayment): Promise<Payment> {
