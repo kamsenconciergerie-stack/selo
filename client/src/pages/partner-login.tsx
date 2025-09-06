@@ -81,9 +81,11 @@ export default function PartnerLogin() {
       <div className="w-full max-w-md">
         {/* Header */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-kamsen-blue rounded-full mb-4">
-            <Building className="h-8 w-8 text-white" />
-          </div>
+          <img 
+            src="/images/kamsen-logo-new.svg" 
+            alt="Kamsen - Des charges en moins" 
+            className="h-16 w-auto mx-auto mb-4"
+          />
           <h1 className="text-3xl font-bold text-kamsen-blue mb-2">Espace Partenaire</h1>
           <p className="text-kamsen-gray">Plateforme Kamsen Logistics</p>
         </div>
