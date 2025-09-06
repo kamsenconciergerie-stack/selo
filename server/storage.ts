@@ -15,6 +15,7 @@ import {
   GpsTracking,
   DeliveryRoute,
   ServiceCity,
+  PartnerEarnings,
   InsertEquipment, 
   InsertBooking, 
   InsertPayment, 
@@ -30,7 +31,8 @@ import {
   InsertUserSession,
   InsertGpsTracking,
   InsertDeliveryRoute,
-  InsertServiceCity
+  InsertServiceCity,
+  InsertPartnerEarnings
 } from "@shared/schema";
 import bcrypt from "bcrypt";
 import { 
@@ -51,7 +53,8 @@ import {
   partnerRequests,
   gpsTracking,
   deliveryRoutes,
-  serviceCities
+  serviceCities,
+  partnerEarnings
 } from "../shared/schema";
 import { eq, ilike, or, desc } from "drizzle-orm";
 import { db } from "../shared/db";
@@ -75,6 +78,10 @@ export interface IStorage {
   updateBooking(id: number, booking: Partial<InsertBooking>): Promise<Booking | undefined>;
   deleteBooking(id: number): Promise<boolean>;
   updateBookingPaymentStatus(bookingId: number, paymentStatus: string, paymentReference?: string): Promise<void>;
+
+  // Partner earnings methods
+  createPartnerEarning(earning: InsertPartnerEarnings): Promise<PartnerEarnings>;
+  getPartnerEarningsByBooking(bookingId: number): Promise<PartnerEarnings | undefined>;
   
   // Payment methods
   createPayment(payment: InsertPayment): Promise<Payment>;
@@ -336,7 +343,25 @@ export class DbStorage implements IStorage {
 
   async createBooking(bookingData: InsertBooking): Promise<Booking> {
     const result = await db.insert(bookings).values(bookingData).returning();
-    return result[0];
+    const newBooking = result[0];
+    
+    // 🎯 AUTOMATIQUE: Créer les gains partenaires à 75% du montant total
+    if (newBooking && newBooking.totalPrice && newBooking.id) {
+      await this.createPartnerEarning({
+        partnerId: 1, // ID du partenaire assigné (pour l'instant, partenaire par défaut)
+        bookingId: newBooking.id,
+        rentalAmount: newBooking.totalPrice,
+        commissionRate: 0.25, // 25% pour Kamsen
+        commissionAmount: Math.round(newBooking.totalPrice * 0.25), // 25% commission Kamsen
+        partnerAmount: Math.round(newBooking.totalPrice * 0.75), // 75% pour le partenaire
+        status: "pending", // En attente de paiement
+        payoutMethod: "mobile_money"
+      });
+      
+      console.log(`💰 Gains partenaires créés automatiquement: 75% de ${newBooking.totalPrice} FCFA = ${Math.round(newBooking.totalPrice * 0.75)} FCFA`);
+    }
+    
+    return newBooking;
   }
 
   async updateBookingPaymentStatus(bookingId: number, paymentStatus: string, paymentReference?: string): Promise<void> {
@@ -347,6 +372,17 @@ export class DbStorage implements IStorage {
         status: paymentStatus === 'completed' ? 'confirmed' : 'pending'
       })
       .where(eq(bookings.id, bookingId));
+  }
+
+  // 💰 METHODES GAINS PARTENAIRES - 75% du montant pour les partenaires
+  async createPartnerEarning(earningData: InsertPartnerEarnings): Promise<PartnerEarnings> {
+    const result = await db.insert(partnerEarnings).values(earningData).returning();
+    return result[0];
+  }
+
+  async getPartnerEarningsByBooking(bookingId: number): Promise<PartnerEarnings | undefined> {
+    const result = await db.select().from(partnerEarnings).where(eq(partnerEarnings.bookingId, bookingId));
+    return result[0];
   }
 
   async createPayment(paymentData: InsertPayment): Promise<Payment> {
@@ -1203,12 +1239,14 @@ export class MemStorage implements IStorage {
   private users: Map<number, User>;
   private commercialManagers: Map<number, CommercialManager>;
   private userSessions: Map<string, UserSession>;
+  private partnerEarnings: Map<number, PartnerEarnings>;
   private currentEquipmentId: number;
   private currentBookingId: number;
   private currentPaymentId: number;
   private currentInquiryId: number;
   private currentUserId: number;
   private currentManagerId: number;
+  private currentEarningId: number;
 
   constructor() {
     this.equipment = new Map();
@@ -1218,12 +1256,14 @@ export class MemStorage implements IStorage {
     this.users = new Map();
     this.commercialManagers = new Map();
     this.userSessions = new Map();
+    this.partnerEarnings = new Map();
     this.currentEquipmentId = 1;
     this.currentBookingId = 1;
     this.currentPaymentId = 1;
     this.currentInquiryId = 1;
     this.currentUserId = 1;
     this.currentManagerId = 1;
+    this.currentEarningId = 1;
     
     // Initialize with sample equipment data for Senegal
     this.initializeData();
@@ -1764,6 +1804,23 @@ export class MemStorage implements IStorage {
       notes: insertBooking.notes || null
     };
     this.bookings.set(id, booking);
+    
+    // 🎯 AUTOMATIQUE: Créer les gains partenaires à 75% du montant total
+    if (booking.totalPrice) {
+      await this.createPartnerEarning({
+        partnerId: 1, // ID du partenaire assigné (pour l'instant, partenaire par défaut)
+        bookingId: booking.id,
+        rentalAmount: booking.totalPrice,
+        commissionRate: 0.25, // 25% pour Kamsen
+        commissionAmount: Math.round(booking.totalPrice * 0.25), // 25% commission Kamsen
+        partnerAmount: Math.round(booking.totalPrice * 0.75), // 75% pour le partenaire
+        status: "pending", // En attente de paiement
+        payoutMethod: "mobile_money"
+      });
+      
+      console.log(`💰 [MemStorage] Gains partenaires créés automatiquement: 75% de ${booking.totalPrice} FCFA = ${Math.round(booking.totalPrice * 0.75)} FCFA`);
+    }
+    
     return booking;
   }
 
@@ -1779,6 +1836,23 @@ export class MemStorage implements IStorage {
       booking.status = paymentStatus === 'completed' ? 'confirmed' : 'pending';
       this.bookings.set(bookingId, booking);
     }
+  }
+
+  // 💰 METHODES GAINS PARTENAIRES - 75% du montant pour les partenaires
+  async createPartnerEarning(earningData: InsertPartnerEarnings): Promise<PartnerEarnings> {
+    const id = this.currentEarningId++;
+    const earning: PartnerEarnings = {
+      id,
+      ...earningData,
+      createdAt: new Date(),
+      paidAt: null
+    };
+    this.partnerEarnings.set(id, earning);
+    return earning;
+  }
+
+  async getPartnerEarningsByBooking(bookingId: number): Promise<PartnerEarnings | undefined> {
+    return Array.from(this.partnerEarnings.values()).find(earning => earning.bookingId === bookingId);
   }
 
   async createPayment(paymentData: InsertPayment): Promise<Payment> {
