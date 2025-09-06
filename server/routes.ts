@@ -1690,6 +1690,29 @@ ${validatedData.message}`
     }
   });
 
+  // Partner earnings routes
+  app.get("/api/partners/:partnerId/earnings", async (req, res) => {
+    try {
+      const partnerId = parseInt(req.params.partnerId);
+      const earnings = await storage.getPartnerEarningsByPartnerId(partnerId);
+      res.json(earnings);
+    } catch (error) {
+      console.error("Error fetching partner earnings:", error);
+      res.status(500).json({ message: "Erreur lors de la récupération des gains" });
+    }
+  });
+
+  app.get("/api/partners/:partnerId/earnings/total", async (req, res) => {
+    try {
+      const partnerId = parseInt(req.params.partnerId);
+      const totalEarnings = await storage.getPartnerTotalEarnings(partnerId);
+      res.json({ totalEarnings });
+    } catch (error) {
+      console.error("Error fetching partner total earnings:", error);
+      res.status(500).json({ message: "Erreur lors de la récupération du total des gains" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

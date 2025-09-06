@@ -103,6 +103,20 @@ interface PartnerInfo {
   joinedAt: string;
 }
 
+interface PartnerEarnings {
+  id: number;
+  partnerId: number;
+  bookingId: number;
+  rentalAmount: number;
+  commissionRate: number;
+  commissionAmount: number;
+  partnerAmount: number;
+  status: 'pending' | 'paid' | 'cancelled';
+  payoutMethod: string;
+  paidAt: string | null;
+  createdAt: string;
+}
+
 const statusConfig = {
   pending: { label: "En attente", color: "bg-yellow-100 text-yellow-800", icon: Clock },
   confirmed: { label: "Confirmée", color: "bg-kamsen-blue-light text-blue-800", icon: CheckCircle },
@@ -121,6 +135,8 @@ function PartnerDashboardContent() {
   const [partner, setPartner] = useState<PartnerInfo | null>(null);
   const [bookings, setBookings] = useState<PartnerBooking[]>([]);
   const [stats, setStats] = useState<PartnerStats | null>(null);
+  const [earnings, setEarnings] = useState<PartnerEarnings[]>([]);
+  const [totalEarnings, setTotalEarnings] = useState<number>(0);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedBooking, setSelectedBooking] = useState<PartnerBooking | null>(null);
   const [revenueData, setRevenueData] = useState<any[]>([]);
@@ -143,6 +159,7 @@ function PartnerDashboardContent() {
         loadPartnerInfo(partnerId),
         loadPartnerBookings(partnerId),
         loadPartnerStats(partnerId),
+        loadPartnerEarnings(partnerId),
         loadAnalyticsData(partnerId)
       ]);
       
@@ -236,6 +253,31 @@ function PartnerDashboardContent() {
       equipmentCount: 25
     };
     setStats(mockStats);
+  };
+
+  const loadPartnerEarnings = async (partnerId: string) => {
+    try {
+      // Load earnings list
+      const earningsResponse = await fetch(`/api/partners/${partnerId}/earnings`);
+      if (earningsResponse.ok) {
+        const earningsData = await earningsResponse.json();
+        setEarnings(earningsData);
+      }
+
+      // Load total earnings
+      const totalResponse = await fetch(`/api/partners/${partnerId}/earnings/total`);
+      if (totalResponse.ok) {
+        const totalData = await totalResponse.json();
+        setTotalEarnings(totalData.totalEarnings);
+      }
+    } catch (error) {
+      console.error("Error loading partner earnings:", error);
+      toast({
+        title: "Erreur",
+        description: "Impossible de charger les gains du partenaire",
+        variant: "destructive",
+      });
+    }
   };
 
   const loadAnalyticsData = async (partnerId: string) => {
@@ -447,6 +489,18 @@ function PartnerDashboardContent() {
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
+                    <p className="text-sm font-medium text-kamsen-gray">Gains totaux (85%)</p>
+                    <p className="text-3xl font-bold text-green-600">{formatPriceLocal(totalEarnings)}</p>
+                  </div>
+                  <Award className="h-8 w-8 text-green-500" />
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between">
+                  <div>
                     <p className="text-sm font-medium text-kamsen-gray">Note moyenne</p>
                     <p className="text-3xl font-bold text-yellow-600">{stats.averageRating}/5</p>
                   </div>
@@ -459,8 +513,9 @@ function PartnerDashboardContent() {
 
         {/* Main Content */}
         <Tabs defaultValue="bookings" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-6">
+          <TabsList className="grid w-full grid-cols-7">
             <TabsTrigger value="bookings">Réservations</TabsTrigger>
+            <TabsTrigger value="earnings">Gains</TabsTrigger>
             <TabsTrigger value="unavailability">Indisponibilités</TabsTrigger>
             <TabsTrigger value="drivers">Chauffeurs</TabsTrigger>
             <TabsTrigger value="gps-admin">GPS Admin</TabsTrigger>
@@ -578,6 +633,102 @@ function PartnerDashboardContent() {
                   </div>
                 </CardContent>
               </Card>
+            )}
+          </TabsContent>
+
+          {/* Earnings Tab */}
+          <TabsContent value="earnings" className="space-y-6">
+            <div className="flex justify-between items-center">
+              <h2 className="text-2xl font-bold text-kamsen-blue">Mes Gains (85%)</h2>
+              <div className="text-right">
+                <p className="text-sm text-kamsen-gray">Total des gains</p>
+                <p className="text-2xl font-bold text-green-600">{formatPriceLocal(totalEarnings)}</p>
+              </div>
+            </div>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Award className="h-5 w-5" />
+                  Historique des gains
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {earnings.length === 0 ? (
+                    <div className="text-center py-8">
+                      <Award className="h-12 w-12 text-kamsen-gray mx-auto mb-4" />
+                      <p className="text-kamsen-gray">Aucun gain enregistré pour le moment</p>
+                    </div>
+                  ) : (
+                    earnings.map((earning) => (
+                      <div key={earning.id} className="flex items-center justify-between p-4 bg-kamsen-blue-light rounded-lg">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-3 mb-2">
+                            <span className="font-semibold">Réservation #{earning.bookingId}</span>
+                            <Badge className={
+                              earning.status === 'paid' ? 'bg-green-100 text-green-800' : 
+                              earning.status === 'pending' ? 'bg-yellow-100 text-yellow-800' : 
+                              'bg-red-100 text-red-800'
+                            }>
+                              {earning.status === 'paid' ? '✓ Payé' : 
+                               earning.status === 'pending' ? '⏳ En attente' : 
+                               '✗ Annulé'}
+                            </Badge>
+                          </div>
+                          <p className="text-sm text-kamsen-gray mb-1">
+                            Montant location: {formatPriceLocal(earning.rentalAmount)}
+                          </p>
+                          <p className="text-sm text-kamsen-gray">
+                            {format(new Date(earning.createdAt), "dd/MM/yyyy à HH:mm", { locale: fr })}
+                          </p>
+                        </div>
+                        <div className="text-right">
+                          <p className="font-bold text-lg text-green-600">{formatPriceLocal(earning.partnerAmount)}</p>
+                          <p className="text-sm text-kamsen-gray">Votre gain (85%)</p>
+                          <p className="text-xs text-kamsen-gray">Commission: {formatPriceLocal(earning.commissionAmount)} (15%)</p>
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Earnings Summary */}
+            {earnings.length > 0 && (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <Card>
+                  <CardContent className="p-6">
+                    <div className="text-center">
+                      <p className="text-sm text-kamsen-gray mb-2">Gains en attente</p>
+                      <p className="text-2xl font-bold text-yellow-600">
+                        {formatPriceLocal(earnings.filter(e => e.status === 'pending').reduce((sum, e) => sum + e.partnerAmount, 0))}
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+                
+                <Card>
+                  <CardContent className="p-6">
+                    <div className="text-center">
+                      <p className="text-sm text-kamsen-gray mb-2">Gains payés</p>
+                      <p className="text-2xl font-bold text-green-600">
+                        {formatPriceLocal(earnings.filter(e => e.status === 'paid').reduce((sum, e) => sum + e.partnerAmount, 0))}
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+                
+                <Card>
+                  <CardContent className="p-6">
+                    <div className="text-center">
+                      <p className="text-sm text-kamsen-gray mb-2">Nombre de transactions</p>
+                      <p className="text-2xl font-bold text-kamsen-blue">{earnings.length}</p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
             )}
           </TabsContent>
 
