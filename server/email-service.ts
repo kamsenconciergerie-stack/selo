@@ -246,14 +246,14 @@ Cette notification a été générée automatiquement par la plateforme Kamsen.
                   <li style="margin-bottom: 8px;">Nous vous contacterons 24h avant la livraison pour confirmer l'heure exacte</li>
                   <li style="margin-bottom: 8px;">Préparez une pièce d'identité valide pour la récupération</li>
                   <li style="margin-bottom: 8px;">Vérifiez l'équipement à la livraison</li>
-                  <li>Contactez-nous pour toute question au +221 78 606 70 13</li>
+                  <li>Contactez-nous pour toute question au +221 71 018 89 89</li>
                 </ul>
               </div>
 
               <div style="text-align: center; margin: 30px 0;">
                 <p style="margin: 0 0 15px 0; color: #666;">Besoin d'aide ou de modification ?</p>
                 <a href="tel:+22178606713" style="display: inline-block; background: #FF6B35; color: white; padding: 12px 25px; text-decoration: none; border-radius: 6px; margin: 0 10px;">
-                  📞 +221 78 606 70 13
+                  📞 +221 71 018 89 89
                 </a>
                 <a href="mailto:contact@kamsenlogistic.com" style="display: inline-block; background: #1e3a8a; color: white; padding: 12px 25px; text-decoration: none; border-radius: 6px; margin: 0 10px;">
                   ✉️ contact@kamsenlogistic.com
@@ -294,7 +294,7 @@ PROCHAINES ÉTAPES:
 - Vérifiez l'équipement à la réception
 
 CONTACT:
-Téléphone: +221 78 606 70 13
+Téléphone: +221 71 018 89 89
 Email: contact@kamsenlogistic.com
 
 Merci de votre confiance !

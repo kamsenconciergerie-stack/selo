@@ -175,6 +175,6 @@ Preferred communication style: Simple, everyday language.
 
 ## Contact Information
 
-- Téléphone: +221 78 606 70 13
+- Téléphone: +221 71 018 89 89
 - Email: contact@kamsenlogistic.com
 - Domaine: kamsenlogistic.com

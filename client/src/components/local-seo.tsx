@@ -51,7 +51,7 @@ export default function LocalSEO() {
                   <Phone className="h-5 w-5 text-kamsen-blue mr-3 mt-1" />
                   <div>
                     <p className="font-semibold">Téléphone</p>
-                    <a href="tel:+221786067013" className="text-kamsen-orange hover:underline">
+                    <a href="tel:+221710188989" className="text-kamsen-orange hover:underline">
                       +221 78 606 70 13
                     </a>
                   </div>

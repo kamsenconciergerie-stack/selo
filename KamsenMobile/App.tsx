@@ -184,7 +184,7 @@ export default function App() {
 
       {/* Footer */}
       <View style={styles.footer}>
-        <Text style={styles.footerText}>📞 +221 78 606 70 13</Text>
+        <Text style={styles.footerText}>📞 +221 71 018 89 89</Text>
         <Text style={styles.footerText}>📧 contact@kamsenlogistic.com</Text>
       </View>
     </View>

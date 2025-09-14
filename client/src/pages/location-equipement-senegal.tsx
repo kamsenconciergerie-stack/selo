@@ -231,7 +231,7 @@ export default function LocationEquipementSenegal() {
                 </p>
                 <div className="flex flex-col gap-3">
                   <a 
-                    href="tel:+221786067013" 
+                    href="tel:+221710188989" 
                     className="bg-kamsen-orange hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-lg text-center transition-colors"
                   >
                     📞 Appeler +221 78 606 70 13

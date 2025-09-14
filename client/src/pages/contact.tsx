@@ -92,7 +92,7 @@ export default function Contact() {
     {
       icon: Phone,
       title: "Téléphone",
-      value: "+221 78 606 70 13",
+      value: "+221 71 018 89 89",
       description: "Disponible 24h/7j",
     },
     {

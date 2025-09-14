@@ -54,7 +54,7 @@ export default function Header() {
           <div className="flex items-center space-x-4">
             <div className="hidden sm:flex items-center text-kamsen-gray hover:text-kamsen-blue">
               <Phone className="h-4 w-4 mr-2" />
-              <span>+221 78 606 70 13</span>
+              <span>+221 71 018 89 89</span>
             </div>
             <Link href="/devis">
               <Button className="bg-kamsen-orange hover:bg-kamsen-orange-dark-dark text-white">
@@ -87,7 +87,7 @@ export default function Header() {
                   ))}
                   <div className="flex items-center text-kamsen-blue pt-4">
                     <Phone className="h-4 w-4 mr-2" />
-                    <span>+221 78 606 70 13</span>
+                    <span>+221 71 018 89 89</span>
                   </div>
                 </div>
               </SheetContent>

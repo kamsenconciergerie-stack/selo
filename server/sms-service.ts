@@ -110,7 +110,7 @@ export class SMSService {
   }
 
   async sendMaintenanceAlert(phone: string, equipmentName: string, maintenanceDate: string): Promise<boolean> {
-    const message = `Kamsen: Maintenance programmée pour ${equipmentName} le ${maintenanceDate}. Contact: +221 78 606 70 13`;
+    const message = `Kamsen: Maintenance programmée pour ${equipmentName} le ${maintenanceDate}. Contact: +221 71 018 89 89`;
     return this.sendSMS(phone, message);
   }
 }

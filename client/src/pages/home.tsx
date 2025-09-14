@@ -211,7 +211,7 @@ export default function Home() {
               <div className="text-center">
                 <div className="text-blue-700 text-sm mb-1 font-semibold">Réservation directe</div>
                 <div className="bg-blue-200/60 backdrop-blur-sm rounded-lg px-4 py-2 border border-blue-300/60">
-                  <div className="text-blue-900 font-bold text-xl">+221 78 606 70 13</div>
+                  <div className="text-blue-900 font-bold text-xl">+221 71 018 89 89</div>
                 </div>
               </div>
             </div>
