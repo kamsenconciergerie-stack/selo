@@ -407,10 +407,10 @@ Tu peux également nous appeler directement au **+221 71 018 89 89** pour toute 
             {/* Contact info for completed step */}
             {currentStep === 'completed' && (
               <div className="border-t border-gray-200 p-4 bg-kamsen-blue-light text-center">
-                <div className="flex items-center justify-center gap-2 text-kamsen-blue">
+                <a href="tel:+221710188989" className="flex items-center justify-center gap-2 text-kamsen-blue hover:text-kamsen-orange transition-colors">
                   <Phone className="h-4 w-4" />
                   <span className="font-bold">+221 71 018 89 89</span>
-                </div>
+                </a>
               </div>
             )}
           </CardContent>

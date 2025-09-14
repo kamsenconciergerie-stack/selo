@@ -52,10 +52,10 @@ export default function Header() {
           </nav>
           
           <div className="flex items-center space-x-4">
-            <div className="hidden sm:flex items-center text-kamsen-gray hover:text-kamsen-blue">
+            <a href="tel:+221710188989" className="hidden sm:flex items-center text-kamsen-gray hover:text-kamsen-blue transition-colors">
               <Phone className="h-4 w-4 mr-2" />
               <span>+221 71 018 89 89</span>
-            </div>
+            </a>
             <Link href="/devis">
               <Button className="bg-kamsen-orange hover:bg-kamsen-orange-dark-dark text-white">
                 Demande de devis
@@ -85,10 +85,10 @@ export default function Header() {
                       {item.name}
                     </Link>
                   ))}
-                  <div className="flex items-center text-kamsen-blue pt-4">
+                  <a href="tel:+221710188989" className="flex items-center text-kamsen-blue pt-4 hover:text-kamsen-orange transition-colors">
                     <Phone className="h-4 w-4 mr-2" />
                     <span>+221 71 018 89 89</span>
-                  </div>
+                  </a>
                 </div>
               </SheetContent>
             </Sheet>
