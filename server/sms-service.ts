@@ -17,7 +17,7 @@ class OrangeSMSProvider implements SMSProvider {
       
       // Simulate SMS sending with email as fallback for demo
       if (process.env.SMTP_HOST) {
-        const transporter = nodemailer.createTransporter({
+        const transporter = nodemailer.createTransport({
           host: process.env.SMTP_HOST,
           port: 587,
           secure: false,
