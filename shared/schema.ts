@@ -89,6 +89,27 @@ export const inquiries = pgTable("inquiries", {
   createdAt: text("created_at").notNull(),
 });
 
+// Chatbot quotes table for generated quotes
+export const chatbotQuotes = pgTable("chatbot_quotes", {
+  id: serial("id").primaryKey(),
+  sessionId: text("session_id").notNull(), // Unique chat session identifier
+  customerName: text("customer_name").notNull(),
+  customerPhone: text("customer_phone").notNull(),
+  customerEmail: text("customer_email"),
+  deliveryCity: text("delivery_city").notNull(),
+  startDate: text("start_date").notNull(),
+  endDate: text("end_date").notNull(),
+  equipmentCategories: text("equipment_categories").array().notNull(),
+  specificNeeds: text("specific_needs"), // What user tells the chatbot
+  projectDescription: text("project_description"),
+  conversationData: jsonb("conversation_data"), // Full chat history
+  estimatedTotalPrice: integer("estimated_total_price"), // in XOF
+  status: text("status").notNull().default("draft"), // draft, confirmed, converted_to_booking
+  isConfirmed: boolean("is_confirmed").notNull().default(false),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+});
+
 export const partnerRequests = pgTable("partner_requests", {
   id: serial("id").primaryKey(),
   firstName: text("first_name").notNull(),
@@ -252,6 +273,12 @@ export const insertPaymentSchema = createInsertSchema(payments).omit({
 export const insertInquirySchema = createInsertSchema(inquiries).omit({
   id: true,
   createdAt: true,
+});
+
+export const insertChatbotQuoteSchema = createInsertSchema(chatbotQuotes).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
 });
 
 export const insertGpsTrackingSchema = createInsertSchema(gpsTracking).omit({
@@ -677,6 +704,8 @@ export type Payment = typeof payments.$inferSelect;
 export type InsertPayment = z.infer<typeof insertPaymentSchema>;
 export type Inquiry = typeof inquiries.$inferSelect;
 export type InsertInquiry = z.infer<typeof insertInquirySchema>;
+export type ChatbotQuote = typeof chatbotQuotes.$inferSelect;
+export type InsertChatbotQuote = z.infer<typeof insertChatbotQuoteSchema>;
 export type User = typeof users.$inferSelect;
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type CommercialManager = typeof commercialManagers.$inferSelect;
