@@ -52,7 +52,7 @@ export default function LocalSEO() {
                   <div>
                     <p className="font-semibold">Téléphone</p>
                     <a href="tel:+221710188989" className="text-kamsen-orange hover:underline">
-                      +221 78 606 70 13
+                      +221 71 018 89 89
                     </a>
                   </div>
                 </div>

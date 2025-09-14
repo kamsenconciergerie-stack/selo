@@ -110,7 +110,7 @@ export default function SEOContent() {
               href="tel:+221710188989" 
               className="bg-kamsen-orange hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-lg transition-colors"
             >
-              Appeler +221 78 606 70 13
+              Appeler +221 71 018 89 89
             </a>
             <a 
               href="/contact" 
