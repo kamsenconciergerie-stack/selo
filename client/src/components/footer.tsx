@@ -65,7 +65,8 @@ export default function Footer() {
         </div>
         
         <div className="border-t border-kamsen-orange/30 mt-8 pt-8 text-center text-white">
-          <p className="mb-4">Votre ville n'est pas listée ? Contactez-nous pour un devis personnalisé</p>
+          <p className="mb-2">Votre ville n'est pas listée ? Contactez-nous pour un devis personnalisé</p>
+          <p className="text-kamsen-orange font-bold text-xl mb-4">+221 71 018 89 89</p>
           
           <a 
             href="/contact" 
