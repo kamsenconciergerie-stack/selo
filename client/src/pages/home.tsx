@@ -1,6 +1,7 @@
 import Header from "@/components/header";
 import Hero from "@/components/hero";
 import Footer from "@/components/footer";
+import Chatbot from "@/components/chatbot";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -401,6 +402,9 @@ export default function Home() {
       <SEOContent />
 
       <Footer />
+      
+      {/* Chatbot */}
+      <Chatbot />
     </div>
   );
 }

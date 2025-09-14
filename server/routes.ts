@@ -4,7 +4,7 @@ import { unifiedData } from "./data-sync";
 import { DbStorage, type IStorage } from "./storage";
 
 const storage: IStorage = new DbStorage();
-import { insertBookingSchema, insertInquirySchema, insertUserSchema } from "@shared/schema";
+import { insertBookingSchema, insertInquirySchema, insertUserSchema, insertChatbotQuoteSchema } from "@shared/schema";
 import { registerPaymentRoutes } from "./payment-routes";
 import { authRoutes } from "./auth-routes";
 import { partnerRoutes } from "./partner-routes";
@@ -137,6 +137,34 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
       res.status(500).json({ message: "Erreur lors de l'envoi de la demande" });
+    }
+  });
+
+  // Chatbot Quotes routes
+  app.post("/api/chatbot-quotes", async (req, res) => {
+    try {
+      const validatedData = insertChatbotQuoteSchema.parse(req.body);
+      const quote = await storage.createChatbotQuote(validatedData);
+      res.status(201).json(quote);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ 
+          message: "Données de devis invalides", 
+          errors: error.errors 
+        });
+      }
+      console.error("Erreur création devis chatbot:", error);
+      res.status(500).json({ message: "Erreur lors de la création du devis" });
+    }
+  });
+
+  app.get("/api/chatbot-quotes", async (req, res) => {
+    try {
+      const quotes = await storage.getAllChatbotQuotes();
+      res.json(quotes);
+    } catch (error) {
+      console.error("Erreur récupération devis chatbot:", error);
+      res.status(500).json({ message: "Erreur lors de la récupération des devis" });
     }
   });
 

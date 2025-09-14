@@ -3,6 +3,7 @@ import {
   Booking, 
   Payment, 
   Inquiry, 
+  ChatbotQuote,
   User,
   Review,
   EquipmentTracking,
@@ -20,6 +21,7 @@ import {
   InsertBooking, 
   InsertPayment, 
   InsertInquiry,
+  InsertChatbotQuote,
   InsertUser,
   InsertReview,
   InsertTracking,
@@ -40,6 +42,7 @@ import {
   bookings, 
   payments, 
   inquiries,
+  chatbotQuotes,
   users,
   reviews,
   equipmentTracking,
@@ -92,6 +95,10 @@ export interface IStorage {
   
   // Inquiry methods
   createInquiry(inquiry: InsertInquiry): Promise<Inquiry>;
+  
+  // Chatbot Quote methods
+  createChatbotQuote(quote: InsertChatbotQuote): Promise<ChatbotQuote>;
+  getAllChatbotQuotes(): Promise<ChatbotQuote[]>;
   
   // User methods
   createUser(user: InsertUser): Promise<User>;
@@ -429,6 +436,16 @@ export class DbStorage implements IStorage {
     };
     const result = await db.insert(inquiries).values(inquiryWithDate).returning();
     return result[0];
+  }
+
+  // Chatbot Quote methods
+  async createChatbotQuote(quoteData: InsertChatbotQuote): Promise<ChatbotQuote> {
+    const result = await db.insert(chatbotQuotes).values(quoteData).returning();
+    return result[0];
+  }
+
+  async getAllChatbotQuotes(): Promise<ChatbotQuote[]> {
+    return await db.select().from(chatbotQuotes).orderBy(desc(chatbotQuotes.createdAt));
   }
 
   async getBookingsByUser(userId: number): Promise<Booking[]> {
