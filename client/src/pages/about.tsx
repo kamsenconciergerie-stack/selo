@@ -302,7 +302,7 @@ export default function About() {
                   <div className="flex-shrink-0 w-8 h-8 bg-kamsen-blue rounded-full flex items-center justify-center">
                     <span className="text-white font-bold">📞</span>
                   </div>
-                  <span className="text-kamsen-blue">+221 78 606 70 13</span>
+                  <a href="tel:+221710188989" className="text-kamsen-blue hover:text-kamsen-orange transition-colors font-medium">+221 71 018 89 89</a>
                 </div>
               </div>
 
