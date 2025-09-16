@@ -83,7 +83,7 @@ export default function LocationEquipementSenegal() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button className="bg-kamsen-orange hover:bg-orange-600 text-white px-8 py-3 text-lg">
               <Phone className="mr-2 h-5 w-5" />
-              +221 78 606 70 13
+              +221 71 018 89 89
             </Button>
             <Link href="/contact">
               <Button variant="outline" className="border-white text-white hover:bg-white hover:text-kamsen-blue px-8 py-3 text-lg">
@@ -234,7 +234,7 @@ export default function LocationEquipementSenegal() {
                     href="tel:+221710188989" 
                     className="bg-kamsen-orange hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-lg text-center transition-colors"
                   >
-                    📞 Appeler +221 78 606 70 13
+                    📞 Appeler +221 71 018 89 89
                   </a>
                   <Link href="/contact">
                     <Button variant="outline" className="w-full border-kamsen-blue text-kamsen-blue hover:bg-kamsen-blue hover:text-white">

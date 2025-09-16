@@ -270,7 +270,7 @@ export default function EquipmentDetail() {
               <p className="text-kamsen-blue font-medium">
                 📞 Contactez l'équipe commerciale d'Kamsen pour en savoir plus au{" "}
                 <a href="tel:+221710188989" className="text-kamsen-blue font-bold hover:underline">
-                  78 606 70 13
+                  71 018 89 89
                 </a>
               </p>
             </div>

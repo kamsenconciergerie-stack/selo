@@ -63,7 +63,13 @@ export default function QuoteRequest() {
   const onSubmit = async (data: QuoteRequestData) => {
     setIsSubmitting(true);
     try {
-      await apiRequest('/api/quote-request', 'POST', data);
+      await apiRequest('/api/quote-request', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
       
       toast({
         title: "Demande de devis envoyée",
@@ -306,7 +312,7 @@ export default function QuoteRequest() {
                     <p className="text-kamsen-gray">
                       Contactez notre équipe commerciale au{" "}
                       <a href="tel:+221710188989" className="text-kamsen-blue font-bold hover:underline">
-                        78 606 70 13
+                        71 018 89 89
                       </a>
                     </p>
                   </div>
