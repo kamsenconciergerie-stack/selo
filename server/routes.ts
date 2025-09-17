@@ -3,7 +3,7 @@ import { createServer, type Server } from "http";
 import { unifiedData } from "./data-sync";
 import { DbStorage, type IStorage } from "./storage";
 
-const storage: IStorage = new DbStorage();
+const storage = new DbStorage();
 import { insertBookingSchema, insertInquirySchema, insertUserSchema, insertChatbotQuoteSchema } from "@shared/schema";
 import { registerPaymentRoutes } from "./payment-routes";
 import { authRoutes } from "./auth-routes";
