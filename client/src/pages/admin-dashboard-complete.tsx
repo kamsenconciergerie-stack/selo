@@ -330,6 +330,7 @@ function AdminDashboardContent() {
   const [stats, setStats] = useState<DashboardStats>({
     totalBookings: 0,
     totalRevenue: 0,
+    kamsenEarnings: 0,
     pendingBookings: 0,
     confirmedBookings: 0,
     totalEquipment: 0,
@@ -380,6 +381,7 @@ function AdminDashboardContent() {
           setStats({
             totalBookings: bookingsData.length,
             totalRevenue,
+            kamsenEarnings: totalRevenue * 0.15, // 15% commission
             pendingBookings: bookingsData.filter((b: any) => b.status === 'pending').length,
             confirmedBookings: bookingsData.filter((b: any) => b.status === 'confirmed').length,
             totalEquipment: equipmentData.length,
