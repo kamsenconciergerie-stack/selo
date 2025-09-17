@@ -104,13 +104,13 @@ export default function Contact() {
     {
       icon: Mail,
       title: "Réservations",
-      value: "reservation@kamsenlogistic.com",
+      value: "contact@kamsenlogistic.com",
       description: "Pour vos demandes de location",
     },
     {
       icon: Mail,
       title: "Partenaires",
-      value: "partenaires@kamsenlogistic.com",
+      value: "contact@kamsenlogistic.com",
       description: "Rejoignez notre réseau",
     },
     {
@@ -172,13 +172,13 @@ export default function Contact() {
                 <div className="text-center p-4 bg-white rounded-lg shadow-sm">
                   <div className="text-2xl mb-2">📋</div>
                   <h4 className="font-semibold text-kamsen-blue">Réservations</h4>
-                  <p className="text-kamsen-blue font-medium">reservation@kamsenlogistic.com</p>
+                  <p className="text-kamsen-blue font-medium">contact@kamsenlogistic.com</p>
                   <p className="text-sm text-kamsen-gray">Location d'équipements</p>
                 </div>
                 <div className="text-center p-4 bg-white rounded-lg shadow-sm">
                   <div className="text-2xl mb-2">🤝</div>
                   <h4 className="font-semibold text-kamsen-blue">Partenaires</h4>
-                  <p className="text-kamsen-blue font-medium">partenaires@kamsenlogistic.com</p>
+                  <p className="text-kamsen-blue font-medium">contact@kamsenlogistic.com</p>
                   <p className="text-sm text-kamsen-gray">Rejoignez notre réseau</p>
                 </div>
               </div>
