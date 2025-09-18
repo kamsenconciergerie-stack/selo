@@ -383,6 +383,12 @@ export class DbStorage implements IStorage {
       .where(eq(bookings.id, bookingId));
   }
 
+  // Admin methods  
+  async getAllBookings(): Promise<Booking[]> {
+    const result = await db.select().from(bookings).orderBy(desc(bookings.createdAt));
+    return result;
+  }
+
   // 💰 METHODES GAINS PARTENAIRES - 75% du montant pour les partenaires
   async createPartnerEarning(earningData: InsertPartnerEarnings): Promise<PartnerEarnings> {
     const result = await db.insert(partnerEarnings).values(earningData).returning();
