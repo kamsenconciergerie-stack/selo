@@ -1,0 +1,500 @@
+1. Prise en Main de l'Interface d'Administration
+
+Cette section décrit les premières étapes pour accéder et naviguer dans l'interface d'administration de Kamsen Logistic. Une maîtrise de ces fondamentaux est essentielle pour une utilisation efficace de la plateforme.
+
+1.1. Accès à la Plateforme
+
+L'accès à l'interface d'administration est sécurisé et nécessite des identifiants de connexion uniques pour chaque utilisateur. Cette mesure garantit la traçabilité des actions et la protection des données sensibles.
+
+Procédure de connexion :
+
+1.
+Ouvrez un navigateur web et accédez à l'adresse : https://kamsenlogistic.com/adminone
+
+2.
+Saisissez votre nom d'utilisateur et votre mot de passe dans les champs correspondants.
+
+3.
+Cliquez sur le bouton "Se connecter" pour accéder au tableau de bord.
+
+En cas d'oubli du mot de passe, utilisez le lien "Mot de passe oublié ?" et suivez les instructions pour le réinitialiser. Il est recommandé de choisir un mot de passe complexe et de le changer régulièrement pour maintenir un haut niveau de sécurité.
+
+1.2. Présentation du Tableau de Bord (Vue d'ensemble)
+
+Le tableau de bord, ou "Vue d'ensemble", est la première page affichée après la connexion. Il présente une synthèse de l'activité de la plateforme à travers des indicateurs clés de performance (KPIs), permettant une évaluation rapide de la situation.
+
+IndicateurDescriptionTotal RéservationsAffiche le nombre total de réservations en cours.Chiffre d'AffairesReprésente le montant total des revenus générés par les locations.Gains Kamsen (15%)Indique la part des revenus revenant à Kamsen Logistic, calculée sur la base d'une commission de 15%.En AttenteSignale le nombre d'actions ou de demandes nécessitant une validation de l'administrateur (par exemple, une nouvelle réservation ou une demande de partenariat). Une icône d'alerte est visible si des éléments sont en attente.Demandes PartenairesAffiche le nombre de nouvelles demandes de partenariat en attente de traitement.Équipements ActifsIndique le nombre d'équipements actuellement disponibles à la location par rapport au nombre total d'équipements enregistrés.
+
+L'analyse de ces indicateurs permet de piloter l'activité et de prendre des décisions éclairées. Par exemple, un nombre élevé de demandes en attente peut indiquer un besoin de ressources supplémentaires pour le traitement des dossiers.
+
+1.3. Navigation Principale
+
+La navigation principale est assurée par une barre d'onglets située en haut de la page, permettant d'accéder aux différents modules de la plateforme.
+
+•
+Vue d'ensemble : Retour au tableau de bord principal.
+
+•
+Réservations : Accès à l'interface de gestion des réservations (création, consultation, modification).
+
+•
+Équipements : Gestion du catalogue d'équipements (ajout, modification, suivi de la maintenance).
+
+•
+Partenaires : Gestion des fiches partenaires et des demandes de partenariat.
+
+•
+Suivi GPS : Interface de géolocalisation en temps réel de la flotte d'équipements.
+
+•
+Analyses : Module de reporting et d'analyse des données de la plateforme.
+
+Chaque module est conçu pour une tâche administrative spécifique, permettant une organisation logique et une prise en main intuitive de l'outil.
+
+2. Gestion des Réservations
+
+Le module de gestion des réservations est au cœur de l'activité de Kamsen Logistic. Il permet de traiter les demandes des clients, de planifier l'utilisation des équipements et de suivre le processus de location du début à la fin. Une gestion rigoureuse des réservations est essentielle pour garantir la satisfaction des clients et optimiser les revenus.
+
+2.1. Créer une Nouvelle Réservation
+
+La création manuelle d'une réservation est nécessaire lorsqu'une demande est reçue par téléphone, par e-mail ou en personne. Cette procédure permet d'intégrer la demande dans le système de gestion centralisé.
+
+Procédure de création manuelle :
+
+1.
+Accédez au module Réservations depuis la barre de navigation principale.
+
+2.
+Cliquez sur le bouton "Nouvelle Réservation".
+
+3.
+Remplissez le formulaire de réservation avec les informations suivantes :
+
+•
+Informations client : Nom, prénom, société, coordonnées (téléphone, e-mail).
+
+•
+Détails de la location : Dates et heures de début et de fin.
+
+•
+Équipements : Sélectionnez les équipements souhaités dans le catalogue. Le système affichera leur disponibilité en temps réel.
+
+•
+Partenaire : Assignez un partenaire pour la location, si applicable. Le système peut suggérer des partenaires en fonction de la disponibilité des équipements.
+
+
+
+4.
+Vérifiez la disponibilité des équipements et du partenaire aux dates demandées.
+
+5.
+Calculez le devis et présentez-le au client pour validation.
+
+6.
+Une fois le devis accepté, confirmez la réservation. Le statut de la réservation passera à "Confirmée".
+
+2.2. Consulter et Modifier une Réservation
+
+La consultation et la modification des réservations sont des tâches courantes pour répondre aux demandes de changement des clients ou pour ajuster la planification.
+
+Procédure de consultation et modification :
+
+1.
+Dans le module Réservations, utilisez la barre de recherche ou les filtres pour retrouver une réservation spécifique (par nom de client, numéro de réservation, dates, etc.).
+
+2.
+Cliquez sur la réservation pour afficher les détails.
+
+3.
+Pour modifier la réservation, cliquez sur le bouton "Modifier".
+
+4.
+Apportez les modifications nécessaires (par exemple, changement de dates, ajout ou suppression d'équipements).
+
+5.
+Le système vérifiera à nouveau la disponibilité des ressources. Si les modifications sont possibles, enregistrez les changements.
+
+6.
+Le système recalculera automatiquement le coût de la location et mettra à jour la facture si nécessaire.
+
+2.3. Gérer les Statuts de Réservation
+
+Chaque réservation suit un cycle de vie défini par différents statuts. La mise à jour de ces statuts est cruciale pour un suivi précis de l'activité.
+
+StatutDescriptionEn attenteLa réservation a été créée mais n'est pas encore confirmée. Les équipements sont pré-réservés.ConfirméeLe client a accepté le devis et la réservation est validée. Les équipements sont bloqués pour les dates demandées.En coursLa période de location a commencé. L'équipement est chez le client.TerminéeL'équipement a été retourné et inspecté. La réservation est clôturée.AnnuléeLa réservation a été annulée avant le début de la location. Les équipements sont à nouveau disponibles.
+
+En cas de litige (par exemple, équipement endommagé), un statut spécifique "Litige" peut être appliqué, déclenchant une procédure de résolution interne.
+
+2.4. Facturation et Suivi des Paiements
+
+La gestion financière des réservations est intégrée au module, permettant de suivre les paiements et de générer les documents comptables.
+
+Procédure de facturation :
+
+1.
+Une fois la réservation confirmée, une facture pro-forma peut être générée et envoyée au client.
+
+2.
+À la fin de la location, la facture finale est générée, incluant d'éventuels frais supplémentaires (par exemple, jours de location additionnels, dommages).
+
+3.
+Le statut du paiement (par exemple, "En attente de paiement", "Payé") doit être mis à jour manuellement dès réception du règlement.
+
+4.
+Des rappels de paiement automatiques peuvent être configurés pour les factures impayées.
+
+3. Gestion des Équipements
+
+La gestion des équipements est une fonction centrale de la plateforme Kamsen Logistic. Elle englobe l'ensemble du cycle de vie des actifs, de leur enregistrement dans le système à leur retrait. Une gestion rigoureuse du parc d'équipements est indispensable pour garantir la disponibilité, la fiabilité et la rentabilité du service de location.
+
+3.1. Ajouter un Nouvel Équipement
+
+L'ajout de nouveaux équipements au catalogue doit suivre une procédure standardisée pour assurer la cohérence et l'exhaustivité des informations. Chaque nouvel équipement doit être soigneusement documenté pour faciliter sa gestion et sa location.
+
+Procédure d'ajout d'un nouvel équipement :
+
+1.
+Accédez au module Équipements depuis la barre de navigation principale.
+
+2.
+Cliquez sur le bouton "Ajouter un équipement".
+
+3.
+Remplissez le formulaire de création avec les informations suivantes :
+
+•
+Nom de l'équipement : Désignation claire et précise (par exemple, "Marteau-piqueur Hilti TE 700-AVR").
+
+•
+Description : Informations détaillées sur les caractéristiques techniques, les capacités et les usages recommandés.
+
+•
+Catégorie : Sélectionnez la catégorie appropriée (par exemple, "Outillage à main", "Engins de chantier").
+
+•
+Partenaire propriétaire : Associez l'équipement à un partenaire si celui-ci appartient à un tiers.
+
+•
+Identifiant unique (SKU) : Attribuez un identifiant unique pour le suivi interne.
+
+•
+Photos : Téléchargez des photos de haute qualité montrant l'équipement sous différents angles.
+
+
+
+4.
+Configurez les paramètres de location :
+
+•
+Tarifs : Définissez les tarifs de location (par jour, par semaine, par mois).
+
+•
+Disponibilité : Indiquez le statut initial de l'équipement (par exemple, "Disponible", "En maintenance").
+
+
+
+5.
+Enregistrez le nouvel équipement. Il sera alors visible dans le catalogue et disponible pour la location selon son statut.
+
+3.2. Gérer le Catalogue d'Équipements
+
+Le catalogue d'équipements doit être organisé de manière logique pour faciliter la recherche et la sélection par les administrateurs et les clients. Une bonne organisation contribue à une meilleure expérience utilisateur et à une gestion plus efficace.
+
+Bonnes pratiques de gestion du catalogue :
+
+•
+Catégorisation : Utilisez des catégories et des sous-catégories claires et cohérentes pour structurer le catalogue.
+
+•
+Variations de produits : Regroupez les équipements similaires qui ne diffèrent que par un attribut (par exemple, la taille ou la puissance) en tant que variations d'un même produit. Cela évite de surcharger le catalogue.
+
+•
+Mise à jour des informations : Assurez-vous que les descriptions, les photos et les caractéristiques techniques des équipements sont toujours à jour.
+
+3.3. Suivi de la Disponibilité et de la Maintenance
+
+Le suivi de la disponibilité et la planification de la maintenance sont essentiels pour maximiser le taux d'utilisation des équipements et prévenir les pannes.
+
+Gestion de la disponibilité :
+
+•
+Le calendrier de disponibilité offre une vue d'ensemble de l'état de chaque équipement (disponible, en location, en maintenance).
+
+•
+Les statuts de disponibilité sont mis à jour automatiquement en fonction des réservations, mais peuvent aussi être modifiés manuellement si nécessaire.
+
+Planification de la maintenance :
+
+1.
+Créez des périodes d'indisponibilité dans le calendrier pour la maintenance préventive (entretien régulier) ou corrective (réparations).
+
+2.
+Associez un ordre de travail à chaque intervention de maintenance, en décrivant les tâches à effectuer.
+
+3.
+Une fois la maintenance terminée, mettez à jour le statut de l'équipement pour le rendre à nouveau disponible à la location.
+
+3.4. Gestion du Cycle de Vie des Équipements
+
+La gestion du cycle de vie implique le suivi de l'équipement depuis son acquisition jusqu'à sa mise au rebut. Ce processus permet d'optimiser les investissements et de planifier le renouvellement du parc.
+
+Suivi de l'amortissement :
+
+•
+Enregistrez la date d'achat et le coût initial de chaque équipement pour suivre son amortissement comptable.
+
+•
+Utilisez les rapports d'analyse pour évaluer la rentabilité de chaque équipement et décider du moment opportun pour le remplacer.
+
+Procédure de retrait :
+
+1.
+Lorsqu'un équipement arrive en fin de vie, changez son statut à "Retiré" ou "Vendu".
+
+2.
+Archivez la fiche de l'équipement pour conserver l'historique de ses locations et de sa maintenance.
+
+3.
+Assurez-vous que l'équipement n'est plus visible dans le catalogue public de location.
+
+4. Gestion des Partenaires
+
+Le module de gestion des partenaires est essentiel pour administrer le réseau de fournisseurs d'équipements de Kamsen Logistic. Il permet de gérer les demandes de nouveaux partenariats, de maintenir une base de données complète des partenaires existants et de suivre leurs performances. Une gestion efficace des partenaires garantit une offre d'équipements diversifiée et de qualité.
+
+4.1. Traitement des Demandes de Partenariat
+
+Le traitement des demandes de partenariat suit un processus de validation structuré pour s'assurer que seuls les partenaires répondant aux critères de qualité de Kamsen Logistic sont acceptés. L'interface, comme visible sur l'image fournie, présente une section dédiée aux "Demandes de Partenariat" avec des statuts clairs : "En Attente", "Approuvées", "Rejetées".
+
+Workflow de validation des demandes :
+
+1.
+Réception de la demande : Une nouvelle demande de partenariat apparaît dans la section "Demandes Récentes" et incrémente le compteur "En Attente". La demande contient les informations de contact du partenaire potentiel (nom, e-mail, téléphone, site web) et ses catégories d'intérêt (par exemple, "Camion porteur", "Camion benne").
+
+2.
+Évaluation de la demande : L'administrateur examine les informations fournies. Les critères d'évaluation peuvent inclure :
+
+•
+La pertinence des équipements proposés par rapport au catalogue de Kamsen Logistic.
+
+•
+La réputation et la fiabilité du partenaire potentiel.
+
+•
+La capacité du partenaire à maintenir ses équipements en bon état.
+
+
+
+3.
+Décision : Sur la base de l'évaluation, l'administrateur prend une décision :
+
+•
+Approuver : Le partenaire est accepté. Son statut passe à "Approuvé" et un profil partenaire est créé dans la base de données.
+
+•
+Rejeter : Le partenaire n'est pas retenu. Son statut passe à "Rejeté". Une notification de refus, idéalement motivée, peut être envoyée au demandeur.
+
+
+
+4.2. Gestion de la Base de Données Partenaires
+
+Une fois qu'un partenaire est approuvé, il est essentiel de maintenir une fiche d'information complète et à jour dans la base de données.
+
+Contenu de la fiche partenaire :
+
+•
+Informations de contact : Nom de l'entreprise, contact principal, adresse, téléphone, e-mail.
+
+•
+Contrats et documents : Contrat de partenariat signé, documents légaux (Kbis, assurance, etc.).
+
+•
+Catalogue d'équipements : Liste des équipements que le partenaire met à disposition sur la plateforme.
+
+•
+Conditions financières : Taux de commission, modalités de paiement.
+
+La mise à jour régulière de ces informations est cruciale pour une collaboration fluide et transparente.
+
+4.3. Suivi des Performances et des Commissions
+
+La plateforme doit permettre un suivi précis des performances de chaque partenaire et une gestion transparente des commissions.
+
+Suivi des performances :
+
+•
+Le module Analyses doit permettre de générer des rapports sur les performances de chaque partenaire (nombre de locations, chiffre d'affaires généré, taux d'utilisation de ses équipements).
+
+•
+Ces indicateurs peuvent être utilisés pour évaluer la contribution de chaque partenaire à l'activité globale de Kamsen Logistic.
+
+Gestion des commissions :
+
+•
+Le système calcule automatiquement la commission de Kamsen Logistic (15% selon le tableau de bord) sur chaque location.
+
+•
+Des relevés de compte périodiques doivent être générés pour chaque partenaire, détaillant les locations effectuées et les revenus générés.
+
+•
+Le processus de paiement des partenaires doit être clairement défini et suivi (par exemple, virement mensuel des revenus moins la commission).
+
+5. Suivi GPS des Équipements
+
+Le module de Suivi GPS est une fonctionnalité avancée de la plateforme Kamsen Logistic, offrant la capacité de géolocaliser les équipements en temps réel. Cette fonction est cruciale pour la sécurité des actifs, l'optimisation des opérations logistiques et la transparence envers les clients. Elle permet de savoir à tout moment où se trouvent les équipements, qu'ils soient en transit, sur un chantier ou dans un entrepôt.
+
+5.1. Visualisation de la Flotte en Temps Réel
+
+L'interface principale du module de Suivi GPS est une carte interactive qui affiche la position de tous les équipements équipés d'un traceur GPS.
+
+Fonctionnalités de la carte :
+
+1.
+Vue d'ensemble de la flotte : La carte affiche des icônes représentant chaque équipement à sa dernière position connue.
+
+2.
+Informations détaillées : En cliquant sur l'icône d'un équipement, une fenêtre d'information apparaît, affichant des détails tels que :
+
+•
+Le nom et le modèle de l'équipement.
+
+•
+Son statut actuel (par exemple, "En mouvement", "À l'arrêt depuis X minutes", "Moteur allumé/éteint").
+
+•
+Le nom du client ou du chantier auquel il est assigné.
+
+•
+La vitesse de déplacement (si en mouvement).
+
+
+
+3.
+Recherche et filtrage : Des outils de recherche permettent de localiser rapidement un équipement spécifique. Des filtres peuvent être appliqués pour n'afficher que certaines catégories d'équipements ou ceux assignés à un partenaire ou un client particulier.
+
+5.2. Configuration des Alertes
+
+La configuration d'alertes automatiques est un outil puissant pour la gestion proactive de la flotte et la prévention des vols ou des utilisations non autorisées.
+
+Types d'alertes configurables :
+
+•
+Geofencing (barrières géographiques) : Il est possible de dessiner des zones virtuelles sur la carte (par exemple, un chantier, une zone de livraison, un périmètre régional). Le système enverra une alerte automatique si un équipement entre ou sort de l'une de ces zones sans autorisation.
+
+•
+Procédure : Définir une zone sur la carte, lui donner un nom (par exemple, "Chantier Dupont"), et choisir le type d'alerte (entrée, sortie, ou les deux).
+
+
+
+•
+Alertes de mouvement non autorisé : Une alerte peut être configurée si un équipement se déplace en dehors des heures de travail prévues (par exemple, la nuit ou le week-end). Cela peut indiquer un vol potentiel.
+
+•
+Alertes de maintenance : Le système peut également envoyer des alertes basées sur le nombre d'heures d'utilisation du moteur ou la distance parcourue, signalant qu'une maintenance préventive est nécessaire.
+
+5.3. Historique des Déplacements
+
+Le système enregistre l'historique des trajets de chaque équipement, ce qui est utile pour l'analyse, la facturation et la résolution de litiges.
+
+Consultation de l'historique :
+
+1.
+Sélectionnez un équipement et une période de temps (par exemple, les dernières 24 heures, la semaine dernière).
+
+2.
+Le système affichera le trajet complet de l'équipement sur la carte, avec des informations sur les arrêts, les distances parcourues et les durées de trajet.
+
+3.
+Ces données peuvent être utilisées pour :
+
+•
+Vérifier les heures d'utilisation facturées à un client.
+
+•
+Optimiser les itinéraires de livraison et de récupération.
+
+•
+Enquêter sur un incident ou un dommage.
+
+
+
+Exportation des données : L'historique des déplacements peut généralement être exporté sous forme de rapport (PDF, Excel) pour une analyse plus approfondie ou pour servir de preuve en cas de besoin.
+
+6. Analyses et Rapports
+
+Le module Analyses est un outil de pilotage stratégique qui transforme les données opérationnelles de la plateforme en informations exploitables. Il permet aux administrateurs de mesurer la performance, de comprendre les tendances et de prendre des décisions éclairées pour optimiser la rentabilité et la croissance de Kamsen Logistic. Ce module complète la "Vue d'ensemble" en offrant des capacités d'analyse plus profondes et personnalisées.
+
+6.1. Génération de Rapports de Performance
+
+La capacité à générer des rapports détaillés est fondamentale pour le suivi de l'activité. Le module Analyses doit offrir une bibliothèque de rapports standards ainsi que la possibilité de créer des rapports personnalisés.
+
+Types de rapports disponibles :
+
+1.
+Rapports sur les réservations :
+
+•
+Nombre de locations par période (jour, semaine, mois).
+
+•
+Durée moyenne des locations.
+
+•
+Taux d'annulation.
+
+
+
+2.
+Rapports sur les revenus :
+
+•
+Chiffre d'affaires total, par catégorie d'équipement, par partenaire et par client.
+
+•
+Évolution des revenus sur le temps.
+
+
+
+3.
+Rapports sur l'utilisation des équipements :
+
+•
+Taux d'utilisation pour chaque équipement ou catégorie.
+
+•
+Identification des équipements les plus et les moins loués.
+
+•
+Rapports sur les coûts de maintenance par rapport aux revenus générés.
+
+
+
+Personnalisation des rapports : Les administrateurs devraient pouvoir filtrer les données par date, par partenaire, par catégorie d'équipement, etc., et sélectionner les colonnes à inclure dans le rapport final. Les rapports peuvent ensuite être exportés aux formats PDF ou Excel pour une distribution ou une analyse externe.
+
+6.2. Analyse des Revenus et de la Rentabilité
+
+Au-delà du simple suivi du chiffre d'affaires, le module Analyses doit permettre une analyse fine de la rentabilité, qui est la clé de la pérennité de l'entreprise.
+
+Analyse des marges :
+
+•
+Rentabilité par équipement : En croisant les revenus générés par un équipement avec ses coûts (amortissement, maintenance, assurance), le système peut calculer une marge de rentabilité pour chaque actif. Cela aide à décider s'il faut investir davantage dans certains types d'équipements ou en retirer d'autres.
+
+•
+Rentabilité par partenaire : L'analyse des revenus générés par les équipements d'un partenaire, après déduction de la commission de Kamsen, permet d'évaluer la profitabilité de chaque partenariat.
+
+Optimisation de la tarification : En analysant la demande et le taux d'utilisation en fonction des saisons et des types d'équipements, les administrateurs peuvent ajuster la stratégie de tarification (par exemple, tarification dynamique) pour maximiser les revenus.
+
+6.3. Suivi des Indicateurs Clés de Performance (KPIs)
+
+Le module Analyses agit comme un tableau de bord avancé où les KPIs peuvent être suivis sur le long terme et de manière plus détaillée que sur la "Vue d'ensemble".
+
+Configuration du tableau de bord d'analyse :
+
+•
+Les administrateurs peuvent sélectionner les KPIs les plus pertinents pour leur rôle et les afficher sous forme de graphiques et de tableaux de bord personnalisés.
+
+•
+Exemples de KPIs avancés : Coût d'acquisition client (CAC), Valeur vie client (LTV), Taux de rotation des équipements.
+
+Exportation des données : La possibilité d'exporter les données brutes permet aux analystes d'utiliser des outils externes (comme Microsoft Power BI ou Tableau) pour des analyses prédictives ou des visualisations de données complexes.
+
