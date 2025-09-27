@@ -17,6 +17,8 @@ import {
   DeliveryRoute,
   ServiceCity,
   PartnerEarnings,
+  Partner,
+  PartnerDriver,
   InsertEquipment, 
   InsertBooking, 
   InsertPayment, 
@@ -34,7 +36,9 @@ import {
   InsertGpsTracking,
   InsertDeliveryRoute,
   InsertServiceCity,
-  InsertPartnerEarnings
+  InsertPartnerEarnings,
+  InsertPartner,
+  InsertPartnerDriver
 } from "@shared/schema";
 import bcrypt from "bcrypt";
 import { 
@@ -57,7 +61,10 @@ import {
   gpsTracking,
   deliveryRoutes,
   serviceCities,
-  partnerEarnings
+  partnerEarnings,
+  partners,
+  partnerDrivers,
+  driverAssignments
 } from "../shared/schema";
 import { eq, ilike, or, desc } from "drizzle-orm";
 import { db } from "../shared/db";
