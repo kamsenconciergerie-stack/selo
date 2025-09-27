@@ -30,7 +30,11 @@ import {
   DollarSign,
   ExternalLink,
   Clock,
-  Navigation
+  Navigation,
+  Plus,
+  Edit,
+  Trash2,
+  Eye
 } from "lucide-react";
 import { formatPrice, formatPriceWithPrefix } from "@/lib/constants";
 import TrackingDashboard from "@/components/TrackingDashboard";
@@ -1314,10 +1318,33 @@ function AdminDashboardContent() {
 
         <TabsContent value="partners" className="space-y-6">
           <div className="grid grid-cols-1 gap-6">
+            {/* Gestion des Partenaires */}
+            <Card>
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <CardTitle className="flex items-center gap-2">
+                    <Users className="h-5 w-5" />
+                    Gestion des Partenaires
+                  </CardTitle>
+                  <Button 
+                    className="bg-kamsen-blue hover:bg-kamsen-blue/90"
+                    onClick={() => window.open('/partners/register', '_blank')}
+                  >
+                    <Plus className="h-4 w-4 mr-2" />
+                    Nouveau Partenaire
+                  </Button>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <PartnerManagementList />
+              </CardContent>
+            </Card>
+
+            {/* Demandes de Partenariat */}
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Users className="h-5 w-5" />
+                  <FileText className="h-5 w-5" />
                   Demandes de Partenariat ({stats.partnerRequests?.total || 0})
                 </CardTitle>
               </CardHeader>
@@ -1419,6 +1446,219 @@ function AdminDashboardContent() {
         </CardContent>
       </Card>
       </div>
+    </div>
+  );
+}
+
+// Composant pour gérer la liste des partenaires
+function PartnerManagementList() {
+  const [partners, setPartners] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [selectedPartner, setSelectedPartner] = useState<any>(null);
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
+
+  const fetchPartners = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch('/api/partners');
+      if (response.ok) {
+        const data = await response.json();
+        setPartners(data);
+      } else {
+        console.error('Failed to fetch partners:', response.status);
+      }
+    } catch (error) {
+      console.error('Erreur lors du chargement des partenaires:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchPartners();
+  }, []);
+
+  const deletePartner = async (partnerId: number) => {
+    if (!confirm('Êtes-vous sûr de vouloir supprimer ce partenaire ?')) return;
+    
+    try {
+      const response = await fetch(`/api/partners/${partnerId}`, {
+        method: 'DELETE'
+      });
+      
+      if (response.ok) {
+        toast({
+          title: 'Partenaire supprimé',
+          description: 'Le partenaire a été supprimé avec succès.',
+        });
+        fetchPartners();
+      } else {
+        throw new Error('Erreur lors de la suppression');
+      }
+    } catch (error) {
+      toast({
+        title: 'Erreur',
+        description: 'Une erreur est survenue lors de la suppression.',
+        variant: 'destructive'
+      });
+    }
+  };
+
+  const getStatusBadge = (status: string) => {
+    switch (status) {
+      case 'active':
+        return <Badge className="bg-green-100 text-green-800">Actif</Badge>;
+      case 'pending':
+        return <Badge className="bg-orange-100 text-orange-800">En Attente</Badge>;
+      case 'suspended':
+        return <Badge className="bg-red-100 text-red-800">Suspendu</Badge>;
+      default:
+        return <Badge variant="outline">{status}</Badge>;
+    }
+  };
+
+  if (loading) {
+    return <div className="text-center py-4">Chargement des partenaires...</div>;
+  }
+
+  if (partners.length === 0) {
+    return (
+      <div className="text-center py-8 text-kamsen-gray">
+        Aucun partenaire enregistré
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-4">
+      <div className="flex items-center justify-between">
+        <h4 className="font-semibold text-kamsen-blue">Partenaires Actifs ({partners.length})</h4>
+      </div>
+      
+      {partners.map((partner) => (
+        <Card key={partner.id} className="border-l-4 border-l-kamsen-blue">
+          <CardContent className="p-6">
+            <div className="flex items-start justify-between">
+              <div className="flex-1">
+                <div className="flex items-center gap-4 mb-3">
+                  <h5 className="font-semibold text-lg">{partner.companyName}</h5>
+                  {getStatusBadge(partner.status)}
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
+                  <div>
+                    <span className="font-medium">Contact:</span>
+                    <p className="text-kamsen-gray">{partner.firstName} {partner.lastName}</p>
+                  </div>
+                  <div>
+                    <span className="font-medium">Email:</span>
+                    <p className="text-kamsen-gray">{partner.email}</p>
+                  </div>
+                  <div>
+                    <span className="font-medium">Téléphone:</span>
+                    <p className="text-kamsen-gray">{partner.phone}</p>
+                  </div>
+                  <div>
+                    <span className="font-medium">Type d'entreprise:</span>
+                    <p className="text-kamsen-gray">{partner.businessType}</p>
+                  </div>
+                  <div>
+                    <span className="font-medium">Commission:</span>
+                    <p className="text-kamsen-gray">{partner.commissionRate}%</p>
+                  </div>
+                  <div>
+                    <span className="font-medium">Inscrit le:</span>
+                    <p className="text-kamsen-gray">{format(new Date(partner.createdAt), 'dd MMM yyyy', { locale: fr })}</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="flex items-center gap-2 ml-4">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    setSelectedPartner(partner);
+                    setEditModalOpen(true);
+                  }}
+                >
+                  <Edit className="h-4 w-4 mr-1" />
+                  Modifier
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="text-red-600 hover:text-red-700 border-red-200 hover:bg-red-50"
+                  onClick={() => deletePartner(partner.id)}
+                >
+                  <Trash2 className="h-4 w-4 mr-1" />
+                  Supprimer
+                </Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      ))}
+
+      {/* Modal d'édition partenaire */}
+      <Dialog open={editModalOpen} onOpenChange={setEditModalOpen}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>Modifier le Partenaire</DialogTitle>
+            <DialogDescription>
+              Modifiez les informations du partenaire sélectionné.
+            </DialogDescription>
+          </DialogHeader>
+          
+          {selectedPartner && (
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label>Nom de l'entreprise</Label>
+                  <p className="text-sm text-kamsen-gray mt-1">{selectedPartner.companyName}</p>
+                </div>
+                <div>
+                  <Label>Statut</Label>
+                  <div className="mt-1">
+                    {getStatusBadge(selectedPartner.status)}
+                  </div>
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label>Email</Label>
+                  <p className="text-sm text-kamsen-gray mt-1">{selectedPartner.email}</p>
+                </div>
+                <div>
+                  <Label>Téléphone</Label>
+                  <p className="text-sm text-kamsen-gray mt-1">{selectedPartner.phone}</p>
+                </div>
+              </div>
+
+              <div className="flex justify-end gap-2 pt-4">
+                <Button variant="outline" onClick={() => setEditModalOpen(false)}>
+                  Annuler
+                </Button>
+                <Button 
+                  className="bg-kamsen-blue hover:bg-kamsen-blue/90"
+                  onClick={() => {
+                    toast({
+                      title: 'Fonctionnalité en développement',
+                      description: 'La modification des partenaires sera bientôt disponible.',
+                    });
+                    setEditModalOpen(false);
+                  }}
+                >
+                  Sauvegarder
+                </Button>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
