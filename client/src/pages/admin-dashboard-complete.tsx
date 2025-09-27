@@ -996,63 +996,23 @@ function AdminDashboardContent() {
         <TabsContent value="bookings" className="space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle>Gestion des Réservations</CardTitle>
+              <div className="flex items-center justify-between">
+                <CardTitle className="flex items-center gap-2">
+                  <Calendar className="h-5 w-5" />
+                  Gestion Complète des Réservations ({bookings.length})
+                </CardTitle>
+                <Button 
+                  onClick={loadDashboardData}
+                  variant="outline"
+                  size="sm"
+                >
+                  <TrendingUp className="h-4 w-4 mr-2" />
+                  Actualiser
+                </Button>
+              </div>
             </CardHeader>
             <CardContent>
-              <div className="space-y-4">
-                {bookings.slice(0, 10).map((booking) => (
-                  <div key={booking.id} className="grid grid-cols-1 lg:grid-cols-5 gap-4 p-4 border rounded-lg">
-                    <div>
-                      <p className="font-medium">{booking.customerName}</p>
-                      <p className="text-sm text-kamsen-gray">{booking.customerEmail}</p>
-                      <p className="text-sm text-kamsen-gray">{booking.customerPhone}</p>
-                    </div>
-                    <div>
-                      <p className="font-medium">{booking.equipmentName || `Équipement #${booking.equipmentId}`}</p>
-                      <p className="text-sm text-kamsen-gray">{booking.equipmentCategory}</p>
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium">{formatDate(booking.startDate)}</p>
-                      <p className="text-sm text-kamsen-gray">au {formatDate(booking.endDate)}</p>
-                    </div>
-                    <div>
-                      <p className="font-bold">{formatPriceLocal(booking.totalPrice)}</p>
-                      <Badge 
-                        className={
-                          booking.status === 'confirmed' ? 'bg-kamsen-blue-light text-green-800' :
-                          booking.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
-                          booking.status === 'completed' ? 'bg-kamsen-blue-light text-blue-800' :
-                          'bg-red-100 text-red-800'
-                        }
-                      >
-                        {booking.status === 'confirmed' ? 'Confirmée' :
-                         booking.status === 'pending' ? 'En attente' :
-                         booking.status === 'completed' ? 'Terminée' : 'Annulée'}
-                      </Badge>
-                    </div>
-                    <div className="flex gap-2">
-                      {booking.status === 'pending' && (
-                        <Button 
-                          size="sm" 
-                          onClick={() => updateBookingStatus(booking.id, 'confirmed')}
-                          className="bg-green-600 hover:bg-green-700"
-                        >
-                          Confirmer
-                        </Button>
-                      )}
-                      {booking.status === 'confirmed' && (
-                        <Button 
-                          size="sm" 
-                          onClick={() => updateBookingStatus(booking.id, 'completed')}
-                          className="bg-blue-600 hover:bg-blue-700"
-                        >
-                          Terminer
-                        </Button>
-                      )}
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <BookingManagementList bookings={bookings} onStatusUpdate={updateBookingStatus} onRefresh={loadDashboardData} />
             </CardContent>
           </Card>
         </TabsContent>
@@ -1446,6 +1406,309 @@ function AdminDashboardContent() {
         </CardContent>
       </Card>
       </div>
+    </div>
+  );
+}
+
+// Composant pour la gestion complète des réservations
+function BookingManagementList({ bookings, onStatusUpdate, onRefresh }: { 
+  bookings: any[], 
+  onStatusUpdate: (id: number, status: string) => void,
+  onRefresh: () => void
+}) {
+  const [selectedBooking, setSelectedBooking] = useState<any>(null);
+  const [detailsModalOpen, setDetailsModalOpen] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [bookingToDelete, setBookingToDelete] = useState<number | null>(null);
+  const { toast } = useToast();
+
+  const deleteBooking = async (bookingId: number) => {
+    try {
+      const response = await fetch(`/api/admin/bookings/${bookingId}`, {
+        method: 'DELETE'
+      });
+      
+      if (response.ok) {
+        toast({
+          title: 'Réservation supprimée',
+          description: 'La réservation a été supprimée avec succès.',
+        });
+        onRefresh();
+        setDeleteModalOpen(false);
+        setBookingToDelete(null);
+      } else {
+        throw new Error('Erreur lors de la suppression');
+      }
+    } catch (error) {
+      toast({
+        title: 'Erreur',
+        description: 'Une erreur est survenue lors de la suppression.',
+        variant: 'destructive'
+      });
+    }
+  };
+
+  const getStatusBadge = (status: string) => {
+    switch (status) {
+      case 'confirmed':
+        return <Badge className="bg-green-100 text-green-800">Confirmée</Badge>;
+      case 'pending':
+        return <Badge className="bg-orange-100 text-orange-800">En Attente</Badge>;
+      case 'completed':
+        return <Badge className="bg-blue-100 text-blue-800">Terminée</Badge>;
+      case 'cancelled':
+        return <Badge className="bg-red-100 text-red-800">Annulée</Badge>;
+      default:
+        return <Badge variant="outline">{status}</Badge>;
+    }
+  };
+
+  const calculateDuration = (startDate: string, endDate: string) => {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const diffTime = Math.abs(end.getTime() - start.getTime());
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays;
+  };
+
+  if (bookings.length === 0) {
+    return (
+      <div className="text-center py-8 text-kamsen-gray">
+        <Calendar className="h-12 w-12 mx-auto mb-4 text-kamsen-blue/50" />
+        <h3 className="font-semibold text-lg mb-2">Aucune réservation</h3>
+        <p className="text-sm">Les nouvelles réservations apparaîtront ici.</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-4">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+        <div className="bg-green-50 border border-green-200 rounded-lg p-4 text-center">
+          <p className="text-2xl font-bold text-green-600">
+            {bookings.filter(b => b.status === 'confirmed').length}
+          </p>
+          <p className="text-sm text-green-700">Confirmées</p>
+        </div>
+        <div className="bg-orange-50 border border-orange-200 rounded-lg p-4 text-center">
+          <p className="text-2xl font-bold text-orange-600">
+            {bookings.filter(b => b.status === 'pending').length}
+          </p>
+          <p className="text-sm text-orange-700">En Attente</p>
+        </div>
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 text-center">
+          <p className="text-2xl font-bold text-blue-600">
+            {bookings.filter(b => b.status === 'completed').length}
+          </p>
+          <p className="text-sm text-blue-700">Terminées</p>
+        </div>
+        <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-center">
+          <p className="text-2xl font-bold text-red-600">
+            {bookings.filter(b => b.status === 'cancelled').length}
+          </p>
+          <p className="text-sm text-red-700">Annulées</p>
+        </div>
+      </div>
+      
+      {bookings.map((booking) => (
+        <Card key={booking.id} className="border-l-4 border-l-kamsen-blue">
+          <CardContent className="p-6">
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+              {/* Informations client */}
+              <div>
+                <h5 className="font-semibold text-kamsen-blue mb-2">Client</h5>
+                <p className="font-medium">{booking.customerName}</p>
+                <p className="text-sm text-kamsen-gray">{booking.customerEmail}</p>
+                <p className="text-sm text-kamsen-gray">{booking.customerPhone}</p>
+              </div>
+
+              {/* Informations équipement */}
+              <div>
+                <h5 className="font-semibold text-kamsen-blue mb-2">Équipement</h5>
+                <p className="font-medium">{booking.equipmentName || `Équipement #${booking.equipmentId}`}</p>
+                <p className="text-sm text-kamsen-gray">{booking.equipmentCategory}</p>
+                <p className="text-sm text-kamsen-gray">
+                  {calculateDuration(booking.startDate, booking.endDate)} jour(s)
+                </p>
+              </div>
+
+              {/* Dates et prix */}
+              <div>
+                <h5 className="font-semibold text-kamsen-blue mb-2">Période & Prix</h5>
+                <p className="text-sm font-medium">
+                  Du {format(new Date(booking.startDate), 'dd MMM', { locale: fr })}
+                </p>
+                <p className="text-sm text-kamsen-gray">
+                  au {format(new Date(booking.endDate), 'dd MMM yyyy', { locale: fr })}
+                </p>
+                <p className="font-bold text-lg">{formatPriceLocal(booking.totalPrice)}</p>
+                <div className="mt-2">
+                  {getStatusBadge(booking.status)}
+                </div>
+              </div>
+
+              {/* Actions */}
+              <div>
+                <h5 className="font-semibold text-kamsen-blue mb-2">Actions</h5>
+                <div className="space-y-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="w-full"
+                    onClick={() => {
+                      setSelectedBooking(booking);
+                      setDetailsModalOpen(true);
+                    }}
+                  >
+                    <Eye className="h-4 w-4 mr-2" />
+                    Voir Détails
+                  </Button>
+                  
+                  {booking.status === 'pending' && (
+                    <>
+                      <Button 
+                        size="sm" 
+                        className="w-full bg-green-600 hover:bg-green-700"
+                        onClick={() => onStatusUpdate(booking.id, 'confirmed')}
+                      >
+                        <CheckCircle className="h-4 w-4 mr-2" />
+                        Confirmer
+                      </Button>
+                      <Button 
+                        size="sm" 
+                        variant="outline"
+                        className="w-full text-red-600 hover:text-red-700 border-red-200 hover:bg-red-50"
+                        onClick={() => onStatusUpdate(booking.id, 'cancelled')}
+                      >
+                        <XCircle className="h-4 w-4 mr-2" />
+                        Annuler
+                      </Button>
+                    </>
+                  )}
+                  
+                  {booking.status === 'confirmed' && (
+                    <Button 
+                      size="sm" 
+                      className="w-full bg-blue-600 hover:bg-blue-700"
+                      onClick={() => onStatusUpdate(booking.id, 'completed')}
+                    >
+                      <CheckCircle className="h-4 w-4 mr-2" />
+                      Terminer
+                    </Button>
+                  )}
+                  
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="w-full text-red-600 hover:text-red-700 border-red-200 hover:bg-red-50"
+                    onClick={() => {
+                      setBookingToDelete(booking.id);
+                      setDeleteModalOpen(true);
+                    }}
+                  >
+                    <Trash2 className="h-4 w-4 mr-2" />
+                    Supprimer
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      ))}
+
+      {/* Modal détails réservation */}
+      <Dialog open={detailsModalOpen} onOpenChange={setDetailsModalOpen}>
+        <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Détails de la Réservation</DialogTitle>
+            <DialogDescription>
+              Informations complètes sur la réservation sélectionnée.
+            </DialogDescription>
+          </DialogHeader>
+          
+          {selectedBooking && (
+            <div className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-4">
+                  <div>
+                    <h4 className="font-semibold text-kamsen-blue mb-2">Informations Client</h4>
+                    <div className="space-y-2 text-sm">
+                      <p><span className="font-medium">Nom:</span> {selectedBooking.customerName}</p>
+                      <p><span className="font-medium">Email:</span> {selectedBooking.customerEmail}</p>
+                      <p><span className="font-medium">Téléphone:</span> {selectedBooking.customerPhone}</p>
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <h4 className="font-semibold text-kamsen-blue mb-2">Période de Location</h4>
+                    <div className="space-y-2 text-sm">
+                      <p><span className="font-medium">Début:</span> {format(new Date(selectedBooking.startDate), 'dd MMMM yyyy', { locale: fr })}</p>
+                      <p><span className="font-medium">Fin:</span> {format(new Date(selectedBooking.endDate), 'dd MMMM yyyy', { locale: fr })}</p>
+                      <p><span className="font-medium">Durée:</span> {calculateDuration(selectedBooking.startDate, selectedBooking.endDate)} jour(s)</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="space-y-4">
+                  <div>
+                    <h4 className="font-semibold text-kamsen-blue mb-2">Équipement</h4>
+                    <div className="space-y-2 text-sm">
+                      <p><span className="font-medium">Nom:</span> {selectedBooking.equipmentName || `Équipement #${selectedBooking.equipmentId}`}</p>
+                      <p><span className="font-medium">Catégorie:</span> {selectedBooking.equipmentCategory}</p>
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <h4 className="font-semibold text-kamsen-blue mb-2">Facturation</h4>
+                    <div className="space-y-2 text-sm">
+                      <p><span className="font-medium">Prix total:</span> {formatPriceLocal(selectedBooking.totalPrice)}</p>
+                      <p><span className="font-medium">Statut:</span> {getStatusBadge(selectedBooking.status)}</p>
+                      <p><span className="font-medium">Paiement:</span> {selectedBooking.paymentStatus || 'À la livraison'}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {selectedBooking.notes && (
+                <div>
+                  <h4 className="font-semibold text-kamsen-blue mb-2">Notes</h4>
+                  <p className="text-sm bg-gray-50 p-3 rounded-lg">{selectedBooking.notes}</p>
+                </div>
+              )}
+              
+              <div className="flex justify-end gap-2 pt-4">
+                <Button variant="outline" onClick={() => setDetailsModalOpen(false)}>
+                  Fermer
+                </Button>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
+
+      {/* Modal confirmation suppression */}
+      <Dialog open={deleteModalOpen} onOpenChange={setDeleteModalOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Confirmer la suppression</DialogTitle>
+            <DialogDescription>
+              Êtes-vous sûr de vouloir supprimer cette réservation ? Cette action est irréversible.
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="flex justify-end gap-2 pt-4">
+            <Button variant="outline" onClick={() => setDeleteModalOpen(false)}>
+              Annuler
+            </Button>
+            <Button 
+              variant="destructive"
+              onClick={() => bookingToDelete && deleteBooking(bookingToDelete)}
+            >
+              Supprimer
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
