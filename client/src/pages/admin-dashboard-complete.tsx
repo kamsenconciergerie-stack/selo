@@ -669,20 +669,13 @@ function AdminDashboardContent() {
     try {
       setIsLoading(true);
       
-      // Use real API data instead of mock data
-      console.log("Loading real admin data from APIs");
-      console.log("Current window location:", window.location.href);
-
       // Load real bookings from admin API
-      console.log("Calling /api/admin/bookings...");
       const bookingsResponse = await fetch("/api/admin/bookings");
-      console.log("Bookings response status:", bookingsResponse.status);
       let bookingsData: any[] = [];
       if (bookingsResponse.ok) {
         bookingsData = await bookingsResponse.json();
         setBookings(bookingsData);
       } else {
-        console.error("Failed to load bookings from admin API");
         // Fallback to regular bookings API
         const fallbackResponse = await fetch("/api/bookings");
         if (fallbackResponse.ok) {
@@ -700,12 +693,9 @@ function AdminDashboardContent() {
       }
 
       // Load real stats from admin API
-      console.log("Calling /api/admin/stats...");
       const statsResponse = await fetch("/api/admin/stats");
-      console.log("Stats response status:", statsResponse.status);
       if (statsResponse.ok) {
         const statsData = await statsResponse.json();
-        console.log("Stats data received:", statsData);
         setStats({
           totalBookings: statsData.totalBookings || 0,
           totalRevenue: statsData.totalRevenue || 0,
@@ -716,18 +706,7 @@ function AdminDashboardContent() {
           availableEquipment: statsData.availableEquipment || 0,
           partnerRequests: statsData.partnerRequests || { total: 0, pending: 0, approved: 0, rejected: 0 }
         });
-        console.log("Stats state updated successfully");
-        console.log("New stats state:", {
-          totalBookings: statsData.totalBookings || 0,
-          totalRevenue: statsData.totalRevenue || 0,
-          kamsenEarnings: statsData.kamsenEarnings || 0,
-          pendingBookings: statsData.pendingBookings || 0,
-          confirmedBookings: statsData.confirmedBookings || 0,
-          totalEquipment: statsData.totalEquipment || 0,
-          availableEquipment: statsData.availableEquipment || 0
-        });
       } else {
-        console.error("Stats API failed with status:", statsResponse.status);
         // Fallback to calculated stats if API fails
         if (bookingsData && equipmentData) {
           const totalRevenue = bookingsData
@@ -748,7 +727,7 @@ function AdminDashboardContent() {
       }
 
     } catch (error) {
-      console.error("Erreur lors du chargement des données:", error);
+      // Silent error handling for production
     } finally {
       setIsLoading(false);
     }
@@ -858,16 +837,6 @@ function AdminDashboardContent() {
               <div>
                 <p className="text-sm font-medium text-kamsen-gray">Total Réservations</p>
                 <p className="text-3xl font-bold text-kamsen-blue">{stats.totalBookings}</p>
-                <Button 
-                  onClick={() => {
-                    console.log("Current stats state:", stats);
-                    loadDashboardData();
-                  }}
-                  size="sm"
-                  className="mt-2 bg-red-500 hover:bg-red-600"
-                >
-                  🔄 Debug Reload
-                </Button>
               </div>
               <Calendar className="h-8 w-8 text-blue-500" />
             </div>
