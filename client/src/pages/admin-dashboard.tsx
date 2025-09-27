@@ -100,7 +100,7 @@ export default function AdminDashboard() {
 
   const addMutation = useMutation({
     mutationFn: async (data: EquipmentFormData) => {
-      return await apiRequest('/api/admin/equipment', 'POST', data);
+      return await apiRequest('/api/admin/equipment', { method: 'POST', body: JSON.stringify(data) });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/equipment"] });
@@ -122,7 +122,7 @@ export default function AdminDashboard() {
 
   const updateMutation = useMutation({
     mutationFn: async (data: EquipmentFormData & { id: number }) => {
-      return await apiRequest(`/api/admin/equipment/${data.id}`, 'PUT', data);
+      return await apiRequest(`/api/admin/equipment/${data.id}`, { method: 'PUT', body: JSON.stringify(data) });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/equipment"] });
@@ -145,7 +145,7 @@ export default function AdminDashboard() {
 
   const deleteMutation = useMutation({
     mutationFn: async (id: number) => {
-      return await apiRequest(`/api/admin/equipment/${id}`, 'DELETE');
+      return await apiRequest(`/api/admin/equipment/${id}`, { method: 'DELETE' });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/equipment"] });

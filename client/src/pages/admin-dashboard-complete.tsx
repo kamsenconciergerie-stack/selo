@@ -674,7 +674,9 @@ function AdminDashboardContent() {
       console.log("Current window location:", window.location.href);
 
       // Load real bookings from admin API
+      console.log("Calling /api/admin/bookings...");
       const bookingsResponse = await fetch("/api/admin/bookings");
+      console.log("Bookings response status:", bookingsResponse.status);
       let bookingsData: any[] = [];
       if (bookingsResponse.ok) {
         bookingsData = await bookingsResponse.json();
