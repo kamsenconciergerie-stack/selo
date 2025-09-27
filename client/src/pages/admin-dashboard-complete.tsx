@@ -717,6 +717,15 @@ function AdminDashboardContent() {
           partnerRequests: statsData.partnerRequests || { total: 0, pending: 0, approved: 0, rejected: 0 }
         });
         console.log("Stats state updated successfully");
+        console.log("New stats state:", {
+          totalBookings: statsData.totalBookings || 0,
+          totalRevenue: statsData.totalRevenue || 0,
+          kamsenEarnings: statsData.kamsenEarnings || 0,
+          pendingBookings: statsData.pendingBookings || 0,
+          confirmedBookings: statsData.confirmedBookings || 0,
+          totalEquipment: statsData.totalEquipment || 0,
+          availableEquipment: statsData.availableEquipment || 0
+        });
       } else {
         console.error("Stats API failed with status:", statsResponse.status);
         // Fallback to calculated stats if API fails
@@ -849,6 +858,16 @@ function AdminDashboardContent() {
               <div>
                 <p className="text-sm font-medium text-kamsen-gray">Total Réservations</p>
                 <p className="text-3xl font-bold text-kamsen-blue">{stats.totalBookings}</p>
+                <Button 
+                  onClick={() => {
+                    console.log("Current stats state:", stats);
+                    loadDashboardData();
+                  }}
+                  size="sm"
+                  className="mt-2 bg-red-500 hover:bg-red-600"
+                >
+                  🔄 Debug Reload
+                </Button>
               </div>
               <Calendar className="h-8 w-8 text-blue-500" />
             </div>
