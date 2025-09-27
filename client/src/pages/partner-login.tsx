@@ -164,27 +164,6 @@ export default function PartnerLogin() {
               </Button>
             </form>
 
-            {/* Demo credentials info */}
-            <div className="mt-6 p-4 bg-blue-50 rounded-lg">
-              <h4 className="font-semibold text-blue-900 mb-2">Comptes de démonstration :</h4>
-              <div className="space-y-2 text-sm text-blue-800">
-                <div>
-                  <strong>Transport Express:</strong><br />
-                  Email: contact@transportexpress.sn<br />
-                  Mot de passe: partner123
-                </div>
-                <div>
-                  <strong>Logistics Pro:</strong><br />
-                  Email: info@logisticspro.sn<br />
-                  Mot de passe: partner123
-                </div>
-                <div>
-                  <strong>Camions du Sud:</strong><br />
-                  Email: contact@camionsdusud.sn<br />
-                  Mot de passe: partner123
-                </div>
-              </div>
-            </div>
 
             <div className="mt-6 text-center text-sm text-kamsen-gray">
               <p>Pas encore partenaire ?</p>
