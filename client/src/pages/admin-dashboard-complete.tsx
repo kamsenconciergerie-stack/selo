@@ -3,8 +3,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
 import ProtectedAdminRoute from "@/components/ProtectedAdminRoute";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useToast } from "@/hooks/use-toast";
+import { apiRequest } from "@/lib/queryClient";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { 
@@ -87,22 +92,104 @@ interface PartnerRequest {
 function PartnerRequestsList() {
   const [requests, setRequests] = useState<PartnerRequest[]>([]);
   const [loading, setLoading] = useState(true);
+  const [rejectionModalOpen, setRejectionModalOpen] = useState(false);
+  const [selectedRequestId, setSelectedRequestId] = useState<number | null>(null);
+  const [rejectionReason, setRejectionReason] = useState('');
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
+
+  const fetchRequests = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch('/api/admin/partner-requests');
+      if (response.ok) {
+        const data = await response.json();
+        setRequests(data);
+      }
+    } catch (error) {
+      console.error('Erreur lors du chargement des demandes:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const approveMutation = useMutation({
+    mutationFn: async (requestId: number) => {
+      return await apiRequest(`/api/partners/applications/${requestId}/review`, {
+        method: 'POST',
+        body: JSON.stringify({
+          status: 'approved',
+          notes: 'Demande approuvée par l\'administrateur'
+        })
+      });
+    },
+    onSuccess: () => {
+      toast({
+        title: 'Demande approuvée',
+        description: 'La demande de partenariat a été approuvée avec succès.',
+      });
+      fetchRequests(); // Refresh the list
+    },
+    onError: () => {
+      toast({
+        title: 'Erreur',
+        description: 'Une erreur est survenue lors de l\'approbation.',
+        variant: 'destructive'
+      });
+    }
+  });
+
+  const rejectMutation = useMutation({
+    mutationFn: async ({ requestId, reason }: { requestId: number; reason: string }) => {
+      return await apiRequest(`/api/partners/applications/${requestId}/review`, {
+        method: 'POST',
+        body: JSON.stringify({
+          status: 'rejected',
+          notes: reason
+        })
+      });
+    },
+    onSuccess: () => {
+      toast({
+        title: 'Demande rejetée',
+        description: 'La demande de partenariat a été rejetée.',
+      });
+      setRejectionModalOpen(false);
+      setRejectionReason('');
+      setSelectedRequestId(null);
+      fetchRequests(); // Refresh the list
+    },
+    onError: () => {
+      toast({
+        title: 'Erreur',
+        description: 'Une erreur est survenue lors du rejet.',
+        variant: 'destructive'
+      });
+    }
+  });
+
+  const handleApprove = (requestId: number) => {
+    approveMutation.mutate(requestId);
+  };
+
+  const handleRejectClick = (requestId: number) => {
+    setSelectedRequestId(requestId);
+    setRejectionModalOpen(true);
+  };
+
+  const handleRejectConfirm = () => {
+    if (!selectedRequestId || rejectionReason.trim().length < 10) {
+      toast({
+        title: 'Commentaire requis',
+        description: 'Veuillez saisir un motif de refus d\'au moins 10 caractères.',
+        variant: 'destructive'
+      });
+      return;
+    }
+    rejectMutation.mutate({ requestId: selectedRequestId, reason: rejectionReason.trim() });
+  };
 
   useEffect(() => {
-    const fetchRequests = async () => {
-      try {
-        const response = await fetch('/api/admin/partner-requests');
-        if (response.ok) {
-          const data = await response.json();
-          setRequests(data);
-        }
-      } catch (error) {
-        console.error('Error fetching partner requests:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchRequests();
   }, []);
 
@@ -132,82 +219,148 @@ function PartnerRequestsList() {
   };
 
   return (
-    <div className="space-y-4">
-      {requests.map((request) => (
-        <Card key={request.id} className="border-l-4 border-l-blue-500">
-          <CardContent className="p-4">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {/* Info partenaire */}
-              <div className="md:col-span-2">
-                <div className="flex items-start justify-between mb-2">
-                  <h5 className="font-semibold text-kamsen-blue">
-                    {request.firstName} {request.lastName}
-                  </h5>
-                  {getStatusBadge(request.status)}
-                </div>
-                
-                <div className="space-y-1 text-sm text-kamsen-gray">
-                  <div className="flex items-center gap-2">
-                    <Mail className="h-4 w-4" />
-                    <span>{request.email}</span>
+    <>
+      <div className="space-y-4">
+        {requests.map((request) => (
+          <Card key={request.id} className="border-l-4 border-l-blue-500">
+            <CardContent className="p-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {/* Info partenaire */}
+                <div className="md:col-span-2">
+                  <div className="flex items-start justify-between mb-2">
+                    <h5 className="font-semibold text-kamsen-blue">
+                      {request.firstName} {request.lastName}
+                    </h5>
+                    {getStatusBadge(request.status)}
                   </div>
-                  <div className="flex items-center gap-2">
-                    <Phone className="h-4 w-4" />
-                    <span>{request.phone}</span>
-                  </div>
-                  {request.website && (
+                  
+                  <div className="space-y-1 text-sm text-kamsen-gray">
                     <div className="flex items-center gap-2">
-                      <ExternalLink className="h-4 w-4" />
-                      <a 
-                        href={request.website} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="text-kamsen-blue hover:underline"
-                      >
-                        {request.website}
-                      </a>
+                      <Mail className="h-4 w-4" />
+                      <span>{request.email}</span>
                     </div>
-                  )}
-                  <div className="flex items-center gap-2">
-                    <Clock className="h-4 w-4" />
-                    <span>{formatDate(request.createdAt)}</span>
+                    <div className="flex items-center gap-2">
+                      <Phone className="h-4 w-4" />
+                      <span>{request.phone}</span>
+                    </div>
+                    {request.website && (
+                      <div className="flex items-center gap-2">
+                        <ExternalLink className="h-4 w-4" />
+                        <a 
+                          href={request.website} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="text-kamsen-blue hover:underline"
+                        >
+                          {request.website}
+                        </a>
+                      </div>
+                    )}
+                    <div className="flex items-center gap-2">
+                      <Clock className="h-4 w-4" />
+                      <span>{formatDate(request.createdAt)}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Catégories d'équipements */}
+                <div>
+                  <h6 className="font-medium text-kamsen-blue mb-2">Catégories d'intérêt</h6>
+                  <div className="flex flex-wrap gap-1">
+                    {request.equipmentCategories.map((category) => (
+                      <Badge 
+                        key={category} 
+                        variant="secondary" 
+                        className="text-xs bg-blue-50 text-blue-700"
+                      >
+                        {category}
+                      </Badge>
+                    ))}
                   </div>
                 </div>
               </div>
 
-              {/* Catégories d'équipements */}
-              <div>
-                <h6 className="font-medium text-kamsen-blue mb-2">Catégories d'intérêt</h6>
-                <div className="flex flex-wrap gap-1">
-                  {request.equipmentCategories.map((category) => (
-                    <Badge 
-                      key={category} 
-                      variant="secondary" 
-                      className="text-xs bg-blue-50 text-blue-700"
-                    >
-                      {category}
-                    </Badge>
-                  ))}
+              {request.status === 'pending' && (
+                <div className="flex gap-2 mt-4 pt-4 border-t">
+                  <Button 
+                    size="sm" 
+                    className="bg-green-600 hover:bg-green-700"
+                    onClick={() => handleApprove(request.id)}
+                    disabled={approveMutation.isPending}
+                    data-testid={`button-approve-${request.id}`}
+                  >
+                    <CheckCircle className="h-4 w-4 mr-1" />
+                    {approveMutation.isPending ? 'Approbation...' : 'Approuver'}
+                  </Button>
+                  <Button 
+                    size="sm" 
+                    variant="outline" 
+                    className="text-red-600 border-red-200 hover:bg-red-50"
+                    onClick={() => handleRejectClick(request.id)}
+                    disabled={rejectMutation.isPending}
+                    data-testid={`button-reject-${request.id}`}
+                  >
+                    <XCircle className="h-4 w-4 mr-1" />
+                    Rejeter
+                  </Button>
                 </div>
-              </div>
+              )}
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+      
+      {/* Modal de refus */}
+      <Dialog open={rejectionModalOpen} onOpenChange={setRejectionModalOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Rejeter la demande de partenariat</DialogTitle>
+            <DialogDescription>
+              Veuillez indiquer le motif du refus. Ce commentaire sera visible par le demandeur.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div>
+              <Label htmlFor="rejection-reason">Motif du refus *</Label>
+              <Textarea
+                id="rejection-reason"
+                placeholder="Expliquez pourquoi cette demande est rejetée (minimum 10 caractères)..."
+                value={rejectionReason}
+                onChange={(e) => setRejectionReason(e.target.value)}
+                className="mt-1"
+                rows={4}
+                data-testid="textarea-rejection-reason"
+              />
+              <p className="text-xs text-gray-500 mt-1">
+                {rejectionReason.length}/10 caractères minimum
+              </p>
             </div>
-
-            {request.status === 'pending' && (
-              <div className="flex gap-2 mt-4 pt-4 border-t">
-                <Button size="sm" className="bg-green-600 hover:bg-green-700">
-                  <CheckCircle className="h-4 w-4 mr-1" />
-                  Approuver
-                </Button>
-                <Button size="sm" variant="outline" className="text-red-600 border-red-200 hover:bg-red-50">
-                  <XCircle className="h-4 w-4 mr-1" />
-                  Rejeter
-                </Button>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      ))}
-    </div>
+            <div className="flex gap-2 justify-end">
+              <Button 
+                variant="outline" 
+                onClick={() => {
+                  setRejectionModalOpen(false);
+                  setRejectionReason('');
+                  setSelectedRequestId(null);
+                }}
+                disabled={rejectMutation.isPending}
+                data-testid="button-cancel-rejection"
+              >
+                Annuler
+              </Button>
+              <Button 
+                variant="destructive"
+                onClick={handleRejectConfirm}
+                disabled={rejectMutation.isPending || rejectionReason.trim().length < 10}
+                data-testid="button-confirm-rejection"
+              >
+                {rejectMutation.isPending ? 'Rejet en cours...' : 'Confirmer le rejet'}
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }
 
