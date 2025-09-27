@@ -1175,6 +1175,18 @@ ${validatedData.message}`
     }
   });
 
+  // Admin route for equipment owners visualization
+  app.get("/api/admin/equipment-owners", async (req, res) => {
+    try {
+      // Get equipment owners data from the view we created
+      const equipmentOwners = await storage.getEquipmentOwners();
+      res.json(equipmentOwners);
+    } catch (error) {
+      console.error("Error fetching equipment owners:", error);
+      res.status(500).json({ message: "Erreur lors de la récupération des propriétaires d'équipements" });
+    }
+  });
+
   // Admin partners routes
   app.get("/api/admin/partners", async (req, res) => {
     try {

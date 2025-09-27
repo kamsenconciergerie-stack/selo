@@ -2544,6 +2544,230 @@ export class MemStorage implements IStorage {
       return null;
     }
   }
+
+  async getEquipmentOwners(): Promise<any[]> {
+    try {
+      // For MemStorage, return mock data based on the view structure
+      // In real DbStorage, this would query the equipment_owners view
+      return [
+        // Équipements avec propriétaires
+        {
+          equipment_id: 29,
+          equipment_name: "Camion benne 15 T",
+          category: "Camions et Transport",
+          price_per_day: 185000,
+          location: "Dakar",
+          is_available: true,
+          partner_id: 1,
+          partner_name: "Sample Transport Company",
+          ownership_type: "owned",
+          registration_number: "DK-2024-001",
+          fleet_active: true,
+          total_partners: 1,
+          partner_rank: 1
+        },
+        {
+          equipment_id: 30,
+          equipment_name: "Camion benne 20 T",
+          category: "Camions et Transport",
+          price_per_day: 245000,
+          location: "Thiès",
+          is_available: true,
+          partner_id: 1,
+          partner_name: "Sample Transport Company",
+          ownership_type: "owned",
+          registration_number: "DK-2024-002",
+          fleet_active: true,
+          total_partners: 1,
+          partner_rank: 1
+        },
+        {
+          equipment_id: 31,
+          equipment_name: "Camion benne 30 T",
+          category: "Camions et Transport",
+          price_per_day: 310000,
+          location: "Dakar",
+          is_available: true,
+          partner_id: 2,
+          partner_name: "Moussa Transport SARL",
+          ownership_type: "owned",
+          registration_number: "TH-2024-001",
+          fleet_active: true,
+          total_partners: 1,
+          partner_rank: 1
+        },
+        {
+          equipment_id: 32,
+          equipment_name: "Camion benne 40 T",
+          category: "Camions et Transport",
+          price_per_day: 370000,
+          location: "Saint-Louis",
+          is_available: true,
+          partner_id: 2,
+          partner_name: "Moussa Transport SARL",
+          ownership_type: "owned",
+          registration_number: "TH-2024-002",
+          fleet_active: true,
+          total_partners: 1,
+          partner_rank: 1
+        },
+        {
+          equipment_id: 33,
+          equipment_name: "Tracteur 50 CV",
+          category: "BTP et Construction",
+          price_per_day: 75000,
+          location: "Kaolack",
+          is_available: true,
+          partner_id: 2,
+          partner_name: "Moussa Transport SARL",
+          ownership_type: "leased",
+          registration_number: "TH-2024-003",
+          fleet_active: true,
+          total_partners: 2,
+          partner_rank: 1
+        },
+        {
+          equipment_id: 33,
+          equipment_name: "Tracteur 50 CV",
+          category: "BTP et Construction",
+          price_per_day: 75000,
+          location: "Kaolack",
+          is_available: true,
+          partner_id: 1,
+          partner_name: "Sample Transport Company",
+          ownership_type: "leased",
+          registration_number: "DK-2024-003",
+          fleet_active: true,
+          total_partners: 2,
+          partner_rank: 2
+        },
+        {
+          equipment_id: 34,
+          equipment_name: "Tracteur 75 CV",
+          category: "BTP et Construction",
+          price_per_day: 95000,
+          location: "Diourbel",
+          is_available: true,
+          partner_id: 2,
+          partner_name: "Moussa Transport SARL",
+          ownership_type: "owned",
+          registration_number: "TH-2024-004",
+          fleet_active: true,
+          total_partners: 1,
+          partner_rank: 1
+        },
+        {
+          equipment_id: 36,
+          equipment_name: "Générateur 10 KVA",
+          category: "Électricité et Énergie",
+          price_per_day: 45000,
+          location: "Dakar",
+          is_available: true,
+          partner_id: 3,
+          partner_name: "Fatou Equipment Services",
+          ownership_type: "owned",
+          registration_number: "FE-2024-001",
+          fleet_active: true,
+          total_partners: 1,
+          partner_rank: 1
+        },
+        {
+          equipment_id: 37,
+          equipment_name: "Générateur 20 KVA",
+          category: "Électricité et Énergie",
+          price_per_day: 65000,
+          location: "Thiès",
+          is_available: true,
+          partner_id: 3,
+          partner_name: "Fatou Equipment Services",
+          ownership_type: "owned",
+          registration_number: "FE-2024-002",
+          fleet_active: true,
+          total_partners: 2,
+          partner_rank: 1
+        },
+        {
+          equipment_id: 37,
+          equipment_name: "Générateur 20 KVA",
+          category: "Électricité et Énergie",
+          price_per_day: 65000,
+          location: "Thiès",
+          is_available: true,
+          partner_id: 1,
+          partner_name: "Sample Transport Company",
+          ownership_type: "owned",
+          registration_number: "DK-2024-004",
+          fleet_active: true,
+          total_partners: 2,
+          partner_rank: 2
+        },
+        {
+          equipment_id: 38,
+          equipment_name: "Générateur 50 KVA",
+          category: "Électricité et Énergie",
+          price_per_day: 125000,
+          location: "Dakar",
+          is_available: true,
+          partner_id: 3,
+          partner_name: "Fatou Equipment Services",
+          ownership_type: "owned",
+          registration_number: "FE-2024-003",
+          fleet_active: true,
+          total_partners: 1,
+          partner_rank: 1
+        },
+        {
+          equipment_id: 39,
+          equipment_name: "Générateur 100 KVA",
+          category: "Électricité et Énergie",
+          price_per_day: 185000,
+          location: "Saint-Louis",
+          is_available: true,
+          partner_id: 3,
+          partner_name: "Fatou Equipment Services",
+          ownership_type: "leased",
+          registration_number: "FE-2024-004",
+          fleet_active: true,
+          total_partners: 1,
+          partner_rank: 1
+        },
+        // Équipements sans propriétaires (Kamsen Direct)
+        {
+          equipment_id: 35,
+          equipment_name: "Tracteur 120 CV",
+          category: "BTP et Construction",
+          price_per_day: 140000,
+          location: "Tambacounda",
+          is_available: true,
+          partner_id: null,
+          partner_name: null,
+          ownership_type: null,
+          registration_number: null,
+          fleet_active: null,
+          total_partners: 0,
+          partner_rank: 1
+        },
+        {
+          equipment_id: 40,
+          equipment_name: "Compresseur 200L mobile",
+          category: "Électricité et Énergie",
+          price_per_day: 35000,
+          location: "Dakar",
+          is_available: true,
+          partner_id: null,
+          partner_name: null,
+          ownership_type: null,
+          registration_number: null,
+          fleet_active: null,
+          total_partners: 0,
+          partner_rank: 1
+        }
+      ];
+    } catch (error) {
+      console.error("Error fetching equipment owners:", error);
+      return [];
+    }
+  }
 }
 
 export const storage = new MemStorage();

@@ -377,6 +377,171 @@ function formatDate(dateString: string): string {
   });
 }
 
+function EquipmentOwnersViewer() {
+  const [equipmentOwners, setEquipmentOwners] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchEquipmentOwners = async () => {
+      try {
+        setIsLoading(true);
+        const response = await fetch('/api/admin/equipment-owners');
+        if (response.ok) {
+          const data = await response.json();
+          setEquipmentOwners(data);
+        }
+      } catch (error) {
+        console.error('Erreur lors du chargement:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchEquipmentOwners();
+  }, []);
+
+  if (isLoading) {
+    return <div className="text-center py-8">Chargement des propriétaires d'équipements...</div>;
+  }
+
+  // Grouper les équipements par ID pour afficher les propriétaires multiples
+  const groupedEquipment = equipmentOwners.reduce((acc, item) => {
+    if (!acc[item.equipment_id]) {
+      acc[item.equipment_id] = {
+        id: item.equipment_id,
+        name: item.equipment_name,
+        category: item.category,
+        price_per_day: item.price_per_day,
+        location: item.location,
+        is_available: item.is_available,
+        partners: []
+      };
+    }
+    
+    if (item.partner_id) {
+      acc[item.equipment_id].partners.push({
+        id: item.partner_id,
+        name: item.partner_name,
+        ownership_type: item.ownership_type,
+        registration_number: item.registration_number,
+        fleet_active: item.fleet_active
+      });
+    }
+    
+    return acc;
+  }, {});
+
+  const equipmentList = Object.values(groupedEquipment) as any[];
+
+  return (
+    <div className="space-y-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <Card>
+          <CardContent className="p-4">
+            <div className="text-center">
+              <p className="text-2xl font-bold text-kamsen-blue">{equipmentList.length}</p>
+              <p className="text-sm text-kamsen-gray">Équipements Total</p>
+            </div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="p-4">
+            <div className="text-center">
+              <p className="text-2xl font-bold text-green-600">
+                {equipmentList.filter(eq => eq.partners.length > 0).length}
+              </p>
+              <p className="text-sm text-kamsen-gray">Avec Propriétaires</p>
+            </div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="p-4">
+            <div className="text-center">
+              <p className="text-2xl font-bold text-orange-600">
+                {equipmentList.filter(eq => eq.partners.length === 0).length}
+              </p>
+              <p className="text-sm text-kamsen-gray">Sans Propriétaire</p>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {equipmentList.map((eq: any) => (
+        <Card key={eq.id} className="border-l-4 border-l-blue-500">
+          <CardContent className="p-6">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {/* Information équipement */}
+              <div className="lg:col-span-1">
+                <div className="flex items-start justify-between mb-3">
+                  <h4 className="font-semibold text-lg">{eq.name}</h4>
+                  <Badge 
+                    className={eq.is_available ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}
+                  >
+                    {eq.is_available ? 'Disponible' : 'Indisponible'}
+                  </Badge>
+                </div>
+                <p className="text-sm text-kamsen-gray mb-2">{eq.category}</p>
+                <div className="flex items-center gap-2 text-sm text-kamsen-gray mb-2">
+                  <MapPin className="h-4 w-4" />
+                  {eq.location}
+                </div>
+                <p className="font-bold text-orange-600">{formatPriceLocal(eq.price_per_day)}/jour</p>
+              </div>
+
+              {/* Propriétaires */}
+              <div className="lg:col-span-2">
+                <h5 className="font-medium text-kamsen-blue mb-3 flex items-center gap-2">
+                  <Users className="h-4 w-4" />
+                  Propriétaires ({eq.partners.length})
+                </h5>
+                {eq.partners.length > 0 ? (
+                  <div className="space-y-3">
+                    {eq.partners.map((partner: any, index: number) => (
+                      <div key={index} className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                        <div className="flex items-center justify-between mb-2">
+                          <h6 className="font-semibold text-kamsen-blue">{partner.name}</h6>
+                          <Badge 
+                            variant="outline" 
+                            className={
+                              partner.ownership_type === 'owned' ? 'bg-green-50 text-green-700 border-green-200' :
+                              'bg-orange-50 text-orange-700 border-orange-200'
+                            }
+                          >
+                            {partner.ownership_type === 'owned' ? 'Propriétaire' : 'En Location'}
+                          </Badge>
+                        </div>
+                        <div className="grid grid-cols-2 gap-4 text-sm">
+                          <div>
+                            <span className="font-medium">Immatriculation:</span>
+                            <p className="text-kamsen-gray">{partner.registration_number}</p>
+                          </div>
+                          <div>
+                            <span className="font-medium">Statut:</span>
+                            <p className={partner.fleet_active ? 'text-green-600' : 'text-red-600'}>
+                              {partner.fleet_active ? 'Actif' : 'Inactif'}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                    <p className="text-sm text-yellow-700 flex items-center gap-2">
+                      <AlertTriangle className="h-4 w-4" />
+                      Aucun propriétaire assigné - Équipement Kamsen Direct
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      ))}
+    </div>
+  );
+}
+
 function EquipmentWithUnavailabilityList() {
   const { data: equipmentData = [], isLoading } = useQuery({
     queryKey: ["/api/admin/equipment-with-unavailability"],
@@ -738,10 +903,11 @@ function AdminDashboardContent() {
 
       {/* Contenu par onglets */}
       <Tabs defaultValue="overview" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-6">
+        <TabsList className="grid w-full grid-cols-7">
           <TabsTrigger value="overview">Vue d'ensemble</TabsTrigger>
           <TabsTrigger value="bookings">Réservations</TabsTrigger>
           <TabsTrigger value="equipment">Équipements</TabsTrigger>
+          <TabsTrigger value="owners">Propriétaires</TabsTrigger>
           <TabsTrigger value="partners">Partenaires</TabsTrigger>
           <TabsTrigger value="tracking">Suivi GPS</TabsTrigger>
           <TabsTrigger value="analytics">Analyses</TabsTrigger>
@@ -890,6 +1056,21 @@ function AdminDashboardContent() {
             </CardHeader>
             <CardContent>
               <EquipmentWithUnavailabilityList />
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="owners" className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Users className="h-5 w-5" />
+                Propriétaires d'Équipements
+              </CardTitle>
+              <p className="text-sm text-kamsen-gray">Visualisez les propriétaires de chaque équipement et leurs quantités respectives</p>
+            </CardHeader>
+            <CardContent>
+              <EquipmentOwnersViewer />
             </CardContent>
           </Card>
         </TabsContent>
