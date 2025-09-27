@@ -101,10 +101,12 @@ function PartnerRequestsList() {
   const fetchRequests = async () => {
     try {
       setLoading(true);
-      const response = await fetch('/api/admin/partner-requests');
+      const response = await fetch('/api/partners/applications');
       if (response.ok) {
         const data = await response.json();
         setRequests(data);
+      } else {
+        console.error('Failed to fetch partner requests:', response.status);
       }
     } catch (error) {
       console.error('Erreur lors du chargement des demandes:', error);
@@ -663,47 +665,49 @@ function AdminDashboardContent() {
     try {
       setIsLoading(true);
       
-      // Skip admin stats API for now - will calculate manually from other data
-      console.log("Using manual stats calculation instead of admin API");
+      // Use real API data instead of mock data
+      console.log("Loading real admin data from APIs");
 
-      // Use sample data for bookings since admin routes require Replit auth
-      let bookingsData: any[] = [
-        {
-          id: 1,
-          equipmentId: 1,
-          equipmentName: "Chargeuse sur Pneus",
-          customerName: "Moussa Diallo",
-          customerEmail: "moussa@example.com",
-          customerPhone: "+221771234567",
-          startDate: "2024-01-15",
-          endDate: "2024-01-20",
-          totalPrice: 450000,
-          status: "confirmed",
-          createdAt: "2024-01-10"
-        },
-        {
-          id: 2,
-          equipmentId: 2,
-          equipmentName: "Excavatrice",
-          customerName: "Fatou Seck",
-          customerEmail: "fatou@example.com", 
-          customerPhone: "+221781234567",
-          startDate: "2024-01-18",
-          endDate: "2024-01-25",
-          totalPrice: 875000,
-          status: "pending",
-          createdAt: "2024-01-15"
+      // Load real bookings from admin API
+      const bookingsResponse = await fetch("/api/admin/bookings");
+      let bookingsData: any[] = [];
+      if (bookingsResponse.ok) {
+        bookingsData = await bookingsResponse.json();
+        setBookings(bookingsData);
+      } else {
+        console.error("Failed to load bookings from admin API");
+        // Fallback to regular bookings API
+        const fallbackResponse = await fetch("/api/bookings");
+        if (fallbackResponse.ok) {
+          bookingsData = await fallbackResponse.json();
+          setBookings(bookingsData);
         }
-      ];
-      setBookings(bookingsData);
+      }
 
       // Load equipment
       const equipmentResponse = await fetch("/api/equipment");
+      let equipmentData: any[] = [];
       if (equipmentResponse.ok) {
-        const equipmentData = await equipmentResponse.json();
+        equipmentData = await equipmentResponse.json();
         setEquipment(equipmentData);
-        
-        // Calculate stats manually since we have the data
+      }
+
+      // Load real stats from admin API
+      const statsResponse = await fetch("/api/admin/stats");
+      if (statsResponse.ok) {
+        const statsData = await statsResponse.json();
+        setStats({
+          totalBookings: statsData.totalBookings || 0,
+          totalRevenue: statsData.totalRevenue || 0,
+          kamsenEarnings: statsData.kamsenEarnings || 0,
+          pendingBookings: statsData.pendingBookings || 0,
+          confirmedBookings: statsData.confirmedBookings || 0,
+          totalEquipment: statsData.totalEquipment || 0,
+          availableEquipment: statsData.availableEquipment || 0,
+          partnerRequests: statsData.partnerRequests || { total: 0, pending: 0, approved: 0, rejected: 0 }
+        });
+      } else {
+        // Fallback to calculated stats if API fails
         if (bookingsData && equipmentData) {
           const totalRevenue = bookingsData
             .filter((b: any) => b.status === 'confirmed' || b.status === 'completed')
