@@ -1353,23 +1353,6 @@ ${validatedData.message}`
     }
   });
 
-  // Partner requests routes
-  app.post("/api/partner-inquiry", async (req, res) => {
-    try {
-      const partnerRequest = req.body;
-      // Mock storage for now - replace with actual database insertion
-      const result = {
-        id: Math.floor(Math.random() * 1000),
-        ...partnerRequest,
-        status: 'pending',
-        createdAt: new Date().toISOString(),
-      };
-      res.status(201).json(result);
-    } catch (error) {
-      console.error("Error creating partner request:", error);
-      res.status(500).json({ message: "Failed to create partner request" });
-    }
-  });
 
   // Equipment unavailability routes for partners
   app.get("/api/partners/:partnerId/equipment-unavailability", async (req, res) => {
