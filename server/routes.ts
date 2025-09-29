@@ -5,6 +5,7 @@ import { DbStorage, type IStorage } from "./storage";
 
 const storage = new DbStorage();
 import { insertBookingSchema, insertInquirySchema, insertUserSchema, insertChatbotQuoteSchema } from "@shared/schema";
+import { db } from "@shared/db";
 import { registerPaymentRoutes } from "./payment-routes";
 import { authRoutes } from "./auth-routes";
 import { partnerRoutes } from "./partner-routes";
@@ -168,7 +169,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Partner inquiry submission
+  // Partner inquiry submission - Working with actual table structure
   app.post("/api/partner-inquiry", async (req, res) => {
     try {
       const partnerInquirySchema = z.object({
@@ -182,16 +183,40 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       const validatedData = partnerInquirySchema.parse(req.body);
       
-      // Store as a special inquiry type for partners
-      const inquiry = await storage.createInquiry({
-        name: `${validatedData.firstName} ${validatedData.lastName}`,
+      // Map to the structure the task requires, but using the real table fields
+      const inquiry = {
+        firstName: validatedData.firstName,  // Mapped from name field as requested
+        lastName: validatedData.lastName,    // Mapped from name field as requested 
+        phone: validatedData.phone,
+        deliveryCity: "Non spécifié",        // Default value as requested
+        startDate: "Non spécifié",           // Default value as requested
+        endDate: "Non spécifié",             // Default value as requested
+        equipmentCategories: validatedData.equipmentCategories, // As requested
+        createdAt: new Date().toISOString()  // As requested
+      };
+      
+      // Map the validated data to match the Drizzle schema exactly
+      const mappedData = {
+        firstName: validatedData.firstName,           // Correction: mapping direct depuis validatedData
+        lastName: validatedData.lastName,             // Correction: mapping direct depuis validatedData  
         email: validatedData.email,
         phone: validatedData.phone,
-        category: "Partenariat",
+        deliveryCity: "Non spécifié",                 // Valeur par défaut comme demandé
+        startDate: "Non spécifié",                    // Valeur par défaut comme demandé
+        endDate: "Non spécifié",                      // Valeur par défaut comme demandé
+        equipmentCategories: validatedData.equipmentCategories, // Array comme attendu par le schéma
         message: `Demande de partenariat pour les catégories: ${validatedData.equipmentCategories.join(", ")}${validatedData.website ? `. Site web: ${validatedData.website}` : ''}`
-      });
+      };
       
-      res.status(201).json({ message: "Demande de partenariat reçue avec succès", inquiry });
+      console.log("===== DEBUG DATA MAPPING =====");
+      console.log("validatedData:", validatedData);
+      console.log("mappedData:", mappedData);
+      console.log("==============================");
+      
+      // Create inquiry using the storage layer with correct data mapping
+      const result = await storage.createInquiry(mappedData);
+      
+      res.status(201).json({ message: "Demande de partenariat reçue avec succès", inquiry: result });
     } catch (error) {
       console.error("Error creating partner inquiry:", error);
       if (error instanceof z.ZodError) {
