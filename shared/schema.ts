@@ -32,6 +32,7 @@ export const bookings = pgTable("bookings", {
   paymentMethod: text("payment_method"),
   paymentStatus: text("payment_status").default("pending"),
   paymentReference: text("payment_reference"),
+  codeParrain: text("code_parrain"), // Code de parrainage optionnel
   notes: text("notes"),
   canModify: boolean("can_modify").notNull().default(true),
   canCancel: boolean("can_cancel").notNull().default(true),

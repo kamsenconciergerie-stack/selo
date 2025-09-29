@@ -29,6 +29,7 @@ const bookingFormSchema = insertBookingSchema.pick({
   customerEmail: true,
   customerPhone: true,
   totalPrice: true,
+  codeParrain: true,
   notes: true,
 }).extend({
   startDate: z.string().min(1, "Date de début requise").refine((date) => {
@@ -63,6 +64,7 @@ export default function BookingModal({ equipment, open, onOpenChange }: BookingM
       endDate: "",
       totalPrice: equipment.pricePerDay,
       paymentMethod: "delivery" as const,
+      codeParrain: "",
       notes: "",
     },
   });
@@ -210,6 +212,25 @@ export default function BookingModal({ equipment, open, onOpenChange }: BookingM
                     <FormLabel>Téléphone</FormLabel>
                     <FormControl>
                       <Input placeholder="+221 XX XXX XXXX" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="codeParrain"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Code de parrainage (optionnel)</FormLabel>
+                    <FormControl>
+                      <Input 
+                        placeholder="Code de la personne qui vous a recommandé Kamsen (optionnel)" 
+                        {...field}
+                        value={field.value || ""}
+                        data-testid="input-code-parrain"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

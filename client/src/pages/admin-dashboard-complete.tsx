@@ -52,6 +52,7 @@ interface Booking {
   totalPrice: number;
   status: 'pending' | 'confirmed' | 'completed' | 'cancelled';
   paymentStatus?: string;
+  codeParrain?: string;
   notes?: string;
   createdAt: string;
 }
@@ -1516,6 +1517,12 @@ function BookingManagementList({ bookings, onStatusUpdate, onRefresh }: {
                 <p className="font-medium">{booking.customerName}</p>
                 <p className="text-sm text-kamsen-gray">{booking.customerEmail}</p>
                 <p className="text-sm text-kamsen-gray">{booking.customerPhone}</p>
+                {booking.codeParrain && (
+                  <div className="flex items-center gap-2 mt-2">
+                    <span className="text-xs bg-kamsen-orange text-white px-2 py-1 rounded font-medium">PARRAIN</span>
+                    <span className="text-sm text-kamsen-blue font-medium">{booking.codeParrain}</span>
+                  </div>
+                )}
               </div>
 
               {/* Informations équipement */}

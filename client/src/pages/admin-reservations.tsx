@@ -40,6 +40,7 @@ interface Booking {
   totalPrice: number;
   status: 'pending' | 'confirmed' | 'completed' | 'cancelled';
   paymentStatus?: string;
+  codeParrain?: string;
   notes?: string;
   createdAt: string;
 }
@@ -248,6 +249,7 @@ export default function AdminReservations() {
       "Client",
       "Email",
       "Téléphone", 
+      "Code Parrain",
       "Équipement",
       "Date début",
       "Date fin",
@@ -262,6 +264,7 @@ export default function AdminReservations() {
       booking.customerName,
       booking.customerEmail,
       booking.customerPhone,
+      booking.codeParrain || 'N/A',
       booking.equipmentName || `Équipement #${booking.equipmentId}`,
       booking.startDate,
       booking.endDate,
@@ -458,6 +461,12 @@ export default function AdminReservations() {
                         <Phone className="h-4 w-4" />
                         <span>{booking.customerPhone}</span>
                       </div>
+                      {booking.codeParrain && (
+                        <div className="flex items-center gap-2 text-sm">
+                          <span className="text-xs bg-kamsen-orange text-white px-2 py-1 rounded font-medium">PARRAIN</span>
+                          <span className="text-kamsen-blue font-medium">{booking.codeParrain}</span>
+                        </div>
+                      )}
                     </div>
 
                     {/* Informations équipement et dates */}
