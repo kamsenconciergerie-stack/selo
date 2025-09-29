@@ -169,7 +169,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Partner inquiry submission - Working with actual table structure
+  // Partner inquiry submission - Using partner_requests table
   app.post("/api/partner-inquiry", async (req, res) => {
     try {
       const partnerInquirySchema = z.object({
@@ -183,42 +183,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       const validatedData = partnerInquirySchema.parse(req.body);
       
-      // Map to the structure the task requires, but using the real table fields
-      const inquiry = {
-        firstName: validatedData.firstName,  // Mapped from name field as requested
-        lastName: validatedData.lastName,    // Mapped from name field as requested 
-        phone: validatedData.phone,
-        deliveryCity: "Non spécifié",        // Default value as requested
-        startDate: "Non spécifié",           // Default value as requested
-        endDate: "Non spécifié",             // Default value as requested
-        equipmentCategories: validatedData.equipmentCategories, // As requested
-        createdAt: new Date().toISOString()  // As requested
-      };
-      
-      // Map the validated data to match the Drizzle schema exactly
-      const mappedData = {
-        firstName: validatedData.firstName,           // Correction: mapping direct depuis validatedData
-        lastName: validatedData.lastName,             // Correction: mapping direct depuis validatedData  
+      // Map to partner_requests table schema
+      const partnerRequestData = {
+        firstName: validatedData.firstName,
+        lastName: validatedData.lastName,
         email: validatedData.email,
         phone: validatedData.phone,
-        deliveryCity: "Non spécifié",                 // Valeur par défaut comme demandé
-        startDate: "Non spécifié",                    // Valeur par défaut comme demandé
-        endDate: "Non spécifié",                      // Valeur par défaut comme demandé
-        equipmentCategories: validatedData.equipmentCategories, // Array comme attendu par le schéma
-        message: `Demande de partenariat pour les catégories: ${validatedData.equipmentCategories.join(", ")}${validatedData.website ? `. Site web: ${validatedData.website}` : ''}`
+        website: validatedData.website || null,
+        equipmentCategories: validatedData.equipmentCategories,
       };
       
-      console.log("===== DEBUG DATA MAPPING =====");
-      console.log("validatedData:", validatedData);
-      console.log("mappedData:", mappedData);
-      console.log("==============================");
+      // Create partner request using the storage layer
+      const result = await storage.createPartnerRequest(partnerRequestData);
       
-      // Create inquiry using the storage layer with correct data mapping
-      const result = await storage.createInquiry(mappedData);
-      
-      res.status(201).json({ message: "Demande de partenariat reçue avec succès", inquiry: result });
+      res.status(201).json({ message: "Demande de partenariat reçue avec succès", partnerRequest: result });
     } catch (error) {
-      console.error("Error creating partner inquiry:", error);
+      console.error("Error creating partner request:", error);
       if (error instanceof z.ZodError) {
         return res.status(400).json({ 
           message: "Données invalides", 
@@ -1471,42 +1451,7 @@ ${validatedData.message}`
 
   app.get("/api/admin/partner-requests", async (req, res) => {
     try {
-      // Mock partner requests data - replace with actual database query
-      const partnerRequests = [
-        {
-          id: 1,
-          firstName: "Mamadou",
-          lastName: "Diallo",
-          email: "mamadou.diallo@transport.sn",
-          phone: "+221 77 123 45 67",
-          website: "https://transportdiallo.sn",
-          equipmentCategories: ["Camion porteur", "Camion benne"],
-          status: "pending",
-          createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
-        },
-        {
-          id: 2,
-          firstName: "Fatou",
-          lastName: "Ba",
-          email: "fatou.ba@logistics.sn",
-          phone: "+221 76 234 56 78",
-          website: "",
-          equipmentCategories: ["Camionnette / Fourgon", "Engins de Chantier"],
-          status: "pending",
-          createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
-        },
-        {
-          id: 3,
-          firstName: "Ousmane",
-          lastName: "Ndiaye",
-          email: "ousmane.ndiaye@equipement.sn",
-          phone: "+221 78 345 67 89",
-          website: "https://equipementndiaye.com",
-          equipmentCategories: ["Camion semi-remorque", "Outils à Main"],
-          status: "approved",
-          createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
-        }
-      ];
+      const partnerRequests = await storage.getAllPartnerRequests();
       res.json(partnerRequests);
     } catch (error) {
       console.error("Error fetching partner requests:", error);
@@ -1516,12 +1461,12 @@ ${validatedData.message}`
 
   app.get("/api/admin/partner-requests/stats", async (req, res) => {
     try {
-      // Mock stats - replace with actual database query
+      const partnerRequests = await storage.getAllPartnerRequests();
       const stats = {
-        total: 3,
-        pending: 2,
-        approved: 1,
-        rejected: 0,
+        total: partnerRequests.length,
+        pending: partnerRequests.filter(pr => pr.status === 'pending').length,
+        approved: partnerRequests.filter(pr => pr.status === 'approved').length,
+        rejected: partnerRequests.filter(pr => pr.status === 'rejected').length,
       };
       res.json(stats);
     } catch (error) {

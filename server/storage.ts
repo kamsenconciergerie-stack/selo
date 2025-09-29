@@ -19,6 +19,7 @@ import {
   PartnerEarnings,
   Partner,
   PartnerDriver,
+  PartnerRequest,
   InsertEquipment, 
   InsertBooking, 
   InsertPayment, 
@@ -38,7 +39,8 @@ import {
   InsertServiceCity,
   InsertPartnerEarnings,
   InsertPartner,
-  InsertPartnerDriver
+  InsertPartnerDriver,
+  InsertPartnerRequest
 } from "@shared/schema";
 import bcrypt from "bcrypt";
 import { 
@@ -182,7 +184,8 @@ export interface IStorage {
   recordBookingChange(bookingId: number, field: string, oldValue: string, newValue: string, modifiedBy: string, reason?: string): Promise<void>;
   
   // Partner request methods
-  getAllPartnerRequests(): Promise<any[]>;
+  createPartnerRequest(data: InsertPartnerRequest): Promise<PartnerRequest>;
+  getAllPartnerRequests(): Promise<PartnerRequest[]>;
   updatePartnerRequestStatus(id: number, status: string, notes?: string): Promise<any>;
   
   // Partner equipment sync methods
@@ -827,8 +830,13 @@ export class DbStorage implements IStorage {
   }
 
   // Partner request methods
-  async getAllPartnerRequests(): Promise<any[]> {
-    return await db.select().from(partnerRequests);
+  async createPartnerRequest(data: InsertPartnerRequest): Promise<PartnerRequest> {
+    const [partnerRequest] = await db.insert(partnerRequests).values(data).returning();
+    return partnerRequest;
+  }
+
+  async getAllPartnerRequests(): Promise<PartnerRequest[]> {
+    return await db.select().from(partnerRequests).orderBy(desc(partnerRequests.createdAt));
   }
 
   async updatePartnerRequestStatus(id: number, status: string, notes?: string): Promise<any> {

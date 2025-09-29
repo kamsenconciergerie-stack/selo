@@ -746,3 +746,5 @@ export type PartnerEarnings = typeof partnerEarnings.$inferSelect;
 export type InsertPartnerEarnings = z.infer<typeof insertPartnerEarningsSchema>;
 export type PartnerApplication = typeof partnerApplications.$inferSelect;
 export type InsertPartnerApplication = z.infer<typeof insertPartnerApplicationSchema>;
+export type PartnerRequest = typeof partnerRequests.$inferSelect;
+export type InsertPartnerRequest = z.infer<typeof insertPartnerRequestSchema>;
