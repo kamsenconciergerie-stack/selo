@@ -732,7 +732,9 @@ function AdminDashboardContent() {
             totalBookings: bookingsData.length,
             totalRevenue,
             kamsenEarnings: totalRevenue * 0.15, // 15% commission
-            pendingBookings: bookingsData.filter((b: any) => b.status === 'pending').length,
+            pendingBookings: bookingsData.filter((b: any) => 
+              b.status === 'pending' || b.status === 'pending_assignment' || b.status === 'assigned'
+            ).length,
             confirmedBookings: bookingsData.filter((b: any) => b.status === 'confirmed').length,
             totalEquipment: equipmentData.length,
             availableEquipment: equipmentData.filter((e: any) => e.isAvailable).length,
@@ -1461,8 +1463,18 @@ function BookingManagementList({ bookings, onStatusUpdate, onRefresh }: {
 
   const getStatusBadge = (status: string) => {
     switch (status) {
+      case 'pending_assignment':
+        return <Badge className="bg-orange-100 text-orange-800">En Attente d'Assignation</Badge>;
+      case 'assigned':
+        return <Badge className="bg-blue-100 text-blue-800">Assignée au Partenaire</Badge>;
+      case 'partner_confirmed':
+        return <Badge className="bg-teal-100 text-teal-800">Confirmée par Partenaire</Badge>;
+      case 'partner_rejected':
+        return <Badge className="bg-red-100 text-red-800">Rejetée par Partenaire</Badge>;
       case 'confirmed':
         return <Badge className="bg-green-100 text-green-800">Confirmée</Badge>;
+      case 'rejected':
+        return <Badge className="bg-red-100 text-red-800">Rejetée</Badge>;
       case 'pending':
         return <Badge className="bg-orange-100 text-orange-800">En Attente</Badge>;
       case 'completed':
@@ -1585,6 +1597,88 @@ function BookingManagementList({ bookings, onStatusUpdate, onRefresh }: {
                     <Eye className="h-4 w-4 mr-2" />
                     Voir Détails
                   </Button>
+                  
+                  {booking.status === 'pending_assignment' && (
+                    <>
+                      <Button 
+                        size="sm" 
+                        className="w-full bg-kamsen-blue hover:bg-kamsen-blue/90"
+                        onClick={() => onStatusUpdate(booking.id, 'assigned')}
+                        data-testid={`button-assign-${booking.id}`}
+                      >
+                        <Users className="h-4 w-4 mr-2" />
+                        Assigner à un Partenaire
+                      </Button>
+                      <Button 
+                        size="sm" 
+                        variant="outline"
+                        className="w-full text-red-600 hover:text-red-700 border-red-200 hover:bg-red-50"
+                        onClick={() => onStatusUpdate(booking.id, 'rejected')}
+                      >
+                        <XCircle className="h-4 w-4 mr-2" />
+                        Rejeter
+                      </Button>
+                    </>
+                  )}
+
+                  {booking.status === 'assigned' && (
+                    <div className="p-3 bg-orange-50 border border-orange-200 rounded-lg">
+                      <p className="text-sm text-orange-700">
+                        En attente de confirmation du partenaire
+                      </p>
+                    </div>
+                  )}
+
+                  {booking.status === 'partner_confirmed' && (
+                    <>
+                      <Button 
+                        size="sm" 
+                        className="w-full bg-green-600 hover:bg-green-700"
+                        onClick={() => onStatusUpdate(booking.id, 'confirmed')}
+                        data-testid={`button-confirm-${booking.id}`}
+                      >
+                        <CheckCircle className="h-4 w-4 mr-2" />
+                        Confirmer Définitivement
+                      </Button>
+                      <Button 
+                        size="sm" 
+                        variant="outline"
+                        className="w-full text-red-600 hover:text-red-700 border-red-200 hover:bg-red-50"
+                        onClick={() => onStatusUpdate(booking.id, 'rejected')}
+                      >
+                        <XCircle className="h-4 w-4 mr-2" />
+                        Rejeter
+                      </Button>
+                    </>
+                  )}
+
+                  {booking.status === 'partner_rejected' && (
+                    <>
+                      <div className="p-3 bg-red-50 border border-red-200 rounded-lg mb-2">
+                        <p className="text-sm text-red-700 font-medium">Rejeté par le partenaire</p>
+                        {booking.partnerRejectionReason && (
+                          <p className="text-xs text-red-600 mt-1">{booking.partnerRejectionReason}</p>
+                        )}
+                      </div>
+                      <Button 
+                        size="sm" 
+                        className="w-full bg-kamsen-blue hover:bg-kamsen-blue/90"
+                        onClick={() => onStatusUpdate(booking.id, 'pending_assignment')}
+                      >
+                        <Users className="h-4 w-4 mr-2" />
+                        Réassigner
+                      </Button>
+                      <Button 
+                        size="sm" 
+                        variant="outline"
+                        className="w-full text-red-600 hover:text-red-700 border-red-200 hover:bg-red-50"
+                        onClick={() => onStatusUpdate(booking.id, 'rejected')}
+                      >
+                        <XCircle className="h-4 w-4 mr-2" />
+                        Rejeter Définitivement
+                      </Button>
+                    </>
+                  )}
                   
                   {booking.status === 'pending' && (
                     <>

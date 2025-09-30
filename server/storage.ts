@@ -1072,7 +1072,9 @@ export class DbStorage implements IStorage {
     try {
       const totalBookings = await db.select().from(bookings);
       const totalEquipment = await db.select().from(equipment);
-      const pendingBookings = totalBookings.filter(b => b.status === 'pending').length;
+      const pendingBookings = totalBookings.filter(b => 
+        b.status === 'pending' || b.status === 'pending_assignment' || b.status === 'assigned'
+      ).length;
       const confirmedBookings = totalBookings.filter(b => b.status === 'confirmed').length;
       const totalRevenue = totalBookings
         .filter(b => b.status === 'completed')
