@@ -88,27 +88,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const validatedData = insertBookingSchema.parse(req.body);
       const booking = await storage.createBooking(validatedData);
       
-      // 🚀 NOUVEAU: Envoi automatique d'email de confirmation
+      // 🚀 NOUVEAU: Envoi automatique d'email de demande enregistrée
       if (booking && booking.customerEmail) {
         // Récupérer les détails de l'équipement pour l'email
         const equipment = await storage.getEquipmentById(parseInt(booking.equipmentId as any));
         
-        // Envoyer l'email de confirmation au client
-        await EmailService.sendBookingConfirmationEmail({
+        // Envoyer l'email de demande au client
+        await EmailService.sendBookingCreatedEmail({
           bookingId: booking.id,
           customerName: booking.customerName,
           customerEmail: booking.customerEmail,
-          customerPhone: booking.customerPhone,
           equipmentName: equipment?.name || 'Équipement',
           startDate: booking.startDate,
           endDate: booking.endDate,
           totalPrice: booking.totalPrice,
-          location: 'Dakar',
-          status: booking.status || 'confirmed',
-          createdAt: booking.createdAt ? booking.createdAt.toISOString() : new Date().toISOString(),
+          deliveryCity: booking.deliveryCity || 'Dakar',
         });
         
-        console.log(`📧 Email de confirmation automatique envoyé pour réservation #${booking.id}`);
+        console.log(`📧 Email de demande automatique envoyé pour réservation #${booking.id}`);
       }
       
       res.status(201).json(booking);
@@ -1089,7 +1086,7 @@ ${validatedData.message}`
   app.put("/api/admin/bookings/:id", isAuthenticated, isAdmin, async (req, res) => {
     try {
       const bookingId = parseInt(req.params.id);
-      const { status } = req.body;
+      const { status, rejectionReason } = req.body;
       
       if (!status || !['pending', 'confirmed', 'completed', 'cancelled'].includes(status)) {
         return res.status(400).json({ message: "Statut invalide" });
@@ -1098,6 +1095,36 @@ ${validatedData.message}`
       const updatedBooking = await storage.updateBooking(bookingId, { status });
       if (!updatedBooking) {
         return res.status(404).json({ message: "Réservation non trouvée" });
+      }
+      
+      // 📧 Envoi automatique d'email selon le statut
+      if (updatedBooking && updatedBooking.customerEmail) {
+        const equipment = await storage.getEquipmentById(updatedBooking.equipmentId);
+        
+        if (status === 'confirmed') {
+          // Email de confirmation
+          await EmailService.sendBookingConfirmedEmail({
+            bookingId: updatedBooking.id,
+            customerName: updatedBooking.customerName,
+            customerEmail: updatedBooking.customerEmail,
+            equipmentName: equipment?.name || 'Équipement',
+            startDate: updatedBooking.startDate,
+            endDate: updatedBooking.endDate,
+            totalPrice: updatedBooking.totalPrice,
+            deliveryCity: updatedBooking.deliveryCity || 'Dakar',
+          });
+          console.log(`✅ Email de confirmation envoyé pour réservation #${updatedBooking.id}`);
+        } else if (status === 'cancelled') {
+          // Email de rejet
+          await EmailService.sendBookingRejectedEmail({
+            bookingId: updatedBooking.id,
+            customerName: updatedBooking.customerName,
+            customerEmail: updatedBooking.customerEmail,
+            equipmentName: equipment?.name || 'Équipement',
+            rejectionReason: rejectionReason || 'Équipement non disponible pour les dates demandées',
+          });
+          console.log(`❌ Email de rejet envoyé pour réservation #${updatedBooking.id}`);
+        }
       }
       
       res.json(updatedBooking);
