@@ -1433,8 +1433,30 @@ export class DbStorage implements IStorage {
     return (result.rowCount || 0) > 0;
   }
 
-  async getAllPartners(): Promise<Partner[]> {
-    return await db.select().from(partners);
+  async getAllPartners(): Promise<any[]> {
+    const result = await db
+      .select({
+        id: partners.id,
+        userId: partners.userId,
+        companyName: partners.companyName,
+        businessRegistrationNumber: partners.businessRegistrationNumber,
+        businessType: partners.businessType,
+        taxNumber: partners.taxNumber,
+        website: partners.website,
+        description: partners.description,
+        status: partners.status,
+        commissionRate: partners.commissionRate,
+        createdAt: partners.createdAt,
+        updatedAt: partners.updatedAt,
+        firstName: users.firstName,
+        lastName: users.lastName,
+        email: users.email,
+        phone: users.phone
+      })
+      .from(partners)
+      .leftJoin(users, eq(partners.userId, users.id));
+    
+    return result;
   }
 
   // Booking workflow methods (admin-partner)
@@ -2920,8 +2942,30 @@ export class MemStorage implements IStorage {
     return (result.rowCount || 0) > 0;
   }
 
-  async getAllPartners(): Promise<Partner[]> {
-    return await db.select().from(partners);
+  async getAllPartners(): Promise<any[]> {
+    const result = await db
+      .select({
+        id: partners.id,
+        userId: partners.userId,
+        companyName: partners.companyName,
+        businessRegistrationNumber: partners.businessRegistrationNumber,
+        businessType: partners.businessType,
+        taxNumber: partners.taxNumber,
+        website: partners.website,
+        description: partners.description,
+        status: partners.status,
+        commissionRate: partners.commissionRate,
+        createdAt: partners.createdAt,
+        updatedAt: partners.updatedAt,
+        firstName: users.firstName,
+        lastName: users.lastName,
+        email: users.email,
+        phone: users.phone
+      })
+      .from(partners)
+      .leftJoin(users, eq(partners.userId, users.id));
+    
+    return result;
   }
 
   async getEquipmentOwners(): Promise<any[]> {
