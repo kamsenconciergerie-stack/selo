@@ -61,7 +61,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
         equipment = await storage.getAllEquipment();
       }
       
-      res.json(equipment);
+      // Enrichir chaque équipement avec ses partenaires
+      const enrichedEquipment = await Promise.all(
+        equipment.map(async (eq) => {
+          const partners = await storage.getEquipmentPartners(eq.id);
+          return {
+            ...eq,
+            partners: partners || []
+          };
+        })
+      );
+      
+      res.json(enrichedEquipment);
     } catch (error) {
       res.status(500).json({ message: "Erreur lors de la récupération des équipements" });
     }
@@ -76,7 +87,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ message: "Équipement non trouvé" });
       }
       
-      res.json(equipment);
+      // Enrichir avec les partenaires associés
+      const partners = await storage.getEquipmentPartners(id);
+      
+      res.json({
+        ...equipment,
+        partners: partners || []
+      });
     } catch (error) {
       res.status(500).json({ message: "Erreur lors de la récupération de l'équipement" });
     }
@@ -1735,6 +1752,93 @@ ${validatedData.message}`
     } catch (error) {
       console.error("Error fetching partner total earnings:", error);
       res.status(500).json({ message: "Erreur lors de la récupération du total des gains" });
+    }
+  });
+
+  // Equipment-Partner relationship routes (many-to-many)
+  
+  // Get all partners for a specific equipment
+  app.get("/api/equipment/:equipmentId/partners", async (req, res) => {
+    try {
+      const equipmentId = parseInt(req.params.equipmentId);
+      const partners = await storage.getEquipmentPartners(equipmentId);
+      res.json(partners);
+    } catch (error) {
+      console.error("Error fetching equipment partners:", error);
+      res.status(500).json({ message: "Erreur lors de la récupération des partenaires" });
+    }
+  });
+
+  // Assign a partner to equipment (admin only)
+  app.post("/api/equipment/:equipmentId/partners", isAuthenticated, isAdmin, async (req, res) => {
+    try {
+      const equipmentId = parseInt(req.params.equipmentId);
+      const { partnerId, isPrimary, allocationWeight } = req.body;
+      
+      if (!partnerId) {
+        return res.status(400).json({ message: "partnerId requis" });
+      }
+      
+      const result = await storage.assignPartnerToEquipment(
+        equipmentId,
+        partnerId,
+        isPrimary || false,
+        allocationWeight || 1
+      );
+      
+      res.status(201).json(result);
+    } catch (error) {
+      console.error("Error assigning partner to equipment:", error);
+      res.status(500).json({ message: "Erreur lors de l'association du partenaire" });
+    }
+  });
+
+  // Remove a partner from equipment (admin only)
+  app.delete("/api/equipment/:equipmentId/partners/:partnerId", isAuthenticated, isAdmin, async (req, res) => {
+    try {
+      const equipmentId = parseInt(req.params.equipmentId);
+      const partnerId = parseInt(req.params.partnerId);
+      
+      const success = await storage.removePartnerFromEquipment(equipmentId, partnerId);
+      
+      if (!success) {
+        return res.status(404).json({ message: "Association non trouvée" });
+      }
+      
+      res.json({ message: "Partenaire retiré avec succès" });
+    } catch (error) {
+      console.error("Error removing partner from equipment:", error);
+      res.status(500).json({ message: "Erreur lors du retrait du partenaire" });
+    }
+  });
+
+  // Set primary partner for equipment (admin only)
+  app.put("/api/equipment/:equipmentId/partners/:partnerId/primary", isAuthenticated, isAdmin, async (req, res) => {
+    try {
+      const equipmentId = parseInt(req.params.equipmentId);
+      const partnerId = parseInt(req.params.partnerId);
+      
+      const success = await storage.setPrimaryPartner(equipmentId, partnerId);
+      
+      if (!success) {
+        return res.status(404).json({ message: "Association non trouvée" });
+      }
+      
+      res.json({ message: "Partenaire principal défini avec succès" });
+    } catch (error) {
+      console.error("Error setting primary partner:", error);
+      res.status(500).json({ message: "Erreur lors de la définition du partenaire principal" });
+    }
+  });
+
+  // Get all partners (for admin UI)
+  app.get("/api/partners", isAuthenticated, isAdmin, async (req, res) => {
+    try {
+      const partners = await storage.getAllPartners();
+      res.json(partners);
+    } catch (error) {
+      console.error("Error fetching all partners:", error);
+      res.status(500).json({ message: "Erreur lors de la récupération des partenaires" });
     }
   });
 

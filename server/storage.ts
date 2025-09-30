@@ -69,7 +69,7 @@ import {
   driverAssignments,
   equipmentPartners
 } from "../shared/schema";
-import { eq, ilike, or, desc } from "drizzle-orm";
+import { eq, ilike, or, desc, and } from "drizzle-orm";
 import { db } from "../shared/db";
 
 export interface IStorage {
@@ -2639,8 +2639,10 @@ export class MemStorage implements IStorage {
     const result = await db
       .delete(equipmentPartners)
       .where(
-        eq(equipmentPartners.equipmentId, equipmentId) &&
-        eq(equipmentPartners.partnerId, partnerId)
+        and(
+          eq(equipmentPartners.equipmentId, equipmentId),
+          eq(equipmentPartners.partnerId, partnerId)
+        )
       );
     
     return (result.rowCount || 0) > 0;
@@ -2658,8 +2660,10 @@ export class MemStorage implements IStorage {
       .update(equipmentPartners)
       .set({ isPrimary: true })
       .where(
-        eq(equipmentPartners.equipmentId, equipmentId) &&
-        eq(equipmentPartners.partnerId, partnerId)
+        and(
+          eq(equipmentPartners.equipmentId, equipmentId),
+          eq(equipmentPartners.partnerId, partnerId)
+        )
       );
     
     return (result.rowCount || 0) > 0;
