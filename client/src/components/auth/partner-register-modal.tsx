@@ -32,6 +32,7 @@ const partnerRegisterSchema = z.object({
   taxNumber: z.string().optional(),
   website: z.string().url().optional().or(z.literal("")),
   description: z.string().min(20, "Description minimum 20 caractères"),
+  availableEquipments: z.array(z.string()).min(1, "Sélectionnez au moins une catégorie d'équipements"),
   
   // Financial info
   bankAccountName: z.string().min(2, "Nom du compte bancaire requis"),
@@ -71,6 +72,7 @@ export function PartnerRegisterModal({ open, onOpenChange, onSwitchToLogin }: Pa
       taxNumber: "",
       website: "",
       description: "",
+      availableEquipments: [],
       bankAccountName: "",
       bankAccountNumber: "",
       bankName: "",
@@ -367,6 +369,64 @@ export function PartnerRegisterModal({ open, onOpenChange, onSwitchToLogin }: Pa
                       <FormMessage />
                     </FormItem>
                   )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="availableEquipments"
+                  render={({ field }) => {
+                    const equipmentCategories = [
+                      { id: "camions", label: "Camions de Transport", icon: "🚛" },
+                      { id: "pelles", label: "Pelles & Excavateurs", icon: "🚜" },
+                      { id: "bulldozers", label: "Bulldozers & Niveleuses", icon: "🚜" },
+                      { id: "compacteurs", label: "Compacteurs & Rouleaux", icon: "🚜" },
+                      { id: "grues", label: "Grues & Engins de Levage", icon: "🏗️" },
+                      { id: "betonniers", label: "Bétonnières & Malaxeurs", icon: "⚙️" },
+                      { id: "generateurs", label: "Générateurs & Compresseurs", icon: "⚡" },
+                    ];
+
+                    const toggleEquipment = (categoryId: string) => {
+                      const currentValue = field.value || [];
+                      const newValue = currentValue.includes(categoryId)
+                        ? currentValue.filter(id => id !== categoryId)
+                        : [...currentValue, categoryId];
+                      field.onChange(newValue);
+                    };
+
+                    return (
+                      <FormItem>
+                        <FormLabel>Équipements disponibles *</FormLabel>
+                        <div className="grid grid-cols-2 gap-3 mt-2">
+                          {equipmentCategories.map((category) => {
+                            const isSelected = (field.value || []).includes(category.id);
+                            return (
+                              <button
+                                key={category.id}
+                                type="button"
+                                onClick={() => toggleEquipment(category.id)}
+                                data-testid={`equipment-category-${category.id}`}
+                                className={`p-3 border-2 rounded-lg text-left transition-all ${
+                                  isSelected
+                                    ? 'border-[#FF6B35] bg-orange-50'
+                                    : 'border-gray-200 hover:border-gray-300'
+                                }`}
+                              >
+                                <div className="flex items-center space-x-2">
+                                  <span className="text-2xl">{category.icon}</span>
+                                  <span className={`text-sm font-medium ${
+                                    isSelected ? 'text-[#FF6B35]' : 'text-gray-700'
+                                  }`}>
+                                    {category.label}
+                                  </span>
+                                </div>
+                              </button>
+                            );
+                          })}
+                        </div>
+                        <FormMessage />
+                      </FormItem>
+                    );
+                  }}
                 />
 
                 <div className="flex space-x-2">
