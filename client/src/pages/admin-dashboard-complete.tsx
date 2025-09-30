@@ -1886,10 +1886,6 @@ function PartnerManagementList({ partners, onRefresh }: { partners: any[], onRef
     }
   };
 
-  if (loading) {
-    return <div className="text-center py-4">Chargement des partenaires...</div>;
-  }
-
   if (partners.length === 0) {
     return (
       <div className="text-center py-8 text-kamsen-gray">
