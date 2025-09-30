@@ -19,10 +19,21 @@ export const equipment = pgTable("equipment", {
   partnerId: integer("partner_id"), // Reference to partner who owns this equipment
 });
 
+// Junction table for many-to-many equipment-partner relationship
+export const equipmentPartners = pgTable("equipment_partners", {
+  id: serial("id").primaryKey(),
+  equipmentId: integer("equipment_id").notNull().references(() => equipment.id, { onDelete: 'cascade' }),
+  partnerId: integer("partner_id").notNull().references(() => partners.id, { onDelete: 'cascade' }),
+  isPrimary: boolean("is_primary").notNull().default(false), // Le partenaire principal pour cet équipement
+  allocationWeight: integer("allocation_weight").notNull().default(1), // Poids pour la répartition des réservations
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
+
 export const bookings = pgTable("bookings", {
   id: serial("id").primaryKey(),
   equipmentId: integer("equipment_id").notNull(),
   userId: integer("user_id"), // New: Link to authenticated user
+  partnerId: integer("partner_id"), // Partner qui traite cette réservation
   customerName: text("customer_name").notNull(),
   customerEmail: text("customer_email").notNull(),
   customerPhone: text("customer_phone").notNull(),
@@ -547,6 +558,18 @@ export const equipmentRelations = relations(equipment, ({ many, one }) => ({
   }),
   inventory: many(equipmentInventory),
   maintenance: many(maintenanceSchedule),
+  equipmentPartners: many(equipmentPartners),
+}));
+
+export const equipmentPartnersRelations = relations(equipmentPartners, ({ one }) => ({
+  equipment: one(equipment, {
+    fields: [equipmentPartners.equipmentId],
+    references: [equipment.id],
+  }),
+  partner: one(partners, {
+    fields: [equipmentPartners.partnerId],
+    references: [partners.id],
+  }),
 }));
 
 export const bookingRelations = relations(bookings, ({ one, many }) => ({
@@ -600,6 +623,7 @@ export const partnerRelations = relations(partners, ({ one, many }) => ({
   fleet: many(partnerFleet),
   earnings: many(partnerEarnings),
   applications: many(partnerApplications),
+  equipmentPartners: many(equipmentPartners),
 }));
 
 export const partnerFleetRelations = relations(partnerFleet, ({ one }) => ({
@@ -697,6 +721,11 @@ export const insertDriverAssignmentSchema = createInsertSchema(driverAssignments
   updatedAt: true,
 });
 
+export const insertEquipmentPartnersSchema = createInsertSchema(equipmentPartners).omit({
+  id: true,
+  createdAt: true,
+});
+
 // Types
 export type Equipment = typeof equipment.$inferSelect;
 export type InsertEquipment = z.infer<typeof insertEquipmentSchema>;
@@ -749,3 +778,5 @@ export type PartnerApplication = typeof partnerApplications.$inferSelect;
 export type InsertPartnerApplication = z.infer<typeof insertPartnerApplicationSchema>;
 export type PartnerRequest = typeof partnerRequests.$inferSelect;
 export type InsertPartnerRequest = z.infer<typeof insertPartnerRequestSchema>;
+export type EquipmentPartner = typeof equipmentPartners.$inferSelect;
+export type InsertEquipmentPartner = z.infer<typeof insertEquipmentPartnersSchema>;
