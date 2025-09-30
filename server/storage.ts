@@ -216,6 +216,14 @@ export interface IStorage {
   setPrimaryPartner(equipmentId: number, partnerId: number): Promise<boolean>;
   getAllPartners(): Promise<Partner[]>;
   
+  // Booking workflow methods (admin-partner)
+  assignBookingToPartner(bookingId: number, partnerId: number, assignedBy: number): Promise<Booking | undefined>;
+  getBookingsByPartnerId(partnerId: number): Promise<Booking[]>;
+  partnerConfirmBooking(bookingId: number, partnerId: number): Promise<Booking | undefined>;
+  partnerRejectBooking(bookingId: number, partnerId: number, reason: string): Promise<Booking | undefined>;
+  adminApproveBooking(bookingId: number, adminId: number): Promise<Booking | undefined>;
+  adminRejectBooking(bookingId: number, adminId: number, reason: string): Promise<Booking | undefined>;
+  
   // GPS Tracking methods
   getAllServiceCities(): Promise<ServiceCity[]>;
   createServiceCity(cityData: InsertServiceCity): Promise<ServiceCity>;
@@ -1424,6 +1432,128 @@ export class DbStorage implements IStorage {
 
   async getAllPartners(): Promise<Partner[]> {
     return await db.select().from(partners);
+  }
+
+  // Booking workflow methods (admin-partner)
+  async assignBookingToPartner(bookingId: number, partnerId: number, assignedBy: number): Promise<Booking | undefined> {
+    const [updated] = await db
+      .update(bookings)
+      .set({
+        partnerId,
+        assignedBy,
+        assignedAt: new Date(),
+        status: 'assigned',
+        updatedAt: new Date()
+      })
+      .where(eq(bookings.id, bookingId))
+      .returning();
+    
+    console.log(`👤 Booking #${bookingId} assigné au Partner #${partnerId} par Admin #${assignedBy}`);
+    return updated;
+  }
+
+  async getBookingsByPartnerId(partnerId: number): Promise<Booking[]> {
+    return await db
+      .select()
+      .from(bookings)
+      .where(eq(bookings.partnerId, partnerId))
+      .orderBy(desc(bookings.createdAt));
+  }
+
+  async partnerConfirmBooking(bookingId: number, partnerId: number): Promise<Booking | undefined> {
+    // Vérifier que le booking est assigné à ce partenaire
+    const [booking] = await db
+      .select()
+      .from(bookings)
+      .where(and(
+        eq(bookings.id, bookingId),
+        eq(bookings.partnerId, partnerId)
+      ));
+
+    if (!booking) {
+      console.error(`❌ Booking #${bookingId} non trouvé ou non assigné au Partner #${partnerId}`);
+      return undefined;
+    }
+
+    const [updated] = await db
+      .update(bookings)
+      .set({
+        partnerConfirmed: true,
+        partnerConfirmedAt: new Date(),
+        partnerRejected: false,
+        status: 'partner_confirmed',
+        updatedAt: new Date()
+      })
+      .where(eq(bookings.id, bookingId))
+      .returning();
+    
+    console.log(`✅ Booking #${bookingId} confirmé par Partner #${partnerId}`);
+    return updated;
+  }
+
+  async partnerRejectBooking(bookingId: number, partnerId: number, reason: string): Promise<Booking | undefined> {
+    // Vérifier que le booking est assigné à ce partenaire
+    const [booking] = await db
+      .select()
+      .from(bookings)
+      .where(and(
+        eq(bookings.id, bookingId),
+        eq(bookings.partnerId, partnerId)
+      ));
+
+    if (!booking) {
+      console.error(`❌ Booking #${bookingId} non trouvé ou non assigné au Partner #${partnerId}`);
+      return undefined;
+    }
+
+    const [updated] = await db
+      .update(bookings)
+      .set({
+        partnerRejected: true,
+        partnerRejectedAt: new Date(),
+        partnerRejectionReason: reason,
+        partnerConfirmed: false,
+        status: 'partner_rejected',
+        updatedAt: new Date()
+      })
+      .where(eq(bookings.id, bookingId))
+      .returning();
+    
+    console.log(`❌ Booking #${bookingId} rejeté par Partner #${partnerId}: ${reason}`);
+    return updated;
+  }
+
+  async adminApproveBooking(bookingId: number, adminId: number): Promise<Booking | undefined> {
+    const [updated] = await db
+      .update(bookings)
+      .set({
+        adminApproved: true,
+        adminApprovedAt: new Date(),
+        adminApprovedBy: adminId,
+        status: 'confirmed',
+        updatedAt: new Date()
+      })
+      .where(eq(bookings.id, bookingId))
+      .returning();
+    
+    console.log(`✅ Booking #${bookingId} approuvé par Admin #${adminId} - Client notifié`);
+    return updated;
+  }
+
+  async adminRejectBooking(bookingId: number, adminId: number, reason: string): Promise<Booking | undefined> {
+    const [updated] = await db
+      .update(bookings)
+      .set({
+        adminApproved: false,
+        adminRejectionReason: reason,
+        status: 'rejected',
+        updatedAt: new Date()
+      })
+      .where(eq(bookings.id, bookingId))
+      .returning();
+    
+    console.log(`❌ Booking #${bookingId} rejeté par Admin #${adminId}: ${reason}`);
+    return updated;
   }
 }
 

@@ -1173,6 +1173,226 @@ ${validatedData.message}`
     }
   });
 
+  // Workflow: Admin booking management
+  // Get available partners for a booking's equipment
+  app.get("/api/admin/bookings/:id/available-partners", isAuthenticated, isAdmin, async (req, res) => {
+    try {
+      const bookingId = parseInt(req.params.id);
+      const bookings = await storage.getAllBookings();
+      const booking = bookings.find(b => b.id === bookingId);
+      
+      if (!booking) {
+        return res.status(404).json({ message: "Réservation non trouvée" });
+      }
+      
+      // Get all partners who have this equipment
+      const partners = await storage.getEquipmentPartners(booking.equipmentId);
+      res.json(partners);
+    } catch (error) {
+      console.error("Error fetching available partners:", error);
+      res.status(500).json({ message: "Erreur lors de la récupération des partenaires" });
+    }
+  });
+
+  // Assign or reassign a partner to a booking
+  app.put("/api/admin/bookings/:id/assign-partner", isAuthenticated, isAdmin, async (req, res) => {
+    try {
+      const bookingId = parseInt(req.params.id);
+      const { partnerId } = req.body;
+      const adminId = (req.user as any)?.id || 1; // Admin ID from session
+      
+      if (!partnerId) {
+        return res.status(400).json({ message: "ID partenaire requis" });
+      }
+      
+      const updatedBooking = await storage.assignBookingToPartner(bookingId, partnerId, adminId);
+      
+      if (!updatedBooking) {
+        return res.status(404).json({ message: "Réservation non trouvée" });
+      }
+      
+      res.json(updatedBooking);
+    } catch (error) {
+      console.error("Error assigning partner:", error);
+      res.status(500).json({ message: "Erreur lors de l'assignation du partenaire" });
+    }
+  });
+
+  // Admin approves booking after partner confirmation
+  app.put("/api/admin/bookings/:id/approve", isAuthenticated, isAdmin, async (req, res) => {
+    try {
+      const bookingId = parseInt(req.params.id);
+      const adminId = (req.user as any)?.id || 1;
+      
+      const updatedBooking = await storage.adminApproveBooking(bookingId, adminId);
+      
+      if (!updatedBooking) {
+        return res.status(404).json({ message: "Réservation non trouvée" });
+      }
+      
+      // Send confirmation email to customer
+      if (updatedBooking.customerEmail) {
+        const equipment = await storage.getEquipmentById(updatedBooking.equipmentId);
+        await EmailService.sendBookingConfirmedEmail({
+          bookingId: updatedBooking.id,
+          customerName: updatedBooking.customerName,
+          customerEmail: updatedBooking.customerEmail,
+          equipmentName: equipment?.name || 'Équipement',
+          startDate: updatedBooking.startDate,
+          endDate: updatedBooking.endDate,
+          totalPrice: updatedBooking.totalPrice,
+          deliveryCity: (updatedBooking as any).deliveryCity || 'Dakar',
+        });
+      }
+      
+      res.json(updatedBooking);
+    } catch (error) {
+      console.error("Error approving booking:", error);
+      res.status(500).json({ message: "Erreur lors de l'approbation de la réservation" });
+    }
+  });
+
+  // Admin rejects booking
+  app.put("/api/admin/bookings/:id/reject", isAuthenticated, isAdmin, async (req, res) => {
+    try {
+      const bookingId = parseInt(req.params.id);
+      const { reason } = req.body;
+      const adminId = (req.user as any)?.id || 1;
+      
+      if (!reason) {
+        return res.status(400).json({ message: "Raison du rejet requise" });
+      }
+      
+      const updatedBooking = await storage.adminRejectBooking(bookingId, adminId, reason);
+      
+      if (!updatedBooking) {
+        return res.status(404).json({ message: "Réservation non trouvée" });
+      }
+      
+      // Send rejection email to customer
+      if (updatedBooking.customerEmail) {
+        const equipment = await storage.getEquipmentById(updatedBooking.equipmentId);
+        await EmailService.sendBookingRejectedEmail({
+          bookingId: updatedBooking.id,
+          customerName: updatedBooking.customerName,
+          customerEmail: updatedBooking.customerEmail,
+          equipmentName: equipment?.name || 'Équipement',
+          rejectionReason: reason,
+        });
+      }
+      
+      res.json(updatedBooking);
+    } catch (error) {
+      console.error("Error rejecting booking:", error);
+      res.status(500).json({ message: "Erreur lors du rejet de la réservation" });
+    }
+  });
+
+  // Partner routes for booking workflow
+  // Get partner's assigned bookings
+  app.get("/api/partner/bookings", isAuthenticated, async (req, res) => {
+    try {
+      const userId = (req.user as any)?.id;
+      if (!userId) {
+        return res.status(401).json({ message: "Non autorisé" });
+      }
+      
+      // Get partner ID from user
+      const allPartners = await storage.getAllPartners();
+      const partner = allPartners.find(p => p.userId === userId);
+      
+      if (!partner) {
+        return res.status(404).json({ message: "Compte partenaire non trouvé" });
+      }
+      
+      const bookings = await storage.getBookingsByPartnerId(partner.id);
+      
+      // Enrich with equipment details
+      const enrichedBookings = await Promise.all(
+        bookings.map(async (booking) => {
+          const equipment = await storage.getEquipmentById(booking.equipmentId);
+          return {
+            ...booking,
+            equipmentName: equipment?.name,
+            equipmentCategory: equipment?.category,
+          };
+        })
+      );
+      
+      res.json(enrichedBookings);
+    } catch (error) {
+      console.error("Error fetching partner bookings:", error);
+      res.status(500).json({ message: "Erreur lors de la récupération des réservations" });
+    }
+  });
+
+  // Partner confirms a booking
+  app.put("/api/partner/bookings/:id/confirm", isAuthenticated, async (req, res) => {
+    try {
+      const bookingId = parseInt(req.params.id);
+      const userId = (req.user as any)?.id;
+      
+      if (!userId) {
+        return res.status(401).json({ message: "Non autorisé" });
+      }
+      
+      // Get partner ID from user
+      const allPartners = await storage.getAllPartners();
+      const partner = allPartners.find(p => p.userId === userId);
+      
+      if (!partner) {
+        return res.status(404).json({ message: "Compte partenaire non trouvé" });
+      }
+      
+      const updatedBooking = await storage.partnerConfirmBooking(bookingId, partner.id);
+      
+      if (!updatedBooking) {
+        return res.status(404).json({ message: "Réservation non trouvée ou non assignée" });
+      }
+      
+      res.json(updatedBooking);
+    } catch (error) {
+      console.error("Error confirming booking:", error);
+      res.status(500).json({ message: "Erreur lors de la confirmation de la réservation" });
+    }
+  });
+
+  // Partner rejects a booking
+  app.put("/api/partner/bookings/:id/reject", isAuthenticated, async (req, res) => {
+    try {
+      const bookingId = parseInt(req.params.id);
+      const { reason } = req.body;
+      const userId = (req.user as any)?.id;
+      
+      if (!userId) {
+        return res.status(401).json({ message: "Non autorisé" });
+      }
+      
+      if (!reason) {
+        return res.status(400).json({ message: "Raison du rejet requise" });
+      }
+      
+      // Get partner ID from user
+      const allPartners = await storage.getAllPartners();
+      const partner = allPartners.find(p => p.userId === userId);
+      
+      if (!partner) {
+        return res.status(404).json({ message: "Compte partenaire non trouvé" });
+      }
+      
+      const updatedBooking = await storage.partnerRejectBooking(bookingId, partner.id, reason);
+      
+      if (!updatedBooking) {
+        return res.status(404).json({ message: "Réservation non trouvée ou non assignée" });
+      }
+      
+      res.json(updatedBooking);
+    } catch (error) {
+      console.error("Error rejecting booking:", error);
+      res.status(500).json({ message: "Erreur lors du rejet de la réservation" });
+    }
+  });
+
   // Routes pour les notifications administrateur
   app.get("/api/admin/notifications", async (req, res) => {
     try {

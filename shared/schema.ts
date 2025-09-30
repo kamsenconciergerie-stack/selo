@@ -40,7 +40,7 @@ export const bookings = pgTable("bookings", {
   startDate: text("start_date").notNull(),
   endDate: text("end_date").notNull(),
   totalPrice: integer("total_price").notNull(),
-  status: text("status").notNull().default("pending"), // pending, confirmed, completed, cancelled
+  status: text("status").notNull().default("pending_assignment"), // pending_assignment, assigned, partner_confirmed, partner_rejected, confirmed, rejected, completed, cancelled
   paymentMethod: text("payment_method"),
   paymentStatus: text("payment_status").default("pending"),
   paymentReference: text("payment_reference"),
@@ -48,6 +48,20 @@ export const bookings = pgTable("bookings", {
   notes: text("notes"),
   canModify: boolean("can_modify").notNull().default(true),
   canCancel: boolean("can_cancel").notNull().default(true),
+  
+  // Workflow fields
+  assignedBy: integer("assigned_by"), // Admin user ID qui a assigné le partenaire
+  assignedAt: timestamp("assigned_at"), // Quand le partenaire a été assigné
+  partnerConfirmed: boolean("partner_confirmed").default(false), // Le partenaire a confirmé
+  partnerConfirmedAt: timestamp("partner_confirmed_at"), // Quand le partenaire a confirmé
+  partnerRejected: boolean("partner_rejected").default(false), // Le partenaire a rejeté
+  partnerRejectedAt: timestamp("partner_rejected_at"), // Quand le partenaire a rejeté
+  partnerRejectionReason: text("partner_rejection_reason"), // Raison du rejet par partenaire
+  adminApproved: boolean("admin_approved").default(false), // Admin a approuvé
+  adminApprovedAt: timestamp("admin_approved_at"), // Quand l'admin a approuvé
+  adminApprovedBy: integer("admin_approved_by"), // Admin user ID qui a approuvé
+  adminRejectionReason: text("admin_rejection_reason"), // Raison du rejet par admin
+  
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
