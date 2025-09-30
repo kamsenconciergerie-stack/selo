@@ -128,10 +128,40 @@ export default function BookingModal({ equipment, open, onOpenChange }: BookingM
         body: JSON.stringify(data)
       });
     },
-    onSuccess: (booking) => {
+    onSuccess: (booking: any) => {
+      // Calculer la durée en jours
+      const startDate = new Date(booking.startDate);
+      const endDate = new Date(booking.endDate);
+      const days = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
+      
       toast({
-        title: "Réservation confirmée",
-        description: "Votre réservation est confirmée. Vous paierez à la livraison de l'équipement.",
+        title: "✅ Demande de réservation enregistrée !",
+        description: (
+          <div className="space-y-3 mt-2">
+            <div className="bg-yellow-50 border-l-4 border-yellow-400 p-3 rounded">
+              <p className="text-sm font-medium text-yellow-800">
+                Votre demande est en cours de traitement
+              </p>
+            </div>
+            
+            <div className="space-y-2 text-sm">
+              <p><strong>N° de réservation :</strong> <span className="text-kamsen-orange font-bold">#{booking.id}</span></p>
+              <p><strong>Équipement :</strong> {equipment.name}</p>
+              <p><strong>Durée :</strong> {days} jour{days > 1 ? 's' : ''}</p>
+              <p><strong>Prix estimé :</strong> {formatPrice(booking.totalPrice)}</p>
+            </div>
+
+            <div className="bg-blue-50 border-l-4 border-blue-400 p-3 rounded">
+              <p className="text-xs text-blue-800 font-medium mb-2">📧 Prochaines étapes :</p>
+              <ul className="text-xs text-blue-700 space-y-1 ml-4 list-disc">
+                <li>Vous recevrez un email de confirmation ou de rejet</li>
+                <li>Vérifiez votre boîte mail régulièrement</li>
+                <li>Pour toute urgence : +221 71 018 89 89</li>
+              </ul>
+            </div>
+          </div>
+        ),
+        duration: 10000,
       });
       handleCloseBooking();
       queryClient.invalidateQueries({ queryKey: ["/api/equipment"] });
