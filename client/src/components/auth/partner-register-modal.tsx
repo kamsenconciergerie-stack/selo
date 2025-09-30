@@ -88,7 +88,7 @@ export function PartnerRegisterModal({ open, onOpenChange, onSwitchToLogin }: Pa
       const { confirmPassword, orangeMoneyNumber, waveNumber, ...registerData } = data;
       
       // Prepare mobile money codes
-      const mobileMoneyCodes = {};
+      const mobileMoneyCodes: Record<string, string> = {};
       if (orangeMoneyNumber) {
         mobileMoneyCodes.orange_money = orangeMoneyNumber;
       }

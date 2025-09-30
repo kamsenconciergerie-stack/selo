@@ -955,13 +955,13 @@ function AdminDashboardContent() {
                         <Badge 
                           className={
                             booking.status === 'confirmed' ? 'bg-kamsen-blue-light text-green-800' :
-                            booking.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
+                            booking.status === 'pending_assignment' ? 'bg-yellow-100 text-yellow-800' :
                             booking.status === 'completed' ? 'bg-kamsen-blue-light text-blue-800' :
                             'bg-red-100 text-red-800'
                           }
                         >
                           {booking.status === 'confirmed' ? 'Confirmée' :
-                           booking.status === 'pending' ? 'En attente' :
+                           booking.status === 'pending_assignment' ? 'En attente' :
                            booking.status === 'completed' ? 'Terminée' : 'Annulée'}
                         </Badge>
                         <span className="font-bold text-sm">{formatPriceLocal(booking.totalPrice)}</span>
