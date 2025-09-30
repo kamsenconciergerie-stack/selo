@@ -665,6 +665,7 @@ function EquipmentWithUnavailabilityList() {
 function AdminDashboardContent() {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [equipment, setEquipment] = useState<Equipment[]>([]);
+  const [partners, setPartners] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [stats, setStats] = useState<DashboardStats>({
     totalBookings: 0,
@@ -705,6 +706,13 @@ function AdminDashboardContent() {
       if (equipmentResponse.ok) {
         equipmentData = await equipmentResponse.json();
         setEquipment(equipmentData);
+      }
+
+      // Load partners
+      const partnersResponse = await fetch("/api/admin/partners");
+      if (partnersResponse.ok) {
+        const partnersData = await partnersResponse.json();
+        setPartners(partnersData);
       }
 
       // Load real stats from admin API
@@ -1309,7 +1317,7 @@ function AdminDashboardContent() {
                 </div>
               </CardHeader>
               <CardContent>
-                <PartnerManagementList />
+                <PartnerManagementList partners={partners} onRefresh={loadDashboardData} />
               </CardContent>
             </Card>
 
@@ -1833,34 +1841,11 @@ function BookingManagementList({ bookings, onStatusUpdate, onRefresh }: {
 }
 
 // Composant pour gérer la liste des partenaires
-function PartnerManagementList() {
-  const [partners, setPartners] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
+function PartnerManagementList({ partners, onRefresh }: { partners: any[], onRefresh: () => void }) {
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [selectedPartner, setSelectedPartner] = useState<any>(null);
   const { toast } = useToast();
   const queryClient = useQueryClient();
-
-  const fetchPartners = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch('/api/admin/partners');
-      if (response.ok) {
-        const data = await response.json();
-        setPartners(data);
-      } else {
-        console.error('Failed to fetch partners:', response.status);
-      }
-    } catch (error) {
-      console.error('Erreur lors du chargement des partenaires:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchPartners();
-  }, []);
 
   const deletePartner = async (partnerId: number) => {
     if (!confirm('Êtes-vous sûr de vouloir supprimer ce partenaire ?')) return;
@@ -1875,7 +1860,7 @@ function PartnerManagementList() {
           title: 'Partenaire supprimé',
           description: 'Le partenaire a été supprimé avec succès.',
         });
-        fetchPartners();
+        onRefresh();
       } else {
         throw new Error('Erreur lors de la suppression');
       }
