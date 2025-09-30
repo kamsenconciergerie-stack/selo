@@ -1076,15 +1076,15 @@ function AdminDashboardContent() {
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div className="text-center p-4 bg-blue-50 rounded-lg">
-                    <p className="text-2xl font-bold text-kamsen-blue">{stats.partnerRequests?.total || 15}</p>
+                    <p className="text-2xl font-bold text-kamsen-blue">{stats.partnerRequests?.total || 0}</p>
                     <p className="text-sm text-kamsen-gray">Total Partenaires</p>
                   </div>
                   <div className="text-center p-4 bg-green-50 rounded-lg">
-                    <p className="text-2xl font-bold text-kamsen-blue">{(stats.partnerRequests?.total || 15) - (stats.partnerRequests?.pending || 2)}</p>
+                    <p className="text-2xl font-bold text-kamsen-blue">{partners.filter(p => p.status === 'approved').length}</p>
                     <p className="text-sm text-kamsen-gray">Partenaires Actifs</p>
                   </div>
                   <div className="text-center p-4 bg-orange-50 rounded-lg">
-                    <p className="text-2xl font-bold text-orange-600">{stats.partnerRequests?.pending || 2}</p>
+                    <p className="text-2xl font-bold text-orange-600">{stats.partnerRequests?.pending || 0}</p>
                     <p className="text-sm text-kamsen-gray">En Attente</p>
                   </div>
                 </div>
@@ -1097,20 +1097,21 @@ function AdminDashboardContent() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
-                  <div className="flex items-center justify-between p-3 bg-kamsen-blue-light rounded-lg">
-                    <div>
-                      <p className="font-medium">Transport Express Dakar</p>
-                      <p className="text-sm text-kamsen-gray">Dakar - Transport routier</p>
-                    </div>
-                    <Badge className="bg-kamsen-blue-light text-green-800">Vérifié</Badge>
-                  </div>
-                  <div className="flex items-center justify-between p-3 bg-kamsen-blue-light rounded-lg">
-                    <div>
-                      <p className="font-medium">Logistique Sénégal Pro</p>
-                      <p className="text-sm text-kamsen-gray">Thiès - Logistique</p>
-                    </div>
-                    <Badge className="bg-yellow-100 text-yellow-800">En cours</Badge>
-                  </div>
+                  {partners.length > 0 ? (
+                    partners.slice(0, 2).map((partner) => (
+                      <div key={partner.id} className="flex items-center justify-between p-3 bg-kamsen-blue-light rounded-lg">
+                        <div>
+                          <p className="font-medium">{partner.companyName}</p>
+                          <p className="text-sm text-kamsen-gray">{partner.businessType}</p>
+                        </div>
+                        <Badge className={partner.status === 'approved' ? 'bg-kamsen-blue-light text-green-800' : 'bg-yellow-100 text-yellow-800'}>
+                          {partner.status === 'approved' ? 'Actif' : 'En attente'}
+                        </Badge>
+                      </div>
+                    ))
+                  ) : (
+                    <p className="text-sm text-kamsen-gray text-center py-4">Aucun partenaire enregistré</p>
+                  )}
                 </div>
               </CardContent>
             </Card>
@@ -1119,22 +1120,22 @@ function AdminDashboardContent() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <MapPin className="h-5 w-5" />
-                  Répartition géographique
+                  Équipements disponibles
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <span>Dakar</span>
-                    <span className="font-bold">8 partenaires</span>
+                    <span>Total équipements</span>
+                    <span className="font-bold">{stats.totalEquipment}</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span>Thiès</span>
-                    <span className="font-bold">3 partenaires</span>
+                    <span>Disponibles</span>
+                    <span className="font-bold text-green-600">{stats.availableEquipment}</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span>Kaolack</span>
-                    <span className="font-bold">2 partenaires</span>
+                    <span>En location</span>
+                    <span className="font-bold text-orange-600">{stats.totalEquipment - stats.availableEquipment}</span>
                   </div>
                 </div>
               </CardContent>
@@ -1146,29 +1147,27 @@ function AdminDashboardContent() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <TrendingUp className="h-5 w-5" />
-                  Top Partenaires
+                  Statistiques Réservations
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
                   <div className="flex items-center justify-between p-3 bg-kamsen-blue-light rounded-lg">
                     <div>
-                      <p className="font-medium">Transport Express Dakar</p>
-                      <p className="text-sm text-kamsen-gray">Note: 4.8/5 - 45 commandes</p>
+                      <p className="font-medium">Total des réservations</p>
+                      <p className="text-sm text-kamsen-gray">Toutes les réservations</p>
                     </div>
                     <div className="text-right">
-                      <span className="font-bold text-kamsen-blue">95%</span>
-                      <p className="text-xs text-kamsen-gray">Taux de réussite</p>
+                      <span className="font-bold text-kamsen-blue text-2xl">{stats.totalBookings}</span>
                     </div>
                   </div>
-                  <div className="flex items-center justify-between p-3 bg-kamsen-blue-light rounded-lg">
+                  <div className="flex items-center justify-between p-3 bg-green-50 rounded-lg">
                     <div>
-                      <p className="font-medium">Camions Sahel</p>
-                      <p className="text-sm text-kamsen-gray">Note: 4.6/5 - 32 commandes</p>
+                      <p className="font-medium">Réservations confirmées</p>
+                      <p className="text-sm text-kamsen-gray">Chiffre d'affaires: {formatPriceLocal(stats.totalRevenue)}</p>
                     </div>
                     <div className="text-right">
-                      <span className="font-bold text-kamsen-blue">92%</span>
-                      <p className="text-xs text-kamsen-gray">Taux de réussite</p>
+                      <span className="font-bold text-green-600 text-2xl">{stats.confirmedBookings}</span>
                     </div>
                   </div>
                 </div>
@@ -1184,24 +1183,31 @@ function AdminDashboardContent() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
-                  <div className="flex items-center justify-between p-3 bg-yellow-50 rounded-lg">
-                    <div>
-                      <p className="font-medium">Validation partenaire</p>
-                      <p className="text-sm text-kamsen-gray">Logistique Sénégal Pro - en attente</p>
+                  {stats.pendingBookings > 0 && (
+                    <div className="flex items-center justify-between p-3 bg-yellow-50 rounded-lg">
+                      <div>
+                        <p className="font-medium">Réservations en attente</p>
+                        <p className="text-sm text-kamsen-gray">{stats.pendingBookings} réservation(s) à traiter</p>
+                      </div>
+                      <Button size="sm" className="bg-kamsen-blue hover:bg-kamsen-blue/90" onClick={() => document.querySelector('[value="bookings"]')?.click()}>
+                        Voir
+                      </Button>
                     </div>
-                    <Button size="sm" className="bg-kamsen-blue hover:bg-kamsen-blue/90">
-                      Examiner
-                    </Button>
-                  </div>
-                  <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
-                    <div>
-                      <p className="font-medium">Réservation litigieuse</p>
-                      <p className="text-sm text-kamsen-gray">Commande #4521 - client mécontent</p>
+                  )}
+                  {(stats.partnerRequests?.pending || 0) > 0 && (
+                    <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
+                      <div>
+                        <p className="font-medium">Demandes de partenariat</p>
+                        <p className="text-sm text-kamsen-gray">{stats.partnerRequests?.pending} demande(s) en attente</p>
+                      </div>
+                      <Button size="sm" variant="outline" onClick={() => document.querySelector('[value="partners"]')?.click()}>
+                        Examiner
+                      </Button>
                     </div>
-                    <Button size="sm" variant="outline">
-                      Résoudre
-                    </Button>
-                  </div>
+                  )}
+                  {stats.pendingBookings === 0 && (stats.partnerRequests?.pending || 0) === 0 && (
+                    <p className="text-sm text-kamsen-gray text-center py-4">Aucune action requise pour le moment</p>
+                  )}
                 </div>
               </CardContent>
             </Card>
