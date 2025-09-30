@@ -1844,7 +1844,7 @@ function PartnerManagementList() {
   const fetchPartners = async () => {
     try {
       setLoading(true);
-      const response = await fetch('/api/partners');
+      const response = await fetch('/api/admin/partners');
       if (response.ok) {
         const data = await response.json();
         setPartners(data);

@@ -1519,8 +1519,8 @@ ${validatedData.message}`
     }
   });
 
-  // Partners routes
-  app.get("/api/partners", async (req, res) => {
+  // Admin route to get all partners
+  app.get("/api/admin/partners", async (req, res) => {
     try {
       const partners = await storage.getAllPartners();
       res.json(partners);
@@ -2052,16 +2052,6 @@ ${validatedData.message}`
     }
   });
 
-  // Get all partners (for admin UI)
-  app.get("/api/partners", isAuthenticated, isAdmin, async (req, res) => {
-    try {
-      const partners = await storage.getAllPartners();
-      res.json(partners);
-    } catch (error) {
-      console.error("Error fetching all partners:", error);
-      res.status(500).json({ message: "Erreur lors de la récupération des partenaires" });
-    }
-  });
 
   const httpServer = createServer(app);
   return httpServer;
