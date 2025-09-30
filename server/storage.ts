@@ -497,9 +497,9 @@ export class DbStorage implements IStorage {
     const user = await this.getUserByEmail(email);
     if (!user || !user.password) return null;
     
-    // In production, use bcrypt to verify password
-    // For now, simple comparison (you should implement proper password hashing)
-    if (user.password === password) {
+    // Use bcrypt to verify password
+    const isValid = await bcrypt.compare(password, user.password);
+    if (isValid) {
       return user;
     }
     return null;

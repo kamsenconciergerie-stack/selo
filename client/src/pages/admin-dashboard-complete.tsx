@@ -44,6 +44,8 @@ interface Booking {
   equipmentId: number;
   equipmentName?: string;
   equipmentCategory?: string;
+  partnerName?: string;
+  partnerId?: number;
   customerName: string;
   customerEmail: string;
   customerPhone: string;
@@ -1530,6 +1532,11 @@ function BookingManagementList({ bookings, onStatusUpdate, onRefresh }: {
                 <h5 className="font-semibold text-kamsen-blue mb-2">Équipement</h5>
                 <p className="font-medium">{booking.equipmentName || `Équipement #${booking.equipmentId}`}</p>
                 <p className="text-sm text-kamsen-gray">{booking.equipmentCategory}</p>
+                {booking.partnerName && (
+                  <p className="text-sm text-kamsen-orange font-medium mt-1">
+                    Partenaire: {booking.partnerName}
+                  </p>
+                )}
                 <p className="text-sm text-kamsen-gray">
                   {calculateDuration(booking.startDate, booking.endDate)} jour(s)
                 </p>
@@ -1658,6 +1665,9 @@ function BookingManagementList({ bookings, onStatusUpdate, onRefresh }: {
                     <div className="space-y-2 text-sm">
                       <p><span className="font-medium">Nom:</span> {selectedBooking.equipmentName || `Équipement #${selectedBooking.equipmentId}`}</p>
                       <p><span className="font-medium">Catégorie:</span> {selectedBooking.equipmentCategory}</p>
+                      {selectedBooking.partnerName && (
+                        <p><span className="font-medium">Partenaire:</span> <span className="text-kamsen-orange">{selectedBooking.partnerName}</span></p>
+                      )}
                     </div>
                   </div>
                   

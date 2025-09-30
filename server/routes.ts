@@ -1062,17 +1062,22 @@ ${validatedData.message}`
   // Admin routes for bookings management (protected)
   app.get("/api/admin/bookings", isAuthenticated, isAdmin, async (req, res) => {
     try {
-      // Get all bookings with equipment information
+      // Get all bookings with equipment and partner information
       const allBookings = await storage.getAllBookings();
       const equipmentList = await storage.getAllEquipment();
+      const partnersList = await storage.getAllPartners();
       
-      // Enrich bookings with equipment details
+      // Enrich bookings with equipment and partner details
       const enrichedBookings = allBookings.map(booking => {
         const equipment = equipmentList.find(eq => eq.id === booking.equipmentId);
+        const partner = equipment?.partnerId ? partnersList.find(p => p.id === equipment.partnerId) : null;
+        
         return {
           ...booking,
           equipmentName: equipment?.name,
-          equipmentCategory: equipment?.category
+          equipmentCategory: equipment?.category,
+          partnerName: partner?.companyName,
+          partnerId: partner?.id
         };
       });
       
