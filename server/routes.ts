@@ -74,6 +74,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       res.json(enrichedEquipment);
     } catch (error) {
+      console.error("❌ Erreur GET /api/equipment:", error);
       res.status(500).json({ message: "Erreur lors de la récupération des équipements" });
     }
   });

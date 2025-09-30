@@ -379,13 +379,36 @@ export class DbStorage implements IStorage {
   }
 
   async createBooking(bookingData: InsertBooking): Promise<Booking> {
-    const result = await db.insert(bookings).values(bookingData).returning();
+    // 🎯 AUTOMATIQUE: Récupérer et assigner le partenaire principal de l'équipement
+    let assignedPartnerId: number | null = null;
+    
+    if (bookingData.equipmentId) {
+      const equipmentPartners = await this.getEquipmentPartners(Number(bookingData.equipmentId));
+      const primaryPartner = equipmentPartners.find(p => p.isPrimary);
+      
+      if (primaryPartner) {
+        assignedPartnerId = primaryPartner.partnerId;
+        console.log(`🤝 Partenaire principal assigné à la réservation: Partner #${assignedPartnerId}`);
+      } else if (equipmentPartners.length > 0) {
+        // Si pas de partenaire principal, prendre le premier
+        assignedPartnerId = equipmentPartners[0].partnerId;
+        console.log(`🤝 Premier partenaire assigné à la réservation: Partner #${assignedPartnerId}`);
+      }
+    }
+    
+    // Ajouter le partnerId aux données du booking
+    const bookingDataWithPartner = {
+      ...bookingData,
+      partnerId: assignedPartnerId
+    };
+    
+    const result = await db.insert(bookings).values(bookingDataWithPartner).returning();
     const newBooking = result[0];
     
     // 🎯 AUTOMATIQUE: Créer les gains partenaires à 85% du montant total (15% commission Kamsen)
-    if (newBooking && newBooking.totalPrice && newBooking.id) {
+    if (newBooking && newBooking.totalPrice && newBooking.id && assignedPartnerId) {
       await this.createPartnerEarning({
-        partnerId: 1, // ID du partenaire assigné (pour l'instant, partenaire par défaut)
+        partnerId: assignedPartnerId,
         bookingId: newBooking.id,
         rentalAmount: newBooking.totalPrice,
         commissionRate: 0.15, // 15% pour Kamsen
@@ -395,7 +418,7 @@ export class DbStorage implements IStorage {
         payoutMethod: "mobile_money"
       });
       
-      console.log(`💰 Gains partenaires créés automatiquement: 85% de ${newBooking.totalPrice} XOF = ${Math.round(newBooking.totalPrice * 0.85)} XOF`);
+      console.log(`💰 Gains partenaires créés automatiquement pour Partner #${assignedPartnerId}: 85% de ${newBooking.totalPrice} XOF = ${Math.round(newBooking.totalPrice * 0.85)} XOF`);
     }
     
     return newBooking;
@@ -1306,6 +1329,101 @@ export class DbStorage implements IStorage {
       console.error('Error deleting partner:', error);
       return false;
     }
+  }
+
+  // Equipment-Partner many-to-many relationship methods
+  async getEquipmentPartners(equipmentId: number): Promise<any[]> {
+    const result = await db
+      .select({
+        id: equipmentPartners.id,
+        equipmentId: equipmentPartners.equipmentId,
+        partnerId: equipmentPartners.partnerId,
+        isPrimary: equipmentPartners.isPrimary,
+        allocationWeight: equipmentPartners.allocationWeight,
+        partnerName: partners.companyName,
+        partnerEmail: users.email,
+        createdAt: equipmentPartners.createdAt,
+      })
+      .from(equipmentPartners)
+      .leftJoin(partners, eq(equipmentPartners.partnerId, partners.id))
+      .leftJoin(users, eq(partners.userId, users.id))
+      .where(eq(equipmentPartners.equipmentId, equipmentId));
+    
+    return result;
+  }
+
+  async getPartnerEquipmentIds(partnerId: number): Promise<number[]> {
+    const result = await db
+      .select({ equipmentId: equipmentPartners.equipmentId })
+      .from(equipmentPartners)
+      .where(eq(equipmentPartners.partnerId, partnerId));
+    
+    return result.map(r => r.equipmentId);
+  }
+
+  async assignPartnerToEquipment(
+    equipmentId: number,
+    partnerId: number,
+    isPrimary: boolean = false,
+    allocationWeight: number = 1
+  ): Promise<any> {
+    // Si isPrimary est true, on retire le flag primary des autres partenaires
+    if (isPrimary) {
+      await db
+        .update(equipmentPartners)
+        .set({ isPrimary: false })
+        .where(eq(equipmentPartners.equipmentId, equipmentId));
+    }
+
+    const [result] = await db
+      .insert(equipmentPartners)
+      .values({
+        equipmentId,
+        partnerId,
+        isPrimary,
+        allocationWeight,
+      })
+      .returning();
+    
+    return result;
+  }
+
+  async removePartnerFromEquipment(equipmentId: number, partnerId: number): Promise<boolean> {
+    const result = await db
+      .delete(equipmentPartners)
+      .where(
+        and(
+          eq(equipmentPartners.equipmentId, equipmentId),
+          eq(equipmentPartners.partnerId, partnerId)
+        )
+      );
+    
+    return (result.rowCount || 0) > 0;
+  }
+
+  async setPrimaryPartner(equipmentId: number, partnerId: number): Promise<boolean> {
+    // Retirer le flag primary de tous les partenaires de cet équipement
+    await db
+      .update(equipmentPartners)
+      .set({ isPrimary: false })
+      .where(eq(equipmentPartners.equipmentId, equipmentId));
+
+    // Définir le nouveau partenaire primary
+    const result = await db
+      .update(equipmentPartners)
+      .set({ isPrimary: true })
+      .where(
+        and(
+          eq(equipmentPartners.equipmentId, equipmentId),
+          eq(equipmentPartners.partnerId, partnerId)
+        )
+      );
+    
+    return (result.rowCount || 0) > 0;
+  }
+
+  async getAllPartners(): Promise<Partner[]> {
+    return await db.select().from(partners);
   }
 }
 
@@ -2898,4 +3016,4 @@ export class MemStorage implements IStorage {
   }
 }
 
-export const storage = new MemStorage();
+export const storage = new DbStorage();
