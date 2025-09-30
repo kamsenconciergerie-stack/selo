@@ -16,6 +16,7 @@ export const equipment = pgTable("equipment", {
   weight: text("weight"),
   fuelType: text("fuel_type"),
   power: text("power"),
+  partnerId: integer("partner_id"), // Reference to partner who owns this equipment
 });
 
 export const bookings = pgTable("bookings", {
