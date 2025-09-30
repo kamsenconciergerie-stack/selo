@@ -79,6 +79,8 @@ export function PartnerRegisterModal({ open, onOpenChange, onSwitchToLogin }: Pa
     },
   });
 
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+
   const partnerRegisterMutation = useMutation({
     mutationFn: async (data: PartnerRegisterData) => {
       const { confirmPassword, orangeMoneyNumber, waveNumber, ...registerData } = data;
@@ -101,13 +103,14 @@ export function PartnerRegisterModal({ open, onOpenChange, onSwitchToLogin }: Pa
       });
     },
     onSuccess: () => {
-      toast({
-        title: "Demande soumise avec succès",
-        description: "Votre demande de partenariat a été soumise. Nous vous contacterons sous 48h pour la vérification de vos documents.",
-      });
       onOpenChange(false);
       form.reset();
       setCurrentStep("account");
+      setShowSuccessPopup(true);
+      
+      setTimeout(() => {
+        setShowSuccessPopup(false);
+      }, 10000);
     },
     onError: (error: Error) => {
       toast({
@@ -486,6 +489,73 @@ export function PartnerRegisterModal({ open, onOpenChange, onSwitchToLogin }: Pa
           </Button>
         </div>
       </DialogContent>
+      
+      {showSuccessPopup && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 animate-in fade-in-0">
+          <div className="bg-white rounded-lg shadow-2xl max-w-2xl w-full mx-4 p-8 animate-in zoom-in-95">
+            <div className="flex items-center justify-center mb-6">
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
+                <svg className="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            </div>
+            
+            <h2 className="text-3xl font-bold text-center mb-4 text-gray-900">
+              Demande envoyée avec succès !
+            </h2>
+            
+            <div className="bg-blue-50 border-l-4 border-blue-600 p-6 mb-6">
+              <h3 className="font-semibold text-blue-900 mb-3 text-lg">
+                📋 Votre demande est en cours d'étude
+              </h3>
+              <div className="space-y-2 text-blue-800">
+                <p className="flex items-start">
+                  <span className="mr-2">•</span>
+                  <span>Notre équipe va examiner votre candidature dans les <strong>48 heures</strong></span>
+                </p>
+                <p className="flex items-start">
+                  <span className="mr-2">•</span>
+                  <span>Nous vous contacterons par <strong>email</strong> et <strong>téléphone</strong> pour confirmer</span>
+                </p>
+                <p className="flex items-start">
+                  <span className="mr-2">•</span>
+                  <span>Si votre demande est approuvée, vous recevrez vos identifiants d'accès</span>
+                </p>
+              </div>
+            </div>
+            
+            <div className="bg-gray-50 rounded-lg p-6 mb-6">
+              <h3 className="font-semibold text-gray-900 mb-3">
+                📞 Besoin d'assistance ?
+              </h3>
+              <div className="space-y-2 text-gray-700">
+                <p className="flex items-center">
+                  <span className="font-medium mr-2">Téléphone :</span>
+                  <a href="tel:+221710188989" className="text-[#FF6B35] hover:underline">+221 71 018 89 89</a>
+                </p>
+                <p className="flex items-center">
+                  <span className="font-medium mr-2">Email :</span>
+                  <a href="mailto:contact@kamsenlogistic.com" className="text-[#FF6B35] hover:underline">contact@kamsenlogistic.com</a>
+                </p>
+              </div>
+            </div>
+            
+            <div className="text-center">
+              <Button
+                onClick={() => setShowSuccessPopup(false)}
+                className="bg-[#FF6B35] hover:bg-[#FF6B35]/90 text-white px-8 py-3 text-lg"
+              >
+                Compris
+              </Button>
+            </div>
+            
+            <p className="text-center text-sm text-gray-500 mt-4">
+              Cette fenêtre se fermera automatiquement dans quelques secondes
+            </p>
+          </div>
+        </div>
+      )}
     </Dialog>
   );
 }
