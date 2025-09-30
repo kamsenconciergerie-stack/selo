@@ -66,7 +66,8 @@ import {
   partnerEarnings,
   partners,
   partnerDrivers,
-  driverAssignments
+  driverAssignments,
+  equipmentPartners
 } from "../shared/schema";
 import { eq, ilike, or, desc } from "drizzle-orm";
 import { db } from "../shared/db";
@@ -207,6 +208,14 @@ export interface IStorage {
   getUnavailabilityByEquipment(equipmentId: number): Promise<any[]>;
   getEquipmentPartnerInfo(equipmentId: number): Promise<any>;
   
+  // Equipment-Partner relationship management (many-to-many)
+  getEquipmentPartners(equipmentId: number): Promise<any[]>;
+  getPartnerEquipmentIds(partnerId: number): Promise<number[]>;
+  assignPartnerToEquipment(equipmentId: number, partnerId: number, isPrimary?: boolean, allocationWeight?: number): Promise<any>;
+  removePartnerFromEquipment(equipmentId: number, partnerId: number): Promise<boolean>;
+  setPrimaryPartner(equipmentId: number, partnerId: number): Promise<boolean>;
+  getAllPartners(): Promise<Partner[]>;
+  
   // GPS Tracking methods
   getAllServiceCities(): Promise<ServiceCity[]>;
   createServiceCity(cityData: InsertServiceCity): Promise<ServiceCity>;
@@ -235,7 +244,16 @@ export class DbStorage implements IStorage {
   }
 
   async getEquipmentByPartnerId(partnerId: number): Promise<Equipment[]> {
-    return await db.select().from(equipment).where(eq(equipment.partnerId, partnerId));
+    // Get equipment IDs associated with this partner via equipment_partners junction table
+    const equipmentIds = await this.getPartnerEquipmentIds(partnerId);
+    
+    if (equipmentIds.length === 0) {
+      return [];
+    }
+    
+    // Fetch the equipment details
+    const equipmentList = await db.select().from(equipment);
+    return equipmentList.filter(eq => equipmentIds.includes(eq.id));
   }
 
   // Partner drivers management
@@ -2558,6 +2576,97 @@ export class MemStorage implements IStorage {
       console.error("Error fetching partner info:", error);
       return null;
     }
+  }
+
+  // Equipment-Partner many-to-many relationship methods
+  async getEquipmentPartners(equipmentId: number): Promise<any[]> {
+    const result = await db
+      .select({
+        id: equipmentPartners.id,
+        equipmentId: equipmentPartners.equipmentId,
+        partnerId: equipmentPartners.partnerId,
+        isPrimary: equipmentPartners.isPrimary,
+        allocationWeight: equipmentPartners.allocationWeight,
+        partnerName: partners.companyName,
+        partnerEmail: users.email,
+        createdAt: equipmentPartners.createdAt,
+      })
+      .from(equipmentPartners)
+      .leftJoin(partners, eq(equipmentPartners.partnerId, partners.id))
+      .leftJoin(users, eq(partners.userId, users.id))
+      .where(eq(equipmentPartners.equipmentId, equipmentId));
+    
+    return result;
+  }
+
+  async getPartnerEquipmentIds(partnerId: number): Promise<number[]> {
+    const result = await db
+      .select({ equipmentId: equipmentPartners.equipmentId })
+      .from(equipmentPartners)
+      .where(eq(equipmentPartners.partnerId, partnerId));
+    
+    return result.map(r => r.equipmentId);
+  }
+
+  async assignPartnerToEquipment(
+    equipmentId: number,
+    partnerId: number,
+    isPrimary: boolean = false,
+    allocationWeight: number = 1
+  ): Promise<any> {
+    // Si isPrimary est true, on retire le flag primary des autres partenaires
+    if (isPrimary) {
+      await db
+        .update(equipmentPartners)
+        .set({ isPrimary: false })
+        .where(eq(equipmentPartners.equipmentId, equipmentId));
+    }
+
+    const [result] = await db
+      .insert(equipmentPartners)
+      .values({
+        equipmentId,
+        partnerId,
+        isPrimary,
+        allocationWeight,
+      })
+      .returning();
+    
+    return result;
+  }
+
+  async removePartnerFromEquipment(equipmentId: number, partnerId: number): Promise<boolean> {
+    const result = await db
+      .delete(equipmentPartners)
+      .where(
+        eq(equipmentPartners.equipmentId, equipmentId) &&
+        eq(equipmentPartners.partnerId, partnerId)
+      );
+    
+    return (result.rowCount || 0) > 0;
+  }
+
+  async setPrimaryPartner(equipmentId: number, partnerId: number): Promise<boolean> {
+    // Retirer le flag primary de tous les partenaires de cet équipement
+    await db
+      .update(equipmentPartners)
+      .set({ isPrimary: false })
+      .where(eq(equipmentPartners.equipmentId, equipmentId));
+
+    // Définir le nouveau partenaire primary
+    const result = await db
+      .update(equipmentPartners)
+      .set({ isPrimary: true })
+      .where(
+        eq(equipmentPartners.equipmentId, equipmentId) &&
+        eq(equipmentPartners.partnerId, partnerId)
+      );
+    
+    return (result.rowCount || 0) > 0;
+  }
+
+  async getAllPartners(): Promise<Partner[]> {
+    return await db.select().from(partners);
   }
 
   async getEquipmentOwners(): Promise<any[]> {
