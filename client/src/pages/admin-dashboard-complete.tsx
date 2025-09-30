@@ -52,11 +52,23 @@ interface Booking {
   startDate: string;
   endDate: string;
   totalPrice: number;
-  status: 'pending' | 'confirmed' | 'completed' | 'cancelled';
+  status: 'pending_assignment' | 'assigned' | 'partner_confirmed' | 'partner_rejected' | 'confirmed' | 'rejected' | 'completed' | 'cancelled';
   paymentStatus?: string;
   codeParrain?: string;
   notes?: string;
   createdAt: string;
+  // Workflow fields
+  assignedBy?: number;
+  assignedAt?: string;
+  partnerConfirmed?: boolean;
+  partnerConfirmedAt?: string;
+  partnerRejected?: boolean;
+  partnerRejectedAt?: string;
+  partnerRejectionReason?: string;
+  adminApproved?: boolean;
+  adminApprovedAt?: string;
+  adminApprovedBy?: number;
+  adminRejectionReason?: string;
 }
 
 interface Equipment {

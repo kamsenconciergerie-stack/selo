@@ -404,10 +404,11 @@ export class DbStorage implements IStorage {
       }
     }
     
-    // Ajouter le partnerId aux données du booking
+    // Ajouter le partnerId aux données du booking et définir le statut initial
     const bookingDataWithPartner = {
       ...bookingData,
-      partnerId: assignedPartnerId
+      partnerId: assignedPartnerId,
+      status: 'pending_assignment' // Nouveau statut initial pour le workflow
     };
     
     const result = await db.insert(bookings).values(bookingDataWithPartner).returning();
