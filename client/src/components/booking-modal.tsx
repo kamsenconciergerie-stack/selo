@@ -25,26 +25,78 @@ interface BookingModalProps {
 
 const bookingFormSchema = insertBookingSchema.pick({
   equipmentId: true,
-  customerName: true,
-  customerEmail: true,
-  customerPhone: true,
   totalPrice: true,
   codeParrain: true,
   notes: true,
 }).extend({
-  startDate: z.string().min(1, "Date de début requise").refine((date) => {
-    const selectedDate = new Date(date);
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    return selectedDate >= today;
-  }, "La date de début ne peut pas être antérieure à aujourd'hui"),
-  endDate: z.string().min(1, "Date de fin requise").refine((date) => {
-    const selectedDate = new Date(date);
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    return selectedDate >= today;
-  }, "La date de fin ne peut pas être antérieure à aujourd'hui"),
+  customerName: z.string()
+    .min(3, "Le nom doit contenir au moins 3 caractères")
+    .max(100, "Le nom ne peut pas dépasser 100 caractères")
+    .refine((name) => {
+      const nameParts = name.trim().split(/\s+/);
+      return nameParts.length >= 2;
+    }, "Veuillez entrer votre nom complet (prénom et nom)")
+    .refine((name) => {
+      return /^[a-zA-ZÀ-ÿ\s'-]+$/.test(name);
+    }, "Le nom ne peut contenir que des lettres, espaces, apostrophes et tirets"),
+  
+  customerEmail: z.string()
+    .min(1, "L'email est requis")
+    .email("Format d'email invalide")
+    .toLowerCase()
+    .refine((email) => {
+      return /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/.test(email);
+    }, "Veuillez entrer une adresse email valide"),
+  
+  customerPhone: z.string()
+    .min(1, "Le numéro de téléphone est requis")
+    .refine((phone) => {
+      const cleaned = phone.replace(/\s/g, '');
+      return /^\+221[0-9]{9}$/.test(cleaned) || /^221[0-9]{9}$/.test(cleaned) || /^[0-9]{9}$/.test(cleaned);
+    }, "Format invalide. Utilisez: +221XXXXXXXXX, 221XXXXXXXXX ou XXXXXXXXX (9 chiffres)"),
+  
+  startDate: z.string()
+    .min(1, "Date de début requise")
+    .refine((date) => {
+      const selectedDate = new Date(date);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      return selectedDate >= today;
+    }, "La date de début ne peut pas être antérieure à aujourd'hui"),
+  
+  endDate: z.string()
+    .min(1, "Date de fin requise")
+    .refine((date) => {
+      const selectedDate = new Date(date);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      return selectedDate >= today;
+    }, "La date de fin ne peut pas être antérieure à aujourd'hui"),
+  
   paymentMethod: z.literal("delivery"),
+}).refine((data) => {
+  const startDate = new Date(data.startDate);
+  const endDate = new Date(data.endDate);
+  return endDate > startDate;
+}, {
+  message: "La date de fin doit être après la date de début",
+  path: ["endDate"],
+}).refine((data) => {
+  const startDate = new Date(data.startDate);
+  const endDate = new Date(data.endDate);
+  const daysDiff = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
+  return daysDiff >= 1;
+}, {
+  message: "La durée de location doit être d'au moins 1 jour",
+  path: ["endDate"],
+}).refine((data) => {
+  const startDate = new Date(data.startDate);
+  const endDate = new Date(data.endDate);
+  const daysDiff = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
+  return daysDiff <= 365;
+}, {
+  message: "La durée de location ne peut pas dépasser 365 jours",
+  path: ["endDate"],
 });
 
 type BookingFormData = z.infer<typeof bookingFormSchema>;
@@ -181,9 +233,13 @@ export default function BookingModal({ equipment, open, onOpenChange }: BookingM
                 name="customerName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Nom complet</FormLabel>
+                    <FormLabel>Nom complet *</FormLabel>
                     <FormControl>
-                      <Input placeholder="Votre nom complet" {...field} />
+                      <Input 
+                        placeholder="Ex: Amadou Diallo" 
+                        {...field}
+                        data-testid="input-customer-name"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -195,9 +251,14 @@ export default function BookingModal({ equipment, open, onOpenChange }: BookingM
                 name="customerEmail"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel>Email *</FormLabel>
                     <FormControl>
-                      <Input type="email" placeholder="votre@email.com" {...field} />
+                      <Input 
+                        type="email" 
+                        placeholder="exemple@email.com" 
+                        {...field}
+                        data-testid="input-customer-email"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -209,10 +270,16 @@ export default function BookingModal({ equipment, open, onOpenChange }: BookingM
                 name="customerPhone"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Téléphone</FormLabel>
+                    <FormLabel>Téléphone *</FormLabel>
                     <FormControl>
-                      <Input placeholder="+221 XX XXX XXXX" {...field} />
+                      <Input 
+                        type="tel"
+                        placeholder="+221 77 123 45 67" 
+                        {...field}
+                        data-testid="input-customer-phone"
+                      />
                     </FormControl>
+                    <p className="text-xs text-gray-500 mt-1">Format accepté: +221XXXXXXXXX ou XXXXXXXXX (9 chiffres)</p>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -243,12 +310,13 @@ export default function BookingModal({ equipment, open, onOpenChange }: BookingM
                   name="startDate"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Date de début</FormLabel>
+                      <FormLabel>Date de début *</FormLabel>
                       <FormControl>
                         <Input 
                           type="date" 
                           min={new Date().toISOString().split('T')[0]}
-                          {...field} 
+                          {...field}
+                          data-testid="input-start-date"
                         />
                       </FormControl>
                       <FormMessage />
@@ -261,12 +329,13 @@ export default function BookingModal({ equipment, open, onOpenChange }: BookingM
                   name="endDate"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Date de fin</FormLabel>
+                      <FormLabel>Date de fin *</FormLabel>
                       <FormControl>
                         <Input 
                           type="date" 
-                          min={new Date().toISOString().split('T')[0]}
-                          {...field} 
+                          min={form.watch("startDate") || new Date().toISOString().split('T')[0]}
+                          {...field}
+                          data-testid="input-end-date"
                         />
                       </FormControl>
                       <FormMessage />
