@@ -1189,7 +1189,7 @@ function AdminDashboardContent() {
                         <p className="font-medium">Réservations en attente</p>
                         <p className="text-sm text-kamsen-gray">{stats.pendingBookings} réservation(s) à traiter</p>
                       </div>
-                      <Button size="sm" className="bg-kamsen-blue hover:bg-kamsen-blue/90" onClick={() => document.querySelector('[value="bookings"]')?.click()}>
+                      <Button size="sm" className="bg-kamsen-blue hover:bg-kamsen-blue/90" onClick={() => (document.querySelector('[value="bookings"]') as HTMLElement)?.click()}>
                         Voir
                       </Button>
                     </div>
@@ -1200,7 +1200,7 @@ function AdminDashboardContent() {
                         <p className="font-medium">Demandes de partenariat</p>
                         <p className="text-sm text-kamsen-gray">{stats.partnerRequests?.pending} demande(s) en attente</p>
                       </div>
-                      <Button size="sm" variant="outline" onClick={() => document.querySelector('[value="partners"]')?.click()}>
+                      <Button size="sm" variant="outline" onClick={() => (document.querySelector('[value="partners"]') as HTMLElement)?.click()}>
                         Examiner
                       </Button>
                     </div>
