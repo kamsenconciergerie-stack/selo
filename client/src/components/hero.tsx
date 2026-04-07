@@ -14,13 +14,12 @@ export default function Hero() {
   const [startDate, setStartDate] = useState("");
 
   const equipmentCategories = [
-    "Camions et Transport",
-    "BTP et Construction",
-    "Électricité et Énergie", 
-    "Pompage et Irrigation",
-    "Équipement Agricole",
-    "Équipement Spécialisé",
-    "Manutention"
+    "Véhicules de tourisme",
+    "Bus",
+    "4/4 tout terrain",
+    "Mini Bus",
+    "Pick up",
+    "Berlines",
   ];
 
   const handleSearch = () => {

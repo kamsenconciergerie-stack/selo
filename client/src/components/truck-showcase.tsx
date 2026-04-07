@@ -15,10 +15,12 @@ export function TruckShowcase() {
 
   // Filter truck categories
   const truckCategories = [
-    "Camion porteur",
-    "Camion semi-remorque", 
-    "Camionnette / Fourgon",
-    "Camion benne"
+    "Véhicules de tourisme",
+    "Bus",
+    "4/4 tout terrain",
+    "Mini Bus",
+    "Pick up",
+    "Berlines"
   ];
 
   const trucks = equipment.filter((item: any) => 
@@ -31,20 +33,24 @@ export function TruckShowcase() {
 
   const getCategoryIcon = (category: string) => {
     switch (category) {
-      case "Camion porteur": return "🚛";
-      case "Camion semi-remorque": return "🚚";
-      case "Camionnette / Fourgon": return "🛻";
-      case "Camion benne": return "🏗️";
-      default: return "🚐";
+      case "Véhicules de tourisme": return "🚗";
+      case "Bus": return "🚌";
+      case "4/4 tout terrain": return "🚙";
+      case "Mini Bus": return "🚐";
+      case "Pick up": return "🛻";
+      case "Berlines": return "🚘";
+      default: return "🚗";
     }
   };
 
   const getCategoryDescription = (category: string) => {
     switch (category) {
-      case "Camion porteur": return "Camion de déménagement, camion de livraison";
-      case "Camion semi-remorque": return "Tracteur + remorque détachable pour transport lourd";
-      case "Camionnette / Fourgon": return "Renault Master, Mercedes Sprinter pour livraisons";
-      case "Camion benne": return "Benne arrière, benne basculante trilatérale";
+      case "Véhicules de tourisme": return "Voitures citadines et SUV pour vos déplacements";
+      case "Bus": return "Voyagez en groupe jusqu'à plus de 60 personnes";
+      case "4/4 tout terrain": return "Affrontez les routes les plus périlleuses";
+      case "Mini Bus": return "Déplacements en petit comité";
+      case "Pick up": return "Véhicules robustes pour tous terrains";
+      case "Berlines": return "Confort et élégance pour vos déplacements";
       default: return "";
     }
   };

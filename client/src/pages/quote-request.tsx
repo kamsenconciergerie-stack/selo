@@ -50,14 +50,12 @@ export default function QuoteRequest() {
   });
 
   const equipmentCategories = [
-    "Camion porteur",
-    "Camion semi-remorque", 
-    "Camionnette / Fourgon",
-    "Camion benne",
-    "Engins de Chantier",
-    "Outils à Main",
-    "Équipement Électrique",
-    "Sécurité & EPI"
+    "Véhicules de tourisme",
+    "Bus",
+    "4/4 tout terrain",
+    "Mini Bus",
+    "Pick up",
+    "Berlines",
   ];
 
   const onSubmit = async (data: QuoteRequestData) => {

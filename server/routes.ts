@@ -276,14 +276,12 @@ ${validatedData.message}`
   app.get("/api/categories", async (req, res) => {
     try {
       const categories = [
-        "Camion porteur",
-        "Camion semi-remorque", 
-        "Camionnette / Fourgon",
-        "Camion benne",
-        "Engins de Chantier",
-        "Outils à Main",
-        "Équipement Électrique",
-        "Sécurité & EPI"
+        "Véhicules de tourisme",
+        "Bus",
+        "4/4 tout terrain",
+        "Mini Bus",
+        "Pick up",
+        "Berlines",
       ];
       res.json(categories);
     } catch (error) {
