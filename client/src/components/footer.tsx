@@ -1,5 +1,5 @@
-import { Truck } from "lucide-react";
 import { Link } from "wouter";
+import logoPath from "@assets/Screenshot_20260407_132036_Chrome_1775568074315.jpg";
 
 export default function Footer() {
   return (
@@ -8,12 +8,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
             <div className="flex items-center mb-4">
-              <div className="flex items-center bg-kamsen-blue rounded-lg p-2 mr-3">
-                <Truck className="text-white h-6 w-6" />
-              </div>
-              <span className="font-bold text-2xl text-white">
-                KAMSEN
-              </span>
+              <img src={logoPath} alt="SELOV" className="h-12 w-auto" />
             </div>
             <p className="text-white mb-4">
               Votre partenaire de confiance pour la location d'équipement professionnel au Sénégal.
@@ -76,7 +71,7 @@ export default function Footer() {
           </a>
           
           <div>
-            <p>&copy; 2025 Kamsen. Tous droits réservés.</p>
+            <p>&copy; 2025 SELOV. Tous droits réservés.</p>
           </div>
         </div>
       </div>
