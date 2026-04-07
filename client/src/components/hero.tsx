@@ -35,13 +35,6 @@ export default function Hero() {
     <section className="bg-hero-gradient text-white py-16 lg:py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
-          <div className="mb-8">
-            <img 
-              src="/images/kamsen-logo-new.svg" 
-              alt="Kamsen - Des charges en moins" 
-              className="h-20 w-auto mx-auto mb-6"
-            />
-          </div>
           <h1 className="text-4xl lg:text-6xl font-bold mb-6 text-white">
             Location de camions et d'équipements<br />
             <span className="text-white font-extrabold">Professionnels</span> au Sénégal
