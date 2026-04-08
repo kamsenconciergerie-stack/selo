@@ -60,11 +60,11 @@ export function TruckShowcase() {
       <div className="container mx-auto px-4">
         <div className="text-center mb-8">
           <h2 className="text-3xl font-bold text-kamsen-blue mb-4">
-            🚛 Camions & Véhicules Utilitaires
+            🚗 Notre Flotte de Véhicules
           </h2>
           <p className="text-lg text-kamsen-gray max-w-3xl mx-auto">
-            Location de camions et véhicules professionnels au Sénégal. 
-            Du petit fourgon au camion semi-remorque, trouvez le véhicule adapté à vos besoins.
+            Location de voitures, SUV, bus et berlines au Sénégal. 
+            Trouvez le véhicule idéal pour vos déplacements professionnels ou personnels.
           </p>
         </div>
 

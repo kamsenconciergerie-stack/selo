@@ -35,11 +35,11 @@ export default function Hero() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <h1 className="text-4xl lg:text-6xl font-bold mb-6 text-white">
-            Location de camions et d'équipements<br />
-            <span className="text-white font-extrabold">Professionnels</span> au Sénégal
+            N°1 dans la Location de Voitures<br />
+            <span className="text-kamsen-orange font-extrabold">partout au Sénégal</span>
           </h1>
           <p className="text-xl lg:text-2xl mb-8 text-white font-medium">
-            Des centaines d'équipements disponibles partout au Sénégal
+            Véhicules de tourisme, 4x4, Bus, Berlines — disponibles dans toutes les villes
           </p>
           
           <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-6 border border-kamsen-orange">

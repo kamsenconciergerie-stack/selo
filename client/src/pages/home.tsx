@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { useQuery } from "@tanstack/react-query";
 import { Equipment } from "@shared/schema";
 import { Link } from "wouter";
-import { Hammer, Truck, Zap, HardHat, Search, Calendar, CheckCircle, Phone, Star } from "lucide-react";
+import { Car, Bus, Truck, Zap, Search, Calendar, CheckCircle, Users } from "lucide-react";
 import EquipmentCard from "@/components/equipment-card";
 import { SERVICE_AREAS } from "@/lib/constants";
 import SEOContent from "@/components/seo-content";
@@ -18,119 +18,73 @@ export default function Home() {
     queryKey: ["/api/equipment"],
   });
 
-  // Most demanded equipment in Senegal - exact popular equipment list
-  const getPopularEquipment = () => {
-    const popularCategories = [
-      // Tracteur 75–90 CV
-      { names: ["Tracteur 75 CV", "Tracteur 90 CV"], displayName: "Tracteur 75–90 CV" },
-      // Charrue 2–3 socs  
-      { names: ["Charrue 2 socs", "Charrue 3 socs"], displayName: "Charrue 2–3 socs" },
-      // Motopompe thermique
-      { names: ["Motopompe thermique"], displayName: "Motopompe thermique" },
-      // Camion benne 20–30 T
-      { names: ["Camion benne 20 T", "Camion benne 30 T"], displayName: "Camion benne 20–30 T" },
-      // Pulvérisateur motorisé
-      { names: ["Pulvérisateur motorisé"], displayName: "Pulvérisateur motorisé" },
-      // Semoir mécanique
-      { names: ["Semoir mécanique"], displayName: "Semoir mécanique" },
-      // Billonneuse / butteuse
-      { names: ["Billonneuse", "Butteuse"], displayName: "Billonneuse / butteuse" },
-      // Camion plateau 10–20 T
-      { names: ["Camion plateau 10 T", "Camion plateau 20 T"], displayName: "Camion plateau 10–20 T" },
-      // Pick-up 4x4 double cabine
-      { names: ["Pick-up 4x4 double cabine"], displayName: "Pick-up 4x4 double cabine" },
-      // Décortiqueuse (riz, arachide)
-      { names: ["Décortiqueuse à riz", "Décortiqueuse à arachide"], displayName: "Décortiqueuse (riz, arachide)" }
-    ];
-
-    const popularEquipment = [];
-    
-    for (const category of popularCategories) {
-      // Find first available equipment from each category
-      const foundEquipment = equipment.find(eq => 
-        category.names.some(name => eq.name === name)
-      );
-      if (foundEquipment) {
-        popularEquipment.push(foundEquipment);
-      }
-    }
-    
-    return popularEquipment;
-  };
-  
-  const featuredEquipment = getPopularEquipment();
+  // Featured vehicles from SELOV categories
+  const featuredEquipment = equipment.slice(0, 8);
 
   const categories = [
     {
-      name: "Camions et Transport",
-      description: "Camions bennes, plateaux et véhicules de transport",
+      name: "Véhicules de tourisme",
+      description: "Citadines, SUV et voitures confortables pour tous vos trajets",
+      icon: Car,
+      emoji: "🚗",
+      count: equipment.filter(eq => eq.category === "Véhicules de tourisme").length,
+    },
+    {
+      name: "Bus",
+      description: "Transport de groupe, voyages et événements jusqu'à 60 personnes",
+      icon: Bus,
+      emoji: "🚌",
+      count: equipment.filter(eq => eq.category === "Bus").length,
+    },
+    {
+      name: "4/4 tout terrain",
+      description: "Affrontez les pistes les plus difficiles en toute sécurité",
       icon: Truck,
-      emoji: "🚛",
-      count: equipment.filter(eq => eq.category === "Camions et Transport").length,
+      emoji: "🚙",
+      count: equipment.filter(eq => eq.category === "4/4 tout terrain").length,
     },
     {
-      name: "BTP et Construction",
-      description: "Équipements de construction et de travaux publics", 
-      icon: HardHat,
-      emoji: "🏗️",
-      count: equipment.filter(eq => eq.category === "BTP et Construction").length,
+      name: "Mini Bus",
+      description: "Minibus pour groupes réduits, transferts et excursions",
+      icon: Users,
+      emoji: "🚐",
+      count: equipment.filter(eq => eq.category === "Mini Bus").length,
     },
     {
-      name: "Électricité et Énergie",
-      description: "Générateurs, compresseurs et équipements électriques",
-      icon: Zap,
-      emoji: "⚡",
-      count: equipment.filter(eq => eq.category === "Électricité et Énergie").length,
-    },
-    {
-      name: "Pompage et Irrigation",
-      description: "Pompes, motopompes et systèmes d'irrigation",
-      icon: Zap,
-      emoji: "💧",
-      count: equipment.filter(eq => eq.category === "Pompage et Irrigation").length,
-    },
-    {
-      name: "Équipement Agricole", 
-      description: "Tracteurs, charrues, semoirs et outils agricoles",
+      name: "Pick up",
+      description: "Véhicules robustes pour le transport et les terrains variés",
       icon: Truck,
-      emoji: "🚜",
-      count: equipment.filter(eq => eq.category === "Équipement Agricole").length,
+      emoji: "🛻",
+      count: equipment.filter(eq => eq.category === "Pick up").length,
     },
     {
-      name: "Équipement Spécialisé",
-      description: "Équipements techniques et spécialisés",
-      icon: Zap,
-      emoji: "⚙️",
-      count: equipment.filter(eq => eq.category === "Équipement Spécialisé").length,
-    },
-    {
-      name: "Manutention",
-      description: "Équipements de levage et de manutention",
-      icon: Hammer,
-      emoji: "🏋️",
-      count: equipment.filter(eq => eq.category === "Manutention").length,
+      name: "Berlines",
+      description: "Élégance et confort pour vos déplacements professionnels",
+      icon: Car,
+      emoji: "🚘",
+      count: equipment.filter(eq => eq.category === "Berlines").length,
     },
   ];
 
   const steps = [
     {
       icon: Search,
-      title: "1. Recherchez",
-      description: "Trouvez l'équipement dont vous avez besoin parmi notre large catalogue",
+      title: "1. Choisissez",
+      description: "Sélectionnez votre véhicule parmi notre large flotte disponible partout au Sénégal",
       bgColor: "bg-kamsen-blue-light",
       iconColor: "text-kamsen-blue",
     },
     {
       icon: Calendar,
       title: "2. Réservez", 
-      description: "Sélectionnez vos dates et confirmez votre réservation en ligne",
+      description: "Choisissez vos dates, votre ville et confirmez votre réservation en quelques clics",
       bgColor: "bg-kamsen-blue-light",
       iconColor: "text-kamsen-blue",
     },
     {
-      icon: Truck,
-      title: "3. Recevez",
-      description: "Nous livrons votre équipement directement sur votre site",
+      icon: Car,
+      title: "3. Prenez la route",
+      description: "Votre véhicule est livré à l'adresse de votre choix ou récupéré en agence",
       bgColor: "bg-kamsen-blue-light", 
       iconColor: "text-kamsen-blue",
     },
@@ -147,10 +101,10 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl lg:text-4xl font-bold text-kamsen-blue mb-4">
-              Nos Catégories d'Équipements
+              Nos Catégories de Véhicules
             </h2>
             <p className="text-xl text-kamsen-gray max-w-3xl mx-auto">
-              Découvrez notre gamme complète d'équipements professionnels disponibles à la location
+              Une flotte complète pour tous vos besoins — déplacements, événements ou missions terrain
             </p>
           </div>
           
@@ -174,7 +128,7 @@ export default function Home() {
                       </p>
                       <div className="text-center">
                         <Badge variant="outline" className="bg-orange-50 text-orange-700 border-orange-200">
-                          {category.count} équipement{category.count > 1 ? 's' : ''} disponible{category.count > 1 ? 's' : ''}
+                          {category.count > 0 ? `${category.count} véhicule${category.count > 1 ? 's' : ''} disponible${category.count > 1 ? 's' : ''}` : 'Bientôt disponible'}
                         </Badge>
                       </div>
                     </CardContent>
@@ -191,10 +145,10 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl lg:text-4xl font-bold text-kamsen-blue mb-4">
-              Les Plus Populaires
+              Véhicules les Plus Demandés
             </h2>
             <p className="text-xl text-kamsen-gray">
-              Tracteurs, charrues, camions benne, motopompes et équipements agricoles les plus demandés
+              Les voitures, 4x4 et bus les plus réservés par nos clients au Sénégal
             </p>
           </div>
           
@@ -222,7 +176,7 @@ export default function Home() {
           <div className="flex justify-center mt-12">
             <Link href="/equipements">
               <Button className="bg-kamsen-blue hover:bg-kamsen-blue/90 text-white px-8 py-3 text-lg">
-                Voir tous les équipements
+                Voir tous nos véhicules
               </Button>
             </Link>
           </div>
@@ -234,10 +188,10 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl lg:text-4xl font-bold text-kamsen-blue mb-4">
-              Exemple de combinaisons populaires (forfait location)
+              Nos Forfaits les Plus Populaires
             </h2>
             <p className="text-xl text-kamsen-gray">
-              Nos équipes vous proposent des forfaits complets pour vos projets
+              Des solutions sur mesure pour tous vos besoins de déplacement au Sénégal
             </p>
           </div>
           
@@ -245,13 +199,13 @@ export default function Home() {
             <Card className="hover:shadow-lg transition-shadow">
               <CardContent className="p-6">
                 <div className="bg-kamsen-blue/10 w-12 h-12 rounded-full flex items-center justify-center mb-4">
-                  <Truck className="h-6 w-6 text-kamsen-blue" />
+                  <Car className="h-6 w-6 text-kamsen-blue" />
                 </div>
                 <h3 className="text-xl font-semibold text-kamsen-blue mb-3">
-                  Tracteur 75 CV + charrue + opérateur → pour 5 ha de maïs
+                  Berline avec chauffeur → pour séminaires et réunions d'affaires
                 </h3>
                 <p className="text-kamsen-gray">
-                  Solution complète pour la préparation et le labour de terrain agricole avec opérateur expérimenté inclus.
+                  Arrivez en toute élégance à vos rendez-vous professionnels avec un chauffeur attitré pour la journée.
                 </p>
               </CardContent>
             </Card>
@@ -259,13 +213,13 @@ export default function Home() {
             <Card className="hover:shadow-lg transition-shadow">
               <CardContent className="p-6">
                 <div className="bg-kamsen-blue-light w-12 h-12 rounded-full flex items-center justify-center mb-4">
-                  <Zap className="h-6 w-6 text-kamsen-blue" />
+                  <Bus className="h-6 w-6 text-kamsen-blue" />
                 </div>
                 <h3 className="text-xl font-semibold text-kamsen-blue mb-3">
-                  Tracteur + billonneuse + semoir + motopompe → pour périmètre maraîcher de 2 ha
+                  Mini Bus ou Bus → pour excursions et sorties scolaires
                 </h3>
                 <p className="text-kamsen-gray">
-                  Kit complet pour l'aménagement et l'irrigation d'un périmètre maraîcher moderne.
+                  Transport confortable et sécurisé pour vos groupes, avec chauffeur expérimenté inclus.
                 </p>
               </CardContent>
             </Card>
@@ -276,10 +230,10 @@ export default function Home() {
                   <Truck className="h-6 w-6 text-kamsen-blue" />
                 </div>
                 <h3 className="text-xl font-semibold text-kamsen-blue mb-3">
-                  Camion benne 30 T + chargeur frontal → pour approvisionnement en gravier ou céréales
+                  4x4 tout terrain → pour missions terrain et zones reculées
                 </h3>
                 <p className="text-kamsen-gray">
-                  Ensemble logistique pour le transport et la manutention de matériaux en vrac ou de produits agricoles.
+                  Idéal pour les missions ONG, prospections minières ou déplacements dans des zones difficiles d'accès.
                 </p>
               </CardContent>
             </Card>
@@ -290,10 +244,10 @@ export default function Home() {
                   <CheckCircle className="h-6 w-6 text-purple-600" />
                 </div>
                 <h3 className="text-xl font-semibold text-kamsen-blue mb-3">
-                  Pick-up 4x4 + pulvérisateur + motopompe → pour suivi agricole multisite
+                  Pick-up double cabine → pour chantiers et travaux
                 </h3>
                 <p className="text-kamsen-gray">
-                  Solution mobile pour la surveillance et le traitement de plusieurs exploitations agricoles.
+                  Robustesse et polyvalence pour vos équipes sur le terrain, avec possibilité de personnalisation.
                 </p>
               </CardContent>
             </Card>
@@ -319,7 +273,7 @@ export default function Home() {
               Comment ça marche ?
             </h2>
             <p className="text-xl text-kamsen-gray">
-              Louer votre équipement en 3 étapes simples
+              Louez votre véhicule en 3 étapes simples
             </p>
           </div>
           
@@ -349,10 +303,10 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl lg:text-4xl font-bold text-kamsen-blue mb-4">
-              Zones de Service
+              Disponibles Partout au Sénégal
             </h2>
             <p className="text-xl text-kamsen-gray">
-              Nous livrons dans les principales villes du Sénégal
+              Livraison ou retrait de votre véhicule dans les principales villes
             </p>
           </div>
           

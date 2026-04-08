@@ -272,10 +272,10 @@ export default function About() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-3xl lg:text-4xl font-bold mb-6 text-kamsen-blue">
-                À Propos d'Kamsen
+                À Propos de SELOV
               </h2>
               <p className="text-lg text-kamsen-gray mb-8">
-                Kamsen vise à accompagner les professionnels et les particuliers dans leurs projets en fournissant des moyens de transport de colis et équipements de qualité et un service personnalisé partout au Sénégal.
+                SELOV est la première plateforme de location de voitures au Sénégal, accompagnant professionnels et particuliers dans leurs déplacements avec une flotte de qualité et un service personnalisé partout au Sénégal.
               </p>
               
               {/* Rejoignez notre réseau de partenaires */}
@@ -284,7 +284,7 @@ export default function About() {
                   🤝 Rejoignez notre réseau de partenaires
                 </h3>
                 <p className="text-kamsen-blue mb-4">
-                  Vous possédez des équipements de transport ou de logistique ? Développez votre activité en rejoignant notre réseau de partenaires de confiance.
+                  Vous possédez des véhicules ? Développez votre activité en rejoignant notre réseau de partenaires SELOV de confiance.
                 </p>
                 <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
                   <DialogTrigger asChild>
