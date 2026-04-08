@@ -269,8 +269,8 @@ export default function EquipmentDetail() {
             <div className="mt-6 p-4 bg-kamsen-blue/10 rounded-lg border-l-4 border-primary-orange">
               <p className="text-kamsen-blue font-medium">
                 📞 Contactez l'équipe commerciale d'Kamsen pour en savoir plus au{" "}
-                <a href="tel:+221710188989" className="text-kamsen-blue font-bold hover:underline">
-                  71 018 89 89
+                <a href="tel:+221338275726" className="text-kamsen-blue font-bold hover:underline">
+                  33 827 57 26
                 </a>
               </p>
             </div>

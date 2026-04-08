@@ -7,42 +7,42 @@ export default function SEOContent() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-gray-900 mb-4">
-            Location d'Équipement Professionnel au Sénégal
+            Location de Voitures au Sénégal — SELOV
           </h2>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            Kamsen est votre partenaire de confiance pour la location d'équipement professionnel 
-            dans tout le Sénégal. Nous couvrons Dakar, Thiès, Saint-Louis, Kaolack et toutes les régions.
+            SELOV est votre partenaire de confiance pour la location de voitures au Sénégal. 
+            Nous couvrons Dakar, Thiès, Saint-Louis, Kaolack et toutes les régions du pays.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
           <div className="bg-gray-50 p-6 rounded-lg">
             <h3 className="text-xl font-semibold text-gray-900 mb-3">
-              Location de Pelleteuses à Dakar
+              Location de Voitures à Dakar
             </h3>
             <p className="text-gray-600">
-              Pelleteuses hydrauliques, mini-pelles et engins de terrassement disponibles 
-              pour vos chantiers à Dakar et sa banlieue. Livraison rapide et tarifs compétitifs.
+              Berlines, SUV et véhicules de tourisme disponibles pour vos déplacements 
+              à Dakar et sa banlieue. Avec ou sans chauffeur, tarifs compétitifs.
             </p>
           </div>
 
           <div className="bg-gray-50 p-6 rounded-lg">
             <h3 className="text-xl font-semibold text-gray-900 mb-3">
-              Camions Sénégal - Location et Transport de Charges
+              4x4 et Pick-up Tout Terrain au Sénégal
             </h3>
             <p className="text-gray-600">
-              Camions Sénégal : location de camions bennes, camions plateaux et véhicules utilitaires 
-              pour transport de charges et marchandises dans tout le Sénégal. Service fiable et rapide.
+              Véhicules robustes pour missions terrain, ONG, chantiers et zones difficiles 
+              d'accès au Sénégal. Service fiable et chauffeurs expérimentés disponibles.
             </p>
           </div>
 
           <div className="bg-gray-50 p-6 rounded-lg">
             <h3 className="text-xl font-semibold text-gray-900 mb-3">
-              Équipement Agricoles Sénégal - Tracteurs et Machines
+              Bus et Mini Bus — Transport de Groupe
             </h3>
             <p className="text-gray-600">
-              Équipement agricoles Sénégal : tracteurs, charrues, décortiqueuses et machines agricoles 
-              pour tous vos besoins farming au Sénégal. Location courte et longue durée.
+              Location de bus et mini bus pour excursions, événements, sorties scolaires 
+              et déplacements de groupe partout au Sénégal. De 15 à 60 passagers.
             </p>
           </div>
         </div>
@@ -50,12 +50,12 @@ export default function SEOContent() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           <div>
             <h3 className="text-2xl font-bold text-gray-900 mb-6">
-              Pourquoi Choisir Kamsen pour Votre Location d'Équipement ?
+              Pourquoi Choisir SELOV pour Votre Location de Voiture ?
             </h3>
             <ul className="space-y-3 text-gray-600">
               <li className="flex items-start">
                 <span className="text-kamsen-orange font-bold mr-2">✓</span>
-                Plus de 500 équipements disponibles dans tout le Sénégal
+                Flotte complète de véhicules disponibles dans tout le Sénégal
               </li>
 
               <li className="flex items-start">
@@ -65,7 +65,7 @@ export default function SEOContent() {
 
               <li className="flex items-start">
                 <span className="text-kamsen-orange font-bold mr-2">✓</span>
-                Équipements neufs et régulièrement entretenus
+                Véhicules récents, assurés et régulièrement entretenus
               </li>
             </ul>
           </div>
@@ -102,15 +102,15 @@ export default function SEOContent() {
             Besoin d'un Devis?
           </h3>
           <p className="text-lg mb-6">
-            Location camions Sénégal, transport de charges et équipement agricoles Sénégal. 
+            Location de voitures, 4x4, bus et berlines partout au Sénégal. 
             Contactez-nous pour un devis personnalisé gratuit en 24h.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a 
-              href="tel:+221710188989" 
+              href="tel:+221338275726" 
               className="bg-kamsen-orange hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-lg transition-colors"
             >
-              Appeler +221 71 018 89 89
+              Appeler +221 33 827 57 26
             </a>
             <a 
               href="/contact" 

@@ -340,7 +340,7 @@ export default function Home() {
               </p>
               <div className="mb-4">
                 <p className="text-kamsen-blue font-semibold text-lg mb-2">Appelez-nous directement :</p>
-                <a href="tel:+221710188989" className="text-kamsen-blue font-bold text-2xl hover:text-kamsen-orange transition-colors">+221 71 018 89 89</a>
+                <a href="tel:+221338275726" className="text-kamsen-blue font-bold text-2xl hover:text-kamsen-orange transition-colors">+221 33 827 57 26</a>
               </div>
               <Link href="/contact">
                 <Button className="bg-kamsen-orange hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg">

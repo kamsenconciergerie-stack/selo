@@ -309,8 +309,8 @@ export default function QuoteRequest() {
                     </p>
                     <p className="text-kamsen-gray">
                       Contactez notre équipe commerciale au{" "}
-                      <a href="tel:+221710188989" className="text-kamsen-blue font-bold hover:underline">
-                        71 018 89 89
+                      <a href="tel:+221338275726" className="text-kamsen-blue font-bold hover:underline">
+                        33 827 57 26
                       </a>
                     </p>
                   </div>

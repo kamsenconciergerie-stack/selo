@@ -591,11 +591,11 @@ export function PartnerRegisterModal({ open, onOpenChange, onSwitchToLogin }: Pa
               <div className="space-y-2 text-gray-700">
                 <p className="flex items-center">
                   <span className="font-medium mr-2">Téléphone :</span>
-                  <a href="tel:+221710188989" className="text-[#FF6B35] hover:underline">+221 71 018 89 89</a>
+                  <a href="tel:+221338275726" className="text-[#FF6B35] hover:underline">+221 33 827 57 26</a>
                 </p>
                 <p className="flex items-center">
                   <span className="font-medium mr-2">Email :</span>
-                  <a href="mailto:contact@kamsenlogistic.com" className="text-[#FF6B35] hover:underline">contact@kamsenlogistic.com</a>
+                  <a href="mailto:selov@selov.sn" className="text-[#FF6B35] hover:underline">selov@selov.sn</a>
                 </p>
               </div>
             </div>

@@ -87,7 +87,7 @@ export default function CamionsSenegal() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button className="bg-kamsen-orange hover:bg-orange-600 text-white px-8 py-3 text-lg">
               <Phone className="mr-2 h-5 w-5" />
-              +221 71 018 89 89
+              +221 33 827 57 26
             </Button>
             <Link href="/contact">
               <Button variant="outline" className="border-white text-white hover:bg-white hover:text-kamsen-blue px-8 py-3 text-lg">
