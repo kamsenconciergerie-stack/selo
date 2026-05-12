@@ -22,7 +22,8 @@ export const CATEGORIES = [
   "Pompage et Irrigation",
   "Équipement Agricole",
   "Équipement Spécialisé",
-  "Manutention"
+  "Manutention",
+  "Réservoirs et Stockage"
 ];
 
 export const SERVICE_AREAS = [

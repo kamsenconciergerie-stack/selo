@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="none">
+  <rect width="400" height="300" fill="#EFF6FF"/>
+  <!-- Tank body -->
+  <rect x="100" y="80" width="200" height="150" rx="10" fill="#1E40AF" opacity="0.15"/>
+  <rect x="110" y="90" width="180" height="130" rx="8" fill="#2563EB" opacity="0.2"/>
+  <!-- Tank cylinder top -->
+  <ellipse cx="200" cy="90" rx="90" ry="20" fill="#1D4ED8"/>
+  <!-- Tank cylinder body -->
+  <rect x="110" y="90" width="180" height="120" fill="#2563EB"/>
+  <!-- Tank cylinder bottom -->
+  <ellipse cx="200" cy="210" rx="90" ry="20" fill="#1E40AF"/>
+  <!-- Water fill indicator -->
+  <rect x="110" y="140" width="180" height="70" fill="#3B82F6" opacity="0.7"/>
+  <ellipse cx="200" cy="140" rx="90" ry="20" fill="#60A5FA" opacity="0.8"/>
+  <!-- Shine -->
+  <ellipse cx="160" cy="105" rx="25" ry="10" fill="white" opacity="0.3" transform="rotate(-20 160 105)"/>
+  <!-- Pipe bottom -->
+  <rect x="185" y="228" width="30" height="30" rx="4" fill="#1E3A8A"/>
+  <rect x="170" y="252" width="60" height="12" rx="6" fill="#1E3A8A"/>
+  <!-- Valve -->
+  <circle cx="240" cy="175" r="14" fill="#F97316"/>
+  <rect x="234" y="169" width="12" height="12" rx="2" fill="#EA580C"/>
+  <rect x="238" y="162" width="4" height="8" rx="2" fill="#C2410C"/>
+  <!-- Level gauge -->
+  <rect x="302" y="90" width="12" height="120" rx="6" fill="#E5E7EB"/>
+  <rect x="302" y="140" width="12" height="70" rx="6" fill="#60A5FA"/>
+  <rect x="298" y="136" width="20" height="6" rx="3" fill="#F97316"/>
+  <!-- Label -->
+  <text x="200" y="270" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1E40AF">Réservoir de stockage</text>
+</svg>

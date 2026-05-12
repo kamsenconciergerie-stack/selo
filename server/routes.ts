@@ -45,6 +45,52 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Auth middleware
   await setupAuth(app);
   // Equipment routes
+  // Données statiques de fallback (affichées quand la BDD est indisponible)
+  const STATIC_EQUIPMENT = [
+    {
+      id: 9001, name: "Réservoir plastique 1 000 L", category: "Réservoirs et Stockage",
+      description: "Réservoir polyéthylène haute densité 1 000 litres, alimentaire et eau. Résistant aux UV, avec robinet de vidange.",
+      pricePerDay: 5000, pricePerWeek: 28000, pricePerMonth: 90000,
+      location: "Dakar", available: true, imageUrl: null, specifications: { capacité: "1 000 L", matière: "PEHD", usage: "Eau/alimentaire" }, partners: []
+    },
+    {
+      id: 9002, name: "Réservoir plastique 2 000 L", category: "Réservoirs et Stockage",
+      description: "Réservoir polyéthylène 2 000 litres pour eau potable, stockage agricole ou chantier. Livraison possible.",
+      pricePerDay: 8000, pricePerWeek: 45000, pricePerMonth: 150000,
+      location: "Dakar", available: true, imageUrl: null, specifications: { capacité: "2 000 L", matière: "PEHD", usage: "Eau/chantier" }, partners: []
+    },
+    {
+      id: 9003, name: "Réservoir plastique 3 000 L", category: "Réservoirs et Stockage",
+      description: "Cuve plastique 3 000 litres idéale pour le stockage d'eau en zone rurale ou sur chantier.",
+      pricePerDay: 11000, pricePerWeek: 60000, pricePerMonth: 200000,
+      location: "Dakar", available: true, imageUrl: null, specifications: { capacité: "3 000 L", matière: "PEHD", usage: "Eau/rural" }, partners: []
+    },
+    {
+      id: 9004, name: "Réservoir plastique 5 000 L", category: "Réservoirs et Stockage",
+      description: "Grande cuve 5 000 litres pour stockage d'eau, produits agricoles ou usage industriel. Très résistante.",
+      pricePerDay: 16000, pricePerWeek: 88000, pricePerMonth: 280000,
+      location: "Dakar", available: true, imageUrl: null, specifications: { capacité: "5 000 L", matière: "PEHD", usage: "Industriel/agricole" }, partners: []
+    },
+    {
+      id: 9005, name: "Réservoir plastique 10 000 L", category: "Réservoirs et Stockage",
+      description: "Cuve de grande capacité 10 000 litres pour chantiers, fermes ou sites industriels. Livraison et installation incluses.",
+      pricePerDay: 28000, pricePerWeek: 160000, pricePerMonth: 500000,
+      location: "Dakar", available: true, imageUrl: null, specifications: { capacité: "10 000 L", matière: "PEHD", usage: "Chantier/industriel" }, partners: []
+    },
+    {
+      id: 9006, name: "Réservoir métallique 1 000 L", category: "Réservoirs et Stockage",
+      description: "Cuve acier galvanisé 1 000 litres pour eau ou carburant. Robuste et durable, avec jauge de niveau.",
+      pricePerDay: 7000, pricePerWeek: 38000, pricePerMonth: 120000,
+      location: "Dakar", available: true, imageUrl: null, specifications: { capacité: "1 000 L", matière: "Acier galvanisé", usage: "Eau/carburant" }, partners: []
+    },
+    {
+      id: 9007, name: "Réservoir métallique 5 000 L", category: "Réservoirs et Stockage",
+      description: "Citerne acier 5 000 litres pour stockage carburant, eau ou produits chimiques. Certifié normes sécurité.",
+      pricePerDay: 22000, pricePerWeek: 120000, pricePerMonth: 380000,
+      location: "Dakar", available: true, imageUrl: null, specifications: { capacité: "5 000 L", matière: "Acier", usage: "Carburant/chimique" }, partners: []
+    },
+  ];
+
   app.get("/api/equipment", async (req, res) => {
     try {
       const { category, search, location } = req.query;
@@ -71,11 +117,33 @@ export async function registerRoutes(app: Express): Promise<Server> {
           };
         })
       );
+
+      // Ajouter les réservoirs statiques si la catégorie correspond ou si pas de filtre
+      let staticItems = STATIC_EQUIPMENT;
+      if (category) {
+        staticItems = STATIC_EQUIPMENT.filter(e => e.category === (category as string));
+      }
+      if (search) {
+        const q = (search as string).toLowerCase();
+        staticItems = STATIC_EQUIPMENT.filter(e =>
+          e.name.toLowerCase().includes(q) || e.description.toLowerCase().includes(q)
+        );
+      }
       
-      res.json(enrichedEquipment);
+      res.json([...enrichedEquipment, ...staticItems]);
     } catch (error) {
       console.error("❌ Erreur GET /api/equipment:", error);
-      res.status(500).json({ message: "Erreur lors de la récupération des équipements" });
+      // Fallback : retourner uniquement les données statiques
+      const { category, search } = req.query;
+      let staticItems = STATIC_EQUIPMENT;
+      if (category) staticItems = STATIC_EQUIPMENT.filter(e => e.category === (category as string));
+      if (search) {
+        const q = (search as string).toLowerCase();
+        staticItems = STATIC_EQUIPMENT.filter(e =>
+          e.name.toLowerCase().includes(q) || e.description.toLowerCase().includes(q)
+        );
+      }
+      res.json(staticItems);
     }
   });
 
@@ -283,7 +351,8 @@ ${validatedData.message}`
         "Engins de Chantier",
         "Outils à Main",
         "Équipement Électrique",
-        "Sécurité & EPI"
+        "Sécurité & EPI",
+        "Réservoirs et Stockage"
       ];
       res.json(categories);
     } catch (error) {

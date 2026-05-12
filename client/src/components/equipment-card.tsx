@@ -12,21 +12,34 @@ interface EquipmentCardProps {
   equipment: Equipment;
 }
 
+function getCategoryPlaceholder(category: string): string {
+  if (category?.toLowerCase().includes("réservoir") || category?.toLowerCase().includes("stockage")) {
+    return "/reservoir.svg";
+  }
+  return "/attached_assets/image_1753108301083.png";
+}
+
 export default function EquipmentCard({ equipment }: EquipmentCardProps) {
   const [showBookingModal, setShowBookingModal] = useState(false);
 
   return (
     <>
       <Card className="overflow-hidden hover:shadow-xl transition-shadow border-kamsen-blue bg-white">
-        <img 
-          src={`${equipment.imageUrl}?v=${Date.now()}`}
-          alt={equipment.name}
-          className="w-full h-48 object-cover"
-          onError={(e) => {
-            console.log('Image load error:', equipment.imageUrl);
-            e.currentTarget.src = '/attached_assets/image_1753108301083.png';
-          }}
-        />
+        {equipment.imageUrl ? (
+          <img 
+            src={`${equipment.imageUrl}?v=${Date.now()}`}
+            alt={equipment.name}
+            className="w-full h-48 object-cover"
+            onError={(e) => {
+              e.currentTarget.onerror = null;
+              e.currentTarget.src = getCategoryPlaceholder(equipment.category);
+            }}
+          />
+        ) : (
+          <div className="w-full h-48 bg-kamsen-blue-light flex items-center justify-center">
+            <img src={getCategoryPlaceholder(equipment.category)} alt={equipment.name} className="w-full h-48 object-cover" />
+          </div>
+        )}
         
         <CardContent className="p-6">
           <div className="flex justify-between items-start mb-3">
