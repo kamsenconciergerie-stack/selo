@@ -83,7 +83,7 @@ export default function LocationEquipementSenegal() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button className="bg-kamsen-orange hover:bg-orange-600 text-white px-8 py-3 text-lg">
               <Phone className="mr-2 h-5 w-5" />
-              +221 33 827 57 26
+              +221 71 018 89 89
             </Button>
             <Link href="/contact">
               <Button variant="outline" className="border-white text-white hover:bg-white hover:text-kamsen-blue px-8 py-3 text-lg">
@@ -231,10 +231,10 @@ export default function LocationEquipementSenegal() {
                 </p>
                 <div className="flex flex-col gap-3">
                   <a 
-                    href="tel:+221338275726" 
+                    href="tel:+221710188989" 
                     className="bg-kamsen-orange hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-lg text-center transition-colors"
                   >
-                    📞 Appeler +221 33 827 57 26
+                    📞 Appeler +221 71 018 89 89
                   </a>
                   <Link href="/contact">
                     <Button variant="outline" className="w-full border-kamsen-blue text-kamsen-blue hover:bg-kamsen-blue hover:text-white">
@@ -242,10 +242,10 @@ export default function LocationEquipementSenegal() {
                     </Button>
                   </Link>
                   <a 
-                    href="mailto:selov@selov.sn" 
+                    href="mailto:contact@kamsenlogistic.com" 
                     className="bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold py-3 px-6 rounded-lg text-center transition-colors"
                   >
-                    ✉️ selov@selov.sn
+                    ✉️ contact@kamsenlogistic.com
                   </a>
                 </div>
               </div>

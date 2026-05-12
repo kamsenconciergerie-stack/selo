@@ -8,40 +8,40 @@ import { Link } from "wouter";
 export default function Services() {
   const services = [
     {
-      icon: Car,
-      title: "🚗 Location de Voitures",
-      description: "Louez des berlines, SUV et véhicules de tourisme pour vos déplacements quotidiens ou professionnels",
+      icon: Package,
+      title: "📦 Envois de Colis",
+      description: "Service d'envoi et de livraison de colis dans tout le Sénégal avec nos véhicules professionnels",
       features: [
-        "Véhicules récents et entretenus",
-        "Avec ou sans chauffeur",
-        "Assurance tous risques incluse",
-        "Disponible dans toutes les villes"
+        "Livraison rapide 24-48h",
+        "Suivi en temps réel",
+        "Assurance colis incluse",
+        "Pickup à domicile disponible"
       ],
       bgColor: "bg-kamsen-blue-light",
       iconColor: "text-kamsen-blue"
     },
     {
       icon: Truck,
-      title: "🚙 4x4 et Pick-up Tout Terrain",
-      description: "Des véhicules robustes pour les missions terrain, zones difficiles, chantiers et ONG au Sénégal",
+      title: "🚛 Location de Camion",
+      description: "Location de camions porteurs, semi-remorques et camions bennes pour tous vos besoins de transport",
       features: [
-        "Idéal missions ONG et chantiers",
-        "Conduite sur tous terrains",
-        "Avec chauffeur expérimenté",
-        "Assurance tous risques"
+        "Camions de 3.5T à 40T",
+        "Avec ou sans chauffeur",
+        "Assurance tous risques",
+        "Maintenance incluse"
       ],
       bgColor: "bg-kamsen-blue-light", 
       iconColor: "text-kamsen-blue"
     },
     {
-      icon: Package,
-      title: "🚌 Bus et Mini Bus",
-      description: "Transport de groupes pour excursions, événements, sorties scolaires et déplacements collectifs",
+      icon: Car,
+      title: "🛻 Fourgonnettes et Location d'Utilitaires",
+      description: "Location de fourgons Renault Master, Mercedes Sprinter et véhicules utilitaires pour professionnels",
       features: [
-        "De 15 à 60 passagers",
-        "Chauffeur professionnel inclus",
-        "Climatisation à bord",
-        "Tarifs groupe avantageux"
+        "Véhicules récents et entretenus",
+        "Capacité 1.5T à 3.5T",
+        "Idéal e-commerce et artisans",
+        "Tarifs dégressifs longue durée"
       ],
       bgColor: "bg-kamsen-blue-light",
       iconColor: "text-kamsen-blue"
@@ -56,8 +56,8 @@ export default function Services() {
     },
     {
       icon: Shield,
-      title: "Véhicules Certifiés",
-      description: "Tous nos véhicules sont contrôlés et aux normes de sécurité en vigueur"
+      title: "Équipements Certifiés",
+      description: "Tous nos équipements sont certifiés et aux normes internationales"
     },
     {
       icon: Award,
@@ -74,10 +74,10 @@ export default function Services() {
       <section className="bg-kamsen-gradient text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl lg:text-5xl font-bold mb-4">
-            🚗 Nos Services de Location de Véhicules
+            🚛 Nos Services de Transport et Location
           </h1>
           <p className="text-xl text-orange-100 max-w-3xl mx-auto">
-            Location de voitures, 4x4, bus et berlines partout au Sénégal
+            Envoi de colis, location de camions et véhicules utilitaires au Sénégal
           </p>
         </div>
       </section>
@@ -172,7 +172,7 @@ export default function Services() {
             </Link>
             <Link href="/equipements">
               <Button variant="outline" className="border-white text-white hover:bg-white hover:text-kamsen-blue px-8 py-3 text-lg">
-                Voir nos véhicules
+                Voir les équipements
               </Button>
             </Link>
           </div>

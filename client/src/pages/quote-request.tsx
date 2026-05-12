@@ -50,12 +50,14 @@ export default function QuoteRequest() {
   });
 
   const equipmentCategories = [
-    "Véhicules de tourisme",
-    "Bus",
-    "4/4 tout terrain",
-    "Mini Bus",
-    "Pick up",
-    "Berlines",
+    "Camion porteur",
+    "Camion semi-remorque", 
+    "Camionnette / Fourgon",
+    "Camion benne",
+    "Engins de Chantier",
+    "Outils à Main",
+    "Équipement Électrique",
+    "Sécurité & EPI"
   ];
 
   const onSubmit = async (data: QuoteRequestData) => {
@@ -309,8 +311,8 @@ export default function QuoteRequest() {
                     </p>
                     <p className="text-kamsen-gray">
                       Contactez notre équipe commerciale au{" "}
-                      <a href="tel:+221338275726" className="text-kamsen-blue font-bold hover:underline">
-                        33 827 57 26
+                      <a href="tel:+221710188989" className="text-kamsen-blue font-bold hover:underline">
+                        71 018 89 89
                       </a>
                     </p>
                   </div>

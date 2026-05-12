@@ -156,7 +156,7 @@ export default function BookingModal({ equipment, open, onOpenChange }: BookingM
               <ul className="text-xs text-blue-700 space-y-1 ml-4 list-disc">
                 <li>Vous recevrez un email de confirmation ou de rejet</li>
                 <li>Vérifiez votre boîte mail régulièrement</li>
-                <li>Pour toute urgence : +221 33 827 57 26</li>
+                <li>Pour toute urgence : +221 71 018 89 89</li>
               </ul>
             </div>
           </div>

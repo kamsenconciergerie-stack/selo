@@ -32,12 +32,14 @@ export default function About() {
   const { toast } = useToast();
   
   const equipmentCategories = [
-    "Véhicules de tourisme",
-    "Bus",
-    "4/4 tout terrain",
-    "Mini Bus",
-    "Pick up",
-    "Berlines",
+    "Camion porteur",
+    "Camion semi-remorque", 
+    "Camionnette / Fourgon",
+    "Camion benne",
+    "Engins de Chantier",
+    "Outils à Main",
+    "Équipement Électrique",
+    "Sécurité & EPI"
   ];
   
   const form = useForm<PartnerFormData>({
@@ -272,10 +274,10 @@ export default function About() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-3xl lg:text-4xl font-bold mb-6 text-kamsen-blue">
-                À Propos de SELOV
+                À Propos d'Kamsen
               </h2>
               <p className="text-lg text-kamsen-gray mb-8">
-                SELOV est la première plateforme de location de voitures au Sénégal, accompagnant professionnels et particuliers dans leurs déplacements avec une flotte de qualité et un service personnalisé partout au Sénégal.
+                Kamsen vise à accompagner les professionnels et les particuliers dans leurs projets en fournissant des moyens de transport de colis et équipements de qualité et un service personnalisé partout au Sénégal.
               </p>
               
               {/* Rejoignez notre réseau de partenaires */}
@@ -284,7 +286,7 @@ export default function About() {
                   🤝 Rejoignez notre réseau de partenaires
                 </h3>
                 <p className="text-kamsen-blue mb-4">
-                  Vous possédez des véhicules ? Développez votre activité en rejoignant notre réseau de partenaires SELOV de confiance.
+                  Vous possédez des équipements de transport ou de logistique ? Développez votre activité en rejoignant notre réseau de partenaires de confiance.
                 </p>
                 <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
                   <DialogTrigger asChild>
@@ -300,7 +302,7 @@ export default function About() {
                   <div className="flex-shrink-0 w-8 h-8 bg-kamsen-blue rounded-full flex items-center justify-center">
                     <span className="text-white font-bold">📞</span>
                   </div>
-                  <a href="tel:+221338275726" className="text-kamsen-blue hover:text-kamsen-orange transition-colors font-medium">+221 33 827 57 26</a>
+                  <a href="tel:+221710188989" className="text-kamsen-blue hover:text-kamsen-orange transition-colors font-medium">+221 71 018 89 89</a>
                 </div>
               </div>
 

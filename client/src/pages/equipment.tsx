@@ -71,10 +71,10 @@ export default function EquipmentPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-4xl lg:text-5xl font-bold mb-4">
-              Notre Flotte de Véhicules
+              Notre Catalogue d'Équipements
             </h1>
             <p className="text-xl text-orange-100">
-              Voitures, 4x4, Bus, Berlines — louez le véhicule qu'il vous faut
+              Découvrez notre large gamme d'équipements professionnels
             </p>
           </div>
         </div>

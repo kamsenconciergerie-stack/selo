@@ -51,8 +51,8 @@ export default function LocalSEO() {
                   <Phone className="h-5 w-5 text-kamsen-blue mr-3 mt-1" />
                   <div>
                     <p className="font-semibold">Téléphone</p>
-                    <a href="tel:+221338275726" className="text-kamsen-orange hover:underline">
-                      +221 33 827 57 26
+                    <a href="tel:+221710188989" className="text-kamsen-orange hover:underline">
+                      +221 71 018 89 89
                     </a>
                   </div>
                 </div>
@@ -90,7 +90,7 @@ export default function LocalSEO() {
           <Card>
             <CardContent className="p-6">
               <h3 className="text-xl font-bold text-gray-900 mb-4 text-center">
-                Zones de Service SELOV au Sénégal
+                Zones de Service Kamsen au Sénégal
               </h3>
               
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">

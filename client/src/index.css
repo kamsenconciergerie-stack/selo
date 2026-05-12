@@ -4,58 +4,59 @@
 
 :root {
   --background: hsl(0, 0%, 100%);
-  --foreground: hsl(224, 65%, 20%);
-  --muted: hsl(220, 20%, 96%);
-  --muted-foreground: hsl(220, 10%, 50%);
+  --foreground: hsl(214, 50%, 16%);
+  --muted: hsl(210, 40%, 96%);
+  --muted-foreground: hsl(215, 16%, 47%);
   --popover: hsl(0, 0%, 100%);
-  --popover-foreground: hsl(224, 65%, 20%);
+  --popover-foreground: hsl(214, 50%, 16%);
   --card: hsl(0, 0%, 100%);
-  --card-foreground: hsl(224, 65%, 20%);
-  --border: hsl(224, 30%, 88%);
-  --input: hsl(224, 30%, 88%);
-  --primary: hsl(43, 80%, 48%);
-  --primary-foreground: hsl(224, 65%, 15%);
-  --secondary: hsl(220, 20%, 96%);
-  --secondary-foreground: hsl(224, 65%, 20%);
-  --accent: hsl(43, 80%, 48%);
-  --accent-foreground: hsl(224, 65%, 15%);
+  --card-foreground: hsl(214, 50%, 16%);
+  --border: hsl(214, 32%, 91%);
+  --input: hsl(214, 32%, 91%);
+  --primary: hsl(214, 84%, 56%);
+  --primary-foreground: hsl(0, 0%, 98%);
+  --secondary: hsl(210, 40%, 96%);
+  --secondary-foreground: hsl(214, 50%, 16%);
+  --accent: hsl(26, 100%, 60%);
+  --accent-foreground: hsl(0, 0%, 98%);
   --destructive: hsl(0, 84.2%, 60.2%);
   --destructive-foreground: hsl(0, 0%, 98%);
-  --ring: hsl(43, 80%, 48%);
+  --ring: hsl(214, 84%, 56%);
   --radius: 0.5rem;
-  --kamsen-blue: hsl(224, 65%, 28%);
-  --kamsen-blue-dark: hsl(224, 65%, 20%);
-  --kamsen-blue-light: hsl(224, 50%, 95%);
-  --kamsen-orange: hsl(43, 80%, 48%);
-  --kamsen-orange-dark: hsl(43, 80%, 38%);
-  --kamsen-orange-light: hsl(43, 100%, 95%);
-  --kamsen-gray: hsl(220, 10%, 50%);
-  --kamsen-gray-light: hsl(220, 20%, 96%);
+  --kamsen-blue: hsl(214, 84%, 56%);
+  --kamsen-blue-dark: hsl(214, 84%, 46%);
+  --kamsen-blue-light: hsl(214, 100%, 95%);
+  --kamsen-orange: hsl(26, 100%, 60%);
+  --kamsen-orange-dark: hsl(26, 100%, 50%);
+  --kamsen-orange-light: hsl(26, 100%, 95%);
+  --kamsen-gray: hsl(215, 16%, 47%);
+  --kamsen-gray-light: hsl(210, 40%, 96%);
 }
 
 .dark {
-  --background: hsl(224, 30%, 8%);
+  --background: hsl(240, 10%, 3.9%);
   --foreground: hsl(0, 0%, 98%);
-  --muted: hsl(224, 20%, 15%);
-  --muted-foreground: hsl(220, 10%, 65%);
-  --popover: hsl(224, 30%, 8%);
+  --muted: hsl(240, 3.7%, 15.9%);
+  --muted-foreground: hsl(240, 5%, 64.9%);
+  --popover: hsl(240, 10%, 3.9%);
   --popover-foreground: hsl(0, 0%, 98%);
-  --card: hsl(224, 30%, 8%);
+  --card: hsl(240, 10%, 3.9%);
   --card-foreground: hsl(0, 0%, 98%);
-  --border: hsl(224, 20%, 15%);
-  --input: hsl(224, 20%, 15%);
-  --primary: hsl(43, 80%, 48%);
-  --primary-foreground: hsl(224, 65%, 15%);
-  --secondary: hsl(224, 20%, 15%);
+  --border: hsl(240, 3.7%, 15.9%);
+  --input: hsl(240, 3.7%, 15.9%);
+  --primary: hsl(20, 91%, 58%);
+  --primary-foreground: hsl(0, 0%, 100%);
+  --secondary: hsl(240, 3.7%, 15.9%);
   --secondary-foreground: hsl(0, 0%, 98%);
-  --accent: hsl(224, 20%, 15%);
+  --accent: hsl(240, 3.7%, 15.9%);
   --accent-foreground: hsl(0, 0%, 98%);
   --destructive: hsl(0, 62.8%, 30.6%);
   --destructive-foreground: hsl(0, 0%, 98%);
-  --ring: hsl(43, 80%, 48%);
+  --ring: hsl(240, 4.9%, 83.9%);
   --radius: 0.5rem;
 }
 
+/* Animation pour la bannière Magal de Touba */
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-8px); }
@@ -89,78 +90,78 @@
 
 @layer utilities {
   .text-kamsen-blue {
-    color: hsl(224, 65%, 28%);
+    color: hsl(214, 84%, 56%);
   }
   
   .text-kamsen-blue-dark {
-    color: hsl(224, 65%, 20%);
+    color: hsl(214, 84%, 46%);
   }
   
   .text-kamsen-orange {
-    color: hsl(43, 80%, 48%);
+    color: hsl(26, 100%, 60%);
   }
   
   .text-kamsen-orange-dark {
-    color: hsl(43, 80%, 38%);
+    color: hsl(26, 100%, 50%);
   }
   
   .text-kamsen-gray {
-    color: hsl(220, 10%, 50%);
+    color: hsl(215, 16%, 47%);
   }
   
   .bg-kamsen-blue {
-    background-color: hsl(224, 65%, 28%);
+    background-color: hsl(214, 84%, 56%);
   }
   
   .bg-kamsen-blue-dark {
-    background-color: hsl(224, 65%, 20%);
+    background-color: hsl(214, 84%, 46%);
   }
   
   .bg-kamsen-blue-light {
-    background-color: hsl(224, 50%, 95%);
+    background-color: hsl(214, 100%, 95%);
   }
   
   .bg-kamsen-orange {
-    background-color: hsl(43, 80%, 48%);
+    background-color: hsl(26, 100%, 60%);
   }
   
   .bg-kamsen-orange-dark {
-    background-color: hsl(43, 80%, 38%);
+    background-color: hsl(26, 100%, 50%);
   }
   
   .bg-kamsen-orange-light {
-    background-color: hsl(43, 100%, 95%);
+    background-color: hsl(26, 100%, 95%);
   }
   
   .bg-kamsen-gray-light {
-    background-color: hsl(220, 20%, 96%);
+    background-color: hsl(210, 40%, 96%);
   }
   
   .bg-kamsen-gradient {
-    background: linear-gradient(135deg, hsl(224, 65%, 28%) 0%, hsl(43, 80%, 48%) 100%);
+    background: linear-gradient(135deg, hsl(214, 84%, 56%) 0%, hsl(26, 100%, 60%) 100%);
   }
   
   .bg-hero-gradient {
-    background: linear-gradient(135deg, hsl(224, 65%, 20%) 0%, hsl(224, 65%, 28%) 50%, hsl(43, 80%, 38%) 100%);
+    background: linear-gradient(135deg, hsl(214, 84%, 46%) 0%, hsl(214, 84%, 36%) 50%, hsl(26, 100%, 50%) 100%);
   }
   
   .border-kamsen {
-    border-color: hsl(224, 30%, 88%);
+    border-color: hsl(214, 32%, 91%);
   }
   
   .border-kamsen-blue {
-    border-color: hsl(224, 65%, 28%);
+    border-color: hsl(214, 84%, 56%);
   }
   
   .border-kamsen-orange {
-    border-color: hsl(43, 80%, 48%);
+    border-color: hsl(26, 100%, 60%);
   }
   
   .hover\:bg-kamsen-blue-dark:hover {
-    background-color: hsl(224, 65%, 20%);
+    background-color: hsl(214, 84%, 46%);
   }
   
   .hover\:bg-kamsen-orange-dark:hover {
-    background-color: hsl(43, 80%, 38%);
+    background-color: hsl(26, 100%, 50%);
   }
 }

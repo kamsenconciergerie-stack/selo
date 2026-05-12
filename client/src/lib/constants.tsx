@@ -16,12 +16,13 @@ export const CITIES = [
 ];
 
 export const CATEGORIES = [
-  "Véhicules de tourisme",
-  "Bus",
-  "4/4 tout terrain",
-  "Mini Bus",
-  "Pick up",
-  "Berlines",
+  "Camions et Transport",
+  "BTP et Construction", 
+  "Électricité et Énergie",
+  "Pompage et Irrigation",
+  "Équipement Agricole",
+  "Équipement Spécialisé",
+  "Manutention"
 ];
 
 export const SERVICE_AREAS = [
