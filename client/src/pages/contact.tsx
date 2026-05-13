@@ -92,25 +92,25 @@ export default function Contact() {
     {
       icon: Phone,
       title: "Téléphone",
-      value: "+221 71 018 89 89",
+      value: "+221 33 827 57 26",
       description: "Disponible 24h/7j",
     },
     {
       icon: Mail,
       title: "Contact Général",
-      value: "contact@kamsenlogistic.com",
+      value: "selov@selov.sn",
       description: "Réponse sous 24h",
     },
     {
       icon: Mail,
       title: "Réservations",
-      value: "contact@kamsenlogistic.com",
+      value: "selov@selov.sn",
       description: "Pour vos demandes de location",
     },
     {
       icon: Mail,
       title: "Partenaires",
-      value: "contact@kamsenlogistic.com",
+      value: "selov@selov.sn",
       description: "Rejoignez notre réseau",
     },
     {
@@ -166,19 +166,19 @@ export default function Contact() {
                 <div className="text-center p-4 bg-white rounded-lg shadow-sm">
                   <div className="text-2xl mb-2">📞</div>
                   <h4 className="font-semibold text-kamsen-blue">Support Client</h4>
-                  <p className="text-kamsen-blue font-medium">contact@kamsenlogistic.com</p>
+                  <p className="text-kamsen-blue font-medium">selov@selov.sn</p>
                   <p className="text-sm text-kamsen-gray">Questions générales</p>
                 </div>
                 <div className="text-center p-4 bg-white rounded-lg shadow-sm">
                   <div className="text-2xl mb-2">📋</div>
                   <h4 className="font-semibold text-kamsen-blue">Réservations</h4>
-                  <p className="text-kamsen-blue font-medium">contact@kamsenlogistic.com</p>
+                  <p className="text-kamsen-blue font-medium">selov@selov.sn</p>
                   <p className="text-sm text-kamsen-gray">Location d'équipements</p>
                 </div>
                 <div className="text-center p-4 bg-white rounded-lg shadow-sm">
                   <div className="text-2xl mb-2">🤝</div>
                   <h4 className="font-semibold text-kamsen-blue">Partenaires</h4>
-                  <p className="text-kamsen-blue font-medium">contact@kamsenlogistic.com</p>
+                  <p className="text-kamsen-blue font-medium">selov@selov.sn</p>
                   <p className="text-sm text-kamsen-gray">Rejoignez notre réseau</p>
                 </div>
               </div>

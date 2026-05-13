@@ -14,13 +14,12 @@ export default function Hero() {
   const [startDate, setStartDate] = useState("");
 
   const equipmentCategories = [
-    "Camions et Transport",
-    "BTP et Construction",
-    "Électricité et Énergie", 
-    "Pompage et Irrigation",
-    "Équipement Agricole",
-    "Équipement Spécialisé",
-    "Manutention"
+    "Véhicules de tourisme",
+    "Bus",
+    "4/4 tout terrain",
+    "Mini Bus",
+    "Pick up",
+    "Berlines",
   ];
 
   const handleSearch = () => {
@@ -35,19 +34,12 @@ export default function Hero() {
     <section className="bg-hero-gradient text-white py-16 lg:py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
-          <div className="mb-8">
-            <img 
-              src="/images/kamsen-logo-new.svg" 
-              alt="Kamsen - Des charges en moins" 
-              className="h-20 w-auto mx-auto mb-6"
-            />
-          </div>
           <h1 className="text-4xl lg:text-6xl font-bold mb-6 text-white">
-            Location de camions et d'équipements<br />
-            <span className="text-white font-extrabold">Professionnels</span> au Sénégal
+            N°1 dans la Location de Voitures<br />
+            <span className="text-kamsen-orange font-extrabold">partout au Sénégal</span>
           </h1>
           <p className="text-xl lg:text-2xl mb-8 text-white font-medium">
-            Des centaines d'équipements disponibles partout au Sénégal
+            Véhicules de tourisme, 4x4, Bus, Berlines — disponibles dans toutes les villes
           </p>
           
           <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-6 border border-kamsen-orange">

@@ -376,13 +376,12 @@ export function PartnerRegisterModal({ open, onOpenChange, onSwitchToLogin }: Pa
                   name="availableEquipments"
                   render={({ field }) => {
                     const equipmentCategories = [
-                      { id: "camions", label: "Camions de Transport", icon: "🚛" },
-                      { id: "pelles", label: "Pelles & Excavateurs", icon: "🚜" },
-                      { id: "bulldozers", label: "Bulldozers & Niveleuses", icon: "🚜" },
-                      { id: "compacteurs", label: "Compacteurs & Rouleaux", icon: "🚜" },
-                      { id: "grues", label: "Grues & Engins de Levage", icon: "🏗️" },
-                      { id: "betonniers", label: "Bétonnières & Malaxeurs", icon: "⚙️" },
-                      { id: "generateurs", label: "Générateurs & Compresseurs", icon: "⚡" },
+                      { id: "tourisme", label: "Véhicules de tourisme", icon: "🚗" },
+                      { id: "bus", label: "Bus", icon: "🚌" },
+                      { id: "4x4", label: "4/4 tout terrain", icon: "🚙" },
+                      { id: "minibus", label: "Mini Bus", icon: "🚐" },
+                      { id: "pickup", label: "Pick up", icon: "🛻" },
+                      { id: "berlines", label: "Berlines", icon: "🚘" },
                     ];
 
                     const toggleEquipment = (categoryId: string) => {
@@ -592,11 +591,11 @@ export function PartnerRegisterModal({ open, onOpenChange, onSwitchToLogin }: Pa
               <div className="space-y-2 text-gray-700">
                 <p className="flex items-center">
                   <span className="font-medium mr-2">Téléphone :</span>
-                  <a href="tel:+221710188989" className="text-[#FF6B35] hover:underline">+221 71 018 89 89</a>
+                  <a href="tel:+221338275726" className="text-[#FF6B35] hover:underline">+221 33 827 57 26</a>
                 </p>
                 <p className="flex items-center">
                   <span className="font-medium mr-2">Email :</span>
-                  <a href="mailto:contact@kamsenlogistic.com" className="text-[#FF6B35] hover:underline">contact@kamsenlogistic.com</a>
+                  <a href="mailto:selov@selov.sn" className="text-[#FF6B35] hover:underline">selov@selov.sn</a>
                 </p>
               </div>
             </div>

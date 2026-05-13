@@ -28,13 +28,12 @@ interface QuoteData {
 }
 
 const EQUIPMENT_CATEGORIES = [
-  "Camions et Transport",
-  "BTP et Construction", 
-  "Électricité et Énergie",
-  "Pompage et Irrigation",
-  "Équipement Agricole",
-  "Équipement Spécialisé",
-  "Manutention"
+  "Véhicules de tourisme",
+  "Bus",
+  "4/4 tout terrain",
+  "Mini Bus",
+  "Pick up",
+  "Berlines",
 ];
 
 const SENEGALESE_CITIES = [
@@ -247,7 +246,7 @@ Merci ${quoteData.customerName} ! Ton devis a été enregistré dans notre syst�
 
 📞 **Notre équipe va te contacter au ${quoteData.customerPhone} dans les plus brefs délais.**
 
-Tu peux également nous appeler directement au **+221 71 018 89 89** pour toute question urgente.
+Tu peux également nous appeler directement au **+221 33 827 57 26** pour toute question urgente.
 
 À bientôt ! 👋
     `);
@@ -407,9 +406,9 @@ Tu peux également nous appeler directement au **+221 71 018 89 89** pour toute 
             {/* Contact info for completed step */}
             {currentStep === 'completed' && (
               <div className="border-t border-gray-200 p-4 bg-kamsen-blue-light text-center">
-                <a href="tel:+221710188989" className="flex items-center justify-center gap-2 text-kamsen-blue hover:text-kamsen-orange transition-colors">
+                <a href="tel:+221338275726" className="flex items-center justify-center gap-2 text-kamsen-blue hover:text-kamsen-orange transition-colors">
                   <Phone className="h-4 w-4" />
-                  <span className="font-bold">+221 71 018 89 89</span>
+                  <span className="font-bold">+221 33 827 57 26</span>
                 </a>
               </div>
             )}
