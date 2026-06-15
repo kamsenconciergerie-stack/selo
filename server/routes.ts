@@ -101,43 +101,59 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Bookings routes
-  app.post("/api/bookings", async (req, res) => {
-    try {
-      const validatedData = insertBookingSchema.parse(req.body);
-      const booking = await storage.createBooking(validatedData);
-      
-      // 🚀 NOUVEAU: Envoi automatique d'email de demande enregistrée
-      if (booking && booking.customerEmail) {
-        // Récupérer les détails de l'équipement pour l'email
-        const equipment = await storage.getEquipmentById(parseInt(booking.equipmentId as any));
-        
-        // Envoyer l'email de demande au client
-        await EmailService.sendBookingCreatedEmail({
+app.post("/api/bookings", async (req, res) => {
+  try {
+    const validatedData = insertBookingSchema.parse(req.body);
+    const booking = await storage.createBooking(validatedData);
+
+    // Récupérer les détails de l'équipement (utilisé pour email + n8n)
+    const equipment = await storage.getEquipmentById(parseInt(booking.equipmentId as any));
+
+    // Email existant
+    if (booking && booking.customerEmail) {
+      await EmailService.sendBookingCreatedEmail({
+        bookingId: booking.id,
+        customerName: booking.customerName,
+        customerEmail: booking.customerEmail,
+        equipmentName: equipment?.name || 'Équipement',
+        startDate: booking.startDate,
+        endDate: booking.endDate,
+        totalPrice: booking.totalPrice,
+        deliveryCity: booking.deliveryCity || 'Dakar',
+      });
+      console.log(`📧 Email envoyé pour réservation #${booking.id}`);
+    }
+
+    // 🚀 Déclenchement workflow n8n (WhatsApp)
+    if (process.env.N8N_WEBHOOK_URL) {
+      fetch(process.env.N8N_WEBHOOK_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
           bookingId: booking.id,
           customerName: booking.customerName,
-          customerEmail: booking.customerEmail,
-          equipmentName: equipment?.name || 'Équipement',
+          customerPhone: booking.customerPhone,
+          equipmentName: equipment?.name || "Équipement",
           startDate: booking.startDate,
           endDate: booking.endDate,
           totalPrice: booking.totalPrice,
-          deliveryCity: booking.deliveryCity || 'Dakar',
-        });
-        
-        console.log(`📧 Email de demande automatique envoyé pour réservation #${booking.id}`);
-      }
-      
-      res.status(201).json(booking);
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        return res.status(400).json({ 
-          message: "Données de réservation invalides", 
-          errors: error.errors 
-        });
-      }
-      console.error("Erreur création réservation:", error);
-      res.status(500).json({ message: "Erreur lors de la création de la réservation" });
+          deliveryCity: booking.deliveryCity || "Dakar",
+        }),
+      }).catch((err) => console.error("Erreur webhook n8n:", err));
     }
-  });
+
+    res.status(201).json(booking);
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return res.status(400).json({
+        message: "Données de réservation invalides",
+        errors: error.errors,
+      });
+    }
+    console.error("Erreur création réservation:", error);
+    res.status(500).json({ message: "Erreur lors de la création de la réservation" });
+  }
+});
 
   // Inquiries routes
   app.post("/api/inquiries", async (req, res) => {
